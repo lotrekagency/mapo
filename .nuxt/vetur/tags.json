@@ -5,6 +5,12 @@
   "LazyLogo": {
     "description": "Auto imported from components/Logo.vue"
   },
+  "SidebarEnder": {
+    "description": "Auto imported from components/SidebarEnder.vue"
+  },
+  "LazySidebarEnder": {
+    "description": "Auto imported from components/SidebarEnder.vue"
+  },
   "VuetifyLogo": {
     "description": "Auto imported from components/VuetifyLogo.vue"
   },
