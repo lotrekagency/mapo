@@ -1,5 +1,5 @@
 <template>
-  <v-btn @click.native="logout" rounded dark> Logout </v-btn>
+  <v-btn @click.native="logout"> Logout </v-btn>
 </template>
 
 <script>

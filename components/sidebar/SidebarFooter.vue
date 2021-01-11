@@ -13,12 +13,7 @@
     >
       Impostazioni
     </NuxtLink>
-    <NuxtLink
-      class="sidebar__ender__item sidebar__ender__item--logout"
-      to="/logout"
-    >
-      Logout
-    </NuxtLink>
+    <logout-button class="sidebar__ender__item sidebar__ender__item--logout" />
   </div>
 </template>
 

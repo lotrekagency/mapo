@@ -38,13 +38,6 @@
           Ciao, Utente
         </span>
       </div>
-      <logout-button />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-main>
       <v-container>
