@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: process.env.AUTH_API || '/api/api-token-auth/',
+    url: process.env.AUTH_API || '/api/camomilla/token-auth/',
     method: 'post',
     data
   })
