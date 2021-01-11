@@ -57,7 +57,7 @@ const actions = {
       getInfo().then(response => {
         commit('SET_USERNAME', response.username)
         commit('SET_INFO', response)
-        resolve(data)
+        resolve(response)
       }).catch(error => {
         reject(error)
       })
