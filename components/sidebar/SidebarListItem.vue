@@ -1,7 +1,7 @@
 <template>
-  <div class="sidebar__list__item__inner">
+  <div class="sidebar__link__wrapper">
     <NuxtLink
-      class="sidebar__list__item__link"
+      class="sidebar__link"
       :to="link"
     >
       {{ title }}
@@ -11,9 +11,16 @@
 
 <style lang="scss" scoped>
 .sidebar {
-  &__list {
-    &__item {
-      
+  &__link {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: white;
+    background: rgba(0,0,0,0);
+    transition: all linear .25s;
+    &:hover {
+      background: rgba(0,0,0,0.25);
     }
   }
 }

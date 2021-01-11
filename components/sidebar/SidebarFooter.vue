@@ -28,6 +28,21 @@
     margin-top: auto;
     display: flex;
     flex-direction: column;
+    &__item {
+      display: block;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      text-decoration: none;
+      color: white;
+      background: rgba(0,0,0,0);
+      transition: all linear .25s;
+      &:hover {
+        background: rgba(0,0,0,0.25);
+      }
+      &--logout {
+        background: rgba(0,0,0,0.15);
+      }
+    }
   }
 }
 </style>
