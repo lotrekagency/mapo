@@ -50,6 +50,7 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
+      <logout-button />
       <v-btn
         icon
         @click.stop="rightDrawer = !rightDrawer"
@@ -89,7 +90,9 @@
 </template>
 
 <script>
+import LogoutButton from '../components/LogoutButton.vue'
 export default {
+  components: { LogoutButton, },
   data () {
     return {
       clipped: false,

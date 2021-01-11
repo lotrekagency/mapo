@@ -1,8 +1,9 @@
 import { getToken } from '@/utils/auth';
 
-export default function ({ route, store, redirect }) {
+export default function ({ route, redirect, query }) {
     const hasToken = getToken()
     if (!hasToken) {
-        return redirect('/login')
+        query['redirect'] = route.fullPath
+        return redirect('/login', query)
     }
 }

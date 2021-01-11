@@ -41,15 +41,36 @@ export default {
       showPass: false,
     };
   },
+  watch: {
+    $route: {
+      handler: function (route) {
+        const query = route.query;
+        if (query) {
+          this.redirect = query.redirect;
+          this.otherQuery = Object.keys(query).reduce((acc, cur) => {
+            if (cur !== "redirect") {
+              acc[cur] = query[cur];
+            }
+            return acc;
+          }, {});
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
     handleLogin(username, password) {
       this.$store
         .dispatch("modules/user/login", {
           username: username,
           password: password,
-        }).then(()=>{
-          this.$store.dispatch("modules/user/getInfo")
-          this.$router.back()
+        })
+        .then(() => {
+          this.$store.dispatch("modules/user/getInfo");
+          this.$router.push({
+            path: this.redirect || "/",
+            query: this.otherQuery,
+          });
         })
         .catch((err) => {
           this.hasErr = true;
