@@ -11,6 +11,8 @@
 </template>
 
 <style lang="scss" scoped>
+@import '~assets/variables.scss';
+
 .sidebar {
   &__link {
     display: flex;
@@ -19,9 +21,10 @@
     width: 100%;
     padding: 0.5rem 1rem;
     text-decoration: none;
-    color: white;
+    color: $white;
     background: rgba(0,0,0,0);
     transition: all linear .25s;
+    text-transform: capitalize;
     &:hover {
       background: rgba(0,0,0,0.25);
     }
