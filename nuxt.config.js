@@ -33,6 +33,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    './modules/meta-injection'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
@@ -56,6 +57,9 @@ export default {
         }
       }
     }
+  },
+  router: {
+    base: process.env.PANEL_URL || '/',
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
