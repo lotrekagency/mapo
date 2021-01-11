@@ -1,8 +1,8 @@
 import * as babel from '@babel/core'
 import traverse from '@babel/traverse'
 import { readFileSync } from 'fs-extra'
-const { join } = require('path')
-const chokidar = require('chokidar')
+import { join }  from 'path'
+import chokidar from 'chokidar'
 
 function checkRouteChange(file, localRoutes, properties) {
     const routes = localRoutes.filter(route => route.component === file)
