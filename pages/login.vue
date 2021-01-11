@@ -1,35 +1,40 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col>
-      <h2>LOGIN</h2>
-      <v-form @submit.prevent="handleLogin(username, password)">
-        <v-text-field
-          v-model="username"
-          label="Username"
-          required
-          outlined
-          dark
-          filled
-          dense
-        ></v-text-field>
-        <v-text-field
-          v-model="password"
-          label="Password"
-          :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
-          @click:append="showPass = !showPass"
-          required
-          outlined
-          dense
-          dark
-          filled
-          :type="showPass ? 'text' : 'password'"
-        ></v-text-field>
-        <div class="text-center">
-          <v-btn type="submit" rounded dark> Log In </v-btn>
-        </div>
-      </v-form>
-    </v-col>
-  </v-row>
+  <div class="login__wrapper">
+    <div class="login__inner">
+      <h2 class="login__inner__title">Login</h2>
+
+      <div class="login__form__outer">
+        <v-form @submit.prevent="handleLogin(username, password)" class="login__form">
+          <v-text-field
+            class="rounded-0"
+            v-model="username"
+            label="Username"
+            required
+            outlined
+            filled
+            dense
+            light
+          ></v-text-field>
+          <v-text-field
+            class="rounded-0"
+            v-model="password"
+            label="Password"
+            :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+            @click:append="showPass = !showPass"
+            required
+            outlined
+            dense
+            filled
+            light
+            :type="showPass ? 'text' : 'password'"
+          ></v-text-field>
+          <div class="text-center">
+            <v-btn type="submit" class="rounded-0" elevation="0" dark> Log In </v-btn>
+          </div>
+        </v-form>
+      </div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
@@ -81,4 +86,29 @@ export default {
 };
 </script>
 <style lang="scss">
+@import '~assets/variables.scss';
+
+.login {
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $w-1;
+    color: $black;
+    height: 100%;
+  }
+  &__inner {
+    padding: 1rem;
+    width: 300px;
+    &__title {
+      font-size: 2rem;
+      border-bottom: 2px solid $black;
+    }
+  }
+  &__form {
+    &__outer {
+      margin-top: 1rem;
+    }
+  }
+}
 </style>
