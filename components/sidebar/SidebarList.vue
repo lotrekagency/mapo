@@ -6,6 +6,7 @@
       :key="i"
       :link="item.to"
       :title="item.title"
+      :icon="item.icon"
     />
   </div>
 </template>

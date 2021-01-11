@@ -88,7 +88,6 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire'
         }

@@ -4,6 +4,7 @@
       class="sidebar__link"
       :to="link"
     >
+      <v-icon v-if="icon" class="sidebar__link__icon">{{icon}}</v-icon>
       {{ title }}
     </NuxtLink>
   </div>
@@ -12,7 +13,9 @@
 <style lang="scss" scoped>
 .sidebar {
   &__link {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
     padding: 0.5rem 1rem;
     text-decoration: none;
@@ -21,6 +24,9 @@
     transition: all linear .25s;
     &:hover {
       background: rgba(0,0,0,0.25);
+    }
+    &__icon {
+      margin-right: 0.5rem;
     }
   }
 }
@@ -33,8 +39,11 @@ export default {
   },
   props: {
     link: String,
-    title: String
+    title: String,
+    icon: String
   },
-  mounted: function () {},
+  mounted: function () {
+    console.log(this.icon)
+  },
 };
 </script>
