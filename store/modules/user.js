@@ -1,35 +1,31 @@
-import { login, getInfo } from '~/api/user'
+import { login, logout, getInfo } from '~/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 
 const state = () => ({
   token: getToken(),
-  name: '',
-  avatar: '',
-  introduction: '',
-  roles: []
+  username: '',
+  info: {}
 })
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_INTRODUCTION: (state, introduction) => {
-    state.introduction = introduction
+  SET_USERNAME: (state, username) => {
+    state.username = username
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_INFO: (state, info) => {
+    state.info = info
   },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  CLEAN_DATA: (state) => {
+    state.token = getToken()
+    state.username = ''
+    state.info = {}
   },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
-  }
 }
 
 const actions = {
 
-  // user login
   login({ commit }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
@@ -44,39 +40,23 @@ const actions = {
     })
   },
 
-  // user logout
-  logout({ commit, state, dispatch }) {
+  logout({ commit }) {
     return new Promise((resolve, reject) => {
-      commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
-      removeToken()
-      resolve()
-    }).catch(error => {
-      reject(error)
+      logout().then(response => {
+        commit('CLEAN_DATA')
+        removeToken()
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 
-  // get user info
-  getInfo({ commit, state }) {
+  getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const { roles, username, avatar, introduction } = data
-
-        // roles must be a non-empty array
-        // if (!roles || roles.length <= 0) {
-        //   reject('getInfo: roles must be a non-null array!')
-        // }
-
-        commit('SET_ROLES', roles)
-        commit('SET_NAME', username)
-        commit('SET_AVATAR', avatar)
-        commit('SET_INTRODUCTION', introduction)
+        commit('SET_USERNAME', response.username)
+        commit('SET_INFO', response)
         resolve(data)
       }).catch(error => {
         reject(error)

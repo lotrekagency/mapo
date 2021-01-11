@@ -47,7 +47,7 @@ export default {
         .dispatch("modules/user/login", {
           username: username,
           password: password,
-        }).then((a)=>{
+        }).then(()=>{
           this.$store.dispatch("modules/user/getInfo")
           this.$router.back()
         })
