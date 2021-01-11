@@ -5,6 +5,12 @@
   "LazyLogo": {
     "description": "Auto imported from components/Logo.vue"
   },
+  "LogoutButton": {
+    "description": "Auto imported from components/LogoutButton.vue"
+  },
+  "LazyLogoutButton": {
+    "description": "Auto imported from components/LogoutButton.vue"
+  },
   "VuetifyLogo": {
     "description": "Auto imported from components/VuetifyLogo.vue"
   },
