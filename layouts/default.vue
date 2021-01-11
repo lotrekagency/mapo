@@ -9,7 +9,7 @@
     >
       <div class="sidebar__core">
 
-        <SidebarList :listItems="items" />
+        <SidebarList />
 
         <SidebarFooter />
 

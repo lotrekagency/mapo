@@ -2,11 +2,10 @@
   <div class="sidebar__list">
     <SidebarListItem
       class="sidebar__list__item"
-      v-for="(item, i) in listItems"
+      v-for="(item, i) in routerList"
       :key="i"
-      :link="item.to"
-      :title="item.title"
-      :icon="item.icon"
+      :link="item.path"
+      :title="item.name"
     />
   </div>
 </template>
@@ -23,11 +22,19 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      routerList: this.routerList
+    };
   },
   props: {
-    listItems: Array,
   },
-  mounted: function () {},
+  mounted: function () {
+    
+    this.routerList = []
+    this.$router.options.routes.forEach(element => {
+      this.routerList.push(element)
+    });
+    
+  },
 };
 </script>

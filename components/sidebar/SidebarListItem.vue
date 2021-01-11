@@ -43,7 +43,6 @@ export default {
     icon: String
   },
   mounted: function () {
-    console.log(this.icon)
   },
 };
 </script>
