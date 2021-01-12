@@ -17,12 +17,6 @@
   "LazyVuetifyLogo": {
     "description": "Auto imported from components/VuetifyLogo.vue"
   },
-  "Topbar": {
-    "description": "Auto imported from components/topbar/Topbar.vue"
-  },
-  "LazyTopbar": {
-    "description": "Auto imported from components/topbar/Topbar.vue"
-  },
   "SidebarFooter": {
     "description": "Auto imported from components/sidebar/SidebarFooter.vue"
   },
@@ -40,5 +34,11 @@
   },
   "LazySidebarListItem": {
     "description": "Auto imported from components/sidebar/SidebarListItem.vue"
+  },
+  "Topbar": {
+    "description": "Auto imported from components/topbar/Topbar.vue"
+  },
+  "LazyTopbar": {
+    "description": "Auto imported from components/topbar/Topbar.vue"
   }
 }
