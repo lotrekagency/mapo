@@ -6,5 +6,30 @@ export default {
       // here put ssr auth
     }
   },
-  getters: getters
+  getters: getters,
+  state: {
+    sidebar: {
+      clipped: false,
+      drawer: false
+    }
+  },
+  mutations: {
+    drawerReverse (state) {
+      state.sidebar.drawer = !state.sidebar.drawer;
+    },
+    clippedReverse (state) {
+      state.sidebar.clipped = !state.sidebar.clipped;
+    }
+  }
 }
+
+/*
+state: {
+  count: 0
+},
+mutations: {
+  increment (state) {
+    state.count++
+  }
+}
+*/

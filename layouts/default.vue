@@ -1,45 +1,18 @@
 <template>
   <v-app class="app__wrapper">
     <v-navigation-drawer
-      v-model="drawer"
+      v-model="drawerSetter"
       :mini-variant="miniVariant"
-      :clipped="clipped"
+      :clipped="this.$store.state.sidebar.clipped"
       fixed
       app
     >
       <div class="sidebar__core">
-
         <SidebarList />
-
         <SidebarFooter />
-
       </div>
-
     </v-navigation-drawer>
-    <v-app-bar
-      :clipped-left="clipped"
-      fixed
-      app
-      flat
-      dense
-      class="topbar__wrapper"
-    >
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
-
-      <div class="topbar__user">
-        <span class="topbar__user__name">
-          Ciao, Utente
-        </span>
-        <v-btn
-          class="topbar__user__btn"
-          icon
-        >
-          <v-icon>mdi-account</v-icon>
-        </v-btn>
-      </div>
-    </v-app-bar>
+    <Topbar :title="title" :drawer="drawer" />
     <v-main>
       <v-container>
         <nuxt />
@@ -60,19 +33,6 @@
     color: $white;
   }
 }
-.topbar {
-  &__wrapper {
-    background: $black!important;
-    color: $white;
-  }
-  &__user {
-    display: flex;
-    align-items: center;
-    &__name {
-      margin-right: 0.5rem;
-    }
-  }
-}
 .app {
   &__wrapper {
     background: $w-1;
@@ -81,9 +41,12 @@
 </style>
 
 <script>
+import { mapMutations } from 'vuex'
+import Topbar from '~/components/topbar/Topbar.vue'
 import LogoutButton from '../components/LogoutButton.vue'
+
 export default {
-  components: { LogoutButton, },
+  components: { LogoutButton, Topbar, },
   data () {
     return {
       clipped: true,
@@ -105,6 +68,24 @@ export default {
       rightDrawer: false,
       title: 'Camomilla'
     }
+  },
+  computed: {
+    drawerSetter: {
+      get() {
+        return this.$store.state.sidebar.drawer;
+      },
+      set() {
+        return this.$store.state.sidebar.drawer;
+      }
+    }
+  },
+  methods: {
+    drawerReverse () {
+      return this.drawer = !this.drawer
+    },
+  },
+  mounted: function () {
+    
   }
 }
 </script>

@@ -34,5 +34,11 @@
   },
   "LazySidebarListItem": {
     "description": "Auto imported from components/sidebar/SidebarListItem.vue"
+  },
+  "Topbar": {
+    "description": "Auto imported from components/topbar/Topbar.vue"
+  },
+  "LazyTopbar": {
+    "description": "Auto imported from components/topbar/Topbar.vue"
   }
 }
