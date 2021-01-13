@@ -2,12 +2,21 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
       <SimpleTable
-        :firstCol="table.firstColumn"
-        :secondCol="table.secondColumn"
-        :itemsList="table.items"
+        :headers="simpleTable.headers"
+        :itemsList="simpleTable.items"
       />
 
-      <v-btn color="primary" nuxt to="/inspire" style="margin-top:1rem"> Continue to inspire page </v-btn>
+      <hr />
+
+      <v-btn
+        class="elevation-0 rounded-0"
+        color="primary"
+        nuxt
+        to="/inspire"
+        style="margin-top: 1rem"
+      >
+        Continue to inspire page
+      </v-btn>
     </v-col>
   </v-row>
 </template>
@@ -23,9 +32,15 @@ export default {
   },
   data() {
     return {
-      table: {
-        firstColumn: "First",
-        secondColumn: "Second",
+      simpleTable: {
+        headers: [
+          {
+            text: 'First column'
+          },
+          {
+            text: 'Second column'
+          }
+        ],
         items: [
           {
             name: "Frozen Yogurt",
