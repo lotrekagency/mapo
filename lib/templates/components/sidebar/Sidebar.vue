@@ -41,8 +41,10 @@ export default {
       get() {
         return this.$store.state.bossa.sidebar.drawer;
       },
-      set() {
-        return this.$store.state.bossa.sidebar.drawer;
+      set(value) {
+        if (this.$store.state.bossa.sidebar.drawer !== value)
+          this.$store.dispatch("toggleSidebarDrawer");
+        return value;
       }
     }
   },
