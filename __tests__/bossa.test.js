@@ -1,6 +1,6 @@
 'use strict';
 
-const BossaModule = require('../src/module');
+const BossaModule = require('../lib/module');
 
 describe('bossa-module', () => {
     it('needs tests');

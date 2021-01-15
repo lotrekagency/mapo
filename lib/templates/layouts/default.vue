@@ -1,7 +1,7 @@
 <template>
   <v-app class="app__wrapper">
     <Sidebar />    
-    <Topbar :title="title" :drawer="this.$store.state.sidebar.drawer" />
+    <Topbar :title="title" :drawer="this.$store.state.bossa.sidebar.drawer" />
     <v-main>
       <v-container>
         <nuxt />
@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~assets/variables.scss';
+@import '~bossamodule/assets/variables.scss';
 
 .app {
   &__wrapper {
@@ -21,7 +21,6 @@
 </style>
 
 <script>
-import { mapMutations } from 'vuex'
 
 export default {
   data () {

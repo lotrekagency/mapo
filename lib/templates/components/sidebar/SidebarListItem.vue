@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~assets/variables.scss';
+@import '~bossamodule/assets/variables.scss';
 
 .sidebar {
   &__link {

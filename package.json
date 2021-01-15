@@ -5,31 +5,25 @@
   "keywords": [],
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
   "license": "ISC",
-  "main": "src/module.js",
+  "main": "lib/module.js",
   "directories": {
-    "lib": "src",
+    "lib": "lib",
     "test": "__tests__"
   },
   "files": [
-    "src"
+    "lib"
   ],
   "publishConfig": {
     "registry": "http://registry.npmjs.org"
   },
   "scripts": {
-    "dev": "nuxt src",
-    "build": "nuxt build src",
-    "start": "nuxt start src",
-    "generate": "nuxt generate src",
-    "test": "echo \"No test defined\""
+    "dev": "nuxt example"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.12.5",
-    "core-js": "^3.6.5",
     "js-cookie": "^2.2.1",
-    "nuxt": "^2.14.6"
-  },
-  "devDependencies": {
-    "@nuxtjs/vuetify": "^1.11.2"
+    "nuxt": "^2.14.6",
+    "@nuxtjs/vuetify": "^1.11.2",
+    "lodash.mergewith": "^4.6.1"
   }
 }

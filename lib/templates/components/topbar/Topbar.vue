@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    :clipped-left="this.$store.state.sidebar.clipped"
+    :clipped-left="this.$store.state.bossa.sidebar.clipped"
     fixed
     app
     flat
@@ -26,7 +26,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~assets/variables.scss';
+@import '~bossamodule/assets/variables.scss';
 
 .topbar {
   &__wrapper {
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     drawerReverse () {
-      return this.$store.commit('drawerReverse')
+      this.$store.dispatch("toggleSidebarDrawer");
     },
   },
   mounted: function () {

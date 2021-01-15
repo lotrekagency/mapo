@@ -1,0 +1,16 @@
+{
+  "name": "example",
+  "version": "0.0.0",
+  "description": "Example project using bossamodule",
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "test": "echo \"No test defined\""
+  },
+  "dependencies": {
+    "nuxt": "^2.14.12",
+    "bossamodule": "link:../"
+  }
+}

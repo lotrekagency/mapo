@@ -20,6 +20,8 @@
 </template>
 
 <style lang="scss" scoped>
+@import '~bossamodule/assets/variables.scss';
+
 .sidebar {
   &__ender {
     margin-top: auto;

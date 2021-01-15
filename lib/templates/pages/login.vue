@@ -66,12 +66,12 @@ export default {
   methods: {
     handleLogin(username, password) {
       this.$store
-        .dispatch("modules/user/login", {
+        .dispatch("login", {
           username: username,
           password: password,
         })
         .then(() => {
-          this.$store.dispatch("modules/user/getInfo");
+          this.$store.dispatch("getInfo");
           this.$router.push({
             path: this.redirect || "/",
             query: this.otherQuery,
@@ -86,7 +86,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import '~assets/variables.scss';
+@import '~bossamodule/assets/variables.scss';
 
 .login {
   &__wrapper {

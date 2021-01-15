@@ -1247,9 +1247,9 @@
   integrity sha512-3c+yGKvVP5Y9TYBEibGNR+kLtijnj7mYrXRg+WpFb2X9xm04g/DXYkfg4hmzJQosc9snFNUPkbYIhu+KAm6jJw==
 
 "@types/node@*":
-  version "14.14.20"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.20.tgz#f7974863edd21d1f8a494a73e8e2b3658615c340"
-  integrity sha512-Y93R97Ouif9JEOWPIUyU+eyIdyRqQR0I8Ez1dzku4hDx34NWh4HbtIc3WNzwB1Y9ULvNGeu5B8h8bVL5cAk4/A==
+  version "14.14.21"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.21.tgz#d934aacc22424fe9622ebf6857370c052eae464e"
+  integrity sha512-cHYfKsnwllYhjOzuC5q1VpguABBeecUp24yFluHpn/BQaVxB1CuQ1FSRZCzrPxrkIfWISXV2LbeoBthLWg0+0A==
 
 "@types/q@^1.5.1":
   version "1.5.4"
@@ -1900,6 +1900,10 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
 
+"bossamodule@link:..":
+  version "0.0.0"
+  uid ""
+
 boxen@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/boxen/-/boxen-4.2.0.tgz#e411b62357d6d6d36587c8ac3d5d974daa070e64"
@@ -2200,9 +2204,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001164, caniuse-lite@^1.0.30001173:
-  version "1.0.30001176"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001176.tgz#e44bac506d4656bae4944a1417f41597bd307335"
-  integrity sha512-VWdkYmqdkDLRe0lvfJlZQ43rnjKqIGKHWhWWRbkqMsJIUaYDNf/K/sdZZcVO6YKQklubokdkJY+ujArsuJ5cag==
+  version "1.0.30001177"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001177.tgz#2c3b384933aafda03e29ccca7bb3d8c3389e1ece"
+  integrity sha512-6Ld7t3ifCL02jTj3MxPMM5wAYjbo4h/TAQGFTgv1inihP1tWnWp8mxxT4ut4JBEHLbpFXEXJJQ119JCJTBkYDw==
 
 chalk@^1.1.3:
   version "1.1.3"
@@ -2574,11 +2578,6 @@ core-js@^2.6.5:
   version "2.6.12"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
   integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
-
-core-js@^3.6.5:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.8.2.tgz#0a1fd6709246da9ca8eff5bb0cbd15fba9ac7044"
-  integrity sha512-FfApuSRgrR6G5s58casCBd9M2k+4ikuu4wbW6pJyYU7bd9zvFc9qf7vr5xmrZOhT9nn+8uwlH1oRR9jTnFoA3A==
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -3067,9 +3066,9 @@ ejs@^2.6.1:
   integrity sha512-7vmuyh5+kuUyJKePhQfRQBhXV5Ce+RnaeeQArKu1EAMpL3WbgMt5WG6uQZpEVvYSSsxMXRKOewtDk9RaTKXRlA==
 
 electron-to-chromium@^1.3.634:
-  version "1.3.637"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.637.tgz#be46f77acc217cdecf633bbd25292f6a36cc689b"
-  integrity sha512-924WXYMYquYybc+7pNApGlhY2RWg3MY3he4BrZ5BUmM2n1MGBsrS+PZxrlo6UAsWuNl4NE66fqFdwsWkBUGgkA==
+  version "1.3.640"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.640.tgz#94e68c0ae79181a1d6fd1ed9a42b9790d51a1bca"
+  integrity sha512-cU6wQdXYzuSPzLdszsa4whStYfmU7CVNnG6c5z6/z9YlCOQ2Xh/uKB1gTxlIRr0ubgSg1/dZuSbUAoeESeQ3sQ==
 
 elliptic@^6.5.3:
   version "6.5.3"
@@ -4418,9 +4417,9 @@ jiti@^0.1.17:
   integrity sha512-nlsuibooCG5yEjmGSVqxhjULy3rO1Gl0LDP+HpUMbzOSLcz5s1Gf5cPnjvHiei0JCG3SXX761HQArDzNIfdz4Q==
 
 jiti@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.1.0.tgz#01b2d1b9ea01e80adcbafb08a7027d4681c6b270"
-  integrity sha512-bNQ+heLBltC/62UQnFY3qYSHx8bJ1+gwEk4j/c9KAM/S1xzS/hzakuZPQztkzU69imuTVrihJRzg6utaqd7pUA==
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.2.0.tgz#15187ac6c49fb5ee4e04700bc05c1d5caed58546"
+  integrity sha512-9YR5zusNf4qmOZAIMqja5pTeuojl5mG2sE4IGogwBoxyclX+Wm2yBZDo2nvuwkUOzUg/nmXwiI2Hz7d/d1UCyw==
 
 js-cookie@^2.2.1:
   version "2.2.1"
@@ -5091,7 +5090,7 @@ num2fraction@^1.2.2:
   resolved "https://registry.yarnpkg.com/num2fraction/-/num2fraction-1.2.2.tgz#6f682b6a027a4e9ddfa4564cd2589d1d4e669ede"
   integrity sha1-b2gragJ6Tp3fpFZM0lidHU5mnt4=
 
-nuxt@^2.14.6:
+nuxt@^2.14.12, nuxt@^2.14.6:
   version "2.14.12"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-2.14.12.tgz#836096ff62ba72554b73744d94f5547109e563f7"
   integrity sha512-tfGz7s0ahL6mCGzzVEWpHgv+/hekNXgY1fX0SBB0dvJKjVHKAdoMxaoHBYhoCYdNL2GNiNQncHRipxiEtuCtOQ==
@@ -6236,9 +6235,9 @@ qs@6.7.0:
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
 qs@^6.9.4:
-  version "6.9.4"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.4.tgz#9090b290d1f91728d3c22e54843ca44aea5ab687"
-  integrity sha512-A1kFqHekCTM7cz0udomYUoYNWjBebHm/5wzU/XqrBRBNWectVH0QIiN+NEcZ0Dte5hvzHwbr8+XQmguPhJ6WdQ==
+  version "6.9.6"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.9.6.tgz#26ed3c8243a431b2924aca84cc90471f35d5a0ee"
+  integrity sha512-TIRk4aqYLNoJUbd+g2lEdz5kLWIuTMRagAXxl78Q0RiVjAOugHmeKNGdd3cwo/ktpf9aL9epCfFqWDEKysUlLQ==
 
 query-string@^4.1.0:
   version "4.3.4"

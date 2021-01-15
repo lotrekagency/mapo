@@ -2,7 +2,7 @@
   <v-navigation-drawer
     v-model="drawerSetter"
     :mini-variant="miniVariant"
-    :clipped="this.$store.state.sidebar.clipped"
+    :clipped="this.$store.clipped"
     fixed
     app
   >
@@ -14,7 +14,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~assets/variables.scss';
+@import '~bossamodule/assets/variables.scss';
 
 .sidebar {
   &__core {
@@ -39,10 +39,10 @@ export default {
   computed: {
     drawerSetter: {
       get() {
-        return this.$store.state.sidebar.drawer;
+        return this.$store.state.bossa.sidebar.drawer;
       },
       set() {
-        return this.$store.state.sidebar.drawer;
+        return this.$store.state.bossa.sidebar.drawer;
       }
     }
   },
