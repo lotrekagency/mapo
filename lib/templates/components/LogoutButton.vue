@@ -9,7 +9,7 @@
 export default {
   methods: {
     async logout() {
-      await this.$store.dispatch("logout");
+      await this.$store.dispatch("bossa/logout");
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     },
   },

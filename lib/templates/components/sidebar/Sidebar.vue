@@ -43,7 +43,7 @@ export default {
       },
       set(value) {
         if (this.$store.state.bossa.sidebar.drawer !== value)
-          this.$store.dispatch("toggleSidebarDrawer");
+          this.$store.dispatch("bossa/toggleSidebarDrawer");
         return value;
       }
     }

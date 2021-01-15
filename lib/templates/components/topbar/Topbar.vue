@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     drawerReverse () {
-      this.$store.dispatch("toggleSidebarDrawer");
+      this.$store.dispatch("bossa/toggleSidebarDrawer");
     },
   },
   mounted: function () {
