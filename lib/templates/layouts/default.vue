@@ -1,7 +1,7 @@
 <template>
   <v-app class="app__wrapper">
     <Sidebar />    
-    <Topbar :title="title" :drawer="this.$store.state.bossa.sidebar.drawer" />
+    <Topbar :title="title" :drawer="this.$store.getters['bossa/app/drawer']" />
     <v-main>
       <v-container>
         <nuxt />
