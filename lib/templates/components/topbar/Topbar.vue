@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    :clipped-left="this.$store.state.bossa.sidebar.clipped"
+    :clipped-left="this.$store.getters['bossa/app/clipped']"
     fixed
     app
     flat
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     drawerReverse () {
-      this.$store.dispatch("bossa/toggleSidebarDrawer");
+      this.$store.dispatch("bossa/app/toggleSidebarDrawer");
     },
   },
   mounted: function () {

@@ -2,7 +2,7 @@
   <v-navigation-drawer
     v-model="drawerSetter"
     :mini-variant="miniVariant"
-    :clipped="this.$store.clipped"
+    :clipped="this.$store.getters['bossa/app/clipped']"
     fixed
     app
   >
@@ -39,11 +39,11 @@ export default {
   computed: {
     drawerSetter: {
       get() {
-        return this.$store.state.bossa.sidebar.drawer;
+        return this.$store.getters['bossa/app/drawer'];
       },
       set(value) {
-        if (this.$store.state.bossa.sidebar.drawer !== value)
-          this.$store.dispatch("bossa/toggleSidebarDrawer");
+        if (this.$store.getters['bossa/app/drawer'] !== value)
+          this.$store.dispatch("bossa/app/toggleSidebarDrawer");
         return value;
       }
     }
