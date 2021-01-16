@@ -66,12 +66,12 @@ export default {
   methods: {
     handleLogin(username, password) {
       this.$store
-        .dispatch("bossa/login", {
+        .dispatch("bossa/user/login", {
           username: username,
           password: password,
         })
         .then(() => {
-          this.$store.dispatch("bossa/getInfo");
+          this.$store.dispatch("bossa/user/getInfo");
           this.$router.push({
             path: this.redirect || "/",
             query: this.otherQuery,
