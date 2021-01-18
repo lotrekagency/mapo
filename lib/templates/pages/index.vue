@@ -1,24 +1,28 @@
 <template>
-  <v-row justify="center" align="center">
-    <v-col cols="12" sm="8" md="6">
-      <SimpleTable
-        :headers="simpleTable.headers"
-        :itemsList="simpleTable.items"
-      />
+  <div>
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="6">
+        <SimpleTable
+          :headers="simpleTable.headers"
+          :itemsList="simpleTable.items"
+        />
 
-      <hr />
+        <hr />
 
-      <v-btn
-        class="elevation-0 rounded-0"
-        color="primary"
-        nuxt
-        to="/inspire"
-        style="margin-top: 1rem"
-      >
-        Continue to inspire page
-      </v-btn>
-    </v-col>
-  </v-row>
+        <v-btn
+          class="elevation-0 rounded-0"
+          color="primary"
+          nuxt
+          to="/inspire"
+          style="margin-top: 1rem"
+        >
+          Continue to inspire page
+        </v-btn>
+      </v-col>
+    </v-row>
+    <hr>
+    <List :pageTitle='pageTitle' />
+  </div>
 </template>
 
 <script>
@@ -32,6 +36,7 @@ export default {
   },
   data() {
     return {
+      pageTitle: 'Homepage',
       simpleTable: {
         headers: [
           {
