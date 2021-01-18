@@ -21,9 +21,6 @@
 
 <script>
 export default {
-  data() {
-    return {};
-  },
   props: {
     headers: Array,
     itemsList: Array,
