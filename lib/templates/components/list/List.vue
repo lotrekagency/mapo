@@ -1,10 +1,10 @@
 <template>
   <div class="list__outer">
-    <ListHead />
+    <ListHead :title="pageTitle" />
     <ListTabs :tabActive='tabActiveStatus' />
 
     <div class="list__pretabs">
-      <ListActions />
+      <ListActions :actionStatus='actionStatus' :filterStatus='filterStatus' />
       <div class="list__counter">
         6 elementi
       </div>
@@ -39,21 +39,25 @@
 </style>
 
 <script>
-
+// •  tabActiveStatus sta ad evidenziare quale dei 3 tab è attivo
+//    1 corrisponde a Tutto, 2 a Pubblicato, 3 a Cestinato
+//
+// •  actionStatus & filterStatus sono gli switcher per
+//    abilitare o disabilitare le azioni di gruppo e i filtri
+//    presenti nel componente ListActions
+//
+// •  pageTitle mi identifica il titolo della pagina dove sarà 
+//    utilizzato il componente List
 export default {
   data() {
     return {
-      tabActiveStatus: 1
+      tabActiveStatus: 1,
+      actionStatus: true,
+      filterStatus: true
     };
   },
   props: {
-
-  },
-  methods: {
-    
-  },
-  mounted: function () {
-    
-  },
+    pageTitle: String
+  }
 };
 </script>

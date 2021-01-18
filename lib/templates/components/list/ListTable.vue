@@ -13,7 +13,7 @@
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn color="primary elevation-0 rounded-0" dark class="mb-2" v-bind="attrs" v-on="on">
+            <v-btn id="tableAddItem" color="primary elevation-0 rounded-0" dark class="mb-2" v-bind="attrs" v-on="on">
               New Item
             </v-btn>
           </template>

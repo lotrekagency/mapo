@@ -50,7 +50,6 @@ export default {
   props: {
     tabActive: Number
   },
-  methods: {},
   mounted: function () {
     document.querySelectorAll('.list__tabs__item').forEach(element => {
       element.addEventListener('click', () => {

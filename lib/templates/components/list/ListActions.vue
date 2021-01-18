@@ -1,12 +1,12 @@
 <template>
   <div class="list__actions">
-    <div class="list__actions__group">
+    <div v-if="actionStatus" class="list__actions__group">
       <v-select label="Azioni di gruppo" outlined dense hide-details light></v-select>
       <v-btn class="rounded-0 elevation-0" outlined color="primary"
         >Applica</v-btn
       >
     </div>
-    <div class="list__actions__group">
+    <div v-if="filterStatus" class="list__actions__group">
       <v-select label="Tutte le date" outlined dense hide-details light></v-select>
       <v-select label="Altri filtri" outlined dense hide-details light></v-select>
       <v-btn class="rounded-0 elevation-0" outlined color="primary"
@@ -45,8 +45,9 @@ export default {
   data() {
     return {};
   },
-  props: {},
-  methods: {},
-  mounted: function () {},
+  props: {
+    actionStatus: Boolean,
+    filterStatus: Boolean
+  }
 };
 </script>

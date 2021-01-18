@@ -21,7 +21,7 @@
       </v-col>
     </v-row>
     <hr>
-    <List />
+    <List :pageTitle='pageTitle' />
   </div>
 </template>
 
@@ -36,6 +36,7 @@ export default {
   },
   data() {
     return {
+      pageTitle: 'Homepage',
       simpleTable: {
         headers: [
           {
