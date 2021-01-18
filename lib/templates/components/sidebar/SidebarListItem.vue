@@ -45,7 +45,5 @@ export default {
     title: String,
     icon: String
   },
-  mounted: function () {
-  },
 };
 </script>

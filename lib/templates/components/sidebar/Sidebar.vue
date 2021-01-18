@@ -52,9 +52,6 @@ export default {
     drawerReverse () {
       return this.drawer = !this.drawer
     },
-  },
-  mounted: function () {
-    
   }
 }
 </script>

@@ -47,22 +47,13 @@
 import { mapMutations } from 'vuex'
 
 export default {
-  data() {
-    return {
-      drawer: true
-    };
-  },
   props: {
-    title: String,
-    clipped: Boolean
+    title: String
   },
   methods: {
     drawerReverse () {
       this.$store.dispatch("bossa/app/toggleSidebarDrawer");
     },
-  },
-  mounted: function () {
-    
   },
 };
 </script>

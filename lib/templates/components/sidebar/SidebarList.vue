@@ -26,15 +26,11 @@ export default {
       routerList: this.routerList
     };
   },
-  props: {
-  },
   mounted: function () {
-    
     this.routerList = []
     this.$router.options.routes.forEach(element => {
       this.routerList.push(element)
     });
-    
   },
 };
 </script>
