@@ -1,7 +1,7 @@
 <template>
   <div class="list__outer">
     <ListHead />
-    <ListTabs />
+    <ListTabs :tabActive='tabActiveStatus' />
 
     <div class="list__pretabs">
       <ListActions />
@@ -43,7 +43,7 @@
 export default {
   data() {
     return {
-      
+      tabActiveStatus: 1
     };
   },
   props: {

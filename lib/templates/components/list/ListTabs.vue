@@ -1,8 +1,8 @@
 <template>
   <div class="list__tabs">
-    <div class="list__tabs__item active">Tutto (6)</div>
-    <div class="list__tabs__item">Pubblicato (12)</div>
-    <div class="list__tabs__item">Cestinato (2)</div>
+    <div class="list__tabs__item" v-bind:class="{ active: tabActive==1 }">Tutto (6)</div>
+    <div class="list__tabs__item" v-bind:class="{ active: tabActive==2 }">Pubblicato (12)</div>
+    <div class="list__tabs__item" v-bind:class="{ active: tabActive==3 }">Cestinato (2)</div>
   </div>
 </template>
 
@@ -16,7 +16,6 @@
     align-items: center;
     margin-bottom: 1rem;
     &__item {
-      transition: all linear .25s;
       font-weight: 400;
       margin-right: 1rem;
       position: relative;
@@ -48,8 +47,19 @@ export default {
   data() {
     return {};
   },
-  props: {},
+  props: {
+    tabActive: Number
+  },
   methods: {},
-  mounted: function () {},
+  mounted: function () {
+    document.querySelectorAll('.list__tabs__item').forEach(element => {
+      element.addEventListener('click', () => {
+        if(!element.classList.contains('active')) {
+          document.querySelector('.list__tabs__item.active').classList.remove('active')
+          element.classList.add('active')
+        }
+      })
+    });
+  },
 };
 </script>
