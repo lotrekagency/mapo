@@ -65,18 +65,14 @@ export default {
   },
   methods: {
     handleLogin(username, password) {
-      this.$store
-        .dispatch("bossa/user/login", {
-          username: username,
-          password: password,
-        })
-        .then(() => {
-          this.$store.dispatch("bossa/user/getInfo");
+      this.$bossa.$auth
+        .login({ username, password })
+        .then(() =>
           this.$router.push({
             path: this.redirect || "/",
             query: this.otherQuery,
-          });
-        })
+          })
+        )
         .catch((err) => {
           this.hasErr = true;
           this.errMsg = err.message;
