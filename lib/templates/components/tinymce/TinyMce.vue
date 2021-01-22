@@ -48,6 +48,8 @@ export default {
       this.emitContent(editor);
       editor.on("keyup", () => this.emitContent(editor));
       editor.on("SetContent", () => this.emitContent(editor));
+      editor.on("ExecCommand", () => this.emitContent(editor));
+      editor.on("ObjectResized", () => this.emitContent(editor));
     },
     emitContent(editor) {
       this.editorContent = editor.getContent();
