@@ -20,7 +20,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~bossamodule/assets/variables.scss';
+@import '~mapomodule/assets/variables.scss';
 
 .sidebar {
   &__ender {

@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    :clipped-left="this.$store.getters['bossa/app/clipped']"
+    :clipped-left="this.$store.getters['mapo/app/clipped']"
     fixed
     app
     flat
@@ -26,7 +26,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~bossamodule/assets/variables.scss';
+@import '~mapomodule/assets/variables.scss';
 
 .topbar {
   &__wrapper {
@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     drawerReverse () {
-      this.$store.dispatch("bossa/app/toggleSidebarDrawer");
+      this.$store.dispatch("mapo/app/toggleSidebarDrawer");
     },
   },
 };

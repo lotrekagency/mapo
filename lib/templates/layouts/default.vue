@@ -1,7 +1,7 @@
 <template>
   <v-app class="app__wrapper">
     <Sidebar />    
-    <Topbar :title="title" :drawer="this.$store.getters['bossa/app/drawer']" />
+    <Topbar :title="title" :drawer="this.$store.getters['mapo/app/drawer']" />
     <v-main>
       <v-container>
         <nuxt />
@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~bossamodule/assets/variables.scss';
+@import '~mapomodule/assets/variables.scss';
 
 .app {
   &__wrapper {

@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import Logo from "~bossamodule/components/Logo.vue";
-import VuetifyLogo from "~bossamodule/components/VuetifyLogo.vue";
+import Logo from "~mapomodule/components/Logo.vue";
+import VuetifyLogo from "~mapomodule/components/VuetifyLogo.vue";
 
 export default {
   components: {

@@ -40,10 +40,10 @@ of the project.
 
 
 ### URLs and accessing resources
-We are using an alias (bossanova) to access resources and files.
+We are using an alias (mapo) to access resources and files.
 Here's an example featuring a SCSS import in a component file:
 
-`@import "~bossamodule/assets/custom-style.scss";`
+`@import "~mapomodule/assets/custom-style.scss";`
 
 
 ## External resources

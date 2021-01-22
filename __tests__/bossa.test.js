@@ -1,7 +1,7 @@
 'use strict';
 
-const BossaModule = require('../lib/module');
+const MapoModule = require('../lib/module');
 
-describe('bossa-module', () => {
+describe('mapo-module', () => {
     it('needs tests');
 });

@@ -19,7 +19,7 @@ export default {
   meta: { permissions: { model: "user" } },
   middleware: ["auth", "permissions"],
   mounted: function () {
-    console.log(this.$bossa.$auth.user);
+    console.log(this.$mapo.$auth.user);
   },
 };
 </script>

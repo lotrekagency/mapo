@@ -2,7 +2,7 @@
   <v-navigation-drawer
     v-model="drawerSetter"
     :mini-variant="miniVariant"
-    :clipped="this.$store.getters['bossa/app/clipped']"
+    :clipped="this.$store.getters['mapo/app/clipped']"
     fixed
     app
   >
@@ -14,7 +14,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import '~bossamodule/assets/variables.scss';
+@import '~mapomodule/assets/variables.scss';
 
 .sidebar {
   &__core {
@@ -39,11 +39,11 @@ export default {
   computed: {
     drawerSetter: {
       get() {
-        return this.$store.getters['bossa/app/drawer'];
+        return this.$store.getters['mapo/app/drawer'];
       },
       set(value) {
-        if (this.$store.getters['bossa/app/drawer'] !== value)
-          this.$store.dispatch("bossa/app/toggleSidebarDrawer");
+        if (this.$store.getters['mapo/app/drawer'] !== value)
+          this.$store.dispatch("mapo/app/toggleSidebarDrawer");
         return value;
       }
     }

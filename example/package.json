@@ -1,7 +1,7 @@
 {
   "name": "example",
   "version": "0.0.0",
-  "description": "Example project using bossamodule",
+  "description": "Example project using mapomodule",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -11,6 +11,6 @@
   },
   "dependencies": {
     "nuxt": "^2.14.12",
-    "bossamodule": "link:../"
+    "mapomodule": "link:../"
   }
 }

@@ -1,6 +1,6 @@
 
 export default {
   buildModules: [
-    'bossamodule'
+    'mapomodule'
   ]
 }

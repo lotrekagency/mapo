@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     handleLogin(username, password) {
-      this.$bossa.$auth
+      this.$mapo.$auth
         .login({ username, password })
         .then(() =>
           this.$router.push({
@@ -82,7 +82,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import '~bossamodule/assets/variables.scss';
+@import '~mapomodule/assets/variables.scss';
 
 .login {
   &__wrapper {

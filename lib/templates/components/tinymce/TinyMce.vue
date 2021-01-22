@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import initBossaMedia from "~bossamodule/components/tinymce/utils/bossamedia.plugin.js";
-import uuid from "~bossamodule/components/tinymce/utils/uuid.js";
-import injectScript from "~bossamodule/components/tinymce/utils/script.injector.js";
-import { toolbarconfig } from "~bossamodule/components/tinymce/defaults.js";
+import initMapoMedia from "~mapomodule/components/tinymce/utils/mapomedia.plugin.js";
+import uuid from "~mapomodule/components/tinymce/utils/uuid.js";
+import injectScript from "~mapomodule/components/tinymce/utils/script.injector.js";
+import { toolbarconfig } from "~mapomodule/components/tinymce/defaults.js";
 
 export default {
   props: ["value"],
@@ -35,10 +35,10 @@ export default {
   methods: {
     initEditor() {
       this.$refs.editorNode.innerHTML = this.value;
-      initBossaMedia(() => this.insertImgCallback());
+      initMapoMedia(() => this.insertImgCallback());
       window.tinymce.init({
         selector: `#${this.id}`,
-        plugins: "bossamedia",
+        plugins: "mapomedia",
         toolbar: toolbarconfig,
         init_instance_callback: this.initCallback,
       });
@@ -59,7 +59,7 @@ export default {
 
       // =====THIS IS THE HOOK TO INSERT THE MEDIA MANAGER LOGIC======= //
 
-      // this function is called when the user clicks the bossa media button.
+      // this function is called when the user clicks the mapo media button.
       // this function is async and returns a promise that resolves in an <img> html tag or rejects.
       // when the promise resolves the result is pushed at cursor position inside tinymce
       // when the promise rejects nothing happens :)
