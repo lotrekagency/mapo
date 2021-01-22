@@ -1,5 +1,5 @@
 <template>
-  <textarea ref="tn" :id="id"></textarea>
+  <textarea ref="editorNode" :id="id"></textarea>
 </template>
 
 <script>
@@ -20,8 +20,11 @@ export default {
   },
 
   computed: {
-    editor() {
-      return this._editor;
+    editor: {
+      cache: false,
+      get() {
+        return this._editor;
+      },
     },
   },
 
@@ -31,7 +34,7 @@ export default {
 
   methods: {
     initEditor() {
-      this.$refs.tn.innerHTML = this.value;
+      this.$refs.editorNode.innerHTML = this.value;
       initBossaMedia(() => this.insertImgCallback());
       window.tinymce.init({
         selector: `#${this.id}`,
@@ -42,12 +45,13 @@ export default {
     },
     initCallback(editor) {
       this._editor = editor;
+      this.emitContent(editor);
+      editor.on("keyup", () => this.emitContent(editor));
+      editor.on("SetContent", () => this.emitContent(editor));
+    },
+    emitContent(editor) {
       this.editorContent = editor.getContent();
       this.$emit("input", this.editorContent);
-      editor.on("Change", () => {
-        this.editorContent = editor.getContent();
-        this.$emit("input", this.editorContent);
-      });
     },
     insertImgCallback() {
       var src = prompt(
