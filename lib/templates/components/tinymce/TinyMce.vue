@@ -55,12 +55,22 @@ export default {
       this.editorContent = editor.getContent();
       this.$emit("input", this.editorContent);
     },
-    insertImgCallback() {
-      var src = prompt(
-        "Please insert image src",
-        "https://i.kym-cdn.com/profiles/icons/big/000/279/747/2e4.jpg"
-      );
-      return src ? `<img src="${src}">` : "";
+    insertImgCallback: async function () {
+
+      // =====THIS IS THE HOOK TO INSERT THE MEDIA MANAGER LOGIC======= //
+
+      // this function is called when the user clicks the bossa media button.
+      // this function is async and returns a promise that resolves in an <img> html tag or rejects.
+      // when the promise resolves the result is pushed at cursor position inside tinymce
+      // when the promise rejects nothing happens :)
+
+      return new Promise((resolve, reject) => {
+        var src = prompt(
+          "Please insert an image src.",
+          "https://i.kym-cdn.com/profiles/icons/big/000/279/747/2e4.jpg"
+        );
+        return src ? resolve(`<img src="${src}">`) : reject("No image selected");
+      });
     },
   },
 
