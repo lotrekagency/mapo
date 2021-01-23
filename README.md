@@ -1,4 +1,4 @@
-# camomilla-backoffice
+# Mapo
 
 ## Build Setup
 
@@ -13,7 +13,7 @@ $ yarn install
 $ yarn dev
 
 ### to install this module in a nuxt project
-$ yarn add git+ssh://git@gitlab.com:lotrekdevteam/camomilla/camomilla-backoffice.git
+$ yarn add git@github.com:lotrekagency/mapo.git
 
 ## Working on the project
 
