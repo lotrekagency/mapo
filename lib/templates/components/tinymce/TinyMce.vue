@@ -6,10 +6,10 @@
 import initMapoMedia from "~mapomodule/components/tinymce/utils/mapomedia.plugin.js";
 import uuid from "~mapomodule/components/tinymce/utils/uuid.js";
 import injectScript from "~mapomodule/components/tinymce/utils/script.injector.js";
-import { toolbarconfig } from "~mapomodule/components/tinymce/defaults.js";
+import { fullFeatured } from "~mapomodule/components/tinymce/defaults.js";
 
 export default {
-  props: ["value"],
+  props: ["value", "conf"],
 
   data() {
     return {
@@ -36,12 +36,12 @@ export default {
     initEditor() {
       this.$refs.editorNode.innerHTML = this.value;
       initMapoMedia(() => this.insertImgCallback());
-      window.tinymce.init({
-        selector: `#${this.id}`,
-        plugins: "mapomedia",
-        toolbar: toolbarconfig,
-        init_instance_callback: this.initCallback,
-      });
+      window.tinymce.init(
+        Object.assign(fullFeatured, this.conf || {}, {
+          selector: `#${this.id}`,
+          init_instance_callback: this.initCallback,
+        })
+      );
     },
     initCallback(editor) {
       this._editor = editor;
@@ -56,7 +56,6 @@ export default {
       this.$emit("input", this.editorContent);
     },
     insertImgCallback: async function () {
-
       // =====THIS IS THE HOOK TO INSERT THE MEDIA MANAGER LOGIC======= //
 
       // this function is called when the user clicks the mapo media button.
@@ -69,7 +68,9 @@ export default {
           "Please insert an image src.",
           "https://i.kym-cdn.com/profiles/icons/big/000/279/747/2e4.jpg"
         );
-        return src ? resolve(`<img src="${src}">`) : reject("No image selected");
+        return src
+          ? resolve(`<img src="${src}">`)
+          : reject("No image selected");
       });
     },
   },

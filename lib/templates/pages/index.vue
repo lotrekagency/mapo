@@ -37,7 +37,7 @@ export default {
   },
   data() {
     return {
-      input1: "Bella tiNy",
+      input1: "<h1>Bella tiNy</h1>",
       pageTitle: 'Homepage',
       simpleTable: {
         headers: [
