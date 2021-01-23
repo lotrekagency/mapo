@@ -23,8 +23,6 @@
     <hr>
     <List :pageTitle='pageTitle' />
     <TinyMce v-model="input1" />
-    <TinyMce v-model="input1" />
-    <v-btn @click.native="log(input1)" class="logout__btn">PT </v-btn>
   </div>
 </template>
 
@@ -36,9 +34,6 @@ export default {
   components: {
     Logo,
     VuetifyLogo,
-  },
-  methods: {
-    log : (item) => console.log(item)
   },
   data() {
     return {

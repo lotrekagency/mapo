@@ -5,7 +5,7 @@
       <thead>
         <tr>
           <th v-for="header in headers" :key="header.text" class="text-left">
-            <td>{{header.text}}</td>
+            {{header.text}}
           </th>
         </tr>
       </thead>
@@ -26,7 +26,6 @@ export default {
     itemsList: Array,
   },
   mounted: function () {
-    console.log(Object.keys(this.itemsList).length);
   },
 };
 </script>
