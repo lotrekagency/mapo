@@ -1,0 +1,42 @@
+<template>
+  <div>
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="12">
+        <TinyMce v-model="tinyInput" />
+      </v-col>
+    </v-row>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tinyInput: `
+        <p style="text-align: center;"><span style="color: #bdc3c7;">&rarr; This is a full-featured editor demo. Please explore!
+        &larr;</span></p>
+        <p style="text-align: center;">&nbsp;</p>
+        <h2 style="text-align: center;">TinyMCE is the world's most customizable, and flexible, rich text editor.</h2>
+        <p style="text-align: center;"><strong> <span style="font-size: 14pt;"> <span style="color: #7e8c8d; font-weight: 600;">
+                        A featherweight download, TinyMCE can handle any challenge you throw at it. </span> </span> </strong>
+        </p>
+        <p style="text-align: center;">&nbsp;</p>
+        <table style="border-collapse: collapse; width: 85%; margin-left: auto; margin-right: auto; border: 0;">
+            <tbody>
+                <tr>
+                    <td style="width: 25%; text-align: center; padding: 7px;"><span style="color: #95a5a6;">🛠 50+
+                            Plugins</span></td>
+                    <td style="width: 25%; text-align: center; padding: 7px;"><span style="color: #95a5a6;">💡 Premium
+                            Support</span></td>
+                    <td style="width: 25%; text-align: center; padding: 7px;"><span style="color: #95a5a6;">🖍 Custom
+                            Skins</span></td>
+                    <td style="width: 25%; text-align: center; padding: 7px;"><span style="color: #95a5a6;">⚙ Full API
+                            Access</span></td>
+                </tr>
+            </tbody>
+        </table>
+      `,
+    };
+  },
+};
+</script>

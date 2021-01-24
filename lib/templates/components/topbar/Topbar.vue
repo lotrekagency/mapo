@@ -13,7 +13,7 @@
 
     <div class="topbar__user">
       <span class="topbar__user__name">
-        Ciao, Utente
+        Ciao, {{ this.$mapo.$auth.user.username }}
       </span>
       <v-btn
         class="topbar__user__btn"
