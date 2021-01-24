@@ -1,17 +1,51 @@
 <template>
-  <div class="sidebar__link__wrapper">
-    <NuxtLink
-      class="sidebar__link"
-      :to="link"
-    >
-      <v-icon v-if="icon" class="sidebar__link__icon">{{icon}}</v-icon>
-      {{ title }}
+  <div :style="indent" class="sidebar__link__wrapper">
+    <NuxtLink v-if="link" class="sidebar__link" :to="link">
+      <v-icon v-if="icon" class="sidebar__link__icon">{{ icon }}</v-icon>
+      {{ label }}
+      <v-icon
+        class="expand-icon"
+        v-if="childrens.length"
+        @click.native.prevent="expanded = !expanded"
+        >mdi-chevron-down</v-icon
+      >
     </NuxtLink>
+    <span
+      @click.prevent="expanded = !expanded"
+      v-if="!link"
+      class="sidebar__link"
+    >
+      <v-icon v-if="icon" class="sidebar__link__icon">{{ icon }}</v-icon>
+      {{ label }}
+      <v-icon class="expand-icon" v-if="childrens.length"
+        >mdi-chevron-down</v-icon
+      >
+    </span>
+    <div v-if="childrens.length && expanded">
+      <sidebar-list-item
+        class="sidebar__list__item"
+        v-for="(item, i) in childrens"
+        :key="i"
+        :link="item.link"
+        :label="item.label"
+        :childrens="item.childrens"
+        :depth="depth || 0 + 1"
+        :icon="item.icon"
+      />
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import '~mapomodule/assets/variables.scss';
+@import "~mapomodule/assets/variables.scss";
+
+.expand-icon {
+  margin: 0 0 0 auto;
+  &:hover {
+    background: #f7f7f747;
+    border-radius: 25%;
+  }
+}
 
 .sidebar {
   &__link {
@@ -22,11 +56,11 @@
     padding: 0.5rem 1rem;
     text-decoration: none;
     color: $white;
-    background: rgba(0,0,0,0);
-    transition: all linear .25s;
+    background: rgba(0, 0, 0, 0);
+    transition: all linear 0.25s;
     text-transform: capitalize;
     &:hover {
-      background: rgba(0,0,0,0.25);
+      background: rgba(0, 0, 0, 0.25);
     }
     &__icon {
       margin-right: 0.5rem;
@@ -37,13 +71,23 @@
 
 <script>
 export default {
+  name: "sidebar-list-item",
   data() {
-    return {};
+    return {
+      expanded: false,
+    };
+  },
+  computed: {
+    indent() {
+      return { marginLeft: `${this.depth * 10}px` };
+    },
   },
   props: {
     link: String,
-    title: String,
-    icon: String
+    label: String,
+    icon: String,
+    childrens: Array,
+    depth: Number,
   },
 };
 </script>

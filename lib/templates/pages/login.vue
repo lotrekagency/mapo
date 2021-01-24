@@ -4,7 +4,10 @@
       <h2 class="login__inner__title">Login</h2>
 
       <div class="login__form__outer">
-        <v-form @submit.prevent="handleLogin(username, password)" class="login__form">
+        <v-form
+          @submit.prevent="handleLogin(username, password)"
+          class="login__form"
+        >
           <v-text-field
             class="rounded-0"
             v-model="username"
@@ -29,7 +32,9 @@
             :type="showPass ? 'text' : 'password'"
           ></v-text-field>
           <div class="text-center">
-            <v-btn type="submit" class="rounded-0" elevation="0" dark> Log In </v-btn>
+            <v-btn type="submit" class="rounded-0" elevation="0" dark>
+              Log In
+            </v-btn>
           </div>
         </v-form>
       </div>
@@ -39,6 +44,7 @@
 <script>
 export default {
   layout: "empty",
+  meta: { sidebarHide: true },
   data() {
     return {
       username: "",
@@ -82,8 +88,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import '~mapomodule/assets/variables.scss';
-
+@import "~mapomodule/assets/variables.scss";
 .login {
   &__wrapper {
     display: flex;
