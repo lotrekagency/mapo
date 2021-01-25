@@ -1,26 +1,20 @@
 <template>
   <div class="sidebar__ender">
-    
-    <NuxtLink
+    <sidebar-list-item
       class="sidebar__ender__item"
-      to="/utenti"
-    >
-      <v-icon class="sidebar__ender__icon">mdi-account-group</v-icon>
-      Utenti
-    </NuxtLink>
-    <NuxtLink
-      class="sidebar__ender__item"
-      to="/impostazioni"
-    >
-      <v-icon class="sidebar__ender__icon">mdi-cog</v-icon>
-      Impostazioni
-    </NuxtLink>
+      v-for="(item, i) in routes"
+      :key="i"
+      :link="item.link"
+      :label="item.label"
+      :childrens="item.childrens"
+      :icon="item.icon"
+    />
     <logout-button class="sidebar__ender__item sidebar__ender__item--logout" />
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import '~mapomodule/assets/variables.scss';
+@import "~mapomodule/assets/variables.scss";
 
 .sidebar {
   &__ender {
@@ -34,22 +28,45 @@
     &__item {
       display: block;
       width: 100%;
-      padding: 0.5rem 1rem;
       text-decoration: none;
       color: white;
       background: $b-2;
-      transition: all linear .25s;
+      transition: all linear 0.25s;
       border-radius: 0;
       &:hover {
-        background: rgba($b-2,0.25);
+        background: rgba($b-2, 0.25);
       }
       &--logout {
-        background: $black!important;
+        background: $black !important;
         &:hover {
-          background: rgba($black,0.25)!important;
+          background: rgba($black, 0.25) !important;
         }
       }
     }
   }
 }
 </style>
+
+<script>
+import { buildRoutes } from "~mapomodule/utils/routebuilder";
+export default {
+  data() {
+    return {
+      defaultIcon: "mdi-chevron-right",
+      routes: this.routes,
+    };
+  },
+  mounted: function () {
+    this.routes = this.buildRoutes(
+      this.$router.options.routes.filter(
+        (route) => route.meta && route.meta.sidebarFooter === true
+      )
+    );
+  },
+  methods: {
+    buildRoutes(routes) {
+      return buildRoutes(routes, this.defaultIcon);
+    },
+  },
+};
+</script>

@@ -22,6 +22,7 @@
 </style>
 
 <script>
+import { buildRoutes } from "~mapomodule/utils/routebuilder"
 export default {
   data() {
     return {
@@ -30,53 +31,11 @@ export default {
     };
   },
   mounted: function () {
-    this.routes = this.buildRoutes(this.$router.options.routes);
+    this.routes = this.buildRoutes(this.$router.options.routes.filter(route => !route.meta || !route.meta.sidebarFooter));
   },
   methods: {
     buildRoutes(routes) {
-      return this.nestReduce(
-        routes
-          .filter((e) => !e.meta || !e.meta.sidebarHide)
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((element) => {
-            return {
-              label:
-                (element.meta && element.meta.label) ||
-                element.name.split("-").pop(),
-              icon: (element.meta && element.meta.icon) || this.defaultIcon,
-              meta: element.meta,
-              link: element.path,
-              name: element.name,
-              childrens: [],
-            };
-          })
-      );
-    },
-
-    nestReduce(array) {
-      return array.reduce((stack, route) => {
-        const names = route.name.split("-");
-        if (names.length === 1) {
-          stack.push(route);
-        } else {
-          const name = names.shift();
-          let pIndex = stack.findIndex((el) => el.name === name);
-          if (pIndex === -1) {
-            stack.push({
-              name: name,
-              label: (route.meta && route.meta.parentLabel) || name,
-              icon: (route.meta && route.meta.parentIcon) || this.defaultIcon,
-              childrens: [],
-            });
-            pIndex = stack.length - 1;
-          }
-          stack[pIndex].childrens.push(
-            Object.assign(route, { name: names.join("-") })
-          );
-          stack[pIndex].childrens = this.nestReduce(stack[pIndex].childrens);
-        }
-        return stack;
-      }, []);
+      return buildRoutes(routes, this.defaultIcon)
     },
   },
 };
