@@ -1,19 +1,18 @@
 <template>
-  <textarea ref="editorNode" :id="id"></textarea>
+  <textarea ref="editorNode"></textarea>
 </template>
 
 <script>
 import initMapoMedia from "~mapomodule/components/tinymce/utils/mapomedia.plugin.js";
-import uuid from "~mapomodule/components/tinymce/utils/uuid.js";
 import injectScript from "~mapomodule/components/tinymce/utils/script.injector.js";
 import { fullFeatured } from "~mapomodule/components/tinymce/defaults.js";
+import { validEvents } from "~mapomodule/components/tinymce/utils/events.js";
 
 export default {
-  props: ["value", "conf"],
+  props: ["value", "conf", "disabled"],
 
   data() {
     return {
-      id: uuid("tiny_mce"),
       _editor: null,
       editorContent: "",
     };
@@ -38,22 +37,30 @@ export default {
       initMapoMedia(() => this.insertImgCallback());
       window.tinymce.init(
         Object.assign(fullFeatured, this.conf || {}, {
-          selector: `#${this.id}`,
-          init_instance_callback: this.initCallback,
+          target: this.$refs.editorNode,
+          readonly: this.disabled,
+          setup: this.setupEditor,
         })
       );
     },
-    initCallback(editor) {
+    setupEditor(editor) {
       this._editor = editor;
-      this.emitContent(editor);
-      editor.on("keyup", () => this.emitContent(editor));
-      editor.on("SetContent", () => this.emitContent(editor));
-      editor.on("ExecCommand", () => this.emitContent(editor));
-      editor.on("ObjectResized", () => this.emitContent(editor));
+      editor.on("init", () => {
+        this.emitContent(editor);
+        editor.on("change input undo redo keyup", () =>
+          this.emitContent(editor)
+        );
+      });
+      this.bindEvents(editor);
     },
     emitContent(editor) {
       this.editorContent = editor.getContent();
       this.$emit("input", this.editorContent);
+    },
+    bindEvents(editor) {
+      validEvents.forEach((eventName) => {
+        editor.on(eventName, (event) => this.$emit(eventName, event));
+      });
     },
     insertImgCallback: async function () {
       // =====THIS IS THE HOOK TO INSERT THE MEDIA MANAGER LOGIC======= //
@@ -74,11 +81,18 @@ export default {
       });
     },
   },
-
+  beforeDestroy() {
+    window && window.tinymce && window.tinymce.remove(this.editor);
+  },
   watch: {
     value(val) {
       if (this.editor && val !== this.editorContent) {
         this.editor.setContent(val);
+      }
+    },
+    disabled(val) {
+      if (this.editor && this.editor.initialized) {
+        this.editor.setMode(val ? "readonly" : "design");
       }
     },
   },
