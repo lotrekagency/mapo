@@ -41,6 +41,7 @@
 
 .expand-icon {
   margin: 0 0 0 auto;
+  cursor: pointer;
   &:hover {
     background: #f7f7f747;
     border-radius: 25%;
@@ -79,7 +80,7 @@ export default {
   },
   computed: {
     indent() {
-      return { marginLeft: `${this.depth * 10}px` };
+      return { marginLeft: `${+this.depth * 10}px` };
     },
   },
   props: {

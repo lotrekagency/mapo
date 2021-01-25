@@ -2,7 +2,7 @@
   <div class="sidebar__list">
     <sidebar-list-item
       class="sidebar__list__item"
-      v-for="(item, i) in routerList"
+      v-for="(item, i) in routes"
       :key="i"
       :link="item.link"
       :label="item.label"
@@ -26,11 +26,11 @@ export default {
   data() {
     return {
       defaultIcon: "mdi-chevron-right",
-      routerList: this.routerList,
+      routes: this.routes,
     };
   },
   mounted: function () {
-    this.routerList = this.buildRoutes(this.$router.options.routes);
+    this.routes = this.buildRoutes(this.$router.options.routes);
   },
   methods: {
     buildRoutes(routes) {
