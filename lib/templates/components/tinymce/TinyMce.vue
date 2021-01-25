@@ -9,7 +9,7 @@ import { fullFeatured } from "~mapomodule/components/tinymce/defaults.js";
 import { validEvents } from "~mapomodule/components/tinymce/utils/events.js";
 
 export default {
-  props: ["value", "conf", "disabled"],
+  props: ["value", "conf", "disabled", "bindevents"],
 
   data() {
     return {
@@ -58,9 +58,11 @@ export default {
       this.$emit("input", this.editorContent);
     },
     bindEvents(editor) {
-      validEvents.forEach((eventName) => {
-        editor.on(eventName, (event) => this.$emit(eventName, event));
-      });
+      if (this.bindevents) {
+        validEvents.forEach((eventName) => {
+          editor.on(eventName, (event) => this.$emit(eventName, event));
+        });
+      }
     },
     insertImgCallback: async function () {
       // =====THIS IS THE HOOK TO INSERT THE MEDIA MANAGER LOGIC======= //
