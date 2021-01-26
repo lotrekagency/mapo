@@ -16,4 +16,5 @@ export default {
   auth_role: 'Ruolo:',
   auth_token: 'Token:',
   auth_permission: 'Il tuo utente ha i seguenti permessi in questa pagina',
+  panel_title: 'Pannello'
 }

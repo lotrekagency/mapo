@@ -1,7 +1,7 @@
 <template>
   <v-app class="app__wrapper">
     <Sidebar />    
-    <Topbar :title="title" :drawer="this.$store.getters['mapo/app/drawer']" />
+    <Topbar :title="$t('panel_title')" :drawer="this.$store.getters['mapo/app/drawer']" />
     <v-main>
       <v-container>
         <nuxt />
@@ -25,7 +25,6 @@
 export default {
   data () {
     return {
-      title: 'Pannello'
     }
   },
   mounted: function () {

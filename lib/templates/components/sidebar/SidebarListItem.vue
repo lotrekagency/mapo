@@ -6,6 +6,7 @@
       <v-icon
         class="expand-icon"
         v-if="childrens.length"
+        :style="rotate"
         @click.native.prevent="expanded = !expanded"
         >mdi-chevron-down</v-icon
       >
@@ -17,7 +18,7 @@
     >
       <v-icon v-if="icon" class="sidebar__link__icon">{{ icon }}</v-icon>
       {{ label }}
-      <v-icon class="expand-icon" v-if="childrens.length"
+      <v-icon :style="rotate" class="expand-icon" v-if="childrens.length"
         >mdi-chevron-down</v-icon
       >
     </span>
@@ -44,7 +45,7 @@
   cursor: pointer;
   &:hover {
     background: #f7f7f747;
-    border-radius: 25%;
+    border-radius: 50%;
   }
 }
 
@@ -81,6 +82,12 @@ export default {
   computed: {
     indent() {
       return { marginLeft: `${+this.depth * 10}px` };
+    },
+    rotate() {
+      return {
+        transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
+        transition: "transform 225ms cubic-bezier(0.4, 0, 0.2, 1)",
+      };
     },
   },
   props: {
