@@ -6,6 +6,13 @@
     >
       Salva
     </v-btn>
+    <v-btn
+      class="elevation-0 rounded-0 sidebar__btn"
+      color="error"
+      small
+    >
+      Elimina
+    </v-btn>
     <div class="sidebar__card">
       <h3 class="sidebar__card__title">
         Titolo card 1
@@ -46,10 +53,11 @@
 @import "~mapomodule/assets/variables.scss";
 
 .sidebar {
-  flex: 1 1 calc(25% - 1rem);
-  max-width: calc(25% - 1rem);
-  padding: 0 1rem 0.5rem;
+  flex: 1 1 calc(25% - 2rem);
+  max-width: calc(25% - 2rem);
+  padding: 0 0 0.5rem;
   margin-top: 1rem;
+  margin-left: 2rem;
   &__btn {
     display: block;
     width: 100%;

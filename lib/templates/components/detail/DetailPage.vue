@@ -1,7 +1,15 @@
 <template>
   <div class="detail__page">
     <div class="detail__head">
-      <h2 class="detail__head__title display-1">{{title}}</h2>
+      <div class="detail__head__grp">
+        <h2 class="detail__head__title display-1">{{title}}</h2>
+        <v-btn
+          class="rounded-0 elevation-0"
+          color="primary"
+          >
+            Aggiungi <v-icon>mdi-plus</v-icon>
+          </v-btn>
+      </div>
       
       <v-text-field
         class="rounded-0 detail__head__textfield"
@@ -75,10 +83,18 @@
     align-items: baseline;
     justify-content: flex-start;
     flex-wrap: wrap;
-    &__title {
+    &__grp  {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
       flex: 1 100%;
       max-width: 100%;
       margin-bottom: 1rem;
+    }
+    &__title {
+      margin-right: 2rem;
+      flex: 1;
+      word-break: break-all;
     }
     &__textfield {
       flex: 1 100%;
