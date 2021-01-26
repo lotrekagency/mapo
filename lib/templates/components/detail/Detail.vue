@@ -1,11 +1,12 @@
 <template>
   <div class="detail__wrapper">
 
-    <DetailPage :title="detailTitle" :permalink="detailPermalink" />
+    <DetailPage v-if="typeSwitcher" :title="detailTitle" :permalink="detailPermalink" />
 
+    <div v-if="!typeSwitcher">Dialog</div>
     <!-- 
         ∆
-       ∆∆∆   
+       ∆∆∆
       ∆∆∆∆∆
       WIP: I wanna make the DetailPopup component aswell,
       to edit the details of some model on the go.
@@ -40,10 +41,31 @@ export default {
     • detailPermalink: the model's URL, if it's a website page or so. 
       This value can be either a string or a null, which will hide the permalink UI
       in the DetailPage component.
+
+    • typeSwitcher: leave it be, it works together with the type prop.
+      When it's set to 'page', the DetailPage component will be rendered,
+      otherwise if set to 'dialog', the DetailDialog component will activate.
   */
   data: () => ({
     detailTitle: 'Pagina dettaglio',
-    detailPermalink: 'mapo.com/pagina'
-  })
+    detailPermalink: 'mapo.com/pagina',
+    typeSwitcher: Boolean
+  }),
+  props: {
+    type: String
+  },
+  methods: {
+    typeHandler () {
+      // Checking if it's either a page or dialog popup
+      if(this.type === 'page') {
+        this.typeSwitcher = true
+      } else if(this.type === 'dialog') {
+        this.typeSwitcher = false
+      }
+    }
+  },
+  created() {
+    this.typeHandler();
+  },
 };
 </script>

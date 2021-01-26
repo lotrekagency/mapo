@@ -100,6 +100,7 @@
 <script>
 /*
   • sidebar: true for enabling it, false for disabling it.
+    This option will adapt the page's UI aswell.
 */
 export default {
   data: () => ({
