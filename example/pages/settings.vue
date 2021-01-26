@@ -5,16 +5,16 @@
       v-model="selectedLanguage"
       :items="this.$i18n.locales"
       color="primary"
-      background-color="black"
       return-object
       item-text="name"
       item-value="code"
       item-color="primary"
       name="locales"
       id="locales"
-      filled
+      outlined dense hide-details light
       @change="changeLocal"
     ></v-select>
+    
   </div>
 </template>
 
