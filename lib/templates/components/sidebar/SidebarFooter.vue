@@ -3,17 +3,18 @@
     
     <NuxtLink
       class="sidebar__ender__item"
-      to="/utenti"
+      :to="localePath('/users')"
     >
       <v-icon class="sidebar__ender__icon">mdi-account-group</v-icon>
-      Utenti
+      {{ $t('sidebar_users') }}
     </NuxtLink>
     <NuxtLink
       class="sidebar__ender__item"
-      to="/impostazioni"
+      :to="localePath('/settings')"
+      
     >
       <v-icon class="sidebar__ender__icon">mdi-cog</v-icon>
-      Impostazioni
+      {{ $t('sidebar_settings') }}
     </NuxtLink>
     <logout-button class="sidebar__ender__item sidebar__ender__item--logout" />
   </div>
