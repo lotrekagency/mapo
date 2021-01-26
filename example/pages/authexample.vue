@@ -51,7 +51,7 @@
 export default {
   name: "Prova",
   meta: { permissions: { model: "user" } },
-  //middleware: ["auth", "permissions"],
+  middleware: ["auth", "permissions"],
   mounted: function () {
     console.log(this.$mapo.$auth.user);
   },
