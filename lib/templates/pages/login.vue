@@ -80,6 +80,8 @@ export default {
           })
         )
         .catch((err) => {
+          console.log(err)
+          this.$mapo.$snack.open({message: err})
           this.hasErr = true;
           this.errMsg = err.message;
         });
