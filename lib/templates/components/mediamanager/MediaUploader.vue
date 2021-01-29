@@ -68,6 +68,11 @@ export default {
   methods: {
     updateMediaList(mediaList) {
       this.mediaList = mediaList;
+      this.mediaList.forEach((media) => {
+        media.info.title = media.info.title || media.info.name;
+        media.info.alt_text = media.info.alt_text || media.info.name;
+        media.info.description = media.info.description || media.info.name;
+      });
       this.count = 0;
       this.progress = 0;
     },
