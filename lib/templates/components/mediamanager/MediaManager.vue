@@ -1,14 +1,43 @@
 <template>
   <v-card>
     <v-tabs color="green accent-4" right>
+      <v-btn class="ma-2" @click="getRoot" icon>
+        <v-icon>mdi-update</v-icon>
+      </v-btn>
+      <v-btn
+        v-if="parentFolder"
+        class="ma-2"
+        @click="getRoot({ folder: { id: parentFolder.updir } })"
+        icon
+      >
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <span class="ma-2 d-flex align-center">{{
+        parentFolder ? parentFolder.path : "/"
+      }}</span>
+      <v-spacer></v-spacer>
       <v-tab>Gallery</v-tab>
       <v-tab>Uploader</v-tab>
-
       <v-tab-item>
-        <MediaGallery />
+        <MediaGallery
+          :folders="folderList"
+          :medias="mediaList"
+          :page="page"
+          :pages="pages"
+          @goToFolder="
+            parentFolder = $event;
+            getRoot();
+          "
+          @pageChange="getRoot({ page: $event })"
+          @updateFolder="updateOrCreateFolder($event)"
+        />
       </v-tab-item>
       <v-tab-item>
-        <MediaUploader />
+        <MediaUploader
+          :folderList="folderList"
+          :parentFolder="parentFolder"
+          @Upload="onUpload($event)"
+        />
       </v-tab-item>
     </v-tabs>
   </v-card>
@@ -21,25 +50,57 @@
 export default {
   data() {
     return {
-      mediaFolderCrud: this.$mapo.$api.crud("api/camomilla/media-folders"),
-      mediaFileCrud: this.$mapo.$api.crud("api/camomilla/media"),
+      _mediaFolderCrud: null,
+      _mediaFileCrud: null,
+      mediaList: [],
+      folderList: [],
+      parentFolder: null,
+      page: 1,
+      pages: 1,
     };
   },
+  computed: {
+    mediaFolderCrud() {
+      this._mediaFolderCrud =
+        this._mediaFolderCrud ||
+        this.$mapo.$api.crud("api/camomilla/media-folders");
+      return this._mediaFolderCrud;
+    },
+    mediaFileCrud() {
+      this._mediaFileCrud =
+        this._mediaFileCrud || this.$mapo.$api.crud("api/camomilla/media");
+      return this._mediaFileCrud;
+    },
+  },
   methods: {
-    getRoot() {
-      return this.mediaFolderCrud.list();
+    getRoot: async function (info) {
+      const { page, folder } = info || {};
+      const { id } = folder || this.parentFolder || {};
+      let response;
+      this.page = page || this.page;
+      const params = { page: this.page };
+      if (id) {
+        response = await this.mediaFolderCrud.detail(id, {
+          params,
+        });
+      } else {
+        response = await this.mediaFolderCrud.list({ params });
+      }
+      this.processResponse(response);
     },
 
-    goToFolder(folder_id) {
-      return this.mediaFolderCrud.detail(folder_id);
-    },
-
-    updateFolder(folder) {
-      return this.mediaFolderCrud.update(folder.id, folder);
+    updateOrCreateFolder(folder) {
+      return this.mediaFolderCrud
+        .updateOrCreate(folder)
+        .then(() => this.getRoot());
     },
 
     deleteFolder(folder_id) {
       return this.mediaFolderCrud.delete(folder_id);
+    },
+
+    deleteMedia(media_id) {
+      return this.mediaFileCrud.delete(media_id);
     },
 
     detailMedia(media_id) {
@@ -47,11 +108,30 @@ export default {
     },
 
     updateMedia(media) {
-      const files = ["file", "reader_url", "thumbnail"];
+      const files = ["file", "objectURL", "thumbnail"];
       const payload = this.$mapo.$api.multipart(media, files);
       const conf = { headers: { "Content-Type": "multipart/form-data" } };
       return this.mediaFileCrud.update(media.id, payload, conf);
     },
+
+    onUpload() {
+      this.getRoot();
+    },
+
+    processResponse(resp) {
+      const hightest = (n1, n2) => (n1 > n2 ? n1 : n2);
+      const getInfo = (r, k) => r[k].paginator;
+      const mInfo = getInfo(resp, "media");
+      const fInfo = getInfo(resp, "folders");
+      this.mediaList = resp.media.items;
+      this.folderList = resp.folders.items;
+      this.parentFolder = resp.parent_folder;
+      this.page = hightest(mInfo.page, fInfo.page);
+      this.pages = hightest(mInfo.page_range.pop(), fInfo.page_range.pop());
+    },
+  },
+  async fetch() {
+    await this.getRoot();
   },
 };
 </script>

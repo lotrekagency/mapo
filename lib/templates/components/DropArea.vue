@@ -36,8 +36,8 @@
       >
         <template v-slot:default="{ item }">
           <v-list-item :key="item.info.name">
-            <v-list-item-avatar tile v-if="item.objectURL">
-              <v-img :src="item.objectURL"></v-img>
+            <v-list-item-avatar tile v-if="item.info.objectURL">
+              <v-img :src="item.info.objectURL"></v-img>
             </v-list-item-avatar>
 
             <v-list-item-content
@@ -90,7 +90,7 @@
               <v-row>
                 <v-col cols="12">
                   <v-text-field
-                    v-model="editedItem.info.name"
+                    v-model="editedItem.name"
                     label="File name"
                   ></v-text-field>
                 </v-col>
@@ -169,10 +169,10 @@ export default {
     },
     processFile(blob) {
       return {
-        objectURL: blob.type.startsWith("image/")
-          ? URL.createObjectURL(blob)
-          : null,
         info: {
+          objectURL: blob.type.startsWith("image/")
+            ? URL.createObjectURL(blob)
+            : null,
           name: blob.name,
           size: this.humanFileSize(blob.size, true, 2),
           type: blob.type,
@@ -205,11 +205,11 @@ export default {
     },
     editItem(item) {
       this.editedIndex = this.uploadedFiles.indexOf(item);
-      this.editedItem = Object.assign({}, JSON.parse(JSON.stringify(item)));
+      this.editedItem = Object.assign({}, item.info);
       this.editDialog = true;
     },
     saveEdit() {
-      Object.assign(this.uploadedFiles[this.editedIndex], this.editedItem);
+      this.uploadedFiles[this.editedIndex].info = Object.assign({}, this.editedItem);
       this.closeEdit();
     },
     closeEdit() {

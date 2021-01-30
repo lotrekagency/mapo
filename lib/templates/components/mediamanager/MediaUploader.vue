@@ -13,26 +13,33 @@
         <v-container>
           <v-row>
             <v-col cols="12">
+              <v-select
+                v-model="editedItem.folder"
+                :items="folderOptions"
+                label="Folder"
+              ></v-select>
+            </v-col>
+            <v-col cols="12">
               <v-text-field
-                v-model="editedItem.info.name"
+                v-model="editedItem.name"
                 label="Name"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="editedItem.info.title"
+                v-model="editedItem.title"
                 label="Title"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="editedItem.info.description"
+                v-model="editedItem.description"
                 label="Description"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="editedItem.info.alt_text"
+                v-model="editedItem.alt_text"
                 label="Alt name"
               ></v-text-field>
             </v-col>
@@ -57,12 +64,28 @@ export default {
       count: 0,
       progress: 0,
       mediaList: [],
-      mediaFileCrud: this.$mapo.$api.crud("api/camomilla/media/upload"),
+      _mediaFileCrud: null,
     };
   },
+  props: {
+    parentFolder: {},
+    folderList: {},
+  },
   computed: {
+    mediaFileCrud() {
+      this._mediaFileCrud =
+        this._mediaFileCrud ||
+        this.$mapo.$api.crud("api/camomilla/media/upload");
+      return this._mediaFileCrud;
+    },
     completed() {
       return `${this.count}/${this.mediaList.length}`;
+    },
+    folderOptions() {
+      return this.folderList.map((folder) => ({
+        text: folder.slug,
+        value: folder.id,
+      }));
     },
   },
   methods: {
@@ -79,19 +102,31 @@ export default {
     updateAll() {
       return Promise.all(
         this.mediaList.map((media) =>
-          this.uploadMedia(Object.assign({ file: media.blob }, media.info))
+          this.uploadMedia(
+            Object.assign(
+              { file: media.blob },
+              {
+                title: media.info.title,
+                alt_text: media.info.alt_text,
+                description: media.info.description,
+                folder: media.info.folder,
+              }
+            )
+          )
         )
       ).then((responses) => {
         this.$mapo.$snack.open({
-          message: `${responses.length} files succesfully uploaded`,
+          message: `${
+            responses.length || this.mediaList.length
+          } files succesfully uploaded`,
         });
+        this.$emit("Upload", (responses.length && responses) || this.mediaList);
         this.$refs.closeButton.$el.click();
       });
     },
     uploadMedia(media) {
-      const index = this.mediaList.findIndex((el) => el.blob == media.file);
-      const files = ["file", "reader_url", "thumbnail"];
-      const payload = this.$mapo.$api.multipart(media, files);
+      const index = this.mediaList.findIndex((el) => el.blob === media.file);
+      const payload = this.$mapo.$api.multipart(media, ["file"]);
       const conf = {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: function (event) {
@@ -102,7 +137,7 @@ export default {
             this.mediaList.reduce((acc, media) => acc + media.progress, 0) /
             this.mediaList.length;
           this.count = this.mediaList.reduce(
-            (acc, media) => acc + (media.progress == 100),
+            (acc, media) => acc + (media.progress === 100),
             0
           );
         }.bind(this),
