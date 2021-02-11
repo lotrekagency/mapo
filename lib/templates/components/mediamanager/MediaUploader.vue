@@ -6,7 +6,7 @@
           <v-icon ref="closeButton">mdi-close</v-icon>
         </v-btn>
         <v-btn @click="updateAll" icon>
-          <v-icon id="update-button">mdi-upload</v-icon>
+          <v-icon>mdi-upload</v-icon>
         </v-btn>
       </template>
       <template v-slot:editContent="{ editedItem }">
@@ -53,9 +53,6 @@
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-</style>
 
 <script>
 export default {
@@ -109,18 +106,20 @@ export default {
                 title: media.info.title,
                 alt_text: media.info.alt_text,
                 description: media.info.description,
-                folder: media.info.folder,
+                folder:
+                  media.info.folder ||
+                  (this.parentFolder && this.parentFolder.id),
               }
             )
           )
         )
-      ).then((responses) => {
+      ).then((response) => {
         this.$mapo.$snack.open({
           message: `${
-            responses.length || this.mediaList.length
+            response.length || this.mediaList.length
           } files succesfully uploaded`,
         });
-        this.$emit("Upload", (responses.length && responses) || this.mediaList);
+        this.$emit("Upload", (response.length && response) || this.mediaList);
         this.$refs.closeButton.$el.click();
       });
     },

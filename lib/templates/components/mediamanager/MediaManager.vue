@@ -19,17 +19,21 @@
       <v-tab>Gallery</v-tab>
       <v-tab>Uploader</v-tab>
       <v-tab-item>
-        <MediaGallery
+        <FolderGallery
           :folders="folderList"
-          :medias="mediaList"
-          :page="page"
-          :pages="pages"
+          :parentFolder="parentFolder"
+          @updateFolder="updateOrCreateFolder($event)"
+          @deleteFolder="deleteFolder($event)"
           @goToFolder="
             parentFolder = $event;
             getRoot();
           "
+        />
+        <MediaGallery
+          :medias="mediaList"
+          :page="page"
+          :pages="pages"
           @pageChange="getRoot({ page: $event })"
-          @updateFolder="updateOrCreateFolder($event)"
         />
       </v-tab-item>
       <v-tab-item>
@@ -95,8 +99,8 @@ export default {
         .then(() => this.getRoot());
     },
 
-    deleteFolder(folder_id) {
-      return this.mediaFolderCrud.delete(folder_id);
+    deleteFolder(folder) {
+      return this.mediaFolderCrud.delete(folder.id).then(() => this.getRoot());
     },
 
     deleteMedia(media_id) {
@@ -119,15 +123,11 @@ export default {
     },
 
     processResponse(resp) {
-      const hightest = (n1, n2) => (n1 > n2 ? n1 : n2);
-      const getInfo = (r, k) => r[k].paginator;
-      const mInfo = getInfo(resp, "media");
-      const fInfo = getInfo(resp, "folders");
       this.mediaList = resp.media.items;
-      this.folderList = resp.folders.items;
+      this.folderList = resp.folders;
       this.parentFolder = resp.parent_folder;
-      this.page = hightest(mInfo.page, fInfo.page);
-      this.pages = hightest(mInfo.page_range.pop(), fInfo.page_range.pop());
+      this.page = resp.media.paginator.page;
+      this.pages = resp.media.paginator.page_range.pop();
     },
   },
   async fetch() {
