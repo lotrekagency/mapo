@@ -39,10 +39,12 @@
           </div>
         </div>
       </div>
-      <v-icon :size="expanded ? 50 : 30" @click.stop="createFolder">
+      <v-icon :size="expanded && folders.length ? 50 : 30" @click.stop="createFolder">
         mdi-plus
       </v-icon>
+      <div class="flex-grow-1 text-center" v-if="!folders.length">No folders there.. Create a new one! </div>
       <v-icon
+        v-if="folders.length"
         :style="rotate"
         class="ma-auto mr-2 mb-2"
         @click.stop="expanded = !expanded"
