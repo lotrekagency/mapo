@@ -39,18 +39,32 @@
           </div>
         </div>
       </div>
-      <v-icon :size="expanded && folders.length ? 50 : 30" @click.stop="createFolder">
-        mdi-plus
-      </v-icon>
-      <div class="flex-grow-1 text-center" v-if="!folders.length">No folders there.. Create a new one! </div>
-      <v-icon
-        v-if="folders.length"
-        :style="rotate"
-        class="ma-auto mr-2 mb-2"
-        @click.stop="expanded = !expanded"
-      >
-        mdi-chevron-down
-      </v-icon>
+      <div class="flex-grow-1 text-center" v-if="!folders.length">
+        No folders there.. Create a new one!
+      </div>
+      <div class="ma-auto mr-2 mb-2">
+        <v-tooltip disabled left>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon v-bind="attrs" v-on="on" @click.stop="createFolder">
+              mdi-plus
+            </v-icon>
+          </template>
+          <span>Add folder</span>
+        </v-tooltip>
+        <v-tooltip v-if="folders.length" disabled bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <v-icon
+              v-bind="attrs"
+              v-on="on"
+              :style="rotate"
+              @click.prevent="expanded = !expanded"
+            >
+              mdi-chevron-down
+            </v-icon>
+          </template>
+          <span>{{ expanded ? "Collapse" : "Expand" }} view</span>
+        </v-tooltip>
+      </div>
     </v-card-actions>
     <v-dialog v-model="dialog" max-width="300px">
       <v-card>

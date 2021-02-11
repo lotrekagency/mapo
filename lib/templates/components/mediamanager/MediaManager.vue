@@ -29,6 +29,7 @@
             getRoot();
           "
         />
+        <hr style="border: 0; border-top: 1px solid #ffffff6b" />
         <MediaGallery
           :medias="mediaList"
           :page="page"
