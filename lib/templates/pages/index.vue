@@ -1,6 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="12">
+
       <v-btn
         class="elevation-0 rounded-0"
         color="primary"
