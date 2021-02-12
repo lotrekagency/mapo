@@ -3,14 +3,7 @@
 
     <DetailPage v-if="typeSwitcher" :title="detailTitle" :permalink="detailPermalink" />
 
-    <div v-if="!typeSwitcher">Dialog</div>
-    <!-- 
-        ∆
-       ∆∆∆
-      ∆∆∆∆∆
-      WIP: I wanna make the DetailPopup component aswell,
-      to edit the details of some model on the go.
-    -->
+    <DetailDialog v-if="!typeSwitcher" />
 
   </div>
 </template>
@@ -49,7 +42,6 @@ export default {
   data: () => ({
     detailTitle: 'Pagina dettaglio',
     detailPermalink: 'mapo.com/pagina',
-    typeSwitcher: Boolean
   }),
   props: {
     type: String
