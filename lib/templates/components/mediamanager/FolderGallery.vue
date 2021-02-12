@@ -161,9 +161,11 @@ export default {
   },
   props: {
     folders: {
+      type: Array,
       default: () => [],
     },
     parentFolder: {
+      type: Object,
       default: {},
     },
   },

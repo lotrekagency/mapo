@@ -65,8 +65,13 @@ export default {
     };
   },
   props: {
-    parentFolder: {},
-    folderList: {},
+    parentFolder: {
+      type: Object,
+    },
+    folders: {
+      type: Array,
+      default: () => [],
+    },
   },
   computed: {
     mediaFileCrud() {
@@ -79,7 +84,7 @@ export default {
       return `${this.count}/${this.mediaList.length}`;
     },
     folderOptions() {
-      return this.folderList.map((folder) => ({
+      return this.folders.map((folder) => ({
         text: folder.slug,
         value: folder.id,
       }));

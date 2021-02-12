@@ -20,8 +20,7 @@
       <v-tab>Uploader</v-tab>
       <v-tab-item>
         <FolderGallery
-          :folders="folderList"
-          :parentFolder="parentFolder"
+          v-bind="{ folders, parentFolder }"
           @updateFolder="updateOrCreateFolder($event)"
           @deleteFolder="deleteFolder($event)"
           @goToFolder="
@@ -31,16 +30,14 @@
         />
         <hr style="border: 0; border-top: 1px solid #ffffff6b" />
         <MediaGallery
-          :medias="mediaList"
-          :page="page"
-          :pages="pages"
+          v-bind="{ select, page, pages, medias }"
+          @selectionChange="selectionChange($event)"
           @pageChange="getRoot({ page: $event })"
         />
       </v-tab-item>
       <v-tab-item>
         <MediaUploader
-          :folderList="folderList"
-          :parentFolder="parentFolder"
+          v-bind="{ folders, parentFolder }"
           @Upload="onUpload($event)"
         />
       </v-tab-item>
@@ -57,12 +54,21 @@ export default {
     return {
       _mediaFolderCrud: null,
       _mediaFileCrud: null,
-      mediaList: [],
-      folderList: [],
+      medias: [],
+      folders: [],
       parentFolder: null,
       page: 1,
       pages: 1,
     };
+  },
+  props: {
+    select: {
+      type: String,
+      default: "none",
+      validator(val) {
+        return ["none", "single", "multi"].indexOf(val) !== -1;
+      },
+    },
   },
   computed: {
     mediaFolderCrud() {
@@ -124,11 +130,14 @@ export default {
     },
 
     processResponse(resp) {
-      this.mediaList = resp.media.items;
-      this.folderList = resp.folders;
+      this.medias = resp.media.items;
+      this.folders = resp.folders;
       this.parentFolder = resp.parent_folder;
       this.page = resp.media.paginator.page;
       this.pages = resp.media.paginator.page_range.pop();
+    },
+    selectionChange(event) {
+      this.$emit("selectionChange", event);
     },
   },
   async fetch() {

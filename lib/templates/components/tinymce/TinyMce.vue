@@ -1,5 +1,8 @@
 <template>
-  <textarea ref="editorNode"></textarea>
+  <div>
+    <media-manager-dialog ref="mediaManager"></media-manager-dialog>
+    <textarea ref="editorNode"></textarea>
+  </div>
 </template>
 
 <script>
@@ -73,13 +76,14 @@ export default {
       // when the promise rejects nothing happens :)
 
       return new Promise((resolve, reject) => {
-        var src = prompt(
-          "Please insert an image src.",
-          "https://i.kym-cdn.com/profiles/icons/big/000/279/747/2e4.jpg"
-        );
-        return src
-          ? resolve(`<img src="${src}">`)
-          : reject("No image selected");
+        this.$refs.mediaManager
+          .open()
+          .then((success) =>
+            success
+              ? resolve(`<img src="${success.file}">`)
+              : reject("No image selected")
+          )
+          .catch((error) => reject(error));
       });
     },
   },
