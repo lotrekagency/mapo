@@ -147,15 +147,16 @@ export default {
     rotate() {
       return {
         transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
-        transition: "transform 225ms cubic-bezier(0.4, 0, 0.2, 1)",
+        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
       };
     },
     hideSlug() {
       return {
-        maxWidth: this.expanded ? null : 0,
-        maxHeight: this.expanded ? null : 0,
-        overflow: "hidden",
-        transition: "all 225ms cubic-bezier(0.4, 0, 0.2, 1)",
+        maxWidth: this.expanded ? "105px" : 0,
+        maxHeight: this.expanded ? "24px" : 0,
+        opacity: this.expanded ? 0.8 : 0,
+        transform: this.expanded ? "scale(1)" : "scale(0)",
+        transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
       };
     },
   },
