@@ -6,7 +6,7 @@
     <h1 v-else>
       {{ otherError }}
     </h1>
-    <NuxtLink to="/">
+    <NuxtLink :to="localePath('/')">
       Home page
     </NuxtLink>
   </v-app>

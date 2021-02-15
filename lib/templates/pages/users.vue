@@ -10,7 +10,7 @@
 </style>
 <script>
 export default {
-  meta: { sidebarFooter: true, label: "Utenti", icon: "mdi-account-group" },
+  meta: { sidebarFooter: true, label: "sidebar_users", icon: "mdi-account-group" },
   data() {
     return {};
   },

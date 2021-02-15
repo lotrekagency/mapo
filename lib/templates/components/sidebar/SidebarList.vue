@@ -5,7 +5,7 @@
       v-for="(item, i) in routes"
       :key="i"
       :link="item.link"
-      :label="item.label"
+      :label="$t(item.label)"
       :childrens="item.childrens"
       :icon="item.icon"
     />

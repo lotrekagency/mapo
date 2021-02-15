@@ -1,6 +1,6 @@
 <template>
   <div :style="indent" class="sidebar__link__wrapper">
-    <NuxtLink v-if="link" class="sidebar__link" :to="link">
+    <NuxtLink v-if="link" class="sidebar__link" :to="localePath(link)">
       <v-icon v-if="icon" class="sidebar__link__icon">{{ icon }}</v-icon>
       {{ label }}
       <v-icon
