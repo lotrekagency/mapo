@@ -1,6 +1,6 @@
 <template>
   <v-card>
-    <v-tabs color="green accent-4" right>
+    <v-tabs v-model="tab" color="green accent-4" right>
       <v-btn class="ma-2" @click="getRoot" icon>
         <v-icon>mdi-update</v-icon>
       </v-btn>
@@ -18,17 +18,22 @@
       <v-spacer></v-spacer>
       <v-tab>Gallery</v-tab>
       <v-tab>Uploader</v-tab>
+    </v-tabs>
+
+    <FolderGallery
+      v-if="!noFolders"
+      v-bind="{ folders, parentFolder }"
+      @updateFolder="updateOrCreateFolder($event)"
+      @deleteFolder="deleteFolder($event)"
+      @goToFolder="
+        parentFolder = $event;
+        getRoot();
+      "
+    />
+    <v-divider class="mb-4"></v-divider>
+
+    <v-tabs-items v-model="tab">
       <v-tab-item>
-        <FolderGallery
-          v-bind="{ folders, parentFolder }"
-          @updateFolder="updateOrCreateFolder($event)"
-          @deleteFolder="deleteFolder($event)"
-          @goToFolder="
-            parentFolder = $event;
-            getRoot();
-          "
-        />
-        <hr style="border: 0; border-top: 1px solid #ffffff6b" />
         <MediaGallery
           v-bind="{ select, page, pages, medias }"
           @selectionChange="selectionChange($event)"
@@ -41,7 +46,7 @@
           @Upload="getRoot({ page: 1 })"
         />
       </v-tab-item>
-    </v-tabs>
+    </v-tabs-items>
   </v-card>
 </template>
 
@@ -59,6 +64,7 @@ export default {
       parentFolder: null,
       page: 1,
       pages: 1,
+      tab: null,
     };
   },
   props: {
@@ -68,6 +74,10 @@ export default {
       validator(val) {
         return ["none", "single", "multi"].indexOf(val) !== -1;
       },
+    },
+    noFolders: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {

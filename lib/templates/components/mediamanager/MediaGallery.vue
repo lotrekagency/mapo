@@ -2,7 +2,7 @@
   <v-card>
     <v-card-text>
       <div>
-        <v-row v-if="selection.length" class="mb-4 selection">
+        <v-row v-if="selection.length" class="selection mb-4">
           <v-col
             v-for="media in selection"
             :key="media.file"
@@ -83,7 +83,8 @@
 
 <style lang="scss" scoped>
 .selection {
-  border-bottom: 1px solid #ffffff6b;
+  background: #79797908;
+  box-shadow: inset 5px 5px 18px #151515, inset -5px -5px 18px #151515;
   &__confirm {
     margin: auto 0 auto auto;
     display: flex;

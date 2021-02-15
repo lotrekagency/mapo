@@ -5,7 +5,7 @@
       <v-card>
         <MediaManager
           @selectionChange="selectionChange($event)"
-          v-bind="{ select }"
+          v-bind="{ select, noFolders }"
         />
         <v-card-actions v-if="select == 'multi'">
           <v-spacer></v-spacer>
@@ -34,6 +34,10 @@ export default {
   props: {
     value: {
       type: Boolean,
+    },
+    noFolders: {
+      type: Boolean,
+      default: false,
     },
     select: {
       type: String,
