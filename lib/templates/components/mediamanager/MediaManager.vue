@@ -38,7 +38,7 @@
       <v-tab-item>
         <MediaUploader
           v-bind="{ folders, parentFolder }"
-          @Upload="onUpload($event)"
+          @Upload="getRoot({ page: 1 })"
         />
       </v-tab-item>
     </v-tabs>
@@ -123,10 +123,6 @@ export default {
       const payload = this.$mapo.$api.multipart(media, files);
       const conf = { headers: { "Content-Type": "multipart/form-data" } };
       return this.mediaFileCrud.update(media.id, payload, conf);
-    },
-
-    onUpload() {
-      this.getRoot();
     },
 
     processResponse(resp) {

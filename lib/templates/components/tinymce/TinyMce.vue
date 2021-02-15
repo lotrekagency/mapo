@@ -31,13 +31,13 @@ export default {
   },
 
   mounted() {
-    injectScript().then(() => this.initEditor());
+    injectScript().then(this.initEditor);
   },
 
   methods: {
     initEditor() {
       this.$refs.editorNode.innerHTML = this.value;
-      initMapoMedia(() => this.insertImgCallback());
+      initMapoMedia(this.insertImgCallback);
       window.tinymce.init(
         Object.assign(fullFeatured, this.conf || {}, {
           target: this.$refs.editorNode,
@@ -68,19 +68,12 @@ export default {
       }
     },
     insertImgCallback: async function () {
-      // =====THIS IS THE HOOK TO INSERT THE MEDIA MANAGER LOGIC======= //
-
-      // this function is called when the user clicks the mapo media button.
-      // this function is async and returns a promise that resolves in an <img> html tag or rejects.
-      // when the promise resolves the result is pushed at cursor position inside tinymce
-      // when the promise rejects nothing happens :)
-
       return new Promise((resolve, reject) => {
         this.$refs.mediaManager
           .open()
           .then((success) =>
             success
-              ? resolve(`<img src="${success.file}">`)
+              ? resolve(`<img width="50%" src="${success.file}">`)
               : reject("No image selected")
           )
           .catch((error) => reject(error));
@@ -92,7 +85,7 @@ export default {
   },
   watch: {
     value(val) {
-      if (this.editor && val !== this.editorContent) {
+      if (this.editor && this.editor.initialized && val !== this.editorContent) {
         this.editor.setContent(val);
       }
     },
