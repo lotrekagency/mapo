@@ -12,7 +12,7 @@
       >
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      <span class="ma-2 d-flex align-center">{{
+      <span class="ma-2 d-flex align-end">{{
         parentFolder ? parentFolder.path : "/"
       }}</span>
       <v-spacer></v-spacer>
