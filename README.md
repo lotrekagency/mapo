@@ -46,6 +46,11 @@ Here's an example featuring a SCSS import in a component file:
 `@import "~mapomodule/assets/custom-style.scss";`
 
 
+### Styling
+Import the variables, mixins and other scss files 
+in your components and templates when needed.
+
+
 ## External resources
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
