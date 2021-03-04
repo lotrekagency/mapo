@@ -8,11 +8,28 @@
 <script>
 import initMapoMedia from "~mapomodule/components/tinymce/utils/mapomedia.plugin.js";
 import injectScript from "~mapomodule/components/tinymce/utils/script.injector.js";
-import { fullFeatured } from "~mapomodule/components/tinymce/defaults.js";
+import defaults from "~mapomodule/components/tinymce/defaults.js";
 import { validEvents } from "~mapomodule/components/tinymce/utils/events.js";
 
 export default {
-  props: ["value", "conf", "disabled", "bindevents"],
+  props: {
+    value: {
+      type: String,
+      default: "",
+    },
+    conf: {
+      type: Object,
+      default: () => ({}),
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    bindevents: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
   data() {
     return {
@@ -39,7 +56,7 @@ export default {
       this.$refs.editorNode.innerHTML = this.value;
       initMapoMedia(this.insertImgCallback);
       window.tinymce.init(
-        Object.assign(fullFeatured, this.conf || {}, {
+        Object.assign(defaults, this.conf, {
           target: this.$refs.editorNode,
           readonly: this.disabled,
           setup: this.setupEditor,
@@ -71,9 +88,9 @@ export default {
       return new Promise((resolve, reject) => {
         this.$refs.mediaManager
           .open()
-          .then((success) =>
-            success
-              ? resolve(`<img width="50%" src="${success.file}">`)
+          .then((result) =>
+            result
+              ? resolve(`<img width="50%" src="${result.file}">`)
               : reject("No image selected")
           )
           .catch((error) => reject(error));
