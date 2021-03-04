@@ -7,19 +7,9 @@
         class="d-flex child-flex mx-2"
       >
         <div>
-          <v-tooltip :disabled="expanded" bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                @click.stop="goToFolder(folder)"
-                :size="expanded ? 100 : 40"
-                v-bind="attrs"
-                v-on="on"
-              >
-                mdi-folder
-              </v-icon>
-            </template>
-            <span>{{ folder.slug }}</span>
-          </v-tooltip>
+          <v-icon @click.stop="goToFolder(folder)" :size="expanded ? 100 : 40">
+            mdi-folder
+          </v-icon>
 
           <div>
             <div class="d-flex" :style="hideSlug">
@@ -27,12 +17,17 @@
                 {{ folder.slug }}
               </span>
               <v-icon
+                v-if="expanded"
                 size="20"
                 class="ma-0 ml-auto"
                 @click.stop="createFolder(folder)"
                 >mdi-pencil</v-icon
               >
-              <v-icon size="20" class="ma-0" @click.stop="confirmDelete(folder)"
+              <v-icon
+                size="20"
+                class="ma-0"
+                @click.stop="confirmDelete(folder)"
+                v-if="expanded"
                 >mdi-delete</v-icon
               >
             </div>
@@ -152,10 +147,10 @@ export default {
     },
     hideSlug() {
       return {
-        maxWidth: this.expanded ? "105px" : 0,
-        maxHeight: this.expanded ? "24px" : 0,
-        opacity: this.expanded ? 0.8 : 0,
-        transform: this.expanded ? "scale(1)" : "scale(0)",
+        maxWidth: this.expanded ? "105px" : "50px",
+        maxHeight: this.expanded ? "24px" : "18px",
+        opacity: this.expanded ? 0.8 : 0.8,
+        transform: this.expanded ? "scale(1)" : "scale(0.7)",
         transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
       };
     },
