@@ -1,88 +1,108 @@
 <template>
-  <v-card>
-    <v-card-text>
-      <div>
-        <v-row v-if="selection.length" class="selection mb-4">
-          <v-col
-            v-for="media in selection"
-            :key="media.file"
-            class="d-flex"
-            cols="2"
-            sm="1"
-            md="1"
-            @click.stop="selectMedia(media)"
-          >
-            <v-img
-              :src="media.file"
-              :lazy-src="media.thumbnail"
-              aspect-ratio="1"
-              class="grey lighten-2 selection__item"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  ></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-          </v-col>
-        </v-row>
-        <v-row
-          v-if="!medias.length"
-          class="d-flex flex-column"
-          dense
-          align="center"
-          justify="center"
+  <div class="pa-4">
+    <v-row v-if="selection.length" class="selection mb-4 mx-1">
+      <v-col
+        v-for="media in selection"
+        :key="media.file"
+        class="d-flex"
+        cols="2"
+        sm="1"
+        md="1"
+        @click.stop="selectMedia(media)"
+      >
+        <v-img
+          :src="media.file"
+          :lazy-src="media.thumbnail"
+          aspect-ratio="1"
+          class="grey lighten-2 elevation-4 selection__item"
         >
-          <v-icon size="60"> mdi-alert-circle-outline </v-icon>
-          <p>No media fund...</p>
-        </v-row>
-        <v-row v-if="medias.length">
-          <v-col
-            v-for="media in medias"
-            :key="media.file"
-            class="d-flex"
-            cols="6"
-            sm="3"
-            md="2"
-            @click.stop="selectMedia(media)"
-          >
-            <v-img
-              v-bind:class="{ selected: isSelected(media) }"
-              :src="media.file"
-              :lazy-src="media.thumbnail"
-              aspect-ratio="1"
-              class="grey lighten-2"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  ></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-          </v-col>
-        </v-row>
-      </div>
-      <v-row>
-        <v-col cols="12">
-          <v-pagination
-            v-if="pages > 1"
-            v-model="currentPage"
-            :length="pages"
-          ></v-pagination>
-        </v-col>
-      </v-row>
-    </v-card-text>
-  </v-card>
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-col>
+    </v-row>
+    <v-row
+      v-if="!medias.length"
+      class="d-flex flex-column"
+      dense
+      align="center"
+      justify="center"
+    >
+      <v-icon size="60"> mdi-alert-circle-outline </v-icon>
+      <p>No media fund...</p>
+    </v-row>
+    <v-row v-if="medias.length">
+      <v-col
+        v-for="media in medias"
+        :key="media.file"
+        class="img-container"
+        cols="6"
+        sm="3"
+        md="2"
+      >
+        <v-btn
+          @click.stop="editMedia(media)"
+          icon
+          small
+          :ripple="false"
+          color="white"
+          class="img-container__btn"
+        >
+          <v-icon>mdi-circle-edit-outline</v-icon>
+        </v-btn>
+
+        <v-img
+          v-bind:class="{ selected: isSelected(media) }"
+          :src="media.file"
+          :lazy-src="media.thumbnail"
+          aspect-ratio="1"
+          class="grey lighten-2 elevation-4"
+          @click.stop="selectMedia(media)"
+        >
+          <template v-slot:placeholder>
+            <v-row class="fill-height ma-0" align="center" justify="center">
+              <v-progress-circular
+                indeterminate
+                color="grey lighten-5"
+              ></v-progress-circular>
+            </v-row>
+          </template>
+        </v-img>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col cols="12">
+        <v-pagination
+          v-if="pages > 1"
+          v-model="currentPage"
+          :length="pages"
+        ></v-pagination>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <style lang="scss" scoped>
+.img-container {
+  display: flex;
+  position: relative;
+  &__btn {
+    position: absolute;
+    z-index: 1;
+    right: 12px;
+    bottom: 12px;
+    background: #1e1e1ea1;
+    border-radius: 50% 0 0;
+  }
+}
 .selection {
+  border-radius: 5px;
   background: #79797908;
   box-shadow: inset 5px 5px 18px #151515, inset -5px -5px 18px #151515;
   &__confirm {
@@ -112,6 +132,9 @@
     width: 100%;
     height: 100%;
   }
+}
+.theme--light .selection {
+  box-shadow: inset 5px 5px 10px #e3e3e3, inset -5px -5px 10px #e3e3e3;
 }
 </style>
 
@@ -168,6 +191,9 @@ export default {
         this.selection = this.selection.slice();
         this.$emit("selectionChange", this.selection);
       }
+    },
+    editMedia(media) {
+      this.$emit("editMedia", media);
     },
   },
 };

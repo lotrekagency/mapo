@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <drop-area @change="updateMediaList($event)" multiple>
       <template v-slot:actions="{ clearList }">
         <v-btn @click="clearList" icon>
@@ -51,7 +51,7 @@
       <p class="text-right mr-3 mb-2">{{ completed }}</p>
       <v-progress-linear :value="progress"></v-progress-linear>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>

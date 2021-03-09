@@ -2,10 +2,11 @@
   <div>
     <slot v-bind="{ on, attrs }" name="activator"></slot>
     <v-dialog v-model="dialog" width="800">
-      <v-card>
+      <v-card v-bind="{ light, dark, elevation }">
         <MediaManager
           @selectionChange="selectionChange($event)"
-          v-bind="{ select, noFolders }"
+          v-bind="{ select, noFolders, light, dark }"
+          elevation="0"
         />
         <v-card-actions v-if="select == 'multi'">
           <v-spacer></v-spacer>
@@ -45,6 +46,18 @@ export default {
       validator(val) {
         return ["none", "single", "multi"].indexOf(val) !== -1;
       },
+    },
+    light: {
+      type: Boolean,
+      default: false,
+    },
+    dark: {
+      type: Boolean,
+      default: false,
+    },
+    elevation: {
+      type: Number | String,
+      default: undefined,
     },
   },
   watch: {

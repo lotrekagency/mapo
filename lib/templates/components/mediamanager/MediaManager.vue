@@ -1,52 +1,66 @@
 <template>
-  <v-card>
-    <v-tabs v-model="tab" color="green accent-4" right>
-      <v-btn class="ma-2" @click="getRoot" icon>
-        <v-icon>mdi-update</v-icon>
-      </v-btn>
-      <v-btn
-        v-if="parentFolder"
-        class="ma-2"
-        @click="getRoot({ folder: { id: parentFolder.updir } })"
-        icon
-      >
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-      <span class="ma-2 d-flex align-end">{{
-        parentFolder ? parentFolder.path : "/"
-      }}</span>
+  <v-card v-bind="{ light, dark, elevation }">
+    <div v-if="!editMedia" class="d-flex">
+      <div class="d-flex">
+        <v-btn class="ma-2" @click="getRoot" icon>
+          <v-icon>mdi-update</v-icon>
+        </v-btn>
+        <v-btn
+          v-if="parentFolder"
+          class="ma-2"
+          @click="getRoot({ folder: { id: parentFolder.updir } })"
+          icon
+        >
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+        <span class="ma-2 d-flex align-center">{{
+          parentFolder ? parentFolder.path : "/"
+        }}</span>
+      </div>
       <v-spacer></v-spacer>
-      <v-tab>Gallery</v-tab>
-      <v-tab>Uploader</v-tab>
-    </v-tabs>
+      <div>
+        <v-tabs v-model="tab" right background-color="transparent">
+          <v-tab>Gallery</v-tab>
+          <v-tab>Uploader</v-tab>
+        </v-tabs>
+      </div>
+    </div>
 
-    <FolderGallery
-      v-if="!noFolders"
-      v-bind="{ folders, parentFolder }"
-      @updateFolder="updateOrCreateFolder($event)"
-      @deleteFolder="deleteFolder($event)"
-      @goToFolder="
-        parentFolder = $event;
-        getRoot();
-      "
+    <div v-if="!editMedia">
+      <FolderGallery
+        v-if="!noFolders"
+        v-bind="{ folders, parentFolder }"
+        @updateFolder="updateOrCreateFolder($event)"
+        @deleteFolder="deleteFolder($event)"
+        @goToFolder="
+          parentFolder = $event;
+          getRoot();
+        "
+      />
+      <v-divider v-if="!noFolders" class="mb-4"></v-divider>
+
+      <v-tabs-items v-model="tab" class="transparent">
+        <v-tab-item>
+          <MediaGallery
+            v-bind="{ select, page, pages, medias }"
+            @selectionChange="selectionChange($event)"
+            @pageChange="getRoot({ page: $event })"
+            @editMedia="openEditor($event)"
+          />
+        </v-tab-item>
+        <v-tab-item>
+          <MediaUploader
+            v-bind="{ folders, parentFolder }"
+            @Upload="getRoot({ page: 1 })"
+          />
+        </v-tab-item>
+      </v-tabs-items>
+    </div>
+    <MediaEditor
+      v-model="editMedia"
+      @deleteMedia="deleteMedia($event)"
+      @updateMedia="updateMedia($event)"
     />
-    <v-divider class="mb-4"></v-divider>
-
-    <v-tabs-items v-model="tab">
-      <v-tab-item>
-        <MediaGallery
-          v-bind="{ select, page, pages, medias }"
-          @selectionChange="selectionChange($event)"
-          @pageChange="getRoot({ page: $event })"
-        />
-      </v-tab-item>
-      <v-tab-item>
-        <MediaUploader
-          v-bind="{ folders, parentFolder }"
-          @Upload="getRoot({ page: 1 })"
-        />
-      </v-tab-item>
-    </v-tabs-items>
   </v-card>
 </template>
 
@@ -65,6 +79,7 @@ export default {
       page: 1,
       pages: 1,
       tab: null,
+      editMedia: null,
     };
   },
   props: {
@@ -78,6 +93,18 @@ export default {
     noFolders: {
       type: Boolean,
       default: false,
+    },
+    light: {
+      type: Boolean,
+      default: false,
+    },
+    dark: {
+      type: Boolean,
+      default: false,
+    },
+    elevation: {
+      type: Number | String,
+      default: undefined,
     },
   },
   computed: {
@@ -120,8 +147,10 @@ export default {
       return this.mediaFolderCrud.delete(folder.id).then(() => this.getRoot());
     },
 
-    deleteMedia(media_id) {
-      return this.mediaFileCrud.delete(media_id);
+    deleteMedia(media) {
+      return this.mediaFileCrud.delete(media.id).then(() => {
+        (this.editMedia = null), this.getRoot();
+      });
     },
 
     detailMedia(media_id) {
@@ -132,7 +161,13 @@ export default {
       const files = ["file", "objectURL", "thumbnail"];
       const payload = this.$mapo.$api.multipart(media, files);
       const conf = { headers: { "Content-Type": "multipart/form-data" } };
-      return this.mediaFileCrud.update(media.id, payload, conf);
+      return this.mediaFileCrud
+        .partialUpdate(media.id, payload, conf)
+        .then(() =>
+          this.$mapo.$snack.open({
+            message: "file info succesfully updated.",
+          })
+        );
     },
 
     processResponse(resp) {
@@ -144,6 +179,9 @@ export default {
     },
     selectionChange(event) {
       this.$emit("selectionChange", event);
+    },
+    async openEditor(event) {
+      this.editMedia = await this.detailMedia(event.id);
     },
   },
   async fetch() {

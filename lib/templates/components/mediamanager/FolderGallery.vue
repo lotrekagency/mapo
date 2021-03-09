@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <div>
     <v-card-actions class="flex-wrap">
       <div
         v-for="folder in folders"
@@ -110,7 +110,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-card>
+  </div>
 </template>
 <style lang="scss" scoped>
 .folder_slug {
