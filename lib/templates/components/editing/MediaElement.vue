@@ -1,55 +1,73 @@
 <template>
-  <v-row>
-    <v-col cols="12">
-      <v-card
-        :dark="this.dark"
-        :light="!this.dark"
+  <v-hover v-slot="{ hover }">
+    <div style="position: relative">
+      <v-img
+        v-if="child_media"
+        :src="child_media.file"
+        contain
+        :height="size"
+        :width="size"
+        aspect-ratio="1"
       >
-        <v-img
+        <template v-slot:placeholder>
+          <v-row
             v-if="child_media"
-            :src="child_media.file"
-            aspect-ratio="1"
-        > </v-img>
+            class="fill-height ma-0"
+            align="center"
+            justify="center"
+          >
+            <v-progress-circular
+              indeterminate
+              color="grey"
+            ></v-progress-circular>
+          </v-row>
 
-        <v-btn v-else block text height="300" @click="editing = true">
-          <v-icon x-large>mdi-plus-box</v-icon>
-        </v-btn>
+          <v-btn v-else block text :height="size" @click="editing = true">
+            <v-icon x-large>mdi-plus-box</v-icon>
+          </v-btn>
+        </template>
+      </v-img>
 
-        <media-manager-dialog
-          v-model="editing"
-          select="single"
-          v-on:selectionChange="update"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-on="on"
-              v-bind="attrs"
-              v-if="child_media"
-              absolute
-              fab
-              bottom
-              right
-              class="mb-10 mr-15"
-            >
+      <media-manager-dialog
+        v-model="editing"
+        select="single"
+        v-on:selectionChange="update"
+        :dark="dark"
+        :light="!dark"
+      >
+      </media-manager-dialog>
+
+      <v-dialog v-model="confirm" max-width="290" :light="!dark" :dark="dark">
+        <v-card>
+          <v-card-title class="headline"> You sure? </v-card-title>
+          <v-card-actions>
+            <v-btn color="red darken-1" text @click="confirmDelete(true)">
+              Yes
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn text @click="confirmDelete(false)"> No </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+
+      <v-overlay opacity="0.3" absolute :value="hover">
+        <v-row>
+          <v-col cols="6">
+            <v-btn @click="editing = true" v-show="child_media" fab x-large>
               <v-icon>mdi-pencil</v-icon>
             </v-btn>
-          </template>
-        </media-manager-dialog>
+          </v-col>
 
-        <v-btn
-            v-if="child_media"
-            fab
-            absolute
-            bottom
-            right
-            class="mb-10"
-            @click="remove"
-        >
-            <v-icon>mdi-delete</v-icon>
-        </v-btn>
-      </v-card>
-    </v-col>
-  </v-row>
+
+          <v-col cols="6">
+            <v-btn @click="confirm = true" v-show="child_media" fab x-large>
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-overlay>
+    </div>
+  </v-hover>
 </template>
 
 <script>
@@ -58,6 +76,7 @@ export default {
     return {
       editing: false,
       child_media: null,
+      confirm: false,
     };
   },
 
@@ -66,9 +85,8 @@ export default {
     event: "changed-media",
   },
 
-  mounted(){
-    if(this.media)
-        this.child_media=this.media
+  mounted() {
+    if (this.media) this.child_media = this.media;
   },
 
   props: {
@@ -77,27 +95,36 @@ export default {
       default: () => null,
     },
     dark: {
-        type: Boolean,
-        default: () => false,
+      type: Boolean,
+      default: false,
+    },
+    size: {
+      type: Number,
+      default: 400,
     },
   },
 
   methods: {
     update(selection) {
-      this.child_media=selection
+      this.child_media = selection;
       this.$emit("changed-media", selection);
     },
-    remove(){
-        this.child_media=null
+    confirmDelete(choice) {
+      if (choice) {
+        this.child_media = null;
         this.$emit("changed-media", null);
-    }
+      }
+      this.confirm = false;
+    },
+    hovering(event) {
+      console.log("HOVER!");
+    },
   },
 
   watch: {
-      media(){
-          this.child_media=this.media
-      }
-  }
-
+    media() {
+      this.child_media = this.media;
+    },
+  },
 };
 </script>

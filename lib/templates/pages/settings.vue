@@ -15,7 +15,7 @@
     </v-row>
 
     <v-row>
-      <MediaElement v-model="fakeMedia"/>
+      <MediaElement :size=500 v-model="fakeMedia"/>
     </v-row>
   </v-container>
 </template>
