@@ -1,21 +1,18 @@
 <template>
 	<div>
-		<v-card
-			width="600"
-			class="mx-auto"
-		>
+		<v-card width="600">
 			<v-card-actions>
 				<v-btn @click="mmdialog = true" outlined>New Selection</v-btn>
 			</v-card-actions>
 
-			<v-carousel v-model="page">
+			<v-carousel v-model="page" height="auto" width="600">
 
-				<v-carousel-item class="page" v-for="(pageMedias, i) in paginatedMedias" :key="i" position="center center">
+				<v-carousel-item class="page" v-for="(pageMedias, i) in paginatedMedias" :key="i" position="center center" contain>
 					
-					<v-container class="fill-height pa-0 ma-1">
-						<v-row v-for="row in rows" :key="row"  align="center" align-content="stretch"  justify="center">
+					<v-container class="fill-height pa-0 my-5">
+						<v-row v-for="row in rows" :key="row"  align="center" align-content="center"  justify="center">
 							<v-col v-for="col in cols" :key="col">
-								<MediaElement v-model="pageMedias[getIndexFromGrid(row, col)]" :aspect-ratio="1" rm-add-btn/>
+								<MediaElement v-model="pageMedias[getIndexFromGrid(row, col)]" :aspect-ratio="1" rm-add-btn @changed-media="checkDeletion($event,i , row, col)"/>
 							</v-col>
 						</v-row>
 					</v-container>
@@ -34,6 +31,7 @@
 
 <script>
 export default {
+	transition: 'tasks-transition',
   data() {
     return {
 			child_medias: [],
@@ -91,8 +89,18 @@ export default {
 			return ((row-1)*(this.cols)) + col-1;
 		},
 		update(selection){
-			this.child_medias=selection
-			this.$emit("changed-selection", selection)
+			console.log(selection)
+			this.child_medias=[...selection]
+			this.$emit("changed-selection", [...selection])
+		},
+		checkDeletion(event, page, row, col){
+			//if event is not empty, then exit
+			if(event)
+				return;		
+			
+			let index = (this.mediasPerPage*page + this.getIndexFromGrid(row, col))
+			this.child_medias.splice(index, 1)
+			this.update(this.child_medias)
 		}
 	},
 
