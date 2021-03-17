@@ -14,8 +14,24 @@
       </v-btn>
     </v-row>
 
+    <v-row class="justify-center">
+      <MediaElement dark :max-height="300" :max-width="300" v-model="fakeMedia"/>
+    </v-row>
+    <v-row class="my-6"></v-row>
     <v-row>
-      <MediaElement dark :min-height="300" :min-width="300" v-model="fakeMedia"/>
+      <media-manager-dialog
+        select="multi"
+        v-on:selectionChange="update"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="red lighten-2 mb-4" dark v-bind="attrs" v-on="on">
+            Open media dialog
+          </v-btn>
+        </template>
+      </media-manager-dialog>
+    </v-row>
+    <v-row>
+      <MediaCarousel :cols="4" v-model="medias"/>
     </v-row>
   </v-container>
 </template>
@@ -35,7 +51,8 @@ export default {
         'https://i.picsum.photos/id/822/200/200.jpg?hmac=pXgRn-rbZIan3GYBv9xCVsdyt_Kzq5Q_d0AbLnzeT3k',
         'https://i.picsum.photos/id/337/200/300.jpg?hmac=0CnfGB9OuB4D8IneXqgjPMaGgLSHBKRjSkl_ITBmDxQ',
         'https://i.picsum.photos/id/117/200/200.jpg?hmac=hAXY0lMbkjkxYIKxW0UjtazVquGY1NCu3ruHLJGc4gs',
-      ]
+      ],
+      medias: [],
     };
   },
   methods:{
@@ -43,6 +60,10 @@ export default {
       const length = this.links.length;
       const i = Math.floor(Math.random() * length);
       this.fakeMedia={file: this.links[i]}
+    },
+    update(selection){
+      this.medias = selection
+      console.log(this.medias)
     }
   },
   watch: {

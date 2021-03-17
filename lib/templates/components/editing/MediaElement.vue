@@ -32,7 +32,7 @@
 
       <!-- If the media is not avaible, it shows a btn to add new media -->
       <v-btn
-        v-else
+        v-if="!mediaExists && !rmAddBtn"
         v-bind="{
           height,
           width,
@@ -134,6 +134,11 @@ export default {
     dark: {
       type: Boolean,
       default: false,
+    },
+
+    rmAddBtn: {
+      type: Boolean,
+      default: false, 
     },
 
     //image reflections
