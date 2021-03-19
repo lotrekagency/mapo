@@ -31,7 +31,7 @@
       </media-manager-dialog>
     </v-row>
     <v-row>
-      <MediaCarousel :cols="2" v-model="medias"/>
+      <MediaCarousel :rows="4" :cols="3" v-model="medias"/>
     </v-row>
   </v-container>
 </template>
