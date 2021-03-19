@@ -35,8 +35,8 @@
         </v-window>
 
 
-        <v-card-actions class="my-auto paginator">
-          <v-row justify="center" class="py-2 my-auto">
+        <v-card-actions class="paginator mt-auto">
+          <v-row justify="center" class="py-2">
             <v-btn text @click="prev">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
@@ -68,10 +68,9 @@
 </template>
 
 <style scoped>
-	.paginator{
-		position: absolute;
-		bottom: 0;
-		width: 100%;
+	.v-card{
+		display: flex;
+		flex-direction: column;
 	}
 </style>
 
