@@ -4,6 +4,7 @@
       <v-img
         v-if="mediaExists"
         :src="child_media.file"
+        :lazy-src="child_media.thumbnail"
         v-bind="{
           aspectRatio,
           contain,
@@ -32,7 +33,7 @@
 
       <!-- If the media is not avaible, it shows a btn to add new media -->
       <v-btn
-        v-if="!mediaExists && !rmAddBtn"
+        v-else-if="!rmAddBtn"
         v-bind="{
           height,
           width,
@@ -47,6 +48,7 @@
       >
         <v-icon x-large>mdi-plus-box</v-icon>
       </v-btn>
+
 
       <!-- Shows darkening overlay on image with buttons on top while hovered -->
       <v-overlay opacity="0.3" absolute :value="overlay">

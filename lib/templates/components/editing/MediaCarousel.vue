@@ -22,12 +22,13 @@
                 justify="center"
               >
                 <v-col v-for="col in cols" :key="col">
-                  <MediaElement
-                    v-model="pageMedias[getIndexFromGrid(row, col)]"
-                    :aspect-ratio="1"
-                    rm-add-btn
-                    @changed-media="checkDeletion($event, i, row, col)"
-                  />
+										<MediaElement
+                      v-if="pageMedias[getIndexFromGrid(row, col)]"
+											v-model="pageMedias[getIndexFromGrid(row, col)]"
+											:aspect-ratio="1"
+											rm-add-btn
+											@changed-media="checkDeletion($event, i, row, col)"
+										/>
                 </v-col>
               </v-row>
             </v-container>
@@ -71,6 +72,12 @@
 	.v-card{
 		display: flex;
 		flex-direction: column;
+	}
+
+	.v-window{
+		overflow: hidden;
+    position: relative;
+    width: 100%;
 	}
 </style>
 
