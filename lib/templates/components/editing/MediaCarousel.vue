@@ -1,6 +1,19 @@
 <template>
   <div>
-    <v-card :min-width="minWidth" :min-height="minHeight">
+    <v-card :min-width="minWidth" :min-height="minHeight"
+      v-bind="{
+          minWidth, 
+          minHeight,
+          height,
+          width,
+          maxHeight,
+          maxWidth,
+          elevation,
+          dark,
+          light: !dark,
+
+        }"
+    >
         <v-card-actions>
           <v-row justify="center" class="ma-1">
             <v-btn @click="mmdialog = true" block outlined>New Selection</v-btn>
@@ -26,6 +39,7 @@
                       v-if="pageMedias[getIndexFromGrid(row, col)]"
 											v-model="pageMedias[getIndexFromGrid(row, col)]"
 											:aspect-ratio="1"
+                      :dark="dark"
 											rm-add-btn
 											@changed-media="checkDeletion($event, i, row, col)"
 										/>
@@ -63,6 +77,8 @@
       v-model="mmdialog"
       select="multi"
       v-on:selectionChange="update"
+      :light="!dark"
+      :dark="dark"
     >
     </media-manager-dialog>
   </div>
@@ -116,6 +132,32 @@ export default {
       type: Number | String,
       default: 500,
     },
+    height: {
+      type: Number | String,
+    },
+    width: {
+      type: Number | String,
+    },
+    maxHeight: {
+      type: Number | String,
+    },
+    maxWidth: {
+      type: Number | String,
+    },
+
+    elevation: {
+      type: Number | String,
+      default: undefined
+    },
+    flat: {
+      type: Boolean,
+      default: false,
+    },
+
+    dark: {
+      type: Boolean,
+      default: false,
+    }
   },
 
   model: {

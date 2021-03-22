@@ -6,6 +6,10 @@
       </v-col>
     </v-row>
 
+    <v-row>
+      <M2m v-model="ids" :options="object" />
+    </v-row>
+
     <v-row class="my-4">
       <v-btn
         @click="changeFakeMedia"
@@ -31,7 +35,7 @@
       </media-manager-dialog>
     </v-row>
     <v-row>
-      <MediaCarousel :rows="2" :cols="2" v-model="medias"/>
+      <MediaCarousel dark :rows="2" :cols="2" v-model="medias"/>
     </v-row>
   </v-container>
 </template>
@@ -53,7 +57,15 @@ export default {
         'https://i.picsum.photos/id/117/200/200.jpg?hmac=hAXY0lMbkjkxYIKxW0UjtazVquGY1NCu3ruHLJGc4gs',
       ],
       medias: [],
+
+      ids: [],
+      object: {
+        4: 'ciao',        
+        10: 'testo1',        
+        30: 'prova',        
+      }
     };
+
   },
   methods:{
     changeFakeMedia(){
