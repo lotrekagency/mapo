@@ -1,76 +1,87 @@
 <template>
   <div>
-    <v-card :min-width="minWidth" :min-height="minHeight"
+    <v-card
+      :min-width="minWidth"
+      :min-height="minHeight"
       v-bind="{
-          minWidth, 
-          minHeight,
-          height,
-          width,
-          maxHeight,
-          maxWidth,
-          elevation,
-          dark,
-          light: !dark,
-
-        }"
+        minWidth,
+        minHeight,
+        height,
+        width,
+        maxHeight,
+        maxWidth,
+        elevation,
+        dark,
+        light: !dark,
+      }"
     >
-        <v-card-actions>
-          <v-row justify="center" class="ma-1">
-            <v-btn @click="mmdialog = true" block outlined>New Selection</v-btn>
-          </v-row>
-        </v-card-actions>
-
-        <v-window v-model="page">
-          <v-window-item
-            class="page"
-            v-for="(pageMedias, i) in paginatedMedias"
-            :key="i"
+      <v-card-actions>
+        <v-row justify="center" class="ma-1">
+          <v-btn
+            @click="mmdialog = true"
+            block
+            outlined 
+            :min-height="pages ? undefined : minHeight"
           >
-            <v-container class="pa-0">
-              <v-row
-                v-for="row in rows"
-                :key="row"
-                align="center"
-                align-content="center"
-                justify="center"
-              >
-                <v-col v-for="col in cols" :key="col">
-										<MediaElement
-                      v-if="pageMedias[getIndexFromGrid(row, col)]"
-											v-model="pageMedias[getIndexFromGrid(row, col)]"
-											:aspect-ratio="1"
-                      :dark="dark"
-											rm-add-btn
-											@changed-media="checkDeletion($event, i, row, col)"
-										/>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-window-item>
-        </v-window>
+            <div v-if="pages">New Selection</div>
+            <v-icon v-else size="80">
+              mdi-plus-circle-outline
+            </v-icon>
+          </v-btn >
+        </v-row>
+      </v-card-actions>
 
+      <v-window v-model="page">
+        <v-window-item
+          class="page"
+          v-for="(pageMedias, i) in paginatedMedias"
+          :key="i"
+        >
+          <v-container class="pa-0">
+            <v-row
+              v-for="row in rows"
+              :key="row"
+              align="center"
+              align-content="center"
+              justify="center"
+            >
+              <v-col v-for="col in cols" :key="col">
+                <MediaElement
+                  v-if="pageMedias[getIndexFromGrid(row, col)]"
+                  v-model="pageMedias[getIndexFromGrid(row, col)]"
+                  :aspect-ratio="1"
+                  :dark="dark"
+                  rm-add-btn
+                  @changed-media="checkDeletion($event, i, row, col)"
+                />
+                <div v-else class="placeholder"></div>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-window-item>
+      </v-window>
 
-        <v-card-actions class="paginator mt-auto">
-          <v-row justify="center" class="py-2">
-            <v-btn text @click="prev">
-              <v-icon>mdi-chevron-left</v-icon>
-            </v-btn>
-            <v-item-group v-model="page" class="text-center mx-1" mandatory>
-              <v-item
-                v-for="n in pages"
-                :key="`btn-${n}`"
-                v-slot="{ active, toggle }"
-              >
-                <v-btn :input-value="active" icon @click="toggle">
-                  <v-icon>mdi-record</v-icon>
-                </v-btn>
-              </v-item>
-            </v-item-group>
-            <v-btn text @click="next">
-              <v-icon>mdi-chevron-right</v-icon>
-            </v-btn>
-          </v-row>
-        </v-card-actions>
+      <v-card-actions class="paginator mt-auto" v-if="pages">
+        <v-row justify="center" class="py-2">
+          <v-btn text @click="prev">
+            <v-icon>mdi-chevron-left</v-icon>
+          </v-btn>
+          <v-item-group v-model="page" class="text-center mx-1" mandatory>
+            <v-item
+              v-for="n in pages"
+              :key="`btn-${n}`"
+              v-slot="{ active, toggle }"
+            >
+              <v-btn :input-value="active" icon @click="toggle">
+                <v-icon>mdi-record</v-icon>
+              </v-btn>
+            </v-item>
+          </v-item-group>
+          <v-btn text @click="next">
+            <v-icon>mdi-chevron-right</v-icon>
+          </v-btn>
+        </v-row>
+      </v-card-actions>
     </v-card>
 
     <media-manager-dialog
@@ -85,16 +96,20 @@
 </template>
 
 <style scoped>
-	.v-card{
-		display: flex;
-		flex-direction: column;
-	}
+.v-card {
+  display: flex;
+  flex-direction: column;
+}
 
-	.v-window{
-		overflow: hidden;
-    position: relative;
-    width: 100%;
-	}
+.v-window {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.placeholder {
+  padding-bottom: 100%;
+}
 </style>
 
 <script>
@@ -147,7 +162,7 @@ export default {
 
     elevation: {
       type: Number | String,
-      default: undefined
+      default: undefined,
     },
     flat: {
       type: Boolean,
@@ -157,7 +172,7 @@ export default {
     dark: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   model: {
