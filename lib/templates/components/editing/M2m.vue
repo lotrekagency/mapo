@@ -1,10 +1,10 @@
 <template>
   <div style="background: black">
     <v-checkbox
-      v-for="(option, id) in options" :key="id"
-      :label="option"
-      :input-value="isSelected(id)"
-      @change="changed($event, id)"
+      v-for="(option, index) in options" :key="index"
+      :label="option[label]"
+      :input-value="isSelected(option[id])"
+      @change="changed($event, option[id])"
     >
     </v-checkbox>
   </div>
@@ -19,9 +19,17 @@ export default {
       required: true,
     },
     options: {
-      type: Object,
+      type: Array,
       required: true,
-    }
+    },
+    id: {
+      type: String | Number,
+      default: 'id'
+    },
+    label: {
+      type: String | Number,
+      default: 'label'
+    },
   },
 
   methods: {
@@ -38,17 +46,16 @@ export default {
       let newArr = [...this.value]
       if(value){
         newArr.push(id)
-        this.$emit('input', newArr)
       }
       else{
         for(let i in newArr){
           if(newArr[i] == id){
             newArr.splice(i, 1)
-            this.$emit('input', newArr)
             break
           }
         }
       }
+      this.$emit('input', newArr)
 
     }
   }

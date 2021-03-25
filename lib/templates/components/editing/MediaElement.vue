@@ -32,7 +32,7 @@
       </v-img>
 
       <!-- If the media is not avaible, it shows a btn to add new media -->
-      <v-btn
+      <v-card
         v-else-if="!rmAddBtn"
         v-bind="{
           height,
@@ -44,10 +44,23 @@
         }"
         :dark="dark"
         :light="!dark"
-        @click="editing = true"
       >
-        <v-icon x-large>mdi-plus-box</v-icon>
-      </v-btn>
+        <v-card-title>Media Element</v-card-title>
+
+        <v-card-actions>
+
+          <v-btn
+            @click="editing = true"
+            block
+            outlined 
+            :min-height="minHeight"
+          >
+            <v-icon size="80">
+              mdi-plus-circle-outline
+            </v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
 
 
       <!-- Shows darkening overlay on image with buttons on top while hovered -->
@@ -154,11 +167,11 @@ export default {
     },
     height: {
       type: String | Number,
-      default: undefined,
+      default: "100%",
     },
     width: {
       type: String | Number,
-      default: undefined,
+      default: "100%",
     },
     maxWidth: {
       type: String | Number,
@@ -174,7 +187,7 @@ export default {
     },
     minHeight: {
       type: String | Number,
-      default: undefined,
+      default: 300,
     },
   },
 

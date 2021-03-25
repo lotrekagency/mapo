@@ -7,7 +7,7 @@
     </v-row>
 
     <v-row>
-      <M2m v-model="ids" :options="object" />
+      <M2m v-model="ids" :options="options" id="codice" label="testo" />
     </v-row>
 
     <v-row class="my-4">
@@ -19,7 +19,9 @@
     </v-row>
 
     <v-row class="justify-center">
-      <MediaElement dark :max-height="300" :max-width="300" v-model="fakeMedia"/>
+      <v-col>
+        <MediaElement dark  v-model="fakeMedia"/>
+      </v-col>
     </v-row>
     <v-row class="my-6"></v-row>
     <v-row>
@@ -35,7 +37,10 @@
       </media-manager-dialog>
     </v-row>
     <v-row>
-      <MediaCarousel dark :rows="2" :cols="2" v-model="medias"/>
+      <v-col>
+
+        <MediaCarousel dark :rows="3" :cols="2" v-model="medias"/>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -58,12 +63,12 @@ export default {
       ],
       medias: [],
 
-      ids: [],
-      object: {
-        4: 'ciao',        
-        10: 'testo1',        
-        30: 'prova',        
-      }
+      ids: [4],
+      options: [
+        {codice: 4, testo: 'ciao'},        
+        {codice: 10, testo: 'prova'},        
+        {codice: 20, testo: 'test'},        
+      ]
     };
 
   },

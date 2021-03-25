@@ -1,8 +1,6 @@
 <template>
   <div>
     <v-card
-      :min-width="minWidth"
-      :min-height="minHeight"
       v-bind="{
         minWidth,
         minHeight,
@@ -15,19 +13,23 @@
         light: !dark,
       }"
     >
+      <v-card-title v-if="!pages">Media Carousel</v-card-title>
       <v-card-actions>
-        <v-row justify="center" class="ma-1">
-          <v-btn
-            @click="mmdialog = true"
-            block
-            outlined 
-            :min-height="pages ? undefined : minHeight"
-          >
-            <div v-if="pages">New Selection</div>
-            <v-icon v-else size="80">
-              mdi-plus-circle-outline
-            </v-icon>
-          </v-btn >
+        <v-row justify="center" class="ma-1" no-gutters>
+          <v-col>
+
+            <v-btn
+              @click="mmdialog = true"
+              block
+              outlined 
+              :min-height="pages ? undefined : minHeight"
+            >
+              <div v-if="pages">New Selection</div>
+              <v-icon v-else size="80">
+                mdi-plus-circle-outline
+              </v-icon>
+            </v-btn >
+          </v-col>
         </v-row>
       </v-card-actions>
 
@@ -141,11 +143,11 @@ export default {
     //reflections
     minWidth: {
       type: Number | String,
-      default: 500,
+      default: 300,
     },
     minHeight: {
       type: Number | String,
-      default: 500,
+      default: 300,
     },
     height: {
       type: Number | String,
