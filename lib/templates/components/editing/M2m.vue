@@ -1,9 +1,11 @@
 <template>
-  <div style="background: black">
+  <div>
     <v-checkbox
       v-for="(option, index) in options" :key="index"
       :label="option[label]"
       :input-value="isSelected(option[id])"
+      :light="!dark"
+      :dark="dark"
       @change="changed($event, option[id])"
     >
     </v-checkbox>
@@ -30,6 +32,10 @@ export default {
       type: String | Number,
       default: 'label'
     },
+    dark: {
+      type: Boolean,
+      default: false,
+    }
   },
 
   methods: {

@@ -36,10 +36,10 @@
         </template>
       </media-manager-dialog>
     </v-row>
-    <v-row>
-      <v-col>
+    <v-row justify="center">
+      <v-col cols="7">
 
-        <MediaCarousel dark :rows="3" :cols="2" v-model="medias"/>
+        <MediaCarousel dark :rows="2" :cols="2" v-model="medias"/>
       </v-col>
     </v-row>
   </v-container>
