@@ -162,7 +162,7 @@ export default {
     },
     parentFolder: {
       type: Object,
-      default: {},
+      default: () => ({}),
     },
   },
   methods: {

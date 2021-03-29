@@ -149,6 +149,7 @@ export default {
     medias: {
       type: Array,
       required: true,
+      default: () => ({}),
     },
     page: {
       type: Number,

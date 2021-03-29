@@ -121,8 +121,8 @@ export default {
     },
   },
   methods: {
-    getRoot: async function (info) {
-      const { page, folder } = info || {};
+    getRoot: async function (context) {
+      const { page, folder } = context || {};
       const { id } = folder || this.parentFolder || {};
       let response;
       this.page = page || this.page;
@@ -169,13 +169,12 @@ export default {
           })
         );
     },
-
     processResponse(resp) {
-      this.medias = resp.media.items;
-      this.folders = resp.folders;
-      this.parentFolder = resp.parent_folder;
-      this.page = resp.media.paginator.page;
-      this.pages = resp.media.paginator.page_range.pop();
+      this.medias = resp?.media?.items || [];
+      this.folders = resp?.folders || [];
+      this.parentFolder = resp?.parent_folder;
+      this.page = resp?.media?.paginator?.page;
+      this.pages = resp?.media?.paginator?.page_range?.pop();
     },
     selectionChange(event) {
       this.$emit("selectionChange", event);
