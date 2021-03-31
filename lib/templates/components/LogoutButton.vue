@@ -8,9 +8,8 @@
 <script>
 export default {
   methods: {
-    async logout() {
-      await this.$store.dispatch("mapo/user/logout");
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+    logout() {
+      this.$store.dispatch("mapo/user/logout");
     },
   },
 };
