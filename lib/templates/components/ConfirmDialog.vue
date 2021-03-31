@@ -1,14 +1,13 @@
 <template>
   <div>
     <slot v-bind="{ on, attrs }" name="activator"></slot>
-    <v-dialog v-model="dialog" width="800">
+    <v-dialog v-model="dialog" width="350">
       <v-card v-bind="$attrs">
         <v-card-title class="headline">{{question}}</v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="close">Cancel</v-btn>
           <v-btn text @click="accept">OK</v-btn>
-          <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -46,8 +45,8 @@ export default {
     dialog(val) {
       this.$emit("input", val);
       this.$emit(val ? "open" : "close");
-      if (!val && this.reject) {
-        this.reject();
+      if (!val && this.resolve) {
+        this.resolve(null);
       }
     },
   },

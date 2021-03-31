@@ -35,7 +35,12 @@ export default {
     };
   },
   props: {
-    title: String
+    title: {
+      type: String,
+      default(){
+        return this.$route.name
+      }
+    }
   },
   mounted: function () {
 

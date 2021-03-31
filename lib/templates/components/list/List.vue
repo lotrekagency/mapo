@@ -1,24 +1,43 @@
 <template>
   <div class="list__outer">
     <ListHead :title="pageTitle" />
-    <ListTabs :tabActive='tabActiveStatus' />
+    <ListTabs :tabActive="tabActiveStatus" />
 
     <div class="list__pretabs">
-      <ListActions :actionStatus='actionStatus' :filterStatus='filterStatus' />
-      <div class="list__counter">
-        6 elementi
+      <div class="list__actions">
+        <ListActions
+          v-bind="$attrs"
+          :crud="crud"
+          :selection="selection"
+          @actionCompleted="refresh"
+        />
+        <ListFilters />
       </div>
     </div>
-
-    <div class="list__core">
-      <ListTable />
+    <div v-if="selection.length" class="list__counter">
+      {{ selection.length }} elementi selezionati
     </div>
-
+    <div class="list__core">
+      <ListTable
+        v-model="selection"
+        v-bind="$attrs"
+        v-on="$listeners"
+        :crud="crud"
+        ref="dtable"
+      >
+        <template v-for="(_, slot) in $slots" :slot="slot">
+          <slot :name="slot"></slot>
+        </template>
+        <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+          <slot :name="slot" v-bind="props" />
+        </template>
+      </ListTable>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import '~mapomodule/assets/variables.scss';
+@import "~mapomodule/assets/variables.scss";
 
 .list {
   &__outer {
@@ -35,29 +54,57 @@
     margin-left: 1rem;
     font-size: 0.9rem;
   }
+  &__actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    &__group {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-right: 2rem;
+      & > * {
+        margin-right: 0.5rem;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
 }
 </style>
 
 <script>
-// •  tabActiveStatus sta ad evidenziare quale dei 3 tab è attivo
-//    1 corrisponde a Tutto, 2 a Pubblicato, 3 a Cestinato
-//
-// •  actionStatus & filterStatus sono gli switcher per
-//    abilitare o disabilitare le azioni di gruppo e i filtri
-//    presenti nel componente ListActions
-//
-// •  pageTitle mi identifica il titolo della pagina dove sarà 
-//    utilizzato il componente List
 export default {
   data() {
     return {
       tabActiveStatus: 1,
-      actionStatus: true,
-      filterStatus: true
+      selection: [],
     };
   },
   props: {
-    pageTitle: String
-  }
+    pageTitle: String,
+    http: Boolean,
+    endpoint: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    crud() {
+      return this.$mapo.$api.crud(this.endpoint);
+    },
+  },
+  watch: {
+    selection(val) {
+      this.$emit("selectionChange", val);
+    },
+  },
+  methods: {
+    refresh() {
+      return this.$refs.dtable.getDataFromApi();
+    },
+  },
+  mounted() {},
 };
 </script>
