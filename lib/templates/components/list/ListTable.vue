@@ -5,6 +5,7 @@
       v-bind="$attrs"
       :items="items"
       :loading="loading"
+      :options.sync="options"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -65,6 +66,7 @@ export default {
     items: [],
     loading: true,
     selection: [],
+    options: {},
   }),
   props: {
     crud: {
@@ -88,8 +90,26 @@ export default {
     selection(val) {
       this.$emit("input", val);
     },
+    options(option) {
+      const { sortBy, sortDesc, page } = option;
+      const sort = sortBy.length ? sortBy.join(".") : undefined;
+      const order = sortDesc.length ? sortDesc.map((e) => (e ? "desc" : "asc")).join(".") : undefined;
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          page: page !== 1 ? page : undefined,
+          sort, order,
+        },
+      });
+    },
   },
   mounted() {
+    this.options = {
+      ...this.options,
+      sortBy: this.$route.query.sort?.split(".") || [],
+      sortDesc:
+        this.$route.query.order?.split(".").map((e) => e == "desc") || [],
+    };
     this.getDataFromApi();
   },
 

@@ -27,6 +27,7 @@ export default {
           value: "id",
         },
         { text: "Title", value: "title" },
+        { text: "Identifier", value: "identifier" },
         { text: "Actions", value: "actions", sortable: false },
       ],
       editFields: [
