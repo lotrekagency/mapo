@@ -13,6 +13,10 @@
             <v-icon small left class="mr-2"> mdi-plus </v-icon>
             Quick add
           </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn class="ma-2" @click="getDataFromApi" icon>
+            <v-icon>mdi-update</v-icon>
+          </v-btn>
         </v-toolbar>
       </template>
       <template v-if="navigable" v-slot:[`item.${firstColName}`]="{ item }">
@@ -93,12 +97,15 @@ export default {
     options(option) {
       const { sortBy, sortDesc, page } = option;
       const sort = sortBy.length ? sortBy.join(".") : undefined;
-      const order = sortDesc.length ? sortDesc.map((e) => (e ? "desc" : "asc")).join(".") : undefined;
+      const order = sortDesc.length
+        ? sortDesc.map((e) => (e ? "desc" : "asc")).join(".")
+        : undefined;
       this.$router.push({
         query: {
           ...this.$route.query,
           page: page !== 1 ? page : undefined,
-          sort, order,
+          sort,
+          order,
         },
       });
     },
