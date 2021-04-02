@@ -3,9 +3,10 @@
     <v-data-table
       v-model="selection"
       v-bind="$attrs"
-      :items="filteredItems"
+      :items="http ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
+      :server-items-length="httpPaginator.count || -1"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -76,6 +77,7 @@ export default {
     loading: true,
     selection: [],
     options: {},
+    httpPaginator: {},
   }),
   props: {
     crud: {
@@ -103,23 +105,12 @@ export default {
     selection(val) {
       this.$emit("input", val);
     },
-    filters(val) {
-      this.filterData(val);
+    filters() {
+      this.http && this.getDataFromApi();
     },
-    options(option) {
-      const { sortBy, sortDesc, page } = option;
-      const sort = sortBy.length ? sortBy.join(".") : undefined;
-      const order = sortDesc.length
-        ? sortDesc.map((e) => (e ? "desc" : "asc")).join(".")
-        : undefined;
-      this.$router.push({
-        query: {
-          ...this.$route.query,
-          page: page !== 1 ? page : undefined,
-          sort,
-          order,
-        },
-      });
+    options(options) {
+      this.setQparams(options);
+      this.http && this.getDataFromApi()
     },
   },
   mounted() {
@@ -137,19 +128,45 @@ export default {
       return new Promise((resolve, reject) => {
         this.selection = [];
         this.loading = true;
-        this.crud
-          .list()
-          .then((data) => {
-            this.items = data;
-            this.loading = false;
-            resolve(data);
-          })
-          .catch((error) => reject(error));
+        if (!this.http) {
+          this.crud.list().then((data) => {
+              this.items = data;
+              this.loading = false;
+              resolve(data);
+            })
+            .catch((error) => reject(error));
+        } else {
+          const params = this.getHttpParams()
+          this.crud.list({ params }).then((data) => {
+              this.items = data.items;
+              this.httpPaginator = data.paginator;
+              this.loading = false;
+              resolve(data);
+            })
+            .catch((error) => reject(error));
+        }
       });
     },
-    filterData(filters) {
-      filters.reduce((query, filter) => {}, {});
-      // TODO generate query to filter backend
+    setQparams(options) {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          ...this.getOrderParams(options),
+        },
+      });
+    },
+    getOrderParams(options) {
+      const { sortBy, sortDesc, page, itemsPerPage } = options;
+      const sort = sortBy.length ? sortBy.join(".") : undefined;
+      const order = sortDesc.length
+        ? sortDesc.map((e) => (e ? "desc" : "asc")).join(".")
+        : undefined;
+      return { sort, order, items: itemsPerPage, page: page !== 1 ? page : undefined };
+    },
+    getHttpParams() {
+      const filterParams = this.filters.reduce((query, filter) => {}, {});
+      const orderParams = this.getOrderParams(this.options);
+      return { ...filterParams, ...orderParams };
     },
     editItem(item) {
       this.$refs.editModal.open(item).then((r) => r && this.getDataFromApi());

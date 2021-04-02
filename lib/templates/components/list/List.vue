@@ -56,7 +56,6 @@ export default {
   },
   props: {
     pageTitle: String,
-    http: Boolean,
     endpoint: {
       type: String,
       required: true,
