@@ -7,6 +7,7 @@
           show-select
           :headers="headers"
           :editFields="editFields"
+          :filters="availableFilters" 
           endpoint="api/camomilla/articles"
         >
         </List>
@@ -34,6 +35,96 @@ export default {
         { attrs: { rules:[v => !!v || 'Title is required'] }, value: "title" },
         { attrs: { rules:[v => !!v || 'Permalink is required'] }, value: "permalink" },
         { attrs: { rules:[v => !!v || 'Identifier is required'] }, value: "identifier" },
+      ],
+      availableFilters: [
+        {
+          text: "Status",
+          value: "status",
+          choices: [
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+            { text: "Trash", value: "TRS" },
+          ],
+        },
+        {
+          text: "Title",
+          value: "title",
+          multiple: true,
+          choices: [
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+            { text: "Trash", value: "TRS" },
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+            { text: "Trash", value: "TRS" },
+            { text: "Draft", value: "DRF" },
+          ],
+        },
+        {
+          text: "Author",
+          value: "author",
+          choices: [
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+            { text: "Trash", value: "TRS" },
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+            { text: "Trash", value: "TRS" },
+          ],
+        },
+        {
+          text: "Designer",
+          value: "designer",
+          choices: [
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+            { text: "Trash", value: "TRS" },
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+            { text: "Trash", value: "TRS" },
+            { text: "Draft", value: "DRF" },
+          ],
+        },
+        {
+          text: "AAAAA",
+          value: "aaaa",
+          choices: [
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+
+            
+          ],
+        },
+        {
+          text: "BBBBB",
+          value: "bbbbb",
+          choices: [
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+
+            
+          ],
+        },
+        {
+          text: "CCCCC",
+          value: "ccccc",
+          choices: [
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+
+            
+          ],
+        },
+        {
+          text: "DDDDD",
+          value: "ddddd",
+          choices: [
+            { text: "Draft", value: "DRF" },
+            { text: "Published", value: "PUB" },
+
+            
+          ],
+        },
       ],
 
     };

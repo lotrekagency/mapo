@@ -1,23 +1,34 @@
 <template>
-  <div class="list__outer">
+  <div>
     <ListHead :title="pageTitle" />
     <ListTabs :tabActive="tabActiveStatus" />
 
-    <div class="list__pretabs">
-      <div class="list__actions">
-        <ListActions
-          v-bind="$attrs"
-          :crud="crud"
-          :selection="selection"
-          @actionCompleted="refresh"
-        />
-        <ListFilters />
-      </div>
+    <div>
+        <v-row class="mb-4">
+          <v-col cols="12" md="4">
+            <ListActions
+              v-bind="$attrs"
+              :crud="crud"
+              :selection="selection"
+              @actionCompleted="refresh"
+            />
+          </v-col>
+          <v-col cols="12" md="8">
+            <ListFilters v-bind="$attrs" @filterChange="log">
+              <template v-for="(_, slot) in $slots" :slot="slot">
+                <slot :name="slot"></slot>
+              </template>
+              <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+                <slot :name="slot" v-bind="props" />
+              </template>
+            </ListFilters>
+          </v-col>
+        </v-row>
     </div>
-    <div v-if="selection.length" class="list__counter">
+    <div v-if="selection.length">
       {{ selection.length }} elementi selezionati
     </div>
-    <div class="list__core">
+    <div>
       <ListTable
         v-model="selection"
         v-bind="$attrs"
@@ -35,44 +46,6 @@
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "~mapomodule/assets/variables.scss";
-
-.list {
-  &__outer {
-    color: $b-1;
-    margin: 2rem;
-  }
-  &__pretabs {
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  &__counter {
-    margin-left: 1rem;
-    font-size: 0.9rem;
-  }
-  &__actions {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    &__group {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      margin-right: 2rem;
-      & > * {
-        margin-right: 0.5rem;
-      }
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-}
-</style>
 
 <script>
 export default {
@@ -104,6 +77,9 @@ export default {
     refresh() {
       return this.$refs.dtable.getDataFromApi();
     },
+    log(val){
+      console.log(val)
+    }
   },
   mounted() {},
 };

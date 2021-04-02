@@ -14,10 +14,13 @@
             Quick add
           </v-btn>
           <v-spacer></v-spacer>
+          <slot name="dtable.top.center"></slot>
+          <v-spacer></v-spacer>
           <v-btn class="ma-2" @click="getDataFromApi" icon>
             <v-icon>mdi-update</v-icon>
           </v-btn>
         </v-toolbar>
+        <slot name="dtable.top.under"></slot>
       </template>
       <template v-if="navigable" v-slot:[`item.${firstColName}`]="{ item }">
         <NuxtLink :to="detailLink(item)">

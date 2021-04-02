@@ -1,16 +1,15 @@
 <template>
-  <div v-if="isActive" class="list__actions__group">
+  <div v-if="isActive" class="d-flex flex-row align-center fill-height">
     <v-select
-      label="Azioni di gruppo"
+      label="Group Actions"
+      v-bind="$attrs"
       v-model="action"
       :items="actions"
-      v-bind="$attrs"
       item-text="label"
       item-value="handler"
       outlined
       dense
       hide-details
-      light
     ></v-select>
     <v-btn
       class="rounded-0 elevation-0 ml-2"
@@ -18,7 +17,7 @@
       color="primary"
       :disabled="!action"
       @click="handleAction"
-      >Applica</v-btn
+      >Apply</v-btn
     >
   </div>
 </template>
