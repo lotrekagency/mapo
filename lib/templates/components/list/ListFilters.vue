@@ -15,7 +15,7 @@
                 class="ma-1"
                 close
                 label
-                @click:close="removeFilter(i)"
+                @click:close="removeFilter(filter)"
                 v-for="(filter, i) in activeFilters"
                 :key="i"
               >
@@ -31,17 +31,29 @@
         </v-row>
       </template>
 
-      <v-list v-if="!loading">
+      <v-list>
         <div v-for="(filter, index) in compFilters" :key="index">
           <slot
             :name="`filter.${filter.value}`"
-            v-bind="{ filter, addFilter, removeFilterChoice, toggleChoice, activeFilters }"
+            v-bind="{
+              filter,
+              addFilter,
+              removeFilterChoice,
+              toggleChoice,
+              activeFilters,
+            }"
           >
             <v-list-group>
               <v-list-item-title slot="activator">
                 <slot
                   :name="`filter.${filter.value}.title`"
-                  v-bind="{ filter, addFilter, removeFilterChoice, toggleChoice, activeFilters }"
+                  v-bind="{
+                    filter,
+                    addFilter,
+                    removeFilterChoice,
+                    toggleChoice,
+                    activeFilters,
+                  }"
                 >
                   {{ filter.text }}
                 </slot>
@@ -49,9 +61,24 @@
 
               <slot
                 :name="`filter.${filter.value}.content`"
-                v-bind="{ filter, addFilter, removeFilterChoice, toggleChoice, activeFilters }"
+                v-bind="{
+                  filter,
+                  addFilter,
+                  removeFilterChoice,
+                  toggleChoice,
+                  activeFilters,
+                }"
               >
-                <v-list class="overflow-y-auto" max-height="200" dense>
+                <div class="d-flex justify-center fit-content" v-if="filter.datepicker">
+                  <v-date-picker
+                    @input="addDateFilter(filter)"
+                    v-model="filter.dates"
+                    range
+                    full-width
+                  >
+                  </v-date-picker>
+                </div>
+                <v-list v-else class="overflow-y-auto" max-height="200" dense>
                   <v-list-item
                     v-for="(choice, i) in filter.choices"
                     :key="i"
@@ -88,8 +115,12 @@
 
 <style lang="scss">
 .v-slide-group__prev--disabled,
-.v-slide-group__next--disabled {
+.v-slide-group__next--disabled,
+.v-picker__title.primary {
   display: none;
+}
+.fit-content{
+  max-width: fit-content;
 }
 </style>
 
@@ -101,7 +132,6 @@ export default {
     return {
       compFilters: [],
       activeFilters: [],
-      loading: true,
     };
   },
   props: {
@@ -111,7 +141,23 @@ export default {
     },
   },
   methods: {
-    removeFilter(i) {
+    addDateFilter(filter) {
+      const { dates } = filter;
+      if (dates && dates.length > 1) {
+        this.addFilter(filter, {
+          text: dates.join(" ~ "),
+          value: dates.join(","),
+        });
+      } else if (!dates || !dates.length) {
+        this.removeFilter(filter);
+      }
+    },
+    removeFilter(filter) {
+      if (filter.datepicker) {
+        const idx = this.compFilters.findIndex((f) => f.value === filter.value);
+        this.compFilters[idx].dates = undefined;
+      }
+      const i = this.activeFilters.findIndex((f) => f.value === filter.value);
       this.activeFilters.splice(i, 1);
     },
     toggleChoice(filter, choice) {
@@ -146,7 +192,7 @@ export default {
         );
         if (chI !== -1) {
           return;
-        } else if (filter.multiple) {
+        } else if (filter.multiple && !filter.datepicker) {
           this.activeFilters[index].active.push(choice);
         } else {
           this.activeFilters[index].active = [choice];
@@ -181,10 +227,17 @@ export default {
       Object.keys(this.$route.query).forEach((k) => {
         const index = this.compFilters.findIndex((f) => f.value == k);
         if (index !== -1) {
-          this.compFilters[index].choices.forEach((c) => {
-            this.$route.query[k].split(",").includes(c.value + "") &&
-              this.addFilter(this.compFilters[index], c);
-          });
+          let filter = this.compFilters[index];
+          if (filter.datepicker) {
+            filter = { ...filter };
+            filter.dates = [...this.$route.query[k].split(",")];
+            this.addDateFilter(filter);
+          } else {
+            filter.choices.forEach((c) => {
+              this.$route.query[k].split(",").includes(c.value + "") &&
+                this.addFilter(filter, c);
+            });
+          }
         }
       });
       this.compFilters = this.compFilters.slice();
@@ -202,7 +255,6 @@ export default {
   mounted() {
     this.compFilters = this.filters;
     this.restoreFromQparams();
-    this.loading = false;
   },
 };
 </script>
