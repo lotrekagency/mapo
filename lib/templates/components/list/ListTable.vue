@@ -3,7 +3,7 @@
     <v-data-table
       v-model="selection"
       v-bind="$attrs"
-      :items="items"
+      :items="filteredItems"
       :loading="loading"
       :options.sync="options"
     >
@@ -68,6 +68,8 @@
 
 
 <script>
+import { getPointed } from "~mapomodule/utils/objHelpers";
+
 export default {
   data: () => ({
     items: [],
@@ -92,10 +94,17 @@ export default {
         return { path: `${this.$route.path}/${item[this.lookup]}` };
       },
     },
+    filters: {
+      type: Array,
+      default: () => [],
+    },
   },
   watch: {
     selection(val) {
       this.$emit("input", val);
+    },
+    filters(val) {
+      this.filterData(val);
     },
     options(option) {
       const { sortBy, sortDesc, page } = option;
@@ -138,6 +147,10 @@ export default {
           .catch((error) => reject(error));
       });
     },
+    filterData(filters) {
+      filters.reduce((query, filter) => {}, {});
+      // TODO generate query to filter backend
+    },
     editItem(item) {
       this.$refs.editModal.open(item).then((r) => r && this.getDataFromApi());
     },
@@ -153,6 +166,30 @@ export default {
     },
   },
   computed: {
+    filteredItems() {
+      return this.filters.reduce(
+        (result, filter) => {
+          let handler;
+          if (filter.datepicker) {
+            handler = (el, filter) => (choice) => {
+              let date = getPointed(el, filter.value, ""),
+                dateObj = date && new Date(date).getTime(),
+                range = choice.value.split(",").map((v, i) => {
+                  let d = new Date(v);
+                  d.setDate(d.getDate() + i);
+                  return d;
+                });
+              return dateObj && dateObj >= range[0] && dateObj <= range[1];
+            };
+          } else {
+            handler = (el, filter) => (choice) =>
+              getPointed(el, filter.value, "") === choice.value;
+          }
+          return result.filter((el) => filter.active.some(handler(el, filter)));
+        },
+        [...this.items]
+      );
+    },
     firstColName() {
       return (
         this.$attrs.headers &&

@@ -1,7 +1,6 @@
 <template>
   <div>
     <ListHead :title="pageTitle" />
-    <ListTabs :tabActive="tabActiveStatus" />
 
     <div>
         <v-row class="mb-4">
@@ -14,7 +13,7 @@
             />
           </v-col>
           <v-col cols="12" md="8">
-            <ListFilters v-bind="$attrs" @filterChange="log">
+            <ListFilters v-bind="$attrs" v-model="filters">
               <template v-for="(_, slot) in $slots" :slot="slot">
                 <slot :name="slot"></slot>
               </template>
@@ -31,9 +30,8 @@
     <div>
       <ListTable
         v-model="selection"
-        v-bind="$attrs"
+        v-bind="{...$attrs, crud, filters}"
         v-on="$listeners"
-        :crud="crud"
         ref="dtable"
       >
         <template v-for="(_, slot) in $slots" :slot="slot">
@@ -53,6 +51,7 @@ export default {
     return {
       tabActiveStatus: 1,
       selection: [],
+      filters: []
     };
   },
   props: {
@@ -77,9 +76,6 @@ export default {
     refresh() {
       return this.$refs.dtable.getDataFromApi();
     },
-    log(val){
-      console.log(val)
-    }
   },
   mounted() {},
 };

@@ -47,8 +47,8 @@ export default {
           ],
         },
         {
-          text: "Pubblication date",
-          value: "pubblication",
+          text: "Date",
+          value: "date",
           datepicker: true,
         },
         {

@@ -247,7 +247,7 @@ export default {
     activeFilters: {
       deep: true,
       handler: debounce(function (val) {
-        this.$emit("filterChange", val);
+        this.$emit("input", val);
         this.setQparams(val);
       }, 200),
     },
