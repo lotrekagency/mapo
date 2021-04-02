@@ -83,6 +83,7 @@
                     v-for="(choice, i) in filter.choices"
                     :key="i"
                     class="v-list-item--link"
+                    active-class="primary--text"
                     :input-value="isChoiceActive(filter, choice)"
                     @click.native.stop="toggleChoice(filter, choice)"
                   >
