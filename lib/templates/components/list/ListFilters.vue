@@ -35,13 +35,13 @@
         <div v-for="(filter, index) in compFilters" :key="index">
           <slot
             :name="`filter.${filter.value}`"
-            v-bind="{ filter, addFilter, activeFilters }"
+            v-bind="{ filter, addFilter, removeFilterChoice, toggleChoice, activeFilters }"
           >
             <v-list-group>
               <v-list-item-title slot="activator">
                 <slot
                   :name="`filter.${filter.value}.title`"
-                  v-bind="{ filter, addFilter, activeFilters }"
+                  v-bind="{ filter, addFilter, removeFilterChoice, toggleChoice, activeFilters }"
                 >
                   {{ filter.text }}
                 </slot>
@@ -49,7 +49,7 @@
 
               <slot
                 :name="`filter.${filter.value}.content`"
-                v-bind="{ filter, addFilter, activeFilters }"
+                v-bind="{ filter, addFilter, removeFilterChoice, toggleChoice, activeFilters }"
               >
                 <v-list class="overflow-y-auto" max-height="200" dense>
                   <v-list-item
@@ -85,6 +85,7 @@
     </v-menu>
   </div>
 </template>
+
 <style lang="scss">
 .v-slide-group__prev--disabled,
 .v-slide-group__next--disabled {
