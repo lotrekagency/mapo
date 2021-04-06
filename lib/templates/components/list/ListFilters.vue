@@ -31,7 +31,7 @@
         </v-row>
       </template>
 
-      <v-list>
+      <v-list class="pa-0">
         <div v-for="(filter, index) in compFilters" :key="index">
           <slot
             :name="`filter.${filter.value}`"
@@ -69,19 +69,20 @@
                   activeFilters,
                 }"
               >
-                <div v-if="filter.datepicker" class="d-flex justify-center fit-content">
+                <div v-if="filter.datepicker" class="d-flex flex-column align-end justify-center fit-content pb-2">
                   <v-date-picker
                     @input="addDateFilter(filter)"
+                    class="rounded-0"
                     v-model="filter.dates"
                     range
                     full-width
                   >
                   </v-date-picker>
                   <v-btn
-                    class="datapicker-clear-btn"
+                    class="datapicker-clear-btn elevation-0"
                     @click="removeFilter(filter)"
                     small
-                    text
+                    tile
                     >clear</v-btn
                   >
                 </div>
@@ -131,9 +132,7 @@
   max-width: fit-content;
 }
 .datapicker-clear-btn {
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
+  margin: -20px 15px 0 0 ;
 }
 </style>
 
