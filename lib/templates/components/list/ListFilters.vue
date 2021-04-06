@@ -86,7 +86,7 @@
                     >clear</v-btn
                   >
                 </div>
-                <v-list v-else class="overflow-y-auto" max-height="200" dense>
+                <v-list v-else class="overflow-y-auto pa-0" max-height="200" dense>
                   <v-list-item
                     v-for="(choice, i) in filter.choices"
                     :key="i"
