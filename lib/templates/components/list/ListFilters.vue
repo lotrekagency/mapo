@@ -1,6 +1,6 @@
 <template>
   <div v-if="compFilters.length">
-    <v-menu offset-y nudge-right="380px" max-width="400px" tile :close-on-content-click="false" v-bind="{...$attrs, value: null}">
+    <v-menu offset-y nudge-right="380px" max-width="400px" tile :close-on-content-click="false" v-bind="{ ...$attrs, value: null }" >
       <template v-slot:activator="{ on }">
         <v-row class="flex-sm-row-reverse">
           <v-col cols="12" sm="3" class="d-flex justify-end align-center">
@@ -69,7 +69,7 @@
                   activeFilters,
                 }"
               >
-                <div class="d-flex justify-center fit-content" v-if="filter.datepicker">
+                <div v-if="filter.datepicker" class="d-flex justify-center fit-content">
                   <v-date-picker
                     @input="addDateFilter(filter)"
                     v-model="filter.dates"
@@ -77,6 +77,13 @@
                     full-width
                   >
                   </v-date-picker>
+                  <v-btn
+                    class="datapicker-clear-btn"
+                    @click="removeFilter(filter)"
+                    small
+                    text
+                    >clear</v-btn
+                  >
                 </div>
                 <v-list v-else class="overflow-y-auto" max-height="200" dense>
                   <v-list-item
@@ -117,11 +124,16 @@
 <style lang="scss">
 .v-slide-group__prev--disabled,
 .v-slide-group__next--disabled,
-.v-picker__title.primary {
+.v-picker__title {
   display: none;
 }
-.fit-content{
+.fit-content {
   max-width: fit-content;
+}
+.datapicker-clear-btn {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
 }
 </style>
 
@@ -156,7 +168,7 @@ export default {
     removeFilter(filter) {
       if (filter.datepicker) {
         const idx = this.compFilters.findIndex((f) => f.value === filter.value);
-        this.compFilters[idx].dates = undefined;
+        if (this.compFilters[idx].dates) this.compFilters[idx].dates = [];
       }
       const i = this.activeFilters.findIndex((f) => f.value === filter.value);
       this.activeFilters.splice(i, 1);
@@ -241,7 +253,6 @@ export default {
           }
         }
       });
-      this.compFilters = this.compFilters.slice();
     },
   },
   watch: {
