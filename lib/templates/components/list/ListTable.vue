@@ -105,24 +105,20 @@ export default {
     selection(val) {
       this.$emit("input", val);
     },
-    filters() {
-      this.http && this.getDataFromApi();
+    filters:{
+      deep: true,
+      handler(){
+        this.http && this.getDataFromApi();
+      }
     },
-    options(options) {
-      this.setQparams(options);
-      this.http && this.getDataFromApi()
-    },
+    options: {
+      deep: true,
+      handler(options) {
+        this.setQparams(options);
+        this.http && this.getDataFromApi()
+      },
+    }
   },
-  mounted() {
-    this.options = {
-      ...this.options,
-      sortBy: this.$route.query.sort?.split(".") || [],
-      sortDesc:
-        this.$route.query.order?.split(".").map((e) => e == "desc") || [],
-    };
-    this.getDataFromApi();
-  },
-
   methods: {
     getDataFromApi() {
       return new Promise((resolve, reject) => {
@@ -155,6 +151,14 @@ export default {
         },
       });
     },
+    restoreFromQparams(){
+      this.options = {
+        ...this.options,
+        sortBy: this.$route.query.sort?.split(".") || [],
+        sortDesc: this.$route.query.order?.split(".").map((e) => e == "desc") || [],
+        itemsPerPage: parseInt(this.$route.query.items) || 10,
+      };
+    },
     getOrderParams(options) {
       const { sortBy, sortDesc, page, itemsPerPage } = options;
       const sort = sortBy.length ? sortBy.join(".") : undefined;
@@ -164,9 +168,24 @@ export default {
       return { sort, order, items: itemsPerPage, page: page !== 1 ? page : undefined };
     },
     getHttpParams() {
-      const filterParams = this.filters.reduce((query, filter) => {}, {});
-      const orderParams = this.getOrderParams(this.options);
-      return { ...filterParams, ...orderParams };
+      const params = new URLSearchParams();
+      for (const [key, value] of Object.entries(this.getOrderParams(this.options))) {
+        value !== undefined && params.append(key, value)
+      }
+      this.filters.forEach(fi => {
+        const query = []
+        const format = (val) => val.replaceAll('.', '__')
+        if (fi.datepicker){
+          const dates = fi.active[0].value.split(',')
+          query.push(`${format(fi.value)}__gte=${dates[0]}`, `${format(fi.value)}__lte=${dates[1]}`)
+        } else if (fi.active.length > 1) {
+          query.push(`${format(fi.value)}=[${ fi.active.map(a=>a.value).join(",")}]`)
+        } else {
+          query.push(`${format(fi.value)}=${ fi.active[0].value}`)
+        }
+        query.forEach(q => params.append('fltr', q)) 
+      })
+      return params;
     },
     editItem(item) {
       this.$refs.editModal.open(item).then((r) => r && this.getDataFromApi());
@@ -221,6 +240,10 @@ export default {
         (this.$attrs.editFields && this.$attrs.editFields.length)
       );
     },
+  },
+  mounted() {
+    this.restoreFromQparams()
+    this.http || this.getDataFromApi();
   },
 };
 </script>
