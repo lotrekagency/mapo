@@ -4,7 +4,6 @@
     <div ref="editorNode">
       <h3 class="tinymce-loading">Loading text editor..</h3>
       <v-skeleton-loader
-        v-bind="attrs"
         type="table-heading, list-item-two-line, list-item-avatar-two-line, list-item-three-lineimage, table-tfoot"
       ></v-skeleton-loader>
     </div>
