@@ -1,7 +1,13 @@
 <template>
   <div>
     <media-manager-dialog ref="mediaManager"></media-manager-dialog>
-    <textarea ref="editorNode"></textarea>
+    <div ref="editorNode">
+      <h3 class="tinymce-loading">Loading text editor..</h3>
+      <v-skeleton-loader
+        v-bind="attrs"
+        type="table-heading, list-item-two-line, list-item-avatar-two-line, list-item-three-lineimage, table-tfoot"
+      ></v-skeleton-loader>
+    </div>
   </div>
 </template>
 
@@ -53,7 +59,6 @@ export default {
 
   methods: {
     initEditor() {
-      this.$refs.editorNode.innerHTML = this.value;
       initMapoMedia(this.insertImgCallback);
       window.tinymce.init(
         Object.assign(defaults, this.conf, {
@@ -66,6 +71,7 @@ export default {
     setupEditor(editor) {
       this._editor = editor;
       editor.on("init", () => {
+        editor.setContent(this.value);
         this.emitContent(editor);
         editor.on("change input undo redo keyup", () =>
           this.emitContent(editor)
@@ -119,5 +125,12 @@ export default {
 .tox-notifications-container,
 .tox-statusbar__branding {
   display: none;
+}
+.tinymce-loading {
+  position: absolute;
+  z-index: 1;
+  width: calc(100% - 30px);
+  text-align: center;
+  margin-top: 115px;
 }
 </style>
