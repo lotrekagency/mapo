@@ -1,14 +1,13 @@
-const path = require('path');
+const sidebar = require('./compose-sidenav')
 
 module.exports = {
-    title: '🥭  Mapo Mapo',
-    description: 'Just playing around',
-    plugins: [
-        // as we respect the naming convention vuepress-plugin-docgen you can juste docgen as name
-        [ 'docgen',
-          {
-            componentsDir: path.join(__dirname,'../../lib/templates/components')
-          }
-        ]
-      ]
+  title: "🥭  Mapo Mapo",
+  description: "Just playing around", 
+  themeConfig: {
+    nav: [
+      { text: 'Home', link: '/' },
+      { text: 'Components', link: '/components/' },
+    ],
+    sidebar: sidebar.getSidebar()
   }
+};
