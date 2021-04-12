@@ -52,7 +52,7 @@ import { buildRoutes } from "~mapomodule/utils/routebuilder";
 export default {
   data() {
     return {
-      defaultIcon: "mdi-chevron-right",
+      defaultIcon: ({label}) => `mdi-alpha-${label[0]}-box`.toLowerCase(),
       routes: this.routes,
     };
   },

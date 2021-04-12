@@ -12,6 +12,9 @@
 export default {
   data: () => ({
     detailType: 'page'
-  })
+  }),
+  meta: {
+    sidebarHide: true
+  }
 };
 </script>

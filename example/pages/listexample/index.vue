@@ -9,6 +9,7 @@
           :editFields="editFields"
           :filters="availableFilters" 
           endpoint="api/camomilla/articles"
+          navigable
         >
         </List>
       </v-col>
