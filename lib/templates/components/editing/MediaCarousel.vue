@@ -54,7 +54,7 @@
                   :aspect-ratio="1"
                   :dark="dark"
                   rm-add-btn
-                  @changed-media="checkMediaEdit($event, i, row, col)"
+                  @changed-media="checkDeletion($event, i, row, col)"
                 />
                 <div v-else class="placeholder"></div>
               </v-col>
@@ -214,16 +214,12 @@ export default {
       this.child_medias = [...selection];
       this.$emit("changed-selection", [...selection]);
     },
-    checkMediaEdit(event, page, row, col) {
+    checkDeletion(event, page, row, col) {
       //if event is not empty, then exit
-      console.log(event)
+      if (event) return;
+
       let index = this.mediasPerPage * page + this.getIndexFromGrid(row, col);
-      if (event) {
-        this.child_medias[index]=event
-      }
-      else{
-        this.child_medias.splice(index, 1);
-      }
+      this.child_medias.splice(index, 1);
       this.update(this.child_medias);
     },
     next() {
