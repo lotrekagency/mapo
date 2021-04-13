@@ -38,7 +38,7 @@ export default {
 
   data() {
     return {
-      _editor: null,
+      editorInstance: null,
       editorContent: "",
     };
   },
@@ -47,7 +47,7 @@ export default {
     editor: {
       cache: false,
       get() {
-        return this._editor;
+        return this.editorInstance;
       },
     },
   },
@@ -63,12 +63,12 @@ export default {
         Object.assign(defaults, this.conf, {
           target: this.$refs.editorNode,
           readonly: this.disabled,
-          setup: this.setupEditor,
+          setup: (ctx) => this.setupEditor(ctx),
         })
       );
     },
     setupEditor(editor) {
-      this._editor = editor;
+      this.editorInstance = editor;
       editor.on("init", () => {
         editor.setContent(this.value || "");
         this.emitContent(editor);
@@ -108,6 +108,7 @@ export default {
   watch: {
     value(val) {
       if (this.editor && this.editor.initialized && val !== this.editorContent) {
+        this.editorContent = val
         this.editor.setContent(val);
       }
     },
