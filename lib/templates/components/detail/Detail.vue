@@ -12,6 +12,7 @@
             class="mb-4"
             v-model="currentLang"
             :langs="langs"
+            :errors="errors"
           />
           <div v-for="(field, index) in mainFields" :key="index">
             <v-card v-if="field.group" class="my-2">
@@ -25,7 +26,11 @@
                   :key="subI"
                   class="mb-4"
                 >
-                  <Field v-model="model" :conf="parseConf(subField)" />
+                  <Field
+                    v-model="model"
+                    :conf="parseConf(subField)"
+                    :errors="errors"
+                  />
                 </div>
               </v-card-text>
             </v-card>
@@ -33,6 +38,7 @@
               v-else
               v-model="model"
               :conf="parseConf(field)"
+              :errors="errors"
             />
           </div>
         </v-col>
@@ -68,7 +74,11 @@
                   :key="subI"
                   class="mb-4"
                 >
-                  <Field v-model="model" :conf="parseConf(subField)" />
+                  <Field
+                    v-model="model"
+                    :conf="parseConf(subField)"
+                    :errors="errors"
+                  />
                 </div>
               </v-card-text>
             </v-card>
@@ -76,6 +86,7 @@
               v-else
               v-model="model"
               :conf="parseConf(field)"
+              :errors="errors"
             />
           </div>
         </v-col>
@@ -97,6 +108,7 @@ export default {
     return {
       model: {},
       currentLang: null,
+      errors: null,
     };
   },
   props: {
@@ -118,12 +130,13 @@ export default {
       this.crud
         .updateOrCreate(this.model)
         .then(() => back && this.$router.back())
-        .catch((error) =>
+        .catch((error) => {
+          this.errors = error.response.status == 400 && error.response.data;
           this.$mapo.$snack.open({
             message: "Something whent bad, please try again later...",
             color: "error",
-          })
-        );
+          });
+        });
     },
     deleteItem() {
       this.$refs.delModal.open().then((res) => {
@@ -141,7 +154,9 @@ export default {
       });
     },
     parseConf(field) {
-      return this.getTranslatedField(typeof field === 'string' ? { value: field } : field)
+      return this.getTranslatedField(
+        typeof field === "string" ? { value: field } : field
+      );
     },
     getTranslatedField(field) {
       if (!this.currentLang || field.synci18n) {

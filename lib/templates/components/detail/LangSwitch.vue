@@ -1,12 +1,16 @@
 <template>
   <v-tabs v-model="tab">
     <v-tab v-for="lang in langs" :key="lang">
-      {{ lang }}
+      <v-badge :value="hasErrors(lang)" color="error" dot>
+        {{ lang }}
+      </v-badge>
     </v-tab>
   </v-tabs>
 </template>
 
 <script>
+import { getPointed } from "~mapomodule/utils/objHelpers";
+
 export default {
   data() {
     return {
@@ -19,6 +23,7 @@ export default {
       type: Array,
       default: () => [],
     },
+    errors: Object,
   },
   computed: {
     currentLang() {
@@ -42,6 +47,14 @@ export default {
           query: { ...this.$route.query, lang: this.currentLang },
         });
       }
+    },
+    hasErrors(lang) {
+      const error = getPointed(
+        this.errors || {},
+        `translations.${lang}`,
+        false
+      );
+      return error && Object.keys(error).length;
     },
   },
   mounted() {

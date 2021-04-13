@@ -35,6 +35,7 @@ export default {
       type: Object,
       required: true,
     },
+    errors: Object,
     conf: {
       type: Object,
       required: true,
@@ -94,6 +95,7 @@ export default {
         label: this.label,
         itemText: "text",
         itemValue: "value",
+        errorMessages: getPointed(this.errors || {}, this.conf.value, []),
       };
       return { ...defaultProps, ...this.conf.attrs };
     },

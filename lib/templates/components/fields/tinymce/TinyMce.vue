@@ -7,6 +7,9 @@
         type="table-heading, list-item-two-line, list-item-avatar-two-line, list-item-three-lineimage, table-tfoot"
       ></v-skeleton-loader>
     </div>
+    <div class="mt-2">
+      <v-messages :value="errorMessages" color="error"></v-messages>
+    </div>
   </div>
 </template>
 
@@ -27,6 +30,7 @@ export default {
       default: () => ({}),
     },
     label: String,
+    errorMessages: Array,
     disabled: {
       type: Boolean,
       default: false,
