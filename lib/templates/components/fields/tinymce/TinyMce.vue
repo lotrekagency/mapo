@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import initMapoMedia from "~mapomodule/components/tinymce/utils/mapomedia.plugin.js";
-import injectScript from "~mapomodule/components/tinymce/utils/script.injector.js";
-import defaults from "~mapomodule/components/tinymce/defaults.js";
-import { validEvents } from "~mapomodule/components/tinymce/utils/events.js";
+import initMapoMedia from "~mapomodule/components/fields/tinymce/utils/mapomedia.plugin.js";
+import injectScript from "~mapomodule/components/fields/tinymce/utils/script.injector.js";
+import defaults from "~mapomodule/components/fields/tinymce/defaults.js";
+import { validEvents } from "~mapomodule/components/fields/tinymce/utils/events.js";
 
 export default {
   props: {
@@ -70,7 +70,7 @@ export default {
     setupEditor(editor) {
       this._editor = editor;
       editor.on("init", () => {
-        editor.setContent(this.value);
+        editor.setContent(this.value || "");
         this.emitContent(editor);
         editor.on("change input undo redo keyup", () =>
           this.emitContent(editor)

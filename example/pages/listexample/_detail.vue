@@ -1,20 +1,45 @@
 <template>
-  <Detail :type="detailType" />
+  <Detail
+    endpoint="api/camomilla/articles"
+    :identifier="$route.params.detail"
+    :fields="fields"
+    :languages="['it', 'en', 'de']"
+  />
 </template>
 
 <script>
-/*
-  • detailType: values must be 'page' or 'dialog'.
-    • 'page': the detail component will be enabled for an edit page.
-    • 'dialog': the detail component will be enabled to act as a 
-      popup window instead of a classic page.
-*/
 export default {
   data: () => ({
-    detailType: 'page'
+    fields: [
+      { value: "canonical" },
+      { value: "identifier", synci18n: true },
+      { value: "title" },
+      { value: "permalink" },
+      {
+        group: "Seo",
+        fields: [
+          {
+            value: "date",
+            type: "date",
+          },
+          {
+            value: "status",
+            type: "select",
+            attrs: {
+              items: [
+                { text: "Draft", value: "DRF" },
+                { text: "Published", value: "PUB" },
+                { text: "Trash", value: "TRS" },
+              ],
+            },
+          },
+          { value: "content", is: "tiny-mce" },
+        ],
+      },
+    ],
   }),
   meta: {
-    sidebarHide: true
-  }
+    sidebarHide: true,
+  },
 };
 </script>

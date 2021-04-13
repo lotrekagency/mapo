@@ -3,13 +3,14 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="12">
         <List
-          light
           show-select
           :headers="headers"
           :editFields="editFields"
           :filters="availableFilters" 
           endpoint="api/camomilla/articles"
           navigable
+          addItem
+          http
         >
         </List>
       </v-col>
