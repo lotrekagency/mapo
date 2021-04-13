@@ -1,8 +1,8 @@
 <template>
   <div>
     <media-manager-dialog ref="mediaManager"></media-manager-dialog>
+    <span v-if="label">{{ label }}:</span>
     <div ref="editorNode">
-      <h3 class="tinymce-loading">Loading text editor..</h3>
       <v-skeleton-loader
         type="table-heading, list-item-two-line, list-item-avatar-two-line, list-item-three-lineimage, table-tfoot"
       ></v-skeleton-loader>
@@ -26,6 +26,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    label: String,
     disabled: {
       type: Boolean,
       default: false,
@@ -125,12 +126,5 @@ export default {
 .tox-notifications-container,
 .tox-statusbar__branding {
   display: none;
-}
-.tinymce-loading {
-  position: absolute;
-  z-index: 1;
-  width: calc(100% - 30px);
-  text-align: center;
-  margin-top: 115px;
 }
 </style>

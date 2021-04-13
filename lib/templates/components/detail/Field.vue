@@ -91,12 +91,26 @@ export default {
     fieldProp() {
       const defaultProps = {
         outlined: true,
-        label: this.conf.value,
-        fullWidth: true,
+        label: this.label,
         itemText: "text",
         itemValue: "value",
       };
       return { ...defaultProps, ...this.conf.attrs };
+    },
+    label() {
+      if (this.conf.label !== undefined) {
+        return this.conf.label;
+      }
+      const titleCase = (string) =>
+        (string && string[0].toUpperCase() + string.slice(1).toLowerCase()) ||
+        "";
+      return titleCase(
+        (this.conf.value || "")
+          .replace(/^translations\.\w\w\./, "")
+          .split(".")
+          .join(" ")
+          .replace(/_/, " ")
+      );
     },
     is() {
       return (

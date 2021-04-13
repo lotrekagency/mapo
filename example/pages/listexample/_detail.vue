@@ -10,33 +10,52 @@
 <script>
 export default {
   data: () => ({
-    fields: [
-      { value: "canonical" },
-      { value: "identifier", synci18n: true },
-      { value: "title" },
-      { value: "permalink" },
-      {
-        group: "Seo",
-        fields: [
-          {
-            value: "date",
-            type: "date",
-          },
-          {
-            value: "status",
-            type: "select",
-            attrs: {
-              items: [
-                { text: "Draft", value: "DRF" },
-                { text: "Published", value: "PUB" },
-                { text: "Trash", value: "TRS" },
-              ],
+    fields: {
+      main: [
+        { value: "identifier", synci18n: true },
+        { value: "content", type: "editor" },
+        {
+          group: "Seo",
+          fields: [
+            "title",
+            { value: "description", type: "textarea" },
+            "permalink",
+            { value: "og_description", type: "textarea" },
+            "og_title",
+            "og_type",
+            "og_url",
+            "canonical",
+          ],
+        },
+      ],
+      sidenav: [
+        {
+          group: "Status",
+          fields: [
+            {
+              value: "status",
+              type: "select",
+              attrs: {
+                items: [
+                  { text: "Draft", value: "DRF" },
+                  { text: "Published", value: "PUB" },
+                  { text: "Trash", value: "TRS" },
+                ],
+              },
+              synci18n: true,
             },
-          },
-          { value: "content", is: "tiny-mce" },
-        ],
-      },
-    ],
+            {
+              value: "pubblication_date",
+              accessor: {
+                set: ({ val }) => val && new Date(val).toISOString(),
+              },
+              type: "date",
+              synci18n: true,
+            },
+          ],
+        },
+      ],
+    },
   }),
   meta: {
     sidebarHide: true,

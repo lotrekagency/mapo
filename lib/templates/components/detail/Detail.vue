@@ -14,7 +14,7 @@
             :langs="langs"
           />
           <div v-for="(field, index) in mainFields" :key="index">
-            <v-card v-if="field.group" class="mb-4">
+            <v-card v-if="field.group" class="my-2">
               <v-card-title>
                 <v-icon left> {{ getGroupIcon(field.group) }} </v-icon>
                 <span>{{ getGroupName(field.group) }}</span>
@@ -25,20 +25,19 @@
                   :key="subI"
                   class="mb-4"
                 >
-                  <Field v-model="model" :conf="getTranslatedField(subField)" />
+                  <Field v-model="model" :conf="parseConf(subField)" />
                 </div>
               </v-card-text>
             </v-card>
             <Field
               v-else
               v-model="model"
-              :conf="getTranslatedField(field)"
-              class="mb-4"
+              :conf="parseConf(field)"
             />
           </div>
         </v-col>
         <v-col cols="12" sm="4">
-          <div>
+          <div class="mb-4">
             <v-btn class="mb-2" tile block @click="saveItem(true)">{{
               isNew ? "Create" : "Save"
             }}</v-btn>
@@ -69,15 +68,14 @@
                   :key="subI"
                   class="mb-4"
                 >
-                  <Field v-model="model" :conf="getTranslatedField(subField)" />
+                  <Field v-model="model" :conf="parseConf(subField)" />
                 </div>
               </v-card-text>
             </v-card>
             <Field
               v-else
               v-model="model"
-              :conf="getTranslatedField(field)"
-              class="mb-4"
+              :conf="parseConf(field)"
             />
           </div>
         </v-col>
@@ -141,6 +139,9 @@ export default {
             );
         }
       });
+    },
+    parseConf(field) {
+      return this.getTranslatedField(typeof field === 'string' ? { value: field } : field)
     },
     getTranslatedField(field) {
       if (!this.currentLang || field.synci18n) {
