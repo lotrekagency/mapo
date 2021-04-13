@@ -3,7 +3,7 @@
     <v-data-table
       v-model="selection"
       v-bind="$attrs"
-      :items="http ? items : filteredItems"
+      :items="httpEnabled ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
       :server-items-length="httpPaginator.count || -1"
@@ -78,6 +78,7 @@ export default {
     selection: [],
     options: {},
     httpPaginator: {},
+    disableHttp: false
   }),
   props: {
     crud: {
@@ -108,15 +109,19 @@ export default {
     filters:{
       deep: true,
       handler(){
-        this.http && this.getDataFromApi();
+        this.httpEnabled && this.getDataFromApi();
       }
     },
     options: {
       deep: true,
       handler(options) {
+        this.disableHttp = options.itemsPerPage === -1;
         this.setQparams(options);
-        this.http && this.getDataFromApi()
+        this.httpEnabled && this.getDataFromApi();
       },
+    },
+    disableHttp(){
+      this.getDataFromApi();
     }
   },
   methods: {
@@ -124,7 +129,7 @@ export default {
       return new Promise((resolve, reject) => {
         this.selection = [];
         this.loading = true;
-        if (!this.http) {
+        if (!this.httpEnabled) {
           this.crud.list().then((data) => {
               this.items = data;
               this.loading = false;
@@ -240,10 +245,13 @@ export default {
         (this.$attrs.editFields && this.$attrs.editFields.length)
       );
     },
+    httpEnabled(){
+      return this.http && !this.disableHttp
+    }
   },
   mounted() {
     this.restoreFromQparams()
-    this.http || this.getDataFromApi();
+    this.httpEnabled || this.getDataFromApi();
   },
 };
 </script>

@@ -69,13 +69,15 @@
                   activeFilters,
                 }"
               >
-                <div v-if="filter.datepicker" class="d-flex flex-column align-end justify-center fit-content pb-2">
+                <div v-if="filter.datepicker" class="d-flex flex-column align-end justify-center pb-2">
                   <v-date-picker
                     @input="addDateFilter(filter)"
                     class="rounded-0"
                     v-model="filter.dates"
                     range
                     full-width
+                    no-title
+                    color="primary"
                   >
                   </v-date-picker>
                   <v-btn
@@ -122,15 +124,7 @@
   </div>
 </template>
 
-<style lang="scss">
-.v-slide-group__prev--disabled,
-.v-slide-group__next--disabled,
-.v-picker__title {
-  display: none;
-}
-.fit-content {
-  max-width: fit-content;
-}
+<style lang="scss" scoped>
 .datapicker-clear-btn {
   margin: -20px 15px 0 0 ;
 }

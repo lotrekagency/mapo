@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ListHead :title="pageTitle" />
+    <ListHead v-bind="$attrs" />
 
     <div>
         <v-row class="mb-4">
@@ -55,7 +55,6 @@ export default {
     };
   },
   props: {
-    pageTitle: String,
     endpoint: {
       type: String,
       required: true,

@@ -1,12 +1,12 @@
 <template>
   <div class="list__head">
-    <h2 class="list__head__title display-1">{{title}}</h2>
+    <h2 class="list__head__title display-1">{{ title }}</h2>
     <v-btn
-      v-show="addItem"
-      id="listHeadButton"
+      v-if="addItem"
       class="rounded-0 elevation-0"
       color="primary"
-      >Aggiungi nuovo</v-btn
+      :to="{path: `${$route.path}/new`}"
+      >Add new <v-icon>mdi-plus</v-icon></v-btn
     >
   </div>
 </template>
@@ -29,29 +29,14 @@
 
 <script>
 export default {
-  data() {
-    return {
-      addItem: false,
-    };
-  },
   props: {
     title: {
       type: String,
-      default(){
-        return this.$route.name
-      }
-    }
-  },
-  mounted: function () {
-
-    // se c'è il pulsante per aggiungere un elemento nella data table CRUD
-    // allora abilito il pulsante con stessa funzionalità nell'head
-    if (document.querySelector("#tableAddItem")) {
-      this.addItem = true;
-      document.querySelector("#listHeadButton").addEventListener("click", () => {
-        document.querySelector("#tableAddItem").click();
-      });
-    }
+      default() {
+        return this.$route.name;
+      },
+    },
+    addItem: Boolean,
   },
 };
 </script>
