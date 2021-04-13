@@ -1,122 +1,127 @@
 <template>
-  <v-hover v-model="isHovered">
-    <div style="position: relative">
-      <v-img
-        v-if="mediaExists"
-        :src="child_media.file"
-        :lazy-src="child_media.thumbnail"
-        v-bind="{
-          aspectRatio,
-          contain,
-          height,
-          width,
-          maxWidth,
-          maxHeight,
-          minWidth,
-          minHeight,
-        }"
-      >
-        <template v-slot:placeholder>
-          <v-row
-            v-if="child_media"
-            class="fill-height ma-0"
-            align="center"
-            justify="center"
-          >
-            <v-progress-circular
-              indeterminate
-              color="grey"
-            ></v-progress-circular>
-          </v-row>
-        </template>
-      </v-img>
-
-      <!-- If the media is not avaible, it shows a btn to add new media -->
-      <v-card
-        v-else-if="!rmAddBtn"
-        v-bind="{
-          height,
-          width,
-          maxWidth,
-          maxHeight,
-          minWidth,
-          minHeight,
-        }"
-        :dark="dark"
-        :light="!dark"
-      >
-        <v-card-title>Media Element</v-card-title>
-
-        <v-card-actions>
-
-          <v-btn
-            @click="editing = true"
-            block
-            outlined 
-            :min-height="minHeight"
-          >
-            <v-icon size="80">
-              mdi-plus-circle-outline
-            </v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-
-
-      <!-- Shows darkening overlay on image with buttons on top while hovered -->
-      <v-overlay opacity="0.3" absolute :value="overlay">
+  <div>
+    <v-card
+      v-bind="{
+        minWidth,
+        minHeight,
+        height,
+        width,
+        maxHeight,
+        maxWidth,
+        dark,
+        light: !dark,
+      }"
+    >
+      <v-card-title>Media element</v-card-title>
+      <v-card-actions>
         <v-row>
-          <v-col cols="6">
-            <v-btn
-              @click="editing = true"
-              fab
-              x-large
-              :dark="dark"
-              :light="!dark"
-            >
-              <v-icon>mdi-pencil</v-icon>
-            </v-btn>
-          </v-col>
+          <v-col>
+            <v-hover v-model="isHovered">
+              <div style="position: relative">
+                <v-img
+                  v-if="mediaExists"
+                  :src="child_media.file"
+                  :lazy-src="child_media.thumbnail"
+                  v-bind="{
+                    aspectRatio,
+                    contain,
+                  }"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      v-if="child_media"
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
 
-          <v-col cols="6">
-            <v-btn
-              @click="confirm = true"
-              fab
-              x-large
-              :dark="dark"
-              :light="!dark"
-            >
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
+                <!-- If the media is not avaible, it shows a btn to add new media -->
+
+                <v-btn
+                  v-else-if="!rmAddBtn"
+                  @click="editing = true"
+                  block
+                  outlined
+                  :min-height="minHeight"
+                >
+                  <v-icon size="80"> mdi-plus-circle-outline </v-icon>
+                </v-btn>
+
+                <!-- Shows darkening overlay on image with buttons on top while hovered -->
+                <v-overlay opacity="0.3" absolute :value="overlay">
+                  <v-row>
+                    <v-col cols="6">
+                      <v-btn
+                        @click="editing = true"
+                        fab
+                        x-large
+                        :dark="dark"
+                        :light="!dark"
+                      >
+                        <v-icon>mdi-pencil</v-icon>
+                      </v-btn>
+                    </v-col>
+
+                    <v-col cols="6">
+                      <v-btn
+                        @click="confirm = true"
+                        fab
+                        x-large
+                        :dark="dark"
+                        :light="!dark"
+                      >
+                        <v-icon>mdi-delete</v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-overlay>
+
+                <!-- Select media dialog -->
+                <media-manager-dialog
+                  v-model="editing"
+                  select="single"
+                  v-on:selectionChange="update"
+                  :dark="dark"
+                  :light="!dark"
+                >
+                </media-manager-dialog>
+
+                <!-- Confirm elimination dialog -->
+                <v-dialog
+                  v-model="confirm"
+                  max-width="290"
+                  :light="!dark"
+                  :dark="dark"
+                >
+                  <v-card>
+                    <v-card-title class="headline"> You sure? </v-card-title>
+                    <v-card-actions>
+                      <v-btn
+                        color="red darken-1"
+                        text
+                        @click="confirmDelete(true)"
+                      >
+                        Yes
+                      </v-btn>
+                      <v-spacer></v-spacer>
+                      <v-btn text @click="confirmDelete(false)"> No </v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
+              </div>
+            </v-hover>
           </v-col>
         </v-row>
-      </v-overlay>
-
-      <!-- Select media dialog -->
-      <media-manager-dialog
-        v-model="editing"
-        select="single"
-        v-on:selectionChange="update"
-        :dark="dark"
-        :light="!dark"
-      >
-      </media-manager-dialog>
-
-      <!-- Confirm elimination dialog -->
-      <v-dialog v-model="confirm" max-width="290" :light="!dark" :dark="dark">
-        <v-card>
-          <v-card-title class="headline"> You sure? </v-card-title>
-          <v-card-actions>
-            <v-btn color="red darken-1" text @click="confirmDelete(true)">
-              Yes
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn text @click="confirmDelete(false)"> No </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </div>
-  </v-hover>
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -153,7 +158,7 @@ export default {
 
     rmAddBtn: {
       type: Boolean,
-      default: false, 
+      default: false,
     },
 
     //image reflections
