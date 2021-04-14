@@ -8,22 +8,13 @@ const sidebar = {
 
     getSidebar(HomeTitle = "Home") {
         const root = getRoot() + '/docs';
-        const dir =
-            fs.readdirSync(root)
-                .filter(file => {
-                    return file !== '.vuepress' && fs.statSync(path.join(root, file)).isDirectory()
-                });
-
-        const sidebarRoot = [{
+        const dirs = fs.readdirSync(root, { withFileTypes: true }).filter(f => f.name !== '.vuepress' && f.isDirectory());
+        return [{
             title: HomeTitle,
             path: !!this.baseOption ? this.baseOption : '/',
             collapsable: true,
             children: []
-        }];
-
-        const sidebarItems = getSidebarItems(dir, root);
-        const sidebar = Array.from(sidebarRoot.concat(sidebarItems));
-        return sidebar;
+        }, ...getSidebarItems(dirs, root, !!this.baseOption ? this.baseOption : '/')];
     }
 };
 
@@ -32,18 +23,17 @@ getRootDir = function () {
     return path.resolve(process.cwd());
 };
 
-getSidebarItems = function (dir, root) {
-    return dir.map((e) => {
-        const childDir = path.resolve(root, e);
-
-        return sidebaritem = {
-            title: e,
-            path: !!sidebar.baseOption ? sidebar.baseOption + e + '/' : '/' + e + '/',
+getSidebarItems = function (dirs, root, parentPath = "") {
+    return dirs.map((dir) => {
+        const childs = fs.readdirSync(path.resolve(root, dir.name), { withFileTypes: true })
+        const childsFolders = childs.filter(d => d.isDirectory())
+        const hasReadme = !!childs.find(d => d.name == "README.md")
+        return childsFolders.length ? {
+            title: dir.name,
+            path: hasReadme ? `${parentPath}/${dir.name}/` : undefined,
             collapsable: true,
-            children: [...fs.readdirSync(childDir)
-                .filter(file => !file.includes('.md'))
-                .map(c => '/' + e + '/' + c + '/')]
-        };
+            children: getSidebarItems(childsFolders, `${root}/${dir.name}`, `${parentPath}/${dir.name}`)
+        } : `${parentPath}/${dir.name}/`
     })
 };
 
