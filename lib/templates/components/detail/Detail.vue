@@ -4,7 +4,7 @@
       <h1>{{ isNew ? "Create" : "Edit" }}</h1>
     </v-row>
 
-    <v-form>
+    <v-form ref="form">
       <v-row>
         <v-col cols="12" sm="8">
           <LangSwitch
@@ -127,6 +127,8 @@ export default {
       return group instanceof Object ? group.icon : "mdi-cube-outline";
     },
     saveItem(back = false) {
+      this.errors = null
+      this.$refs.form?.resetValidation();
       this.crud
         .updateOrCreate(this.model)
         .then(() => back && this.$router.back())
