@@ -17,7 +17,9 @@
     "registry": "http://registry.npmjs.org"
   },
   "scripts": {
-    "dev": "nuxt example"
+    "dev": "nuxt example",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
@@ -26,5 +28,8 @@
     "js-cookie": "^2.2.1",
     "lodash.mergewith": "^4.6.2",
     "nuxt": "^2.15.4"
+  },
+  "devDependencies": {
+    "vuepress": "^1.8.2"
   }
 }
