@@ -1,53 +1,77 @@
 <template>
-  <div class="list__actions">
-    <div v-if="actionStatus" class="list__actions__group">
-      <v-select label="Azioni di gruppo" outlined dense hide-details light></v-select>
-      <v-btn class="rounded-0 elevation-0" outlined color="primary"
-        >Applica</v-btn
-      >
-    </div>
-    <div v-if="filterStatus" class="list__actions__group">
-      <v-select label="Tutte le date" outlined dense hide-details light></v-select>
-      <v-select label="Altri filtri" outlined dense hide-details light></v-select>
-      <v-btn class="rounded-0 elevation-0" outlined color="primary"
-        >Filtri</v-btn
-      >
-    </div>
+  <div v-if="isActive" class="d-flex flex-row align-center fill-height">
+    <v-select
+      label="Group Actions"
+      v-bind="$attrs"
+      v-model="action"
+      :items="actions"
+      item-text="label"
+      item-value="handler"
+      outlined
+      dense
+      hide-details
+    ></v-select>
+    <v-btn
+      class="rounded-0 elevation-0 ml-2"
+      outlined
+      color="primary"
+      :disabled="!action"
+      @click="handleAction"
+      >Apply</v-btn
+    >
   </div>
 </template>
-
-<style lang="scss" scoped>
-@import "~mapomodule/assets/variables.scss";
-
-.list {
-  &__actions {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    &__group {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      margin-right: 2rem;
-      & > * {
-        margin-right: 0.5rem;
-      }
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-}
-</style>
-
 <script>
 export default {
   data() {
-    return {};
+    return {
+      action: null,
+    };
   },
   props: {
-    actionStatus: Boolean,
-    filterStatus: Boolean
-  }
+    lookup: {
+      type: String,
+      default: "id",
+    },
+    actions: {
+      type: Array,
+      default() {
+        return [
+          {
+            label: "Permanent delete",
+            handler: function () {
+              return Promise.all(
+                this.selection.map((i) => this.crud.delete(i[this.lookup]))
+              );
+            }.bind(this),
+          },
+        ];
+      },
+    },
+    selection: {
+      type: Array,
+      default: () => [],
+    },
+    crud: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed:{
+    isActive(){
+      return this.$attrs['show-select'] !== undefined
+    }
+  },
+  methods: {
+    handleAction() {
+      if (!this.selection.length) {
+        return this.$mapo.$snack.open({
+          message: "You need to select at least one item.",
+          color: "error",
+        });
+      }
+      return this.action ? this.action().then((res) => this.$emit('actionCompleted', res)) : () => {};
+    },
+  },
 };
 </script>

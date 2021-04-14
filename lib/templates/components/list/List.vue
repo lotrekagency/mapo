@@ -1,63 +1,80 @@
 <template>
-  <div class="list__outer">
-    <ListHead :title="pageTitle" />
-    <ListTabs :tabActive='tabActiveStatus' />
+  <div>
+    <ListHead v-bind="$attrs" />
 
-    <div class="list__pretabs">
-      <ListActions :actionStatus='actionStatus' :filterStatus='filterStatus' />
-      <div class="list__counter">
-        6 elementi
-      </div>
+    <div>
+        <v-row class="mb-4">
+          <v-col cols="12" md="4">
+            <ListActions
+              v-bind="$attrs"
+              :crud="crud"
+              :selection="selection"
+              @actionCompleted="refresh"
+            />
+          </v-col>
+          <v-col cols="12" md="8">
+            <ListFilters v-bind="$attrs" v-model="filters">
+              <template v-for="(_, slot) in $slots" :slot="slot">
+                <slot :name="slot"></slot>
+              </template>
+              <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+                <slot :name="slot" v-bind="props" />
+              </template>
+            </ListFilters>
+          </v-col>
+        </v-row>
     </div>
-
-    <div class="list__core">
-      <ListTable />
+    <div v-if="selection.length">
+      {{ selection.length }} elementi selezionati
     </div>
-
+    <div>
+      <ListTable
+        v-model="selection"
+        v-bind="{...$attrs, crud, filters}"
+        v-on="$listeners"
+        ref="dtable"
+      >
+        <template v-for="(_, slot) in $slots" :slot="slot">
+          <slot :name="slot"></slot>
+        </template>
+        <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+          <slot :name="slot" v-bind="props" />
+        </template>
+      </ListTable>
+    </div>
   </div>
 </template>
 
-<style lang="scss" scoped>
-@import '~mapomodule/assets/variables.scss';
-
-.list {
-  &__outer {
-    color: $b-1;
-    margin: 2rem;
-  }
-  &__pretabs {
-    margin-bottom: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  &__counter {
-    margin-left: 1rem;
-    font-size: 0.9rem;
-  }
-}
-</style>
-
 <script>
-// •  tabActiveStatus sta ad evidenziare quale dei 3 tab è attivo
-//    1 corrisponde a Tutto, 2 a Pubblicato, 3 a Cestinato
-//
-// •  actionStatus & filterStatus sono gli switcher per
-//    abilitare o disabilitare le azioni di gruppo e i filtri
-//    presenti nel componente ListActions
-//
-// •  pageTitle mi identifica il titolo della pagina dove sarà 
-//    utilizzato il componente List
 export default {
   data() {
     return {
       tabActiveStatus: 1,
-      actionStatus: true,
-      filterStatus: true
+      selection: [],
+      filters: []
     };
   },
   props: {
-    pageTitle: String
-  }
+    endpoint: {
+      type: String,
+      required: true,
+    },
+  },
+  computed: {
+    crud() {
+      return this.$mapo.$api.crud(this.endpoint);
+    },
+  },
+  watch: {
+    selection(val) {
+      this.$emit("selectionChange", val);
+    },
+  },
+  methods: {
+    refresh() {
+      return this.$refs.dtable.getDataFromApi();
+    },
+  },
+  mounted() {},
 };
 </script>
