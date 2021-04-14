@@ -14,7 +14,7 @@ const sidebar = {
             path: !!this.baseOption ? this.baseOption : '/',
             collapsable: true,
             children: []
-        }, ...getSidebarItems(dirs, root, !!this.baseOption ? this.baseOption : '/')];
+        }, ...getSidebarItems(dirs, root, !!this.baseOption ? this.baseOption : '')];
     }
 };
 
