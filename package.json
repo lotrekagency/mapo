@@ -18,6 +18,7 @@
   },
   "scripts": {
     "dev": "nuxt example",
+    "docs:gen": "vuese gen --genType=\"markdown\" --include=\"lib/templates/components/**/*.vue\" --markdownDir=\"*\" && ./docs/.vuepress/moveREADME.sh",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
   },
@@ -30,6 +31,7 @@
     "nuxt": "^2.15.4"
   },
   "devDependencies": {
+    "@vuese/cli": "^2.14.3",
     "vuepress": "^1.8.2"
   }
 }
