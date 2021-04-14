@@ -10,6 +10,7 @@
       outlined
       dense
       hide-details
+      clearable
     ></v-select>
     <v-btn
       class="rounded-0 elevation-0 ml-2"
