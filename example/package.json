@@ -10,7 +10,7 @@
     "test": "echo \"No test defined\""
   },
   "dependencies": {
-    "nuxt": "^2.14.12",
-    "mapomodule": "link:../"
+    "mapomodule": "link:..",
+    "nuxt": "^2.14.12"
   }
 }
