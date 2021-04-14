@@ -7,7 +7,7 @@
     <v-form ref="form">
       <v-row>
         <v-col cols="12" sm="8">
-          <LangSwitch
+          <DetailLangSwitch
             v-if="langs && langs.length"
             class="mb-4"
             v-model="currentLang"
@@ -26,7 +26,7 @@
                   :key="subI"
                   class="mb-4"
                 >
-                  <Field
+                  <DetailField
                     v-model="model"
                     :conf="parseConf(subField)"
                     :errors="errors"
@@ -34,7 +34,7 @@
                 </div>
               </v-card-text>
             </v-card>
-            <Field
+            <DetailField
               v-else
               v-model="model"
               :conf="parseConf(field)"
@@ -74,7 +74,7 @@
                   :key="subI"
                   class="mb-4"
                 >
-                  <Field
+                  <DetailField
                     v-model="model"
                     :conf="parseConf(subField)"
                     :errors="errors"
@@ -82,7 +82,7 @@
                 </div>
               </v-card-text>
             </v-card>
-            <Field
+            <DetailField
               v-else
               v-model="model"
               :conf="parseConf(field)"

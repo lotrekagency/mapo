@@ -30,8 +30,8 @@
 
 .topbar {
   &__wrapper {
-    background: $black!important;
-    color: $white;
+    // background: $black!important;
+    // color: $white;
   }
   &__user {
     display: flex;

@@ -14,12 +14,13 @@
 </template>
 
 <script>
-import initMapoMedia from "~mapomodule/components/fields/tinymce/utils/mapomedia.plugin.js";
-import injectScript from "~mapomodule/components/fields/tinymce/utils/script.injector.js";
-import defaults from "~mapomodule/components/fields/tinymce/defaults.js";
-import { validEvents } from "~mapomodule/components/fields/tinymce/utils/events.js";
+import initMapoMedia from "~mapomodule/components/fields/TinyMce/utils/mapomedia.plugin.js";
+import injectScript from "~mapomodule/components/fields/TinyMce/utils/script.injector.js";
+import defaults from "~mapomodule/components/fields/TinyMce/defaults.js";
+import { validEvents } from "~mapomodule/components/fields/TinyMce/utils/events.js";
 
 export default {
+  name: "TinyMce",
   props: {
     value: {
       type: String,

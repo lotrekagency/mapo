@@ -21,8 +21,8 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: $b-1;
-    color: $white;
+    // background: $b-1;
+    // color: $white;
   }
 }
 </style>

@@ -27,7 +27,7 @@
     </div>
 
     <div v-if="!editMedia">
-      <FolderGallery
+      <MediaFolders
         v-if="!noFolders"
         v-bind="{ folders, parentFolder }"
         @updateFolder="updateOrCreateFolder($event)"
@@ -68,7 +68,9 @@
 </style>
 
 <script>
+import MediaFolders from './MediaFolders.vue';
 export default {
+  components: { MediaFolders },
   data() {
     return {
       _mediaFolderCrud: null,

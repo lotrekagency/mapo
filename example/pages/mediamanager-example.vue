@@ -22,7 +22,7 @@
       ></v-switch>
     </div>
 
-    <MediaManager light elevation="0" class="transparent" />
+    <MediaManager elevation="0" class="transparent" />
   </div>
 </template>
 <script>

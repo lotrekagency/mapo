@@ -16,7 +16,7 @@
 
 .app {
   &__wrapper {
-    background: $w-1;
+    // background: $w-1;
   }
 }
 </style>

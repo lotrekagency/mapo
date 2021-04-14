@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import TinyMce from "~mapomodule/components/fields/tinymce/TinyMce.vue";
+import TinyMce from "~mapomodule/components/fields/TinyMce/TinyMce.vue";
 import DateField from "~mapomodule/components/fields/DateField.vue";
 import { getPointed, setPointed } from "~mapomodule/utils/objHelpers";
 import debounce from "~mapomodule/utils/debounce";
