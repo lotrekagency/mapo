@@ -5,43 +5,6 @@
         <h1>This is the setting page</h1>
       </v-col>
     </v-row>
-
-    <v-row>
-      <M2m v-model="ids" :options="options" id="codice" label="testo" />
-    </v-row>
-
-    <v-row class="my-4">
-      <v-btn
-        @click="changeFakeMedia"
-      >
-        CHANGE FAKE-MEDIA
-      </v-btn>
-    </v-row>
-
-    <v-row class="justify-center">
-      <v-col>
-        <MediaElement dark  v-model="fakeMedia"/>
-      </v-col>
-    </v-row>
-    <v-row class="my-6"></v-row>
-    <v-row>
-      <media-manager-dialog
-        select="multi"
-        v-on:selectionChange="update"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="red lighten-2 mb-4" dark v-bind="attrs" v-on="on">
-            Open media dialog
-          </v-btn>
-        </template>
-      </media-manager-dialog>
-    </v-row>
-    <v-row justify="center">
-      <v-col cols="7">
-
-        <MediaCarousel dark :rows="2" :cols="2" v-model="medias"/>
-      </v-col>
-    </v-row>
   </v-container>
 </template>
 
