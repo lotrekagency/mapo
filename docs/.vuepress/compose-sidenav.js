@@ -12,29 +12,33 @@ const sidebar = {
         return [{
             title: HomeTitle,
             path: !!this.baseOption ? this.baseOption : '/',
-            collapsable: true,
+            collapsable: false,
             children: []
         }, ...getSidebarItems(dirs, root, !!this.baseOption ? this.baseOption : '')];
     }
 };
-
 
 getRootDir = function () {
     return path.resolve(process.cwd());
 };
 
 getSidebarItems = function (dirs, root, parentPath = "") {
-    return dirs.map((dir) => {
+    return dirs.reduce((stack, dir) => {
         const childs = fs.readdirSync(path.resolve(root, dir.name), { withFileTypes: true })
         const childsFolders = childs.filter(d => d.isDirectory())
         const hasReadme = !!childs.find(d => d.name == "README.md")
-        return childsFolders.length ? {
-            title: dir.name,
-            path: hasReadme ? `${parentPath}/${dir.name}/` : undefined,
-            collapsable: true,
-            children: getSidebarItems(childsFolders, `${root}/${dir.name}`, `${parentPath}/${dir.name}`)
-        } : `${parentPath}/${dir.name}/`
-    })
+        if (childsFolders.length) {
+            stack.push({
+                title: dir.name.charAt(0).toUpperCase() + dir.name.slice(1),
+                path: hasReadme ? `${parentPath}/${dir.name}/` : undefined,
+                collapsable: true,
+                children: getSidebarItems(childsFolders, `${root}/${dir.name}`, `${parentPath}/${dir.name}`)
+            })
+        } else if (hasReadme) {
+            stack.push(`${parentPath}/${dir.name}/`)
+        }
+        return stack
+    }, [])
 };
 
 getRoot = function () {
