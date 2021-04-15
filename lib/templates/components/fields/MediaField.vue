@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <v-text-field
       v-if="title"
@@ -7,14 +6,14 @@
       class="mb-n8 pb-0"
       solo
       readonly
-      :dark="dark"
+      v-bind="$attrs"
     ></v-text-field>
     <v-hover v-model="isHovered">
       <div style="position: relative">
         <v-img
           v-if="mediaExists"
-          :src="child_media.file"
-          :lazy-src="child_media.thumbnail"
+          :src="internalValue.file"
+          :lazy-src="internalValue.thumbnail"
           v-bind="{
             aspectRatio,
             contain,
@@ -28,7 +27,7 @@
         >
           <template v-slot:placeholder>
             <v-row
-              v-if="child_media"
+              v-if="internalValue"
               class="fill-height ma-0"
               align="center"
               justify="center"
@@ -51,51 +50,39 @@
             maxHeight,
             minWidth,
             minHeight,
+            ...$attrs,
           }"
-          :dark="dark"
-          :light="!dark"
         >
-          <v-card-title>Media Element</v-card-title>
+          <v-card-title>{{ label }}</v-card-title>
 
           <v-card-actions>
-
             <v-btn
               @click="editing = true"
               block
-              outlined 
+              outlined
               :min-height="minHeight"
             >
-              <v-icon size="80">
-                mdi-plus-circle-outline
-              </v-icon>
+              <v-icon size="80"> mdi-plus-circle-outline </v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
 
-
         <!-- Shows darkening overlay on image with buttons on top while hovered -->
         <v-overlay opacity="0.3" absolute :value="overlay">
           <v-row>
+            <v-col cols="12">
+              <h3>{{ label }}</h3>
+            </v-col>
+          </v-row>
+          <v-row>
             <v-col cols="6">
-              <v-btn
-                @click="editing = true"
-                fab
-                x-large
-                :dark="dark"
-                :light="!dark"
-              >
+              <v-btn @click="editing = true" fab v-bind="$attrs">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
             </v-col>
 
             <v-col cols="6">
-              <v-btn
-                @click="confirm = true"
-                fab
-                x-large
-                :dark="dark"
-                :light="!dark"
-              >
+              <v-btn @click="confirmDelete" fab v-bind="$attrs">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-col>
@@ -107,24 +94,16 @@
           v-model="editing"
           select="single"
           v-on:selectionChange="update"
-          :dark="dark"
-          :light="!dark"
+          v-bind="$attrs"
         >
         </media-manager-dialog>
 
         <!-- Confirm elimination dialog -->
-        <v-dialog v-model="confirm" max-width="290" :light="!dark" :dark="dark">
-          <v-card>
-            <v-card-title class="headline"> You sure? </v-card-title>
-            <v-card-actions>
-              <v-btn color="red darken-1" text @click="confirmDelete(true)">
-                Yes
-              </v-btn>
-              <v-spacer></v-spacer>
-              <v-btn text @click="confirmDelete(false)"> No </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+        <confirm-dialog
+          v-bind="{ ...$attrs, value: false }"
+          question="Are you sure you want to delete this item?"
+          ref="removeModal"
+        ></confirm-dialog>
       </div>
     </v-hover>
   </div>
@@ -135,48 +114,26 @@
 
 <script>
 export default {
-  name: "MediaElement",
+  name: "MediaField",
   data() {
     return {
-      child_media: null,
-
+      internalValue: null,
       editing: false,
-      confirm: false,
-
       isHovered: false,
     };
   },
 
-  model: {
-    prop: "media",
-    event: "changed-media",
-  },
-
-  mounted() {
-    if (this.media) this.child_media = this.media;
-  },
-
   props: {
-    media: {
-      type: Object,
-      default: () => null,
-    },
-
+    value: Object,
+    label: String,
     title: {
       type: String,
-      default: () => '',
+      default: () => "",
     },
-
-    dark: {
+    rmAddBtn: {
       type: Boolean,
       default: false,
     },
-
-    rmAddBtn: {
-      type: Boolean,
-      default: false, 
-    },
-
     //image reflections
     aspectRatio: {
       type: String | Number,
@@ -214,37 +171,32 @@ export default {
 
   computed: {
     mediaExists() {
-      try {
-        if (this.child_media.file) return true;
-        else return false;
-      } catch {
-        return false;
-      }
+      return !!this.internalValue?.file;
     },
     overlay() {
-      if (this.isHovered && this.mediaExists) return true;
-
-      return false;
+      return this.isHovered && this.mediaExists;
     },
   },
 
   methods: {
-    update(selection) {
-      this.child_media = selection;
-      this.$emit("changed-media", selection);
+    update(val) {
+      this.internalValue = val;
     },
-    confirmDelete(choice) {
-      if (choice) {
-        this.child_media = null;
-        this.$emit("changed-media", null);
-      }
-      this.confirm = false;
+    confirmDelete() {
+      this.$refs.removeModal
+        .open()
+        .then((res) => (res ? (this.internalValue = null) : null));
     },
   },
 
   watch: {
-    media() {
-      this.child_media = this.media;
+    value(val) {
+      if (val !== this.internalValue) {
+        this.internalValue = val;
+      }
+    },
+    internalValue(val) {
+      this.$emit("input", val);
     },
   },
 };

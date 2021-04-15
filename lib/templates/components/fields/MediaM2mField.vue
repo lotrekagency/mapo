@@ -113,7 +113,7 @@
 
 <script>
 export default {
-  name: "MediaCarousel",
+  name: "MediaM2mField",
   transition: "tasks-transition",
   data() {
     return {

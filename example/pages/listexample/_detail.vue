@@ -54,6 +54,7 @@ export default {
             },
           ],
         },
+        { value: "highlight_image", type: "media" }
       ],
     },
   }),

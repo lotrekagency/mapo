@@ -5,6 +5,10 @@
 <script>
 import TinyMce from "~mapomodule/components/fields/TinyMce/TinyMce.vue";
 import DateField from "~mapomodule/components/fields/DateField.vue";
+import M2mField from "~mapomodule/components/fields/M2mField.vue";
+import MediaM2mField from "~mapomodule/components/fields/MediaM2mField.vue";
+import MediaField from "~mapomodule/components/fields/MediaField.vue";
+
 import { getPointed, setPointed } from "~mapomodule/utils/objHelpers";
 import debounce from "~mapomodule/utils/debounce";
 
@@ -13,6 +17,9 @@ export default {
   components: {
     TinyMce,
     DateField,
+    M2mField,
+    MediaM2mField,
+    MediaField,
   },
 
   data() {
@@ -27,6 +34,9 @@ export default {
         slider: "v-slider",
         file: "v-file-input",
         editor: "tiny-mce",
+        media: "media-field",
+        m2m: "m2m-field",
+        mediaList: "media-m2m-field",
       },
     };
   },
@@ -72,7 +82,8 @@ export default {
         model: { ...out },
         val: getPointed({ ...out }, this.conf.value),
       });
-      if (out && this.model !== model) this.model = model;
+      if (out && JSON.stringify(this.model) !== JSON.stringify(model))
+        this.model = model;
     },
   },
   computed: {
@@ -84,7 +95,7 @@ export default {
         };
       } else {
         func = function ({ val }) {
-          return val || "";
+          return val;
         };
       }
       return { get: func, set: func, ...this.conf.accessor };
