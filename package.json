@@ -18,9 +18,16 @@
   },
   "scripts": {
     "dev": "nuxt example",
-    "docs:gen": "vuese gen --genType=\"markdown\" --include=\"lib/templates/components/**/*.vue\" --markdownDir=\"*\" && ./docs/.vuepress/moveREADME.sh",
+    "docs:gen": "vuese gen && ./docs/.vuepress/moveREADME.sh",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs"
+  },
+  "vuese": {
+    "genType": "markdown",
+    "include": [
+      "lib/templates/components/**/*.vue"
+    ],
+    "markdownDir": "*"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.1",
