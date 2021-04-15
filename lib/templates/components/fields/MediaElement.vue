@@ -135,6 +135,7 @@
 
 <script>
 export default {
+  name: "MediaElement",
   data() {
     return {
       child_media: null,

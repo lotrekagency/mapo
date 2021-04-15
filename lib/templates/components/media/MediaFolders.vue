@@ -124,6 +124,7 @@
 
 <script>
 export default {
+  name: "MediaFolders",
   data() {
     return {
       expanded: false,

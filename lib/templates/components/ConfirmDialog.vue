@@ -15,6 +15,7 @@
 </template>
 <script>
 export default {
+  name: "ConfirmDialog",
   data() {
     return {
       response: null,

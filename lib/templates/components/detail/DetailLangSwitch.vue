@@ -12,6 +12,7 @@
 import { getPointed } from "~mapomodule/utils/objHelpers";
 
 export default {
+  name: "DetailLangSwitch",
   data() {
     return {
       tab: null,

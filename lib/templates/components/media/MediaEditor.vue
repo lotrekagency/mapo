@@ -132,6 +132,7 @@ table tr td:nth-child(2) {
 import { humanFileSize } from "~mapomodule/utils/formatters.js";
 
 export default {
+  name: "MediaEditor",
   data() {
     return {
       media: null,

@@ -29,6 +29,7 @@
 
 <script>
 export default {
+  name: "ListHead",
   props: {
     title: {
       type: String,

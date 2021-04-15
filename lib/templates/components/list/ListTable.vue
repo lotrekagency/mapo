@@ -72,6 +72,7 @@
 import { getPointed } from "~mapomodule/utils/objHelpers";
 
 export default {
+  name: "ListTable",
   data: () => ({
     items: [],
     loading: true,

@@ -1,8 +1,8 @@
-# sidebar-list-item
+# SidebarListItem
 
 ## Props
 
-<!-- @vuese:sidebar-list-item:props:start -->
+<!-- @vuese:SidebarListItem:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |link|-|`String`|`false`|-|
@@ -11,6 +11,6 @@
 |childrens|-|`Array`|`false`|-|
 |depth|-|`Number`|`false`|-|
 
-<!-- @vuese:sidebar-list-item:props:end -->
+<!-- @vuese:SidebarListItem:props:end -->
 
 

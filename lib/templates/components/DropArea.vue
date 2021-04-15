@@ -124,6 +124,7 @@
 import { humanFileSize } from "~mapomodule/utils/formatters.js";
 
 export default {
+  name: "DropArea",
   props: {
     multiple: {
       type: Boolean,

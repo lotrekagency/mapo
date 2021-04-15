@@ -7,6 +7,7 @@
 
 <script>
 export default {
+  name: "LogoutButton",
   methods: {
     logout() {
       this.$store.dispatch("mapo/user/logout");

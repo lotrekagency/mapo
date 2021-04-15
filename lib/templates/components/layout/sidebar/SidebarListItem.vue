@@ -23,7 +23,7 @@
       >
     </span>
     <div v-if="childrens.length && expanded">
-      <sidebar-list-item
+      <SidebarListItem
         class="sidebar__list__item"
         v-for="(item, i) in childrens"
         :key="i"
@@ -73,7 +73,7 @@
 
 <script>
 export default {
-  name: "sidebar-list-item",
+  name: "SidebarListItem",
   data() {
     return {
       expanded: false,

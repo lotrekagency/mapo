@@ -134,6 +134,7 @@
 import debounce from "~mapomodule/utils/debounce";
 
 export default {
+  name: "ListFilters",
   data() {
     return {
       compFilters: [],

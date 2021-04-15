@@ -56,6 +56,7 @@
 
 <script>
 export default {
+  name: "MediaUploader",
   data() {
     return {
       count: 0,

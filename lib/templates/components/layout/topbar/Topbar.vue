@@ -47,6 +47,7 @@
 import { mapMutations } from 'vuex'
 
 export default {
+  name: "Topbar",
   props: {
     title: String
   },

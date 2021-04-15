@@ -70,6 +70,7 @@
 <script>
 import MediaFolders from './MediaFolders.vue';
 export default {
+  name: "MediaManager",
   components: { MediaFolders },
   data() {
     return {

@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-checkbox
-      v-for="(option, index) in options" :key="index"
+      v-for="(option, index) in options"
+      :key="index"
       :label="option[label]"
       :input-value="isSelected(option[id])"
       :light="!dark"
@@ -14,7 +15,7 @@
 
 <script>
 export default {
-
+  name: "M2mField",
   props: {
     value: {
       type: Array,
@@ -26,44 +27,42 @@ export default {
     },
     id: {
       type: String | Number,
-      default: 'id'
+      default: "id",
     },
     label: {
       type: String | Number,
-      default: 'label'
+      default: "label",
     },
     dark: {
       type: Boolean,
       default: false,
-    }
+    },
   },
 
   methods: {
-    isSelected(id){
-      for(let selection of this.value){
-        if(selection == id){
-          return true
+    isSelected(id) {
+      for (let selection of this.value) {
+        if (selection == id) {
+          return true;
         }
       }
-      return false
+      return false;
     },
-    changed(value, id){
-      id=parseInt(id)
-      let newArr = [...this.value]
-      if(value){
-        newArr.push(id)
-      }
-      else{
-        for(let i in newArr){
-          if(newArr[i] == id){
-            newArr.splice(i, 1)
-            break
+    changed(value, id) {
+      id = parseInt(id);
+      let newArr = [...this.value];
+      if (value) {
+        newArr.push(id);
+      } else {
+        for (let i in newArr) {
+          if (newArr[i] == id) {
+            newArr.splice(i, 1);
+            break;
           }
         }
       }
-      this.$emit('input', newArr)
-
-    }
-  }
-}
+      this.$emit("input", newArr);
+    },
+  },
+};
 </script>

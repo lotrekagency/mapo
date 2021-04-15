@@ -31,6 +31,7 @@
 import { mapMutations } from 'vuex'
 
 export default {
+  name: "Sidebar",
   data () {
     return {
       miniVariant: false,

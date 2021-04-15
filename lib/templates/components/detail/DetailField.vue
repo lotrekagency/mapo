@@ -9,7 +9,7 @@ import { getPointed, setPointed } from "~mapomodule/utils/objHelpers";
 import debounce from "~mapomodule/utils/debounce";
 
 export default {
-  name: "mapo-field",
+  name: "DetailField",
   components: {
     TinyMce,
     DateField,

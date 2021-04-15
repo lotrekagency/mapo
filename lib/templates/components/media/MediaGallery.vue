@@ -140,6 +140,7 @@
 
 <script>
 export default {
+  name: "MediaGallery",
   data() {
     return {
       selection: [],

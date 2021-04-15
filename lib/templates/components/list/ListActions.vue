@@ -24,6 +24,7 @@
 </template>
 <script>
 export default {
+  name: "ListActions",
   data() {
     return {
       action: null,

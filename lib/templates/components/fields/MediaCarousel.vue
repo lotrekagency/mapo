@@ -17,18 +17,15 @@
       <v-card-actions>
         <v-row justify="center" class="ma-1" no-gutters>
           <v-col>
-
             <v-btn
               @click="mmdialog = true"
               block
-              outlined 
+              outlined
               :min-height="pages ? undefined : minHeight"
             >
               <div v-if="pages">New Selection</div>
-              <v-icon v-else size="80">
-                mdi-plus-circle-outline
-              </v-icon>
-            </v-btn >
+              <v-icon v-else size="80"> mdi-plus-circle-outline </v-icon>
+            </v-btn>
           </v-col>
         </v-row>
       </v-card-actions>
@@ -116,6 +113,7 @@
 
 <script>
 export default {
+  name: "MediaCarousel",
   transition: "tasks-transition",
   data() {
     return {
@@ -210,18 +208,15 @@ export default {
       return (row - 1) * this.cols + col - 1;
     },
     update(selection) {
-      console.log(selection);
       this.child_medias = [...selection];
       this.$emit("changed-selection", [...selection]);
     },
     checkMediaEdit(event, page, row, col) {
       //if event is not empty, then exit
-      console.log(event)
       let index = this.mediasPerPage * page + this.getIndexFromGrid(row, col);
       if (event) {
-        this.child_medias[index]=event
-      }
-      else{
+        this.child_medias[index] = event;
+      } else {
         this.child_medias.splice(index, 1);
       }
       this.update(this.child_medias);

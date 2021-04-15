@@ -44,6 +44,7 @@
 
 <script>
 export default {
+  name: "ListTabs",
   data() {
     return {};
   },

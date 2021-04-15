@@ -13,6 +13,7 @@
 import { mapGetters } from "vuex";
 
 export default {
+  name: "SnackBar",
   data: () => ({
     snackbar: false,
     message: null,

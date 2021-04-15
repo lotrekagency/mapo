@@ -50,6 +50,7 @@
 <script>
 import { buildRoutes } from "~mapomodule/utils/routebuilder";
 export default {
+  name: "SidebarFooter",
   data() {
     return {
       defaultIcon: ({label}) => `mdi-alpha-${label[0]}-box`.toLowerCase(),

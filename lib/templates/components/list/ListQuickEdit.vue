@@ -44,6 +44,7 @@
 import { filterObj } from "~mapomodule/utils/objHelpers";
 
 export default {
+  name: "ListQuickEdit",
   data() {
     return {
       dialog: false,

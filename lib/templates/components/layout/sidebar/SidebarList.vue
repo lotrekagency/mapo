@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar__list">
-    <sidebar-list-item
+    <SidebarListItem
       class="sidebar__list__item"
       v-for="(item, i) in routes"
       :key="i"
@@ -24,6 +24,7 @@
 <script>
 import { buildRoutes } from "~mapomodule/utils/routebuilder"
 export default {
+  name: "SidebarList",
   data() {
     return {
       defaultIcon: ({label}) => `mdi-alpha-${label[0]}-circle`.toLowerCase(),

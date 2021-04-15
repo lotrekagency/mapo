@@ -18,6 +18,7 @@
 </template>
 <script>
 export default {
+  name: "MediaManagerDialog",
   data() {
     return {
       selection: [],
