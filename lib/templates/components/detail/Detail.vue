@@ -195,7 +195,7 @@ export default {
         .updateOrCreate(this.model)
         .then(() => back && this.$router.back())
         .catch(error => {
-          this.errors = error.response.status == 400 && error.response.data;
+          this.errors = error.response.status == 400 && error.response.data || null;
           this.$mapo.$snack.open({
             message: "Something whent bad, please try again later...",
             color: "error"
