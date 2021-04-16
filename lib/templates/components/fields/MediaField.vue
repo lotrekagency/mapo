@@ -51,17 +51,13 @@
             minWidth,
             minHeight,
             ...$attrs,
+            outlined: false,
           }"
         >
           <v-card-title>{{ label }}</v-card-title>
 
           <v-card-actions>
-            <v-btn
-              @click="editing = true"
-              block
-              outlined
-              :min-height="minHeight"
-            >
+            <v-btn @click="editing = true" block :min-height="minHeight">
               <v-icon size="80"> mdi-plus-circle-outline </v-icon>
             </v-btn>
           </v-card-actions>
@@ -101,7 +97,7 @@
         <!-- Confirm elimination dialog -->
         <confirm-dialog
           v-bind="{ ...$attrs, value: false }"
-          question="Are you sure you want to delete this item?"
+          question="Are you sure you want to remove this media?"
           ref="removeModal"
         ></confirm-dialog>
       </div>
