@@ -5,18 +5,7 @@
     :fields="fields"
     :languages="['it', 'en', 'de']"
     modelName="article"
-  >
-    <template v-slot:[`field.canonical`]="{ model, field, currentLang }">
-      <h3 class="mb-3">YOU CAN OVERRIDE ALMOST EVERYTHING: </h3>
-      <v-text-field
-        label="OVERRIDED CANONICAL"
-        outlined
-        v-if="model.translations && currentLang"
-        v-model="model.translations[currentLang].canonical"
-      >
-      </v-text-field>
-    </template>
-  </Detail>
+  />
 </template>
 
 <script>
