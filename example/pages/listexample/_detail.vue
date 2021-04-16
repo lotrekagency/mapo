@@ -4,7 +4,19 @@
     :identifier="$route.params.detail"
     :fields="fields"
     :languages="['it', 'en', 'de']"
-  />
+    modelName="article"
+  >
+    <template v-slot:[`field.canonical`]="{ model, field, currentLang }">
+      <h3 class="mb-3">YOU CAN OVERRIDE ALMOST EVERYTHING: </h3>
+      <v-text-field
+        label="OVERRIDED CANONICAL"
+        outlined
+        v-if="model.translations && currentLang"
+        v-model="model.translations[currentLang].canonical"
+      >
+      </v-text-field>
+    </template>
+  </Detail>
 </template>
 
 <script>
@@ -24,9 +36,9 @@ export default {
             "og_title",
             "og_type",
             "og_url",
-            "canonical",
-          ],
-        },
+            "canonical"
+          ]
+        }
       ],
       sidenav: [
         {
@@ -39,27 +51,27 @@ export default {
                 items: [
                   { text: "Draft", value: "DRF" },
                   { text: "Published", value: "PUB" },
-                  { text: "Trash", value: "TRS" },
-                ],
+                  { text: "Trash", value: "TRS" }
+                ]
               },
-              synci18n: true,
+              synci18n: true
             },
             {
               value: "pubblication_date",
               accessor: {
-                set: ({ val }) => val && new Date(val).toISOString(),
+                set: ({ val }) => val && new Date(val).toISOString()
               },
               type: "date",
-              synci18n: true,
-            },
-          ],
+              synci18n: true
+            }
+          ]
         },
         { value: "highlight_image", type: "media", synci18n: true },
-      ],
-    },
+      ]
+    }
   }),
   meta: {
-    sidebarHide: true,
-  },
+    sidebarHide: true
+  }
 };
 </script>
