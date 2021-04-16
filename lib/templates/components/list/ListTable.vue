@@ -28,7 +28,7 @@
           {{ item[firstColName] }}
         </NuxtLink>
       </template>
-      <template v-slot:item.actions="{ item }">
+      <template v-slot:[`item.actions`]="{ item }">
         <v-icon v-if="shouldEdit" small class="mr-2" @click="editItem(item)">
           mdi-pencil
         </v-icon>
