@@ -49,6 +49,7 @@
 
 <script>
 import { buildRoutes } from "~mapomodule/utils/routebuilder";
+// @vuese
 export default {
   name: "SidebarFooter",
   data() {

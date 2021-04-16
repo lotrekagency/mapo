@@ -1,13 +1,13 @@
-# MediaElement
+# MediaField
 
 ## Props
 
-<!-- @vuese:MediaElement:props:start -->
+<!-- @vuese:MediaField:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|media|-|`Object`|`false`|null|
+|value|-|`Object`|`false`|-|
+|label|-|`String`|`false`|-|
 |title|-|`String`|`false`|-|
-|dark|-|`Boolean`|`false`|false|
 |rmAddBtn|-|`Boolean`|`false`|false|
 |aspectRatio|image reflections|—|`false`|undefined|
 |contain|-|`Boolean`|`false`|false|
@@ -18,16 +18,16 @@
 |minWidth|-|—|`false`|undefined|
 |minHeight|-|—|`false`|300|
 
-<!-- @vuese:MediaElement:props:end -->
+<!-- @vuese:MediaField:props:end -->
 
 
 ## Events
 
-<!-- @vuese:MediaElement:events:start -->
+<!-- @vuese:MediaField:events:start -->
 |Event Name|Description|Parameters|
 |---|---|---|
-|changed-media|-|-|
+|input|-|-|
 
-<!-- @vuese:MediaElement:events:end -->
+<!-- @vuese:MediaField:events:end -->
 
 

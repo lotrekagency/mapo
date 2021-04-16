@@ -29,7 +29,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
-
+// @vuese
 export default {
   name: "Sidebar",
   data () {

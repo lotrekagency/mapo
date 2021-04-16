@@ -1,8 +1,8 @@
-# MediaCarousel
+# MediaM2mField
 
 ## Props
 
-<!-- @vuese:MediaCarousel:props:start -->
+<!-- @vuese:MediaM2mField:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |medias|-|`Array`|`false`|[]|
@@ -18,16 +18,16 @@
 |flat|-|`Boolean`|`false`|false|
 |dark|-|`Boolean`|`false`|false|
 
-<!-- @vuese:MediaCarousel:props:end -->
+<!-- @vuese:MediaM2mField:props:end -->
 
 
 ## Events
 
-<!-- @vuese:MediaCarousel:events:start -->
+<!-- @vuese:MediaM2mField:events:start -->
 |Event Name|Description|Parameters|
 |---|---|---|
 |changed-selection|-|-|
 
-<!-- @vuese:MediaCarousel:events:end -->
+<!-- @vuese:MediaM2mField:events:end -->
 
 
