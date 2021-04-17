@@ -51,7 +51,6 @@
             minWidth,
             minHeight,
             ...$attrs,
-            outlined: false,
           }"
         >
           <v-card-title>{{ label }}</v-card-title>

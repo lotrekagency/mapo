@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import defaults from "~mapomodule/components/detail/defaults.js";
 import TinyMce from "~mapomodule/components/fields/TinyMce/TinyMce.vue";
 import DateField from "~mapomodule/components/fields/DateField.vue";
 import M2mField from "~mapomodule/components/fields/M2mField.vue";
@@ -19,44 +20,34 @@ export default {
     DateField,
     M2mField,
     MediaM2mField,
-    MediaField,
+    MediaField
   },
 
   data() {
     return {
       model: null,
-      mapping: {
-        text: "v-text-field",
-        select: "v-select",
-        date: "date-field",
-        textarea: "v-textarea",
-        switch: "v-switch",
-        slider: "v-slider",
-        file: "v-file-input",
-        editor: "tiny-mce",
-        media: "media-field",
-        m2m: "m2m-field",
-        mediaList: "media-m2m-field",
-      },
+      fieldsMap: defaults.mapping,
+      fieldsProps: defaults.props,
+      fieldsAccess: defaults.accessor
     };
   },
   props: {
     value: {
       type: Object,
-      required: true,
+      required: true
     },
     errors: Object,
     conf: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   watch: {
     value: {
       deep: true,
       handler(val) {
         this.setModel(val);
-      },
+      }
     },
     conf(newConf, oldConf) {
       if (newConf.value !== oldConf.value) {
@@ -64,7 +55,7 @@ export default {
       }
     },
     model: {
-      handler: debounce(function (val) {
+      handler: debounce(function(val) {
         const dump = { ...this.value };
         setPointed(
           dump,
@@ -72,49 +63,44 @@ export default {
           this.accessor.set({ model: { ...this.value }, val })
         );
         this.$emit("input", dump);
-      }, 200),
-    },
+      }, 200)
+    }
   },
   methods: {
-    setModel(val) {
-      const out = val || this.value;
+    setModel(val = this.value) {
       var model = this.accessor.get({
-        model: { ...out },
-        val: getPointed({ ...out }, this.conf.value),
+        model: { ...val },
+        val: getPointed({ ...val }, this.conf.value)
       });
-      if (out && JSON.stringify(this.model) !== JSON.stringify(model))
+      if (val && JSON.stringify(this.model) !== JSON.stringify(model))
         this.model = model;
-    },
+    }
   },
   computed: {
     accessor() {
-      let func;
-      if (["v-date-picker", "date-field"].includes(this.is)) {
-        func = function ({ val }) {
-          return val && new Date(val).toISOString().split("T")[0];
-        };
-      } else {
-        func = function ({ val }) {
-          return val;
-        };
-      }
-      return { get: func, set: func, ...this.conf.accessor };
+      let func = function({ val }) {
+        return val;
+      };
+      return {
+        get: func,
+        set: func,
+        ...(this.fieldsAccess[this.is] || {}),
+        ...this.conf.accessor
+      };
     },
     fieldProp() {
-      const defaultProps = {
-        outlined: true,
+      return {
         label: this.label,
-        itemText: "text",
-        itemValue: "value",
         errorMessages: getPointed(this.errors || {}, this.conf.value, []),
+        ...(this.fieldsProps[this.is] || {}),
+        ...this.conf.attrs
       };
-      return { ...defaultProps, ...this.conf.attrs };
     },
     label() {
       if (this.conf.label !== undefined) {
         return this.conf.label;
       }
-      const titleCase = (string) =>
+      const titleCase = string =>
         (string && string[0].toUpperCase() + string.slice(1).toLowerCase()) ||
         "";
       return titleCase(
@@ -128,11 +114,10 @@ export default {
     is() {
       return (
         this.conf.is ||
-        (this.conf.type && this.mapping[this.conf.type]) ||
+        (this.conf.type && this.fieldsMap[this.conf.type]) ||
         "v-text-field"
       );
-    },
-  },
-  mounted() {},
+    }
+  }
 };
 </script>

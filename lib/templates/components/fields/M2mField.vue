@@ -3,11 +3,9 @@
     <v-checkbox
       v-for="(option, index) in options"
       :key="index"
-      :label="option[label]"
-      :input-value="isSelected(option[id])"
-      :light="!dark"
-      :dark="dark"
-      @change="changed($event, option[id])"
+      :label="option[itemText]"
+      :input-value="isSelected(option)"
+      @change="changed($event, option)"
     >
     </v-checkbox>
   </div>
@@ -16,53 +14,73 @@
 <script>
 export default {
   name: "M2mField",
-  props: {
-    value: {
-      type: Array,
-      required: true,
-    },
-    options: {
-      type: Array,
-      required: true,
-    },
-    id: {
-      type: String | Number,
-      default: "id",
-    },
-    label: {
-      type: String | Number,
-      default: "label",
-    },
-    dark: {
-      type: Boolean,
-      default: false,
-    },
+  data() {
+    return {
+      proxyItems: []
+    };
   },
-
-  methods: {
-    isSelected(id) {
-      for (let selection of this.value) {
-        if (selection == id) {
-          return true;
-        }
-      }
-      return false;
+  props: {
+    value: Array,
+    items: {
+      type: Array,
+      default: () => []
     },
-    changed(value, id) {
-      id = parseInt(id);
-      let newArr = [...this.value];
+    itemText: {
+      type: String,
+      default: "text"
+    },
+    itemValue: {
+      type: String,
+      default: "*"
+    },
+    lookup: {
+      type: String,
+      default: "id"
+    },
+    endPoint: String,
+    mapping: {
+      type: Function,
+      default: items => items
+    }
+  },
+  computed: {
+    hasKey() {
+      return this.itemValue !== "*";
+    },
+    options() {
+      return this.mapping(this.proxyItems);
+    }
+  },
+  methods: {
+    isSelected(option) {
+      return !!(this.value || []).find(
+        e => e[this.lookup] == option[this.lookup]
+      );
+    },
+    changed(value, option) {
+      let val = this.hasKey ? option[this.itemValue] : option;
+      let newArr = [...(this.value || [])];
       if (value) {
-        newArr.push(id);
+        newArr.push(val);
       } else {
-        for (let i in newArr) {
-          if (newArr[i] == id) {
-            newArr.splice(i, 1);
-            break;
-          }
-        }
+        let i = newArr.findIndex(e => e[this.lookup] == option[this.lookup]);
+        i !== -1 && newArr.splice(i, 1);
       }
       this.$emit("input", newArr);
-    },
+    }
   },
+  watch: {
+    items(val) {
+      this.proxyItems = val;
+    }
+  },
+  mounted() {
+    if (this.endPoint && (!this.items || !this.items.length)) {
+      this.$mapo.$api
+        .crud(this.endPoint)
+        .list()
+        .then(res => (this.proxyItems = res));
+    }
+  }
 };
 </script>
