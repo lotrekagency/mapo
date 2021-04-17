@@ -76,8 +76,7 @@ export default {
     setupEditor(editor) {
       this.editorInstance = editor;
       editor.on("init", () => {
-        editor.setContent(this.value || "");
-        this.emitContent(editor);
+        editor.setContent(this.value);
         editor.on("change input undo redo keyup", () =>
           this.emitContent(editor)
         );

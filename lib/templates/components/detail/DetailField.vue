@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import defaults from "~mapomodule/components/detail/defaults.js";
 import TinyMce from "~mapomodule/components/fields/TinyMce/TinyMce.vue";
 import DateField from "~mapomodule/components/fields/DateField.vue";
 import M2mField from "~mapomodule/components/fields/M2mField.vue";
@@ -12,6 +11,7 @@ import MediaField from "~mapomodule/components/fields/MediaField.vue";
 
 import { getPointed, setPointed } from "~mapomodule/utils/objHelpers";
 import debounce from "~mapomodule/utils/debounce";
+import defaults from "~mapomodule/components/detail/defaults.js";
 
 export default {
   name: "DetailField",
