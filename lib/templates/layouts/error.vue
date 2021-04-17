@@ -9,7 +9,7 @@
     <NuxtLink to="/">
       Home page
     </NuxtLink>
-    <SnackBar/>
+    <root-components />
   </v-app>
 </template>
 

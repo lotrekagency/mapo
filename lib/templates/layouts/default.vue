@@ -5,8 +5,7 @@
     <v-main>
       <v-container>
         <nuxt />
-        <SnackBar />
-        <ConfirmDialog ref="rootConfirmDialog" />
+        <root-components />
       </v-container>
     </v-main>
   </v-app>
@@ -28,20 +27,6 @@ export default {
     return {
       title: "Pannello"
     };
-  },
-  methods: {
-    initConfirmDialog(count = 10) {
-      this.$nextTick(() => {
-        if (this.$refs.rootConfirmDialog) {
-          this.$mapo.$confirm = this.$refs.rootConfirmDialog;
-        } else if (count > 0) {
-          this.initConfirmDialog(count - 1);
-        }
-      });
-    }
-  },
-  mounted: function() {
-    this.initConfirmDialog();
   }
 };
 </script>

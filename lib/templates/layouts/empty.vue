@@ -1,6 +1,6 @@
 <template>
   <v-app>
     <nuxt />
-    <SnackBar/>
+    <root-components />
   </v-app>
 </template>
