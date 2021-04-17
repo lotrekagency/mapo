@@ -92,7 +92,7 @@
               <v-icon left> mdi-upload </v-icon>
               save
             </v-btn>
-            <v-btn text color="error" @click="deleteDialog = true">
+            <v-btn text color="error" @click="deleteMedia">
               <v-icon left> mdi-delete </v-icon>
               delete
             </v-btn>
@@ -100,27 +100,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-dialog v-model="deleteDialog" max-width="300px">
-      <v-card>
-        <v-card-title> Delete </v-card-title>
-
-        <v-card-text>
-          <v-container>
-            <p>Are you sure to delelete this file?</p>
-          </v-container>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="deleteDialog = false">
-            Cancel
-          </v-btn>
-          <v-btn color="green darken-1" text @click="deleteMedia">
-            Delete
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -135,15 +114,14 @@ export default {
   name: "MediaEditor",
   data() {
     return {
-      media: null,
-      deleteDialog: false,
+      media: null
     };
   },
   props: {
     value: {
       type: Object,
-      default: () => null,
-    },
+      default: () => null
+    }
   },
   computed: {
     fileSize() {
@@ -157,24 +135,29 @@ export default {
     },
     fileName() {
       return this.media && this.media.file && this.media.file.split("/").pop();
-    },
+    }
   },
   watch: {
     value(val) {
       this.media = val;
-    },
+    }
   },
   methods: {
     saveMedia() {
       this.$emit("updateMedia", this.media);
     },
     deleteMedia() {
-      this.deleteDialog = false;
-      this.$emit("deleteMedia", this.media);
+      this.$mapo.$confirm
+        .open({
+          title: "Delete",
+          question: "Are you sure you want to delete this media?",
+          approveButton: { text: "Delete", attrs: { color: "red" } }
+        })
+        .then(res => res && this.$emit("deleteMedia", this.media));
     },
     close() {
       this.$emit("input", null);
-    },
-  },
+    }
+  }
 };
 </script>

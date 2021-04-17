@@ -26,7 +26,7 @@
               <v-icon
                 size="20"
                 class="ma-0"
-                @click.stop="confirmDelete(folder)"
+                @click.stop="deleteFolder(folder)"
                 v-if="expanded"
                 >mdi-delete</v-icon
               >
@@ -91,25 +91,6 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="deleteDialog" max-width="300px">
-      <v-card>
-        <v-card-title> Delete </v-card-title>
-
-        <v-card-text>
-          <v-container>
-            <p>Are you sure to delelete this folder and all its content?</p>
-          </v-container>
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="closeEdit"> Cancel </v-btn>
-          <v-btn color="green darken-1" text @click="deleteFolder">
-            Delete
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -129,21 +110,20 @@ export default {
     return {
       expanded: false,
       dialog: false,
-      deleteDialog: false,
       folderEdit: {},
       actions: [
         {
           label: "Create folder",
-          action: this.createFolder,
-        },
-      ],
+          action: this.createFolder
+        }
+      ]
     };
   },
   computed: {
     rotate() {
       return {
         transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
-        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
+        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
       };
     },
     hideSlug() {
@@ -152,19 +132,19 @@ export default {
         maxHeight: this.expanded ? "24px" : "18px",
         opacity: this.expanded ? 0.8 : 0.8,
         transform: this.expanded ? "scale(1)" : "scale(0.7)",
-        transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
+        transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
       };
-    },
+    }
   },
   props: {
     folders: {
       type: Array,
-      default: () => [],
+      default: () => []
     },
     parentFolder: {
       type: Object,
-      default: () => ({}),
-    },
+      default: () => ({})
+    }
   },
   methods: {
     goToFolder(folder) {
@@ -177,13 +157,14 @@ export default {
       );
       this.dialog = true;
     },
-    confirmDelete(folder) {
-      this.folderEdit = Object.assign({}, folder);
-      this.deleteDialog = true;
-    },
-    deleteFolder() {
-      this.$emit("deleteFolder", this.folderEdit);
-      this.closeEdit();
+    deleteFolder(folder) {
+      this.$mapo.$confirm
+        .open({
+          title: "Delete",
+          question: "Are you sure to delelete this folder and all its content?",
+          approveButton: { text: "Delete", attrs: { color: "red" } }
+        })
+        .then(res => res && this.$emit("deleteFolder", folder));
     },
     saveFolder() {
       this.$emit("updateFolder", this.folderEdit);
@@ -191,9 +172,8 @@ export default {
     },
     closeEdit() {
       this.dialog = false;
-      this.deleteDialog = false;
       this.folderEdit = {};
-    },
-  },
+    }
+  }
 };
 </script>
