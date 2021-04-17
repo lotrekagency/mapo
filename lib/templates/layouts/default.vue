@@ -1,18 +1,19 @@
 <template>
   <v-app class="app__wrapper">
-    <Sidebar />    
+    <Sidebar />
     <Topbar :title="title" :drawer="this.$store.getters['mapo/app/drawer']" />
     <v-main>
       <v-container>
         <nuxt />
-        <SnackBar/>
+        <SnackBar />
+        <ConfirmDialog ref="rootConfirmDialog" />
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <style lang="scss" scoped>
-@import '~mapomodule/assets/variables.scss';
+@import "~mapomodule/assets/variables.scss";
 
 .app {
   &__wrapper {
@@ -22,15 +23,25 @@
 </style>
 
 <script>
-
 export default {
-  data () {
+  data() {
     return {
-      title: 'Pannello'
+      title: "Pannello"
+    };
+  },
+  methods: {
+    initConfirmDialog(count = 10) {
+      this.$nextTick(() => {
+        if (this.$refs.rootConfirmDialog) {
+          this.$mapo.$confirm = this.$refs.rootConfirmDialog;
+        } else if (count > 0) {
+          this.initConfirmDialog(count - 1);
+        }
+      });
     }
   },
-  mounted: function () {
-
-}
-}
+  mounted: function() {
+    this.initConfirmDialog();
+  }
+};
 </script>

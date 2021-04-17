@@ -148,12 +148,6 @@
         </v-col>
       </v-row>
     </v-form>
-
-    <confirm-dialog
-      v-bind="{ ...$attrs, value: false }"
-      question="Are you sure you want to delete this item?"
-      ref="delModal"
-    ></confirm-dialog>
   </v-container>
 </template>
 
@@ -195,7 +189,8 @@ export default {
         .updateOrCreate(this.model)
         .then(() => back && this.$router.back())
         .catch(error => {
-          this.errors = error.response.status == 400 && error.response.data || null;
+          this.errors =
+            (error.response.status == 400 && error.response.data) || null;
           this.$mapo.$snack.open({
             message: "Something whent bad, please try again later...",
             color: "error"
@@ -203,19 +198,25 @@ export default {
         });
     },
     deleteItem() {
-      this.$refs.delModal.open().then(res => {
-        if (res) {
-          this.crud
-            .delete(this.identifier)
-            .then(() => this.$router.back())
-            .catch(error =>
-              this.$mapo.$snack.open({
-                message: "Something whent bad, please try again later...",
-                color: "error"
-              })
-            );
-        }
-      });
+      this.$mapo.$confirm
+        .open({
+          title: "Delete",
+          question: "Are you sure you want to delete this item?",
+          approveButton: { text: "Delete", attrs: { color: "red" } }
+        })
+        .then(res => {
+          if (res) {
+            this.crud
+              .delete(this.identifier)
+              .then(() => this.$router.back())
+              .catch(error =>
+                this.$mapo.$snack.open({
+                  message: "Something whent bad, please try again later...",
+                  color: "error"
+                })
+              );
+          }
+        });
     },
     parseConf(field, translate = true) {
       const val = typeof field === "string" ? { value: field } : field;

@@ -93,12 +93,6 @@
         >
         </media-manager-dialog>
 
-        <!-- Confirm elimination dialog -->
-        <confirm-dialog
-          v-bind="{ ...$attrs, value: false }"
-          question="Are you sure you want to remove this media?"
-          ref="removeModal"
-        ></confirm-dialog>
       </div>
     </v-hover>
   </div>
@@ -178,8 +172,11 @@ export default {
       this.internalValue = val;
     },
     confirmDelete() {
-      this.$refs.removeModal
-        .open()
+      this.$mapo.$confirm
+        .open({
+          title: "Remove",
+          question: "Are you sure to want to remove this media?"
+        })
         .then((res) => (res ? (this.internalValue = null) : null));
     },
   },

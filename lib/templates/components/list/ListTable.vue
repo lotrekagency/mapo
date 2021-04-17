@@ -44,11 +44,6 @@
         <slot :name="`dtable.${slot}`" v-bind="props" />
       </template>
     </v-data-table>
-    <confirm-dialog
-      v-bind="{ ...$attrs, value: false }"
-      question="Are you sure you want to delete this item?"
-      ref="delModal"
-    ></confirm-dialog>
     <list-quick-edit
       v-if="shouldEdit"
       ref="editModal"
@@ -199,7 +194,12 @@ export default {
     deleteItem(item) {
       const callback = (item) =>
         this.crud.delete(item[this.lookup]).then(this.getDataFromApi);
-      this.$refs.delModal.open().then((res) => (res ? callback(item) : null));
+        this.$mapo.$confirm
+          .open({
+            title: "Delete",
+            question: "Are you sure you want to delete this item?",
+            approveButton: { text: "Delete", attrs: { color: "red" } }
+          }).then((res) => (res ? callback(item) : null));
     },
     filterSlots(slots, scope) {
       return Object.keys(slots)

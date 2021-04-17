@@ -1,13 +1,14 @@
 <template>
   <div>
-    <slot v-bind="{ on, attrs }" name="activator"></slot>
-    <v-dialog v-model="dialog" width="350">
-      <v-card v-bind="$attrs">
-        <v-card-title class="headline">{{question}}</v-card-title>
+    <slot v-bind="{ on, attrs: options.attrs }" name="activator"></slot>
+    <v-dialog v-model="dialog" v-bind="{ width: 350, ...options.attrs }">
+      <v-card v-bind="options.attrs">
+        <v-card-title>{{ options.title }}</v-card-title>
+        <v-card-text class="headline">{{ options.question }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="close">Cancel</v-btn>
-          <v-btn text @click="accept">OK</v-btn>
+          <v-btn v-bind="dismissAttrs" @click="close">{{ dismissTxt }}</v-btn>
+          <v-btn @click="accept" v-bind="approveAttrs">{{ approveTxt }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -20,24 +21,57 @@ export default {
     return {
       response: null,
       dialog: false,
-      attrs: { ...this.$attrs },
+      optionsBk: null,
+      options: {
+        title: this.title,
+        question: this.question,
+        dismissButton: this.dismissButton,
+        approveButton: this.approveButton,
+        attrs: { ...this.$attrs }
+      },
       on: {
-        click: (event) => {
+        click: event => {
           event.preventDefault();
           event.stopPropagation();
           this.dialog = !this.dialog;
-        },
-      },
+        }
+      }
     };
   },
   props: {
     value: {
-      type: Boolean,
+      type: Boolean
     },
     question: {
       type: String,
-      default: "Are you sure of what you are doing?",
+      default: "Are you sure of what you are doing?"
     },
+    title: {
+      type: String,
+      default: "Confirm"
+    },
+    dismissButton: {
+      type: Object,
+      default: () => ({ text: "Cancel", attrs: { text: true } })
+    },
+    approveButton: {
+      type: Object,
+      default: () => ({ text: "Ok", attrs: { color: "primary", text: true } })
+    }
+  },
+  computed: {
+    approveTxt() {
+      return this.options.approveButton?.text || "Ok";
+    },
+    approveAttrs() {
+      return this.options.approveButton?.attrs || {};
+    },
+    dismissTxt() {
+      return this.options.dismissButton?.text || "Cancel";
+    },
+    dismissAttrs() {
+      return this.options.dismissButton?.attrs || {};
+    }
   },
   watch: {
     value(val) {
@@ -49,10 +83,12 @@ export default {
       if (!val && this.resolve) {
         this.resolve(null);
       }
-    },
+    }
   },
   methods: {
-    open() {
+    open(options) {
+      this.optionsBk = { ...this.options };
+      this.options = { ...this.options, ...options };
       this.dialog = true;
       return new Promise((resolve, reject) => {
         this.resolve = resolve;
@@ -68,7 +104,8 @@ export default {
         this.resolve(this.response);
       }
       this.dialog = false;
-    },
-  },
+      this.options = { ...this.optionsBk };
+    }
+  }
 };
 </script>
