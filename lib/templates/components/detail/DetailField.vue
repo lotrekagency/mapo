@@ -10,7 +10,6 @@ import MediaM2mField from "~mapomodule/components/fields/MediaM2mField.vue";
 import MediaField from "~mapomodule/components/fields/MediaField.vue";
 
 import { getPointed, setPointed } from "~mapomodule/utils/objHelpers";
-import debounce from "~mapomodule/utils/debounce";
 import defaults from "~mapomodule/components/detail/defaults.js";
 
 export default {
@@ -54,16 +53,14 @@ export default {
         this.setModel();
       }
     },
-    model: {
-      handler: debounce(function(val) {
-        const dump = { ...this.value };
-        setPointed(
-          dump,
-          this.conf.value,
-          this.accessor.set({ model: { ...this.value }, val })
-        );
-        this.$emit("input", dump);
-      }, 200)
+    model(val) {
+      const dump = { ...this.value };
+      setPointed(
+        dump,
+        this.conf.value,
+        this.accessor.set({ model: { ...this.value }, val })
+      );
+      this.$emit("input", dump);
     }
   },
   methods: {
