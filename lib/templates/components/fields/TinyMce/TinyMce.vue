@@ -64,7 +64,7 @@ export default {
 
   methods: {
     initEditor() {
-      initMapoMedia(this.insertImgCallback);
+      initMapoMedia(() => this.insertImgCallback());
       window.tinymce.init(
         Object.assign(defaults, this.conf, {
           target: this.$refs.editorNode,
