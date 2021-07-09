@@ -34,12 +34,12 @@
     "markdownDir": "*"
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.13.1",
-    "@nuxtjs/vuetify": "^1.11.3",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/vuetify": "^1.12.1",
     "cookieparser": "^0.1.0",
     "js-cookie": "^2.2.1",
     "lodash.mergewith": "^4.6.2",
-    "nuxt": "^2.15.4"
+    "nuxt": "^2.15.7"
   },
   "devDependencies": {
     "@vuese/cli": "^2.14.3",
