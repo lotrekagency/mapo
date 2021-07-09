@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { VTextField, VSelect, VTextarea, VSwitch, VSlider, VFileInput } from "vuetify/lib";
 import TinyMce from "~mapomodule/components/fields/TinyMce/TinyMce.vue";
 import DateField from "~mapomodule/components/fields/DateField.vue";
 import M2mField from "~mapomodule/components/fields/M2mField.vue";
@@ -15,6 +16,12 @@ import defaults from "~mapomodule/components/detail/defaults.js";
 export default {
   name: "DetailField",
   components: {
+    VTextField,
+    VSelect,
+    VTextarea,
+    VSwitch,
+    VSlider,
+    VFileInput,
     TinyMce,
     DateField,
     M2mField,
