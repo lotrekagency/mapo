@@ -21,7 +21,7 @@
     "docs:gen": "yarn docs:js && vuese gen && ./docs/.vuepress/moveREADME.sh",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:js": "jsdoc2md -t docs/.jsdoc2md/TEMPLATE.hbs ./lib/**/*.js > docs/core/mapo/README.md"
+    "docs:js": "jsdoc2md -t docs/.jsdoc2md/TEMPLATE.hbs ./lib/**/*.js > docs/core/README.md"
   },
   "engines": {
     "node": "^12 || ^14",
