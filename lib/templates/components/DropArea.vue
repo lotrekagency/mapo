@@ -66,7 +66,9 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
+      <!-- Slot to provide custom button actions inside the drop area -->
       <slot v-bind:clearList="clearList" name="actions">
+        <!-- `<v-btn @click="clearList" icon><v-icon>mdi-close</v-icon></v-btn>` -->
         <v-btn @click="clearList" icon>
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -79,7 +81,9 @@
     >
       <v-card v-if="editedItem">
         <v-card-title>
+          <!-- Slot to provide custom edit card title. Exposes `editedItem`. -->
           <slot v-bind:editedItem="editedItem" name="editTitle">
+            <!-- `<v-img v-if="editedItem.objectURL" max-height="200" contain :src="editedItem.objectURL"></v-img>` -->
             <v-img
               v-if="editedItem.objectURL"
               max-height="200"
@@ -90,7 +94,9 @@
         </v-card-title>
 
         <v-card-text>
+          <!-- Slot to provide custom edit card content. Exposes `editedItem`. -->
           <slot v-bind:editedItem="editedItem" name="editContent">
+            <!-- `<v-container><v-row><v-col cols="12"><v-text-field v-model="editedItem.name" label="File name"></v-text-field></v-col></v-row></v-container>` -->
             <v-container>
               <v-row>
                 <v-col cols="12">
@@ -122,23 +128,34 @@
 
 <script>
 import { humanFileSize } from "~mapomodule/utils/formatters.js";
-
+/**
+ * This component creates a drop area for uploads.
+ * You can drag and drop over the button or click it to load the files.
+ * When files are loaded into the component it will emit an event containing all the files.
+ * This component will not take care of the actual file upload.
+ * 
+ */ 
 export default {
   name: "DropArea",
   props: {
+    // This determines whether the component accepts multiple files or a single file.
     multiple: {
       type: Boolean,
       default: false,
     },
+    // Light theme (style).
     light: {
       type: Boolean,
       default: false,
     },
+    // Dark theme (style).
     dark: {
       type: Boolean,
       default: false,
     },
+    // Elevation shadow (style).
     elevation: {
+      // `Number|String`.
       type: Number | String,
       default: undefined,
     },
@@ -222,6 +239,10 @@ export default {
   },
   watch: {
     uploadedFiles(val) {
+      /** Fires when the list of files loaded changes
+      * @arg This emits a list of files in the format {info, blob} where the blob is a 
+      * [File](https://developer.mozilla.org/en-US/docs/Web/API/File) and info are some custom info about the file.
+      */
       this.$emit("change", val);
     },
   },

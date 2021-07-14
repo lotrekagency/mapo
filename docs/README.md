@@ -37,3 +37,8 @@ in your components and templates when needed.
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
 
 https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request
+
+<br><br><br>
+
+* * * 
+This documentation was generated thanks to [@Vuepress](https://vuepress.vuejs.org/), [@Vuese](https://vuese.org/) and [@jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown#readme) .
