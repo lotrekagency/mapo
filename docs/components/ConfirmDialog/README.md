@@ -7,6 +7,9 @@
 |---|---|---|---|---|
 |value|-|`Boolean`|`false`|-|
 |question|-|`String`|`false`|Are you sure of what you are doing?|
+|title|-|`String`|`false`|Confirm|
+|dismissButton|-|`Object`|`false`|{"text":"Cancel","attrs":{"text":true}}|
+|approveButton|-|`Object`|`false`|{"text":"Ok","attrs":{"color":"primary","text":true}}|
 
 <!-- @vuese:ConfirmDialog:props:end -->
 

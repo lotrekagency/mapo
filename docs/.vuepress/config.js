@@ -7,6 +7,9 @@ module.exports = {
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Components', link: '/components/' },
+      { text: 'Core', link: '/core/' },
+
+
     ],
     sidebar: sidebar.getSidebar()
   },

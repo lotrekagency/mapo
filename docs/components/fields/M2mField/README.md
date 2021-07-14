@@ -5,11 +5,13 @@
 <!-- @vuese:M2mField:props:start -->
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|value|-|`Array`|`true`|-|
-|options|-|`Array`|`true`|-|
-|id|-|—|`false`|id|
-|label|-|—|`false`|label|
-|dark|-|`Boolean`|`false`|false|
+|value|-|`Array`|`false`|-|
+|items|-|`Array`|`false`|[]|
+|itemText|-|`String`|`false`|text|
+|itemValue|-|`String`|`false`|*|
+|lookup|-|`String`|`false`|id|
+|endPoint|-|`String`|`false`|-|
+|mapping|-|`Function`|`false`|items => items|
 
 <!-- @vuese:M2mField:props:end -->
 
