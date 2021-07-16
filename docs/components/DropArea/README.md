@@ -5,6 +5,7 @@ This component creates a drop area for uploads. You can drag and drop over the b
 ## Props
 
 <!-- @vuese:DropArea:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |multiple|This determines whether the component accepts multiple files or a single file.|`Boolean`|`false`|false|
@@ -18,6 +19,7 @@ This component creates a drop area for uploads. You can drag and drop over the b
 ## Events
 
 <!-- @vuese:DropArea:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |change|Fires when the list of files loaded changes [File](https://developer.mozilla.org/en-US/docs/Web/API/File) and info are some custom info about the file.|This emits a list of files in the format {info, blob} where the blob is a|
@@ -28,6 +30,7 @@ This component creates a drop area for uploads. You can drag and drop over the b
 ## Slots
 
 <!-- @vuese:DropArea:slots:start -->
+
 |Name|Description|Default Slot Content|
 |---|---|---|
 |actions|Slot to provide custom button actions inside the drop area|`<v-btn @click="clearList" icon><v-icon>mdi-close</v-icon></v-btn>`|

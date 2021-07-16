@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:DetailLangSwitch:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|-|`String`|`false`|-|
@@ -15,6 +16,7 @@
 ## Events
 
 <!-- @vuese:DetailLangSwitch:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|

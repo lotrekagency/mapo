@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:DetailField:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|-|`Object`|`true`|-|
@@ -15,6 +16,7 @@
 ## Events
 
 <!-- @vuese:DetailField:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|

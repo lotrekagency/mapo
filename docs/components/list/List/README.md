@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:List:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |endpoint|-|`String`|`true`|-|
@@ -13,6 +14,7 @@
 ## Events
 
 <!-- @vuese:List:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |selectionChange|-|-|
@@ -23,6 +25,7 @@
 ## Slots
 
 <!-- @vuese:List:slots:start -->
+
 |Name|Description|Default Slot Content|
 |---|---|---|
 |slot|-|-|

@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:MediaGallery:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |medias|-|`Array`|`true`|{}|
@@ -16,6 +17,7 @@
 ## Events
 
 <!-- @vuese:MediaGallery:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |pageChange|-|-|

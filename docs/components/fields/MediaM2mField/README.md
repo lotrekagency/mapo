@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:MediaM2mField:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |medias|-|`Array`|`false`|[]|
@@ -24,6 +25,7 @@
 ## Events
 
 <!-- @vuese:MediaM2mField:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |changed-selection|-|-|

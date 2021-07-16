@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:MediaField:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|-|`Object`|`false`|-|
@@ -24,6 +25,7 @@
 ## Events
 
 <!-- @vuese:MediaField:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|

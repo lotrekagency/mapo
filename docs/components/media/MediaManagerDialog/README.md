@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:MediaManagerDialog:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|-|`Boolean`|`false`|-|
@@ -18,6 +19,7 @@
 ## Events
 
 <!-- @vuese:MediaManagerDialog:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|
@@ -29,6 +31,7 @@
 ## Slots
 
 <!-- @vuese:MediaManagerDialog:slots:start -->
+
 |Name|Description|Default Slot Content|
 |---|---|---|
 |activator|-|-|

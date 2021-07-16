@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:MediaEditor:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|-|`Object`|`false`|null|
@@ -13,6 +14,7 @@
 ## Events
 
 <!-- @vuese:MediaEditor:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |updateMedia|-|-|

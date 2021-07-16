@@ -5,6 +5,7 @@ This component is embedded in the default layout. It's a dynamic dialog which is
 ## Props
 
 <!-- @vuese:ConfirmDialog:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|v-model boolean that controll the status of the dialog (opened/closed)|`Boolean`|`false`|false|
@@ -19,6 +20,7 @@ This component is embedded in the default layout. It's a dynamic dialog which is
 ## Events
 
 <!-- @vuese:ConfirmDialog:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|Fired when the v-model changes.|Emits `true|false` based on the dialog status `open|close`.|
@@ -31,6 +33,7 @@ This component is embedded in the default layout. It's a dynamic dialog which is
 ## Slots
 
 <!-- @vuese:ConfirmDialog:slots:start -->
+
 |Name|Description|Default Slot Content|
 |---|---|---|
 |activator|Activator slot, this follows the logics of <a href="https://vuetifyjs.com/en/api/v-dialog/#api-slots" target="__blank">vuetify activator</a>.|-|
@@ -41,6 +44,7 @@ This component is embedded in the default layout. It's a dynamic dialog which is
 ## Methods
 
 <!-- @vuese:ConfirmDialog:methods:start -->
+
 |Method|Description|Parameters|
 |---|---|---|
 |open|This open the Confirm dialog component showing to the user a question. Returns a promise with the user response. See [this.$mapo.$confirm.open](/core/#confirm)|The payload containing the information to show to the user in the confirm dialog.|

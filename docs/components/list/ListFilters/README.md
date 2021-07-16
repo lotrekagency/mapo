@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:ListFilters:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |filters|-|`Array`|`false`|[]|
@@ -13,6 +14,7 @@
 ## Events
 
 <!-- @vuese:ListFilters:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|
@@ -23,6 +25,7 @@
 ## Slots
 
 <!-- @vuese:ListFilters:slots:start -->
+
 |Name|Description|Default Slot Content|
 |---|---|---|
 |`filter.${filter.value}`|-|-|

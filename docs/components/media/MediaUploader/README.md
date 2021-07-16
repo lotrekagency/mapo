@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:MediaUploader:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |parentFolder|-|`Object`|`false`|-|
@@ -14,6 +15,7 @@
 ## Events
 
 <!-- @vuese:MediaUploader:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |Upload|-|-|

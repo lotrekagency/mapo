@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:ListQuickEdit:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|-|`Boolean`|`false`|-|
@@ -17,6 +18,7 @@
 ## Events
 
 <!-- @vuese:ListQuickEdit:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|
@@ -27,6 +29,7 @@
 ## Slots
 
 <!-- @vuese:ListQuickEdit:slots:start -->
+
 |Name|Description|Default Slot Content|
 |---|---|---|
 |activator|-|-|

@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:Detail:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |fields|-|—|`false`|-|
@@ -18,6 +19,7 @@
 ## Slots
 
 <!-- @vuese:Detail:slots:start -->
+
 |Name|Description|Default Slot Content|
 |---|---|---|
 |title|-|-|

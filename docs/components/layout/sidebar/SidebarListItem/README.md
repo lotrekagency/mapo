@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:SidebarListItem:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |link|-|`String`|`false`|-|

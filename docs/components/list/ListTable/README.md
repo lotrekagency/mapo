@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:ListTable:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |crud|-|`Object`|`true`|-|
@@ -22,6 +23,7 @@
 ## Events
 
 <!-- @vuese:ListTable:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|
@@ -32,6 +34,7 @@
 ## Slots
 
 <!-- @vuese:ListTable:slots:start -->
+
 |Name|Description|Default Slot Content|
 |---|---|---|
 |dtable.top.center|-|-|

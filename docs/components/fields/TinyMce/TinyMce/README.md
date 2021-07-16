@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:TinyMce:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|-|`String`|`false`|-|
@@ -18,6 +19,7 @@
 ## Events
 
 <!-- @vuese:TinyMce:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|

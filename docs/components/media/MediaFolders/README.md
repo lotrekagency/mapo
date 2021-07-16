@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:MediaFolders:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |folders|-|`Array`|`false`|[]|
@@ -14,6 +15,7 @@
 ## Events
 
 <!-- @vuese:MediaFolders:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |goToFolder|-|-|

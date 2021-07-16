@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:MediaManager:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |select|-|`String`|`false`|none|
@@ -17,6 +18,7 @@
 ## Events
 
 <!-- @vuese:MediaManager:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |selectionChange|-|-|

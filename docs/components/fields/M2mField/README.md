@@ -3,6 +3,7 @@
 ## Props
 
 <!-- @vuese:M2mField:props:start -->
+
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|-|`Array`|`false`|-|
@@ -19,6 +20,7 @@
 ## Events
 
 <!-- @vuese:M2mField:events:start -->
+
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|
