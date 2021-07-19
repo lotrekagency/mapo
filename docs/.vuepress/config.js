@@ -3,6 +3,7 @@ const sidebar = require('./compose-sidenav')
 module.exports = {
   title: "🥭  Mapo DOC",
   description: "Just playing around",
+  base: '/mapo/',
   themeConfig: {
     nextLinks: false,
     prevLinks: false,
