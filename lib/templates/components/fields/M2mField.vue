@@ -12,6 +12,10 @@
 </template>
 
 <script>
+/**
+ * This component is made to simplify Many To Many associations. With this component you can modify an array selecting items from a list of checkboxes.
+ */
+
 export default {
   name: "M2mField",
   data() {
@@ -20,7 +24,12 @@ export default {
     };
   },
   props: {
-    value: Array,
+    // V-model property. It is the array to be modified. 
+    value: {
+      type: Array,
+      required: true
+    },
+    // This is the array of options from which you can choose.
     items: {
       type: Array,
       default: () => []

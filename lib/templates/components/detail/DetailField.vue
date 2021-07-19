@@ -12,6 +12,9 @@ import MediaField from "~mapomodule/components/fields/MediaField.vue";
 import { getPointed, setPointed } from "~mapomodule/utils/objHelpers";
 import defaults from "~mapomodule/components/detail/defaults.js";
 
+/**
+ * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail) in order to render dinamic fields inside the main form.
+ */
 export default {
   name: "DetailField",
   components: {
@@ -31,12 +34,16 @@ export default {
     };
   },
   props: {
+    // V-model of the payload needed to edit the field value in realtime.
     value: {
       type: Object,
       required: true
     },
+    // An object representing all the errors of all fields. This means that this component will find the error of its field following the dottedPath of the value in the error dict.
     errors: Object,
+    // The main configuration that determines the rendering of the field. See [FieldConfiguration](/components/detail/Detail/#fieldconfiguration).
     conf: {
+      // [`FieldConfiguration`](/components/detail/Detail/#fieldconfiguration)
       type: Object,
       required: true
     }
@@ -60,6 +67,8 @@ export default {
         this.conf.value,
         this.accessor.set({ model: { ...this.value }, val })
       );
+      // Fired when the v-model changes.
+      // @arg Emits the entire payload modified.
       this.$emit("input", dump);
     }
   },

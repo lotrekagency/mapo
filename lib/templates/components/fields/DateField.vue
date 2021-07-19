@@ -28,6 +28,9 @@
 </template>
 
 <script>
+/**
+ * This component is used to edit a date in iso format. It is a combination of "v-text-field" and "v-date-picker".
+ */
 export default {
   name: "DateField",
   data() {
@@ -37,14 +40,24 @@ export default {
     };
   },
   props: {
-    value: String | Array,
-    range: Boolean,
+    // V-model property. Is the date to be modified. It can be also array in case of date range.
+    value: {
+      // `String|Array`
+      type: String | Array,
+    },
+    // Determines if we need to work with date ranges.
+    range: {
+      type: Boolean,
+      default: false
+    }
   },
   watch: {
     value(val) {
       if (this.model !== val) this.model = val;
     },
     model(val) {
+      // Fired when the v-model changes
+      //@arg Emits the date or the date range edited.
       this.$emit("input", val);
     },
   },

@@ -10,7 +10,9 @@
 
 <script>
 import { getPointed } from "~mapomodule/utils/objHelpers";
-
+/**
+ * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail) in order to render and manage all the language choices for the payload.
+ */
 export default {
   name: "DetailLangSwitch",
   data() {
@@ -19,11 +21,14 @@ export default {
     };
   },
   props: {
+    // V-model representing the current selected language.
     value: String,
+    // A list of languages into which the payload needs to be translated.
     langs: {
       type: Array,
       default: () => [],
     },
+      // An object representing all the errors of all fields. This component will find errors in each language and will display a little dot in the tab if there are any errors.
     errors: Object,
   },
   computed: {
@@ -34,6 +39,8 @@ export default {
   watch: {
     tab(val) {
       this.saveQparams();
+      // Fired when the v-model changes.
+      // @arg Emits the current language choice.
       this.$emit("input", this.langs[val]);
     },
     value(val) {
