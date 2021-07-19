@@ -1,6 +1,8 @@
 <template>
   <v-container>
+    <!-- Use this to override the title of the detail component. -->
     <slot name="title" v-bind="slotBindings">
+      <!-- `<h1> "Create | Edit" + modelName </h1>` -->
       <v-row class="mb-14">
         <h1>{{ isNew ? "Create" : "Edit" }} {{ modelName }}</h1>
       </v-row>
@@ -8,8 +10,11 @@
     <v-form ref="form">
       <v-row>
         <v-col cols="12" md="8">
+          <!-- Use this to add content at the top of the central layout. -->
           <slot name="body.top" v-bind="slotBindings"></slot>
+          <!-- Use this to override the Language Switch panel. -->
           <slot name="body.lang" v-bind="slotBindings">
+            <!-- [`DetailLangSwitch`](/components/detail/DetailLangSwitch)  -->
             <DetailLangSwitch
               v-if="langs && langs.length"
               class="mb-4"
@@ -17,30 +22,35 @@
               :langs="langs"
               :errors="errors"
           /></slot>
+          <!-- Use this to add content under the Language Switch panel. -->
           <slot name="body.top.underlang" v-bind="slotBindings"></slot>
+          <!-- Use this to override the content of the main body. -->
           <slot name="body" v-bind="slotBindings">
+            <!-- The result of the [`DetailConfiguration`](#detailconfiguration) contained in the main body. -->
             <div v-for="(field, index) in mainFields" :key="index">
               <v-card v-if="field.group" class="my-2">
                 <v-card-title>
-                  <v-icon left> {{ getGroupIcon(field.group) }} </v-icon>
-                  <span>{{ getGroupName(field.group) }}</span>
+                  <v-icon left> {{ field.group.icon }} </v-icon>
+                  <span>{{ field.group.name }}</span>
                 </v-card-title>
                 <v-card-text>
                   <div
-                    v-for="(subField, subI) in field.fields"
-                    :key="subI"
+                    v-for="(fields, fieldsI) in field.fields"
+                    :key="fieldsI"
                     class="mb-4"
                   >
+                    <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
                     <slot
-                      :name="`field.${parseConf(subField, false).value}`"
+                      :name="fields.slotName"
                       v-bind="{
-                        conf: parseConf(subField),
+                        conf: fields,
                         ...slotBindings,
                       }"
                     >
+                      <!-- A [`DetailField`](/components/detail/DetailField) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
                       <DetailField
                         v-model="model"
-                        :conf="parseConf(subField)"
+                        :conf="fields"
                         :errors="errors"
                       />
                     </slot>
@@ -49,44 +59,51 @@
               </v-card>
               <slot
                 v-else
-                :name="`field.${parseConf(field, false).value}`"
+                :name="field.slotName"
                 v-bind="{
-                  conf: parseConf(field),
+                  conf: field,
                   ...slotBindings,
                 }"
               >
-                <DetailField
-                  v-model="model"
-                  :conf="parseConf(field)"
-                  :errors="errors"
-                />
+                <DetailField v-model="model" :conf="field" :errors="errors" />
               </slot>
             </div>
           </slot>
+          <!-- Use this to add content under the main body. -->
           <slot name="body.bottom" v-bind="slotBindings"></slot>
         </v-col>
         <v-col cols="12" md="4">
           <div class="d-flex flex-column" :style="stickySide">
+            <!-- Use this to add content on the top of the sidebar button panel. -->
             <slot name="side.buttons.top" v-bind="slotBindings"></slot>
-
+            <!-- Use this to override the the sidebar button panel. -->
             <slot name="side.buttons" v-bind="slotBindings">
+              <!-- Save, Save and continue, Back, and Delete buttons. -->
               <div class="mt-4 mt-md-0 mb-md-4 mb-0 order-1 order-md-0">
+                <!-- Use this to override the Save button. -->
                 <slot name="button.save" v-bind="slotBindings">
+                  <!-- The Save button. -->
                   <v-btn class="mb-2" tile block @click="saveItem(true)">{{
                     isNew ? "Create" : "Save"
                   }}</v-btn>
                 </slot>
+                <!-- Use this to override the Save and continue button. -->
                 <slot name="button.savecontinue" v-bind="slotBindings">
+                  <!-- The Save and continue button. -->
                   <v-btn class="mb-2" tile block @click="saveItem(false)"
                     >{{ isNew ? "Create" : "Save" }} and continue</v-btn
                   >
                 </slot>
+                <!-- Use this to override the Back button. -->
                 <slot name="button.back" v-bind="slotBindings">
+                  <!-- The Back button. -->
                   <v-btn class="mb-2" tile block @click="$router.back()"
                     >Back</v-btn
                   >
                 </slot>
+                <!-- Use this to override the Delete button. -->
                 <slot name="button.delete" v-bind="slotBindings">
+                  <!-- The Delete button. -->
                   <v-btn
                     v-if="!isNew"
                     class="mb-2"
@@ -99,29 +116,32 @@
                 </slot>
               </div>
             </slot>
+            <!-- Use this to add content on the top of the sidebar fields (or under sidebar buttons). -->
             <slot name="side.top" v-bind="slotBindings"></slot>
             <div v-for="(field, index) in sideFields" :key="index">
               <v-card v-if="field.group" class="mb-4">
                 <v-card-title>
-                  <v-icon left> {{ getGroupIcon(field.group) }} </v-icon>
-                  <span>{{ getGroupName(field.group) }}</span>
+                  <v-icon left> {{ field.group.icon }} </v-icon>
+                  <span>{{ field.group.name }}</span>
                 </v-card-title>
                 <v-card-text>
                   <div
-                    v-for="(subField, subI) in field.fields"
-                    :key="subI"
+                    v-for="(fields, fieldsI) in field.fields"
+                    :key="fieldsI"
                     class="mb-4"
                   >
+                    <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
                     <slot
-                      :name="`field.${parseConf(subField, false).value}`"
+                      :name="fields.slotName"
                       v-bind="{
-                        conf: parseConf(subField),
+                        conf: fields,
                         ...slotBindings,
                       }"
                     >
+                      <!-- A [`DetailField`](/components/detail/DetailField) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
                       <DetailField
                         v-model="model"
-                        :conf="parseConf(subField)"
+                        :conf="fields"
                         :errors="errors"
                       />
                     </slot>
@@ -130,19 +150,16 @@
               </v-card>
               <slot
                 v-else
-                :name="`field.${parseConf(field, false).value}`"
+                :name="field.slotName"
                 v-bind="{
-                  conf: parseConf(field),
+                  conf: field,
                   ...slotBindings,
                 }"
               >
-                <DetailField
-                  v-model="model"
-                  :conf="parseConf(field)"
-                  :errors="errors"
-                />
+                <DetailField v-model="model" :conf="field" :errors="errors" />
               </slot>
             </div>
+            <!-- 	Use this to add content under the sidebar fields. -->
             <slot name="side.bottom" v-bind="slotBindings"></slot>
           </div>
         </v-col>
@@ -153,6 +170,10 @@
 
 
 <script>
+/**
+ * The purpose of this component is to provide you with a very quick way to create an edit page for a payload to send to the server.
+ * A use case example could be "build a page that allows you to change the specifications of a product for an ecommerce".<br><br> ![Detail component structure](./img.png)
+ */
 export default {
   name: "Detail",
   data() {
@@ -163,25 +184,34 @@ export default {
     };
   },
   props: {
+    // The main configuration that determines the arrangement of the fields in the detail layout.
     fields: {
-      type: Object | Array
+      // [`DetailConfiguration`](#detailconfiguration)
+      type: Object | Array,
+      required: true
     },
-    languages: Array,
+    // A list of languages into which the payload needs to be translated.
+    languages: {
+      type: Array,
+      default: () => []
+    },
+    // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
     endpoint: String,
-    identifier: String | Number,
+    // The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.
+    identifier: {
+      // `String|Number`.
+      type: String | Number, 
+      default: 'new'
+    },
+    // The title of the detail page.
     modelName: String,
+    // This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.
     sticky: {
       type: Boolean,
       default: true
     }
   },
   methods: {
-    getGroupName(group) {
-      return group instanceof Object ? group.name : group;
-    },
-    getGroupIcon(group) {
-      return group instanceof Object ? group.icon : "mdi-cube-outline";
-    },
     saveItem(back = false) {
       this.errors = null;
       this.$refs.form?.resetValidation();
@@ -218,18 +248,26 @@ export default {
           }
         });
     },
-    parseConf(field, translate = true) {
-      const val = typeof field === "string" ? { value: field } : field;
-      return translate ? this.getTranslatedField(val) : val;
-    },
-    getTranslatedField(field) {
-      if (!this.currentLang || field.synci18n) {
-        return field;
+    parseConf(field) {
+      const conf = typeof field === "string" ? { value: field } : field;
+      conf.value = conf.value.replace(/^translations\..*\./, "");
+      conf.slotName = `fields.${conf.value}`;
+      if (this.currentLang && !field.synci18n) {
+        conf.value = `translations.${this.currentLang}.${conf.value}`;
       }
-      return {
-        ...field,
-        value: `translations.${this.currentLang}.${field.value}`
-      };
+      return conf;
+    },
+    mapConf(fields) {
+      const icon = "mdi-cube-outline";
+      const parseGroup = group =>
+        typeof group === "string"
+          ? { name: group, icon }
+          : { ...group, icon: group.icon || icon };
+      return fields.map(f =>
+        f.group
+          ? { group: parseGroup(f.group), fields: this.mapConf(f.fields) }
+          : this.parseConf(f)
+      );
     }
   },
   watch: {
@@ -247,12 +285,14 @@ export default {
       return this.$mapo.$api.crud(this.endpoint);
     },
     mainFields() {
-      return this.fields instanceof Array
-        ? this.fields
-        : this.fields.main || [];
+      return this.mapConf(
+        this.fields instanceof Array ? this.fields : this.fields.main || []
+      );
     },
     sideFields() {
-      return (this.fields instanceof Object && this.fields.sidenav) || [];
+      return this.mapConf(
+        (this.fields instanceof Object && this.fields.sidenav) || []
+      );
     },
     isNew() {
       return this.identifier && this.identifier == "new";
@@ -297,3 +337,79 @@ export default {
   }
 };
 </script>
+
+<docs lang="md">
+
+## DetailConfiguration
+
+The DetailConfiguration determines the behavior of the main form and is an `Array` of [`FieldConfiguration`](#fieldconfiguration). 
+Each field configuration represents a field of the form.
+The configuration can also consist of an object with two keys `{ main sidenav }`.
+Each key is an `Array` of [`FieldConfiguration`](#fieldconfiguration) and will modify a different part of the component:
+ - The main body
+ - The sidebar
+
+
+### FieldConfiguration
+
+The `FieldConfiguration` is a `String` containing the dottedPath of a value inside the payload we want to modify.  
+So, for example, if we have the payload: `{ image: { name: "...", url: "..." } }` we can modify the image name using the dottedPath `"image.name"`.
+
+The default component used to render a field of a form is a [`v-text-field`](https://vuetifyjs.com/en/components/text-fields/).
+If you want more control over the generated component you can use an `Object` with this attributes:
+
+|Name|Description|Type|Required|Default|
+|---|---|---|---|---|
+|value|The dottedPath of the value we want to modify.|`String`|`true`|-| 
+|synci18n|Determines if the field is translatable or not. If set to true the value will remain the same in all translations (untranslatable).|`Boolean`|`false`|`false`| 
+|type|Type of the field. This determines which component will be rendered. The list of possible choices can be found [here](#field-types) |`String`|`false`|`text`| 
+|accessor|[`Accessor`](#accessor) object to specify the setter and the getter of the field.|`Object`|`false`|`{set: x=>x, get: x=>x}`| 
+|attrs|The attributes that will be passed to the component.|`Object`|`false`|-| 
+|is|The component to be rendered in the form. This has a higher priority than the "type" attribute. Here you can pass in any regitered Vue component instance or name. [Learn more](https://vuejs.org/v2/guide/components.html#Dynamic-Components).|`String | VueComponent`|`false`|-| 
+
+#### Accessor
+
+The accessor object contains two funcition `get` and `set`. Each function will be called with a ctx as argument. The ctx contains the val (value) and the model (the payload).
+If you want to change the value as it is being processed by the component, you can set one or both of the accessors.
+Each function must return the processed value.
+
+#### Field types
+
+Here the list of the FieldConfiguration type association. 
+
+ - `text` ==> [v-text-field](https://vuetifyjs.com/en/components/text-fields/),
+ - `select` ==> [v-select](https://vuetifyjs.com/en/components/selects/),
+ - `date` ==> [date-field](/components/fields/DateField),
+ - `textarea` ==> [v-textarea](https://vuetifyjs.com/en/components/textareas/),
+ - `switch` ==> [v-switch](https://vuetifyjs.com/en/components/switches/),
+ - `slider` ==> [v-slider](https://vuetifyjs.com/en/components/sliders/),
+ - `file` ==> [v-file-input](https://vuetifyjs.com/en/components/file-inputs/),
+ - `editor` ==> [tiny-mce](/components/fields/TinyMce/TinyMce),
+ - `media` ==> [media-field](/components/fields/MediaField),
+ - `m2m` ==> [m2m-field](/components/fields/M2mField),
+ - `mediaList` ==> [media-m2m-field](/components/fields/MediaM2mField)
+
+
+#### Example of a [`FieldConfiguration`](#fieldconfiguration):
+
+```js
+{
+  value: "pubblicationDate",
+  accessor: {
+    set: ({ val }) => val && new Date(val).toISOString()
+  },
+  type: "date",
+  synci18n: true,
+  attrs: { color: "purple" }
+}
+```
+
+### FieldGroup
+
+You can use this mixed with `FieldConfiguration` to group multiple fields in one card with a title and an icon.  
+The `FieldGroup` has the key group that is a string repreenting the name of the group and the key fields that is an `Array` of [`FieldConfiguration`](#fieldconfiguration).  
+The group key can also be an `Object`. In that case it contains the name and the icon for the group `{name: "...", icon: "..."}`. For a list of all available icons, visit the official [Material Design Icons](https://materialdesignicons.com/) page.
+
+
+
+</docs>

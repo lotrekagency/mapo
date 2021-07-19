@@ -56,3 +56,16 @@ export default {
   },
 };
 </script>
+
+
+<docs>
+### Example usage:
+
+```js
+this.$mapo.$snack.open({
+  message: "Only one file can be uploaded at a time..",
+  color: "error",
+});
+```
+
+</docs>
