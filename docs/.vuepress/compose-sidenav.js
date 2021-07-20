@@ -22,22 +22,31 @@ getRootDir = function () {
     return path.resolve(process.cwd());
 };
 
+
+collapseSameName = function (dirName, childrens){
+    const childI = childrens.findIndex(c=>`${c.path || c}`.toUpperCase().endsWith(`/${dirName.toUpperCase()}/`))
+    if (childI !== -1){
+        const child = childrens.splice(childI, 1)[0]
+        return child.path || child
+    }
+}
+
 getSidebarItems = function (dirs, root, parentPath = "") {
     return dirs.reduce((stack, dir) => {
         const childs = fs.readdirSync(path.resolve(root, dir.name), { withFileTypes: true })
         const childsFolders = childs.filter(d => d.isDirectory())
         const hasReadme = !!childs.find(d => d.name == "README.md")
         if (childsFolders.length) {
+            const children = getSidebarItems(childsFolders, `${root}/${dir.name}`, `${parentPath}/${dir.name}`)
             stack.push({
                 title: dir.name.charAt(0).toUpperCase() + dir.name.slice(1),
-                path: hasReadme ? `${parentPath}/${dir.name}/` : undefined,
-                collapsable: true,
-                children: getSidebarItems(childsFolders, `${root}/${dir.name}`, `${parentPath}/${dir.name}`)
+                path: hasReadme ? `${parentPath}/${dir.name}/` : collapseSameName(dir.name, children),
+                collapsable: !!children.length, children
             })
         } else if (hasReadme) {
             stack.push(`${parentPath}/${dir.name}/`)
         }
-        return stack
+        return stack.sort((a,b)=> typeof (a.path || a) == "string" ? -1 : 1 )
     }, [])
 };
 

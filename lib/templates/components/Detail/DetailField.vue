@@ -10,7 +10,7 @@ import MediaM2mField from "~mapomodule/components/fields/MediaM2mField.vue";
 import MediaField from "~mapomodule/components/fields/MediaField.vue";
 
 import { getPointed, setPointed } from "~mapomodule/utils/objHelpers";
-import defaults from "~mapomodule/components/detail/defaults.js";
+import defaults from "~mapomodule/components/Detail/defaults.js";
 
 /**
  * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail) in order to render dinamic fields inside the main form.
