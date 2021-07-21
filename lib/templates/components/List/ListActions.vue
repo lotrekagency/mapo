@@ -23,11 +23,11 @@
   </div>
 </template>
 <script>
+/**
+ * This components renders the select box in the upper-left. This select box contains a list of actions that can be used on a selection of items.
+ * By default the only action mapo provides is a bulk delete. But with the proper configuration you can do any action you want.
+ */
 export default {
-  /**
-   * This components renders the select box in the upper-left. This select box contains a list of actions that can be used on a selection of items.
-   * By default the only action mapo provides is a bulk delete. But with the proper configuration you can do any action you want.
-   */
   name: "ListActions",
   data() {
     return {
