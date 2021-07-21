@@ -23,9 +23,9 @@ getRootDir = function () {
 };
 
 
-collapseSameName = function (dirName, childrens){
-    const childI = childrens.findIndex(c=>`${c.path || c}`.toUpperCase().endsWith(`/${dirName.toUpperCase()}/`))
-    if (childI !== -1){
+collapseSameName = function (dirName, childrens) {
+    const childI = childrens.findIndex(c => `${c.path || c}`.toUpperCase().endsWith(`/${dirName.toUpperCase()}/`))
+    if (childI !== -1) {
         const child = childrens.splice(childI, 1)[0]
         return child.path || child
     }
@@ -46,7 +46,8 @@ getSidebarItems = function (dirs, root, parentPath = "") {
         } else if (hasReadme) {
             stack.push(`${parentPath}/${dir.name}/`)
         }
-        return stack.sort((a,b)=> typeof (a.path || a) == "string" ? -1 : 1 )
+        return stack.sort((a, b) => (a.path || a) > (b.path || b) ? 1 : -1) // sort by name
+            .sort((a, b) => !!(a.path || typeof a == "string") + !!a.collapsable <= !!(b.path || typeof b == "string") + !!b.collapsable ? 1 : -1) // sort by collapse and url path
     }, [])
 };
 
