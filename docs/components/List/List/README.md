@@ -35,7 +35,6 @@ This component, as we said, is a wrapper and is made up of several parts:
  - [ListHead](../ListHead/)
  - [ListQuickEdit](../ListQuickEdit/)
  - [ListTable](../ListTable/)
- - [ListTabs](../ListTabs/)
 
 Each component within it inherits its props and slots.
 
@@ -43,7 +42,7 @@ Each component within it inherits its props and slots.
 For the list of available prop refer to the documentation of each single part.
 
 ### Slots
-This component has not individual slots, but reflects down to its parts each slot passed. 
+This component has not individual slots, but reflects down to its parts each assigned slot. 
 
 Each part can be reached with a namespace.
 

@@ -107,7 +107,6 @@ This component, as we said, is a wrapper and is made up of several parts:
  - [ListHead](../ListHead/)
  - [ListQuickEdit](../ListQuickEdit/)
  - [ListTable](../ListTable/)
- - [ListTabs](../ListTabs/)
 
 Each component within it inherits its props and slots.
 

@@ -28,15 +28,21 @@
 </style>
 
 <script>
+/**
+ * This component renders the upper part of the list. Specifically, the page title and the button to add new content.
+ */
 export default {
   name: "ListHead",
   props: {
+    // This is the title of the page.
     title: {
       type: String,
+      // The route name.
       default() {
         return this.$route.name;
       },
     },
+    // This is a boolean that determines the visibility of "new item" button. If set to true will provide the user a link to a detail page for new content creation.
     addItem: Boolean,
   },
 };
