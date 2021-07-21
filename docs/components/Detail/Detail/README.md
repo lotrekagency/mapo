@@ -26,10 +26,10 @@ The purpose of this component is to provide you with a very quick way to create 
 |---|---|---|
 |title|Use this to override the title of the detail component.|`<h1> "Create | Edit" + modelName </h1>`|
 |body.top|Use this to add content at the top of the central layout.|-|
-|body.lang|Use this to override the Language Switch panel.|[`DetailLangSwitch`](/components/detail/DetailLangSwitch)|
+|body.lang|Use this to override the Language Switch panel.|[`DetailLangSwitch`](/components/detail/DetailLangSwitch/)|
 |body.top.underlang|Use this to add content under the Language Switch panel.|-|
 |body|Use this to override the content of the main body.|The result of the [`DetailConfiguration`](#detailconfiguration) contained in the main body.|
-|fields.slotName|This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`.|A [`DetailField`](/components/detail/DetailField) configured by a [`FieldConfiguration`](#fieldconfiguration).|
+|fields.slotName|This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`.|A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration).|
 |body.bottom|Use this to add content under the main body.|-|
 |side.buttons.top|Use this to add content on the top of the sidebar button panel.|-|
 |side.buttons|Use this to override the the sidebar button panel.|Save, Save and continue, Back, and Delete buttons.|
@@ -38,7 +38,6 @@ The purpose of this component is to provide you with a very quick way to create 
 |button.back|Use this to override the Back button.|The Back button.|
 |button.delete|Use this to override the Delete button.|The Delete button.|
 |side.top|Use this to add content on the top of the sidebar fields (or under sidebar buttons).|-|
-|fields.slotName|This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`.|A [`DetailField`](/components/detail/DetailField) configured by a [`FieldConfiguration`](#fieldconfiguration).|
 |side.bottom|Use this to add content under the sidebar fields.|-|
 
 <!-- @vuese:Detail:slots:end -->
@@ -85,15 +84,15 @@ Here the list of the FieldConfiguration type association.
 
  - `text` ==> [v-text-field](https://vuetifyjs.com/en/components/text-fields/),
  - `select` ==> [v-select](https://vuetifyjs.com/en/components/selects/),
- - `date` ==> [date-field](/components/fields/DateField),
+ - `date` ==> [date-field](/components/fields/DateField/),
  - `textarea` ==> [v-textarea](https://vuetifyjs.com/en/components/textareas/),
  - `switch` ==> [v-switch](https://vuetifyjs.com/en/components/switches/),
  - `slider` ==> [v-slider](https://vuetifyjs.com/en/components/sliders/),
  - `file` ==> [v-file-input](https://vuetifyjs.com/en/components/file-inputs/),
- - `editor` ==> [tiny-mce](/components/fields/TinyMce/TinyMce),
- - `media` ==> [media-field](/components/fields/MediaField),
- - `m2m` ==> [m2m-field](/components/fields/M2mField),
- - `mediaList` ==> [media-m2m-field](/components/fields/MediaM2mField)
+ - `editor` ==> [tiny-mce](/components/fields/TinyMce/TinyMce/),
+ - `media` ==> [media-field](/components/fields/MediaField/),
+ - `m2m` ==> [m2m-field](/components/fields/M2mField/),
+ - `mediaList` ==> [media-m2m-field](/components/fields/MediaM2mField/)
 
 
 #### Example of a [`FieldConfiguration`](#fieldconfiguration):

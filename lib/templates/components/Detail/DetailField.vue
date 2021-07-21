@@ -13,7 +13,7 @@ import { getPointed, setPointed } from "~mapomodule/utils/objHelpers";
 import defaults from "~mapomodule/components/Detail/defaults.js";
 
 /**
- * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail) in order to render dinamic fields inside the main form.
+ * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic fields inside the main form.
  */
 export default {
   name: "DetailField",

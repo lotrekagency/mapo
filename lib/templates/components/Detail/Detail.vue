@@ -14,7 +14,7 @@
           <slot name="body.top" v-bind="slotBindings"></slot>
           <!-- Use this to override the Language Switch panel. -->
           <slot name="body.lang" v-bind="slotBindings">
-            <!-- [`DetailLangSwitch`](/components/detail/DetailLangSwitch)  -->
+            <!-- [`DetailLangSwitch`](/components/detail/DetailLangSwitch/)  -->
             <DetailLangSwitch
               v-if="langs && langs.length"
               class="mb-4"
@@ -47,7 +47,7 @@
                         ...slotBindings,
                       }"
                     >
-                      <!-- A [`DetailField`](/components/detail/DetailField) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
+                      <!-- A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
                       <DetailField
                         v-model="model"
                         :conf="fields"
@@ -130,7 +130,7 @@
                     :key="fieldsI"
                     class="mb-4"
                   >
-                    <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
+                    <!-- @vuese-ignore -->
                     <slot
                       :name="fields.slotName"
                       v-bind="{
@@ -138,7 +138,6 @@
                         ...slotBindings,
                       }"
                     >
-                      <!-- A [`DetailField`](/components/detail/DetailField) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
                       <DetailField
                         v-model="model"
                         :conf="fields"
@@ -379,15 +378,15 @@ Here the list of the FieldConfiguration type association.
 
  - `text` ==> [v-text-field](https://vuetifyjs.com/en/components/text-fields/),
  - `select` ==> [v-select](https://vuetifyjs.com/en/components/selects/),
- - `date` ==> [date-field](/components/fields/DateField),
+ - `date` ==> [date-field](/components/fields/DateField/),
  - `textarea` ==> [v-textarea](https://vuetifyjs.com/en/components/textareas/),
  - `switch` ==> [v-switch](https://vuetifyjs.com/en/components/switches/),
  - `slider` ==> [v-slider](https://vuetifyjs.com/en/components/sliders/),
  - `file` ==> [v-file-input](https://vuetifyjs.com/en/components/file-inputs/),
- - `editor` ==> [tiny-mce](/components/fields/TinyMce/TinyMce),
- - `media` ==> [media-field](/components/fields/MediaField),
- - `m2m` ==> [m2m-field](/components/fields/M2mField),
- - `mediaList` ==> [media-m2m-field](/components/fields/MediaM2mField)
+ - `editor` ==> [tiny-mce](/components/fields/TinyMce/TinyMce/),
+ - `media` ==> [media-field](/components/fields/MediaField/),
+ - `m2m` ==> [m2m-field](/components/fields/M2mField/),
+ - `mediaList` ==> [media-m2m-field](/components/fields/MediaM2mField/)
 
 
 #### Example of a [`FieldConfiguration`](#fieldconfiguration):

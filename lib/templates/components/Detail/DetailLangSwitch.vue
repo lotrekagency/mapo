@@ -11,7 +11,7 @@
 <script>
 import { getPointed } from "~mapomodule/utils/objHelpers";
 /**
- * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail) in order to render and manage all the language choices for the payload.
+ * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render and manage all the language choices for the payload.
  */
 export default {
   name: "DetailLangSwitch",

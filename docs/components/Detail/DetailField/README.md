@@ -1,6 +1,6 @@
 # DetailField
 
-This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail) in order to render dinamic fields inside the main form.
+This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic fields inside the main form.
 
 ## Props
 
