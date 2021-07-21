@@ -43,7 +43,7 @@
     "lodash.mergewith": "^4.6.2"
   },
   "devDependencies": {
-    "@vuese/cli": "https://github.com/bnznamco/vuese/releases/download/%40vuese%2Fcli%402.14.3.mod/cli.tar.gz",
+    "@vuese/cli": "https://github.com/bnznamco/vuese/releases/download/%40vuese%2Fcli%402.14.3.mod2/cli.tar.gz",
     "eslint": "^7.24.0",
     "eslint-plugin-vue": "^7.9.0",
     "jsdoc-to-markdown": "^7.0.1",
