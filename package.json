@@ -48,6 +48,7 @@
     "eslint-plugin-vue": "^7.9.0",
     "jsdoc-to-markdown": "^7.0.1",
     "nuxt": "^2.15.7",
-    "vuepress": "^1.8.2"
+    "vuepress": "^1.8.2",
+    "vuepress-plugin-demo-code": "^0.6.0"
   }
 }
