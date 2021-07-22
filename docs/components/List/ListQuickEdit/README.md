@@ -1,12 +1,14 @@
 # ListQuickEdit
 
+This components renders a dialog that let the user quick edit (or add) an element of the list. The dialog provides several fields that will edit a payload that will be sent to the server. <br> The component checks for editFields config or dedicated slots to decide if it should be available to the user.
+
 ## Props
 
 <!-- @vuese:ListQuickEdit:props:start -->
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|value|-|`Boolean`|`false`|-|
+|value|V-model|`Boolean`|`false`|-|
 |editTitle|-|`String`|`false`|-|
 |editFields|-|`Array`|`false`|[]|
 |lookup|-|`String`|`false`|id|

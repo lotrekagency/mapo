@@ -42,7 +42,11 @@
 </template>
 <script>
 import { filterObj } from "~mapomodule/utils/objHelpers";
-
+/**
+ * This components renders a dialog that let the user quick edit (or add) an element of the list.
+ * The dialog provides several fields that will edit a payload that will be sent to the server. <br>
+ * The component checks for editFields config or dedicated slots to decide if it should be available to the user.
+ */
 export default {
   name: "ListQuickEdit",
   data() {
@@ -62,6 +66,7 @@ export default {
     };
   },
   props: {
+    // V-model
     value: {
       type: Boolean,
     },
