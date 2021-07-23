@@ -135,6 +135,7 @@ Each part can be reached with a namespace.
     :filters="availableFilters" 
     endpoint="api/camomilla/articles"
     title="List Example"
+    addItem
   >
   </List>
 </v-app>

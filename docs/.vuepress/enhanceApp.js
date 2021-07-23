@@ -10,4 +10,5 @@ export default ({ Vue, options, router, siteData }) => {
     injectMapo({ $axios: fakeAxios }, (name, plugin) => Vue.prototype.$mapo = plugin)
     Vue.use(Vuetify, vuetifyOptions);
     options.vuetify = new Vuetify(vuetifyOptions)
+    router.beforeEach((to, from, next) => to.path.endsWith("//new") || (to.path == from.path && !!Object.keys(to.query).length) ? next(false) : next())
 };
