@@ -127,22 +127,17 @@ Each part can be reached with a namespace.
 
 ::: demo
 <template>
-<div data-app class="v-application app__wrapper v-application--is-ltr theme--dark">
-  <v-row justify="center" align="center">
-      <v-col cols="12" sm="8" md="12">
-        <List
-          show-select
-          :headers="headers"
-          :editFields="editFields"
-          :filters="availableFilters" 
-          endpoint="api/camomilla/articles"
-          title="List Example"
-          dark
-        >
-        </List>
-      </v-col>
-    </v-row>
-</div>
+<v-app >
+  <List
+    show-select
+    :headers="headers"
+    :editFields="editFields"
+    :filters="availableFilters" 
+    endpoint="api/camomilla/articles"
+    title="List Example"
+  >
+  </List>
+</v-app>
 </template>
 
 <script>
