@@ -337,7 +337,7 @@ export default {
 };
 </script>
 
-<docs lang="md">
+<docs>
 
 ## DetailConfiguration
 
