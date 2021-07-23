@@ -1,6 +1,6 @@
 # Detail
 
-The purpose of this component is to provide you with a very quick way to create an edit page for a payload to send to the server. A use case example could be "build a page that allows you to change the specifications of a product for an ecommerce".<br><br> ![Detail component structure](./img.png)
+The purpose of this component is to provide you with a very quick way to create an edit page for a payload to send to the server. A use case example could be "build a page that allows you to change the specifications of a product for an ecommerce".<br> <h4>Index:</h4> [[toc]]
 
 ## Props
 
@@ -114,6 +114,81 @@ Here the list of the FieldConfiguration type association.
 You can use this mixed with `FieldConfiguration` to group multiple fields in one card with a title and an icon.  
 The `FieldGroup` has the key group that is a string repreenting the name of the group and the key fields that is an `Array` of [`FieldConfiguration`](#fieldconfiguration).  
 The group key can also be an `Object`. In that case it contains the name and the icon for the group `{name: "...", icon: "..."}`. For a list of all available icons, visit the official [Material Design Icons](https://materialdesignicons.com/) page.
+
+<br><br>
+
+## Live Demo
+
+<br>
+
+::: warning LIVE DEMO 🎉🎉🎉
+This is an interactive example. You can play with it but remember that all http features are disabled since there is no backend server.
+:::
+
+
+::: demo
+<template>
+  <v-app>
+    <Detail
+      endpoint="api/camomilla/articles"
+      identifier="new"
+      :fields="fields"
+      :languages="['it', 'en', 'de']"
+      modelName="article"
+    />
+  </v-app>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    fields: {
+      main: [
+        { value: "identifier", synci18n: true },
+        { value: "content", type: "editor" },
+        {
+          group: "Seo",
+          fields: [
+            "title",
+            { value: "description", type: "textarea" },
+            "permalink",
+          ]
+        }
+      ],
+      sidenav: [
+        {
+          group: "Status",
+          fields: [
+            { value: "trash", type: "switch", synci18n: true },
+            {
+              value: "status",
+              type: "select",
+              attrs: {
+                items: [
+                  { text: "Draft", value: "DRF" },
+                  { text: "Published", value: "PUB" },
+                  { text: "Trash", value: "TRS" }
+                ]
+              },
+              synci18n: true
+            },
+            {
+              value: "pubblication_date",
+              accessor: {
+                set: ({ val }) => val && new Date(val).toISOString()
+              },
+              type: "date",
+              synci18n: true
+            }
+          ]
+        },
+        { value: "highlight_image", type: "media", synci18n: true }
+      ]
+    }
+  })
+};
+</script>
+:::
 
 
 

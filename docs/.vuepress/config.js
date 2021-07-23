@@ -32,8 +32,8 @@ module.exports = {
   plugins: [
     [
       'demo-code', {
-        showText: 'show more',
-        hideText: 'show less',
+        showText: '🧐 show more code..',
+        hideText: '😱 WTF! Show less!',
         onlineBtns: { codepen: false, jsfiddle: false, codesandbox: false, },
       }
     ],

@@ -1,6 +1,6 @@
 # List
 
-The purpose of this component is to provide you with a very quick way to create a page that can show a list of resources retrieved from the server. A use case example could be "build a page that lists all the products of an ecommerce". <br><br> This component is a wrapper and is made up of several parts. The props and slots of this component are passed to its childs. For detailed explanations see [Transparent Wrapping](#transparent-wrapping). <br><br> ![List component structure](./img.png)
+The purpose of this component is to provide you with a very quick way to create a page that can show a list of resources retrieved from the server. A use case example could be "build a page that lists all the products of an ecommerce". <br><br> This component is a wrapper and is made up of several parts. The props and slots of this component are passed to its childs. For detailed explanations see [Transparent Wrapping](#transparent-wrapping). <br> <h4>Index:</h4> [[toc]]
 
 ## Props
 
@@ -50,8 +50,15 @@ Each part can be reached with a namespace.
  - `"dtable"` is the namespace of [`ListTable`](../ListTable/#slots) slots.
  - `"qedit"` is the namespace of [`ListQuickEdit`](../ListQuickEdit/#slots) slots.
 
+<br><br>
 
-## Live Example 🕶
+## Live Demo
+
+<br>
+
+::: warning LIVE DEMO 🎉🎉🎉
+This is an interactive example. You can play with it but remember that all http features are disabled since there is no backend server.
+:::
 
 ::: demo
 <template>
