@@ -157,7 +157,7 @@ export default {
         ...this.options,
         sortBy: this.$route.query.sort?.split(".") || [],
         sortDesc: this.$route.query.order?.split(".").map((e) => e == "desc") || [],
-        itemsPerPage: parseInt(this.$route.query.items) || 10,
+        itemsPerPage: parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
       };
     },
     getOrderParams(options) {
@@ -184,7 +184,7 @@ export default {
         } else {
           query.push(`${format(fi.value)}=${ fi.active[0].value}`)
         }
-        query.forEach(q => params.append('fltr', q)) 
+        query.forEach(q => params.append('fltr', q))
       })
       return params;
     },
