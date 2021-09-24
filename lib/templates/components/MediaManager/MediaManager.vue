@@ -177,7 +177,7 @@ export default {
       this.folders = resp?.folders || [];
       this.parentFolder = resp?.parent_folder;
       this.page = resp?.media?.paginator?.page;
-      this.pages = resp?.media?.paginator?.page_range?.pop();
+      this.pages = resp?.media?.paginator?.pages;
     },
     selectionChange(event) {
       this.$emit("selectionChange", event);
