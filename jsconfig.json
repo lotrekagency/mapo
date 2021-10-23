@@ -14,9 +14,6 @@
             "@@/*": [
                 "./*"
             ],
-            "~mapomodule/*": [
-                "./lib/templates/*"
-            ]
         }
     },
     "exclude": [

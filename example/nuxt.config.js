@@ -2,5 +2,5 @@
 export default {
   buildModules: [
     'mapomodule'
-  ]
+  ],
 }

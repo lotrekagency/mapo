@@ -1,5 +1,5 @@
 #!/bin/bash
-source="./lib/templates"
+source="./packages/@mapomodule/uikit"
 destination="./docs"
 
 destination=$(cd -- "$destination" && pwd)

@@ -1,8 +1,8 @@
 
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
-import injectMapo from '../../lib/templates/plugins/mapo.plugin'
-import vuetifyOptions from '../../lib/vuetify'
+import injectMapo from '../../packages/@mapomodule/core/index'
+import vuetifyOptions from '../../packages/@mapomodule/uikit/defaults'
 
 export default ({ Vue, options, router, siteData }) => {
     function fakeHttp() { return Promise.reject({ detail: "This is a demo environment.. No backend connection.. " }) }

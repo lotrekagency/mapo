@@ -26,8 +26,7 @@ module.exports = {
   ],
   chainWebpack: config => {
     config.module.rule('images').use('url-loader').options({ esModule: false });
-    config.resolve.alias.set('~mapomodule', path.resolve(__dirname, '../../lib/templates'))
-    config.merge({ module: { rules: [{ resourceQuery: /blockType=docs/, loader: require.resolve(path.resolve(__dirname, '../../lib/loaders/dummy-loader.js')) }] } });
+    config.merge({ module: { rules: [{ resourceQuery: /blockType=docs/, loader: require('@mapomodule/utils/loaders/dummy-loader.js') }] } });
   },
   plugins: [
     [
@@ -39,7 +38,7 @@ module.exports = {
     ],
     [
       '@vuepress/register-components', {
-        componentsDir: path.resolve(__dirname, '../../lib/templates/components/'),
+        componentsDir: path.resolve(__dirname, '../../packages/@mapomodule/uikit/components/'),
         getComponentName: file => file.split("/").pop()
       }
     ]

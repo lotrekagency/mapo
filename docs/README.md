@@ -6,7 +6,7 @@
 Add mapomodule dependency to your project:
 
 ```sh
-$ yarn add https://github.com/lotrekagency/mapo.git#master
+$ yarn add mapomodule
 ```
 
 Then add it to the modules section in your nuxt.config.js:
@@ -19,11 +19,10 @@ export default {
 
 
 ## URLs and accessing resources
-We are using an alias (~mapomodule) to access resources and files.
 Here's an example featuring a SCSS import in a component file:
 
 ```scss
-@import "~mapomodule/assets/custom-style.scss";
+@import "@mapomodule/uikit/assets/custom-style.scss";
 ```
 
 

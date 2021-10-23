@@ -3,17 +3,13 @@
 ## Build Setup
 
 ### install dependencies
-$ yarn install
-
-### install dependencies of example project
-$ cd example
-$ yarn install
+$ yarn bootstrap
 
 ### serve with hot reload at localhost:3000
 $ yarn dev
 
 ### to install this module in a nuxt project
-$ yarn add git@github.com:lotrekagency/mapo.git
+$ yarn add mapomodule
 
 ## Working on the project
 
@@ -40,10 +36,9 @@ of the project.
 
 
 ### URLs and accessing resources
-We are using an alias (mapo) to access resources and files.
 Here's an example featuring a SCSS import in a component file:
 
-`@import "~mapomodule/assets/custom-style.scss";`
+`@import "@mapomodule/uikit/assets/custom-style.scss";`
 
 
 ### Styling

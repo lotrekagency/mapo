@@ -1,54 +1,39 @@
 {
-  "name": "mapomodule",
-  "version": "0.0.1",
-  "description": "Now I’m the model of a modern major general / The venerated Virginian veteran whose men are all / Lining up, to put me up on a pedestal / Writin’ letters to relatives / Embellishin’ my elegance and eloquence / But the elephant is in the room / The truth is in ya face when ya hear the British cannons go / BOOM",
-  "keywords": [],
+  "name": "mapo-monorepo",
+  "private": true,
+  "description": "Monorepo for @mapomodule",
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
-  "license": "ISC",
-  "main": "lib/module.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lotrekagency/mapo.git"
   },
-  "files": [
-    "lib"
+  "workspaces": [
+    "packages/@mapomodule/*",
+    "packages/mapomodule",
+    "example"
   ],
-  "publishConfig": {
-    "registry": "http://registry.npmjs.org"
+  "vuese": {
+    "genType": "markdown",
+    "include": [
+      "packages/@mapomodule/uikit/components/**/*.vue"
+    ],
+    "markdownDir": "*"
   },
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "dev": "nuxt example",
     "docs:gen": "yarn docs:js && vuese gen && ./docs/.vuepress/moveREADME.sh",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:publish": "./docs/.vuepress/publishDOCS.sh",
-    "docs:js": "jsdoc2md -t docs/.jsdoc2md/TEMPLATE.hbs ./lib/templates/plugins/*.js ./lib/templates/api/core/*.js > docs/core/README.md"
-  },
-  "engines": {
-    "node": "^12 || ^14",
-    "yarn": "^1.12"
-  },
-  "vuese": {
-    "genType": "markdown",
-    "include": [
-      "lib/templates/components/**/*.vue"
-    ],
-    "markdownDir": "*"
-  },
-  "dependencies": {
-    "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/vuetify": "^1.12.1",
-    "cookieparser": "^0.1.0",
-    "js-cookie": "^2.2.1",
-    "lodash.mergewith": "^4.6.2"
+    "docs:js": "jsdoc2md -t docs/.jsdoc2md/TEMPLATE.hbs ./packages/@mapomodule/core/index.js ./packages/@mapomodule/core/api/*.js > docs/core/README.md"
   },
   "devDependencies": {
     "@vuese/cli": "https://github.com/bnznamco/vuese/releases/download/%40vuese%2Fcli%402.14.3.mod2/cli.tar.gz",
     "eslint": "^7.24.0",
     "eslint-plugin-vue": "^7.9.0",
     "jsdoc-to-markdown": "^7.0.1",
-    "nuxt": "^2.15.7",
-    "vuepress": "^1.8.2",
-    "vuepress-plugin-demo-code": "^0.6.0"
+    "lerna": "^3.22.1",
+    "vuepress": "^1.8.2"
   }
 }

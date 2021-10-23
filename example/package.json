@@ -1,7 +1,7 @@
 {
   "name": "example",
-  "version": "0.0.0",
-  "description": "Example project using mapomodule",
+  "private": true,
+  "description": "Example project using mapo",
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
@@ -10,7 +10,7 @@
     "test": "echo \"No test defined\""
   },
   "dependencies": {
-    "mapomodule": "link:..",
-    "nuxt": "^2.14.12"
+    "mapomodule": "^0.0.0",
+    "nuxt": "latest"
   }
 }

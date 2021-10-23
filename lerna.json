@@ -1,0 +1,10 @@
+{
+  "packages": [
+    "example",
+    "packages/@mapomodule/*",
+    "packages/mapomodule"
+  ],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "0.0.0"
+}
