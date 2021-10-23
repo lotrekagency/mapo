@@ -1,9 +1,14 @@
 {
   "name": "@mapomodule/store",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.0",
   "description": "This is part of Mapo nuxt module. Injects mapo vuex store.",
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
-  "keywords": ["mapo", "nuxt", "Admin", "Panel"],
+  "keywords": [
+    "mapo",
+    "nuxt",
+    "Admin",
+    "Panel"
+  ],
   "license": "MIT",
   "repository": "https://github.com/lotrekagency/mapo",
   "main": "./module.js",
@@ -11,7 +16,7 @@
     "index.js"
   ],
   "dependencies": {
-    "@mapomodule/utils": "^0.0.0",
+    "@mapomodule/utils": "^1.0.0-alpha.0",
     "cookieparser": "^0.1.0",
     "js-cookie": "^2.2.1"
   },
