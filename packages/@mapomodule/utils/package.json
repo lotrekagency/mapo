@@ -6,10 +6,6 @@
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
   "repository": "https://github.com/lotrekagency/mapo",
   "main": "./index.js",
-  "files": [
-    "helpers",
-    "loaders"
-  ],
   "dependencies": {
     "js-cookie": "^2.2.1"
   },

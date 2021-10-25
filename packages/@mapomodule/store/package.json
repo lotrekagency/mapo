@@ -12,9 +12,6 @@
   "license": "MIT",
   "repository": "https://github.com/lotrekagency/mapo",
   "main": "./module.js",
-  "files": [
-    "index.js"
-  ],
   "dependencies": {
     "@mapomodule/utils": "^1.0.0-alpha.0",
     "cookieparser": "^0.1.0",
