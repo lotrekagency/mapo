@@ -1,4 +1,4 @@
-# mapomodule ![npm](https://img.shields.io/npm/v/mapomodule?style=flat-square) ![GitHub](https://img.shields.io/github/license/lotrekagency/mapo?style=flat-square)
+# mapomodule [![npm](https://img.shields.io/npm/v/mapomodule?style=flat-square)](https://www.npmjs.com/package/mapomodule) [![GitHub](https://img.shields.io/badge/license-MIT-green?style=flat-square)](./LICENSE.md)
 
 ## Setup
 Add `mapomodule` dependency to your project
@@ -36,7 +36,7 @@ Add mapomodule to the buildModules section of nuxt.config.js
 - Injects mapo [`components`](https://lotrekagency.github.io/mapo/components/) in the default nuxt component discovery.
 - Adds meta information to router module from nuxt pages.
 
-📑 &nbsp;Read more from the [documentation](https://lotrekagency.github.io).
+📑 &nbsp;Read more from the [documentation](https://lotrekagency.github.io/mapo/).
 
 ## How to contribute
 
