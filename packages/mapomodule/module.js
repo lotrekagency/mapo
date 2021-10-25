@@ -20,11 +20,12 @@ export default async function MapoModule(moduleOptions) {
 
     this.options = _mergeWith(this.options, mapoDefaults, customMerger)
 
-    await this.requireModule(['@nuxtjs/axios', (this.options && this.options.axios) || userModuleOptions.axios || mapoDefaults.axios || {}])
-    await this.requireModule(['@mapomodule/store'], userModuleOptions.store)
-    await this.requireModule(['@mapomodule/core'], userModuleOptions)
-    this.requireModule(['@mapomodule/uikit'], userModuleOptions.ui)
-        .then(() => this.requireModule(['@mapomodule/routemeta'], userModuleOptions.routemeta))
+    this.requireModule(['@nuxtjs/axios', (this.options && this.options.axios) || userModuleOptions.axios || mapoDefaults.axios || {}])
+    this.requireModule(['@mapomodule/store'], userModuleOptions.store)
+    this.requireModule(['@mapomodule/core'], userModuleOptions)
+    /* Await prevents to load routemeta before mapo pages. Also needed to correclty load mapo components */
+    await this.requireModule(['@mapomodule/uikit'], userModuleOptions.ui)
+    this.requireModule(['@mapomodule/routemeta'], userModuleOptions.routemeta)
 
 }
 
