@@ -27,7 +27,7 @@
 }
 </style>
 <script>
-import { version } from "@mapomodule/core/package.json";
+import { version } from "mapomodule/package.json";
 export default {
   data: () => ({
     version: version
