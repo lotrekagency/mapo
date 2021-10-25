@@ -9,14 +9,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * Display corret version of mapo in index page ([22ae4cf](https://github.com/lotrekagency/mapo/commit/22ae4cf55f1f3c6fcda64b085fe3c13c416bafb8))
-
-
-
-
-
-# [1.0.0-alpha.3](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2021-10-25)
-
-
-### Bug Fixes
-
-* Corrected load order of modules to prevent missing mapo components in some circumstances ([4fa16fb](https://github.com/lotrekagency/mapo/commit/4fa16fb549ee0e6368fe724c8305ffc789d5c2fc))
