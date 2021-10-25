@@ -29,6 +29,7 @@
     "docs:js": "jsdoc2md -t docs/.jsdoc2md/TEMPLATE.hbs ./packages/@mapomodule/core/index.js ./packages/@mapomodule/core/api/*.js > docs/core/README.md"
   },
   "devDependencies": {
+    "nuxt": "^2.15.8",
     "@vuese/cli": "https://github.com/bnznamco/vuese/releases/download/%40vuese%2Fcli%402.14.3.mod2/cli.tar.gz",
     "eslint": "^7.24.0",
     "eslint-plugin-vue": "^7.9.0",
