@@ -1,21 +1,40 @@
-# Mapo
+# mapomodule ![npm](https://img.shields.io/npm/v/mapomodule?style=flat-square) ![GitHub](https://img.shields.io/github/license/lotrekagency/mapo?style=flat-square)
 
-## Getting Started
-
-### Setup
-Add mapomodule dependency to your project:
-
+## Setup
+Add `mapomodule` dependency to your project
 ```sh
-$ yarn add mapomodule
+yarn add --dev mapomodule # or npm install --save-dev mapomodule
 ```
-
-Then add it to the modules section in your nuxt.config.js:
-
+Add mapomodule to the buildModules section of nuxt.config.js
 ```js
-export default {
-  modules: ['mapomodule']
+{
+  buildModules: [
+    // Simple usage
+    'mapomodule',
+
+    // With options
+    ['mapomodule', { /* module options */ }]
+  ]
 }
 ```
+ 
+ You can add options also from top level nuxt.config.js
+
+```js
+{
+  buildModules: [
+    'mapomodule'
+  ],
+  mapo: {
+    /* module options */
+  }
+}
+```
+## Features
+
+- Exposes [`$mapo`](https://lotrekagency.github.io/mapo/core/) core sevices to provide set of utilities.
+- Injects mapo [`components`](https://lotrekagency.github.io/mapo/components/) in the default nuxt component discovery.
+- Adds meta information to router module from nuxt pages.
 
 
 ## URLs and accessing resources
@@ -24,20 +43,6 @@ Here's an example featuring a SCSS import in a component file:
 ```scss
 @import "@mapomodule/uikit/assets/custom-style.scss";
 ```
-
-
-## Styling
-Import the variables, mixins and other scss files 
-in your components and templates when needed.
-
-
-## External resources
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
-https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request
-
-<br><br><br>
 
 * * * 
 This documentation was generated thanks to [@Vuepress](https://vuepress.vuejs.org/), [@Vuese](https://vuese.org/) and [@jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown#readme) .
