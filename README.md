@@ -1,20 +1,52 @@
-# Mapo
+# mapomodule ![npm](https://img.shields.io/npm/v/mapomodule?style=flat-square) ![GitHub](https://img.shields.io/github/license/lotrekagency/mapo?style=flat-square)
 
-## Build Setup
+## Setup
+Add `mapomodule` dependency to your project
+```sh
+yarn add --dev mapomodule # or npm install --save-dev mapomodule
+```
+Add mapomodule to the buildModules section of nuxt.config.js
+```js
+{
+  buildModules: [
+    // Simple usage
+    'mapomodule',
 
-### install dependencies
-$ yarn bootstrap
+    // With options
+    ['mapomodule', { /* module options */ }]
+  ]
+}
+```
+ 
+ You can add options also from top level nuxt.config.js
 
-### serve with hot reload at localhost:3000
-$ yarn dev
+```js
+{
+  buildModules: [
+    'mapomodule'
+  ],
+  mapo: {
+    /* module options */
+  }
+}
+```
+## Features
 
-### to install this module in a nuxt project
-$ yarn add mapomodule
+- Exposes [`$mapo`](https://lotrekagency.github.io/mapo/core/) core sevices to provide set of utilities.
+- Injects mapo [`components`](https://lotrekagency.github.io/mapo/components/) in the default nuxt component discovery.
+- Adds meta information to router module from nuxt pages.
 
-## Working on the project
+📑 &nbsp;Read more from the [documentation](https://lotrekagency.github.io).
 
-### How to contribute
+## How to contribute
+
+1. Clone this repository
+2. Install dependencies using `yarn bootstrap`
+3. Start development server using `yarn dev`
+
+
 Feel free to contribute to the project by making a [Pull Request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
 Here's an example for a branch naming:
 
 `feature/<branch name>`
@@ -25,29 +57,8 @@ Gabriele Baldi (bnznamco) and Andrea Morosi (andreamorosi).
 
 ### Documenting components
 Always write some documentation regarding the components you're developing.
-We are working on a StorybookJS implementation, which is going to help in this regard.
+Our documentation is generated directly from code thanks to [@Vuepress](https://vuepress.vuejs.org/), [@Vuese](https://vuese.org/) and [@jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown#readme).
 
+1. Generate doc `yarn doc:gen`
+2. Preview vuepress doc `yarn doc:dev`
 
-### How to edit and add configurations and settings
-Our library doesn't have a standard nuxt.config.js file, so in order to add the stuff 
-which usually goes there you're going to either work on the defaults.js file, for configurations 
-and such, or on the module.js file for modules and plugins. Both files are located in the root 
-of the project.
-
-
-### URLs and accessing resources
-Here's an example featuring a SCSS import in a component file:
-
-`@import "@mapomodule/uikit/assets/custom-style.scss";`
-
-
-### Styling
-Import the variables, mixins and other scss files 
-in your components and templates when needed.
-
-
-## External resources
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
-https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request
