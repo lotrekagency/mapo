@@ -6,17 +6,32 @@
       :items="httpEnabled ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
+      :search="searchable && !httpEnabled ? searchValue : ''"
       :server-items-length="httpPaginator.count || -1"
     >
       <template v-slot:top>
         <v-toolbar flat>
+          <v-text-field
+            v-if="searchable"
+            v-model="searchValue"
+            @input="loadingSearch = true; changeSearch()"
+            prepend-inner-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            outlined
+            dense
+            clearable
+            :loading="loadingSearch"
+            style="max-width: 300px"
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <slot name="dtable.top.center"></slot>
+          <v-spacer></v-spacer>
           <v-btn text v-if="shouldEdit" @click="editItem()">
             <v-icon small left class="mr-2"> mdi-plus </v-icon>
             Quick add
           </v-btn>
-          <v-spacer></v-spacer>
-          <slot name="dtable.top.center"></slot>
-          <v-spacer></v-spacer>
           <v-btn class="ma-2" @click="getDataFromApi" icon>
             <v-icon>mdi-update</v-icon>
           </v-btn>
@@ -65,6 +80,7 @@
 
 <script>
 import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
+import { debounce } from "@mapomodule/utils/helpers/debounce";
 
 export default {
   name: "ListTable",
@@ -74,6 +90,8 @@ export default {
     selection: [],
     options: {},
     httpPaginator: {},
+    searchValue: "",
+    loadingSearch: false,
     disableHttp: false
   }),
   props: {
@@ -96,6 +114,10 @@ export default {
     filters: {
       type: Array,
       default: () => [],
+    },
+    searchable: {
+      type: Boolean,
+      default: false,
     },
   },
   watch: {
@@ -122,9 +144,12 @@ export default {
   },
   methods: {
     getDataFromApi() {
+      this.loading = true;
+      this.httpEnabled && this.debouncedDataFromApi();
+    },
+    debouncedDataFromApi: debounce(function () {
       return new Promise((resolve, reject) => {
         this.selection = [];
-        this.loading = true;
         if (!this.httpEnabled) {
           this.crud.list().then((data) => {
               this.items = data;
@@ -143,7 +168,7 @@ export default {
             .catch((error) => reject(error));
         }
       });
-    },
+    }, 500),
     setQparams(options) {
       this.$router.push({
         query: {
@@ -159,6 +184,7 @@ export default {
         sortDesc: this.$route.query.order?.split(".").map((e) => e == "desc") || [],
         itemsPerPage: parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
       };
+      this.searchValue = this.$route.query.search;
     },
     getOrderParams(options) {
       const { sortBy, sortDesc, page, itemsPerPage } = options;
@@ -186,6 +212,8 @@ export default {
         }
         query.forEach(q => params.append('fltr', q))
       })
+      if (this.searchValue && this.searchable)
+        params.append("search", this.searchValue);
       return params;
     },
     editItem(item) {
@@ -206,6 +234,17 @@ export default {
         .filter((name) => name.startsWith(scope))
         .map((name) => name.replace(scope, ""));
     },
+    changeSearch: debounce(function () {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          search: this.searchValue,
+        },
+      });
+
+      this.httpEnabled && this.getDataFromApi();
+      this.loadingSearch = false;
+    }, 1000)
   },
   computed: {
     filteredItems() {
