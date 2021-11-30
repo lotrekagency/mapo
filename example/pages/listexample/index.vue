@@ -6,11 +6,12 @@
           show-select
           :headers="headers"
           :editFields="editFields"
-          :filters="availableFilters" 
+          :filters="availableFilters"
           endpoint="api/camomilla/articles"
           navigable
           addItem
           http
+          canSelectAll
         >
         </List>
       </v-col>

@@ -8,11 +8,27 @@
             <ListActions
               v-bind="$attrs"
               :crud="crud"
-              :selection="selection"
+              :selection="allSelected ? 'all' : selection"
+              :selectionQuery="selectionQuery"
               @actionCompleted="refresh"
             />
           </v-col>
-          <v-col cols="12" md="8">
+          <v-col cols="12" md="8" class="d-flex flex-nowrap justify-end align-center">
+            <div class="caption mr-1">
+              <b v-if="$refs.dtable && $refs.dtable.selectAll">All items selected</b>
+              <span v-else-if="selection.length">
+              {{ selection.length }} item selected
+              <v-btn
+                  v-if="selection != 'all' && canSelectAll"
+                  @click="$refs.dtable.toggleSelectAll()"
+                  outlined
+                  tile
+                  x-small
+                  class="ml-1 d-inline-flex"
+                  >Select all</v-btn
+              >
+              </span>
+            </div>
             <ListFilters v-bind="$attrs" v-model="filters">
               <template v-for="(_, slot) in $slots" :slot="slot">
                 <!-- @vuese-ignore -->
@@ -25,9 +41,6 @@
             </ListFilters>
           </v-col>
         </v-row>
-    </div>
-    <div v-if="selection.length">
-      {{ selection.length }} elementi selezionati
     </div>
     <div>
       <ListTable
@@ -54,7 +67,7 @@
  * The purpose of this component is to provide you with a very quick way to create a page that can show a list of resources retrieved from the server.
  * A use case example could be "build a page that lists all the products of an ecommerce". <br><br>
  * This component is a wrapper and is made up of several parts.
- * The props and slots of this component are passed to its childs. 
+ * The props and slots of this component are passed to its childs.
  * For detailed explanations see [Transparent Wrapping](#transparent-wrapping). <br> <h4>Index:</h4> [[toc]]
  */
 export default {
@@ -63,6 +76,7 @@ export default {
     return {
       tabActiveStatus: 1,
       selection: [],
+      allSelected: false,
       filters: []
     };
   },
@@ -72,16 +86,22 @@ export default {
       type: String,
       required: true,
     },
+    // Add option to select all items in all pages
+    canSelectAll: Boolean,
   },
   computed: {
     crud() {
       return this.$mapo.$api.crud(this.endpoint);
     },
+    selectionQuery() {
+      return this.$refs?.dtable?.getHttpParams();
+    }
   },
   watch: {
     selection(val) {
       // Fires when you select some row of the table.
-      // @arg Emit the list of the selected rows.
+      this.allSelected = val == 'all';
+      // @arg Emit "all" if all items are selected, else the list of the selected rows.
       this.$emit("selectionChange", val);
     },
   },
@@ -113,7 +133,7 @@ Each component within it inherits its props and slots.
 For the list of available prop refer to the documentation of each single part.
 
 ### Slots
-This component has not individual slots, but reflects down to its parts each assigned slot. 
+This component has not individual slots, but reflects down to its parts each assigned slot.
 
 Each part can be reached with a namespace.
 
@@ -138,7 +158,7 @@ This is an interactive example. You can play with it but remember that all http 
     show-select
     :headers="headers"
     :editFields="editFields"
-    :filters="availableFilters" 
+    :filters="availableFilters"
     endpoint="api/camomilla/articles"
     title="List Example"
     addItem
