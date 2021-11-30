@@ -14,21 +14,24 @@
             />
           </v-col>
           <v-col cols="12" md="8" class="d-flex flex-nowrap justify-end align-center">
-            <div class="caption mr-1">
-              <b v-if="$refs.dtable && $refs.dtable.selectAll">All items selected</b>
-              <span v-else-if="selection.length">
-              {{ selection.length }} item selected
-              <v-btn
-                  v-if="selection != 'all' && canSelectAll"
-                  @click="$refs.dtable.toggleSelectAll()"
-                  outlined
-                  tile
-                  x-small
-                  class="ml-1 d-inline-flex"
-                  >Select all</v-btn
-              >
-              </span>
-            </div>
+            <!-- Overrides counter for selected items.  -->
+            <slot name="item-counter" v-bind="{ selection, canSelectAll, allSelected, toggleSelectAll }">
+              <div class="caption mr-1">
+                <b v-if="allSelected">All items selected</b>
+                <span v-else-if="selection.length">
+                {{ selection.length }} items selected
+                <v-btn
+                    v-if="selection != 'all' && canSelectAll"
+                    @click="toggleSelectAll"
+                    outlined
+                    tile
+                    x-small
+                    class="ml-1 d-inline-flex"
+                    >Select all</v-btn
+                >
+                </span>
+              </div>
+            </slot>
             <ListFilters v-bind="$attrs" v-model="filters">
               <template v-for="(_, slot) in $slots" :slot="slot">
                 <!-- @vuese-ignore -->
@@ -109,6 +112,9 @@ export default {
     refresh() {
       return this.$refs.dtable.getDataFromApi();
     },
+    toggleSelectAll() {
+      return this.$refs?.dtable?.toggleSelectAll();
+    }
   },
   mounted() {},
 };
@@ -133,10 +139,7 @@ Each component within it inherits its props and slots.
 For the list of available prop refer to the documentation of each single part.
 
 ### Slots
-This component has not individual slots, but reflects down to its parts each assigned slot.
-
-Each part can be reached with a namespace.
-
+Other slots related to sub-components can be reached through these namespaces:
  - `"filter"` is the namespace of [`ListFilters`](../ListFilters/#slots) slots.
  - `"dtable"` is the namespace of [`ListTable`](../ListTable/#slots) slots.
  - `"qedit"` is the namespace of [`ListQuickEdit`](../ListQuickEdit/#slots) slots.
