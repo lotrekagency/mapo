@@ -159,6 +159,7 @@ export default {
   methods: {
     addDateFilter(filter) {
       const { dates } = filter;
+      dates.sort((a,b) => Date.parse(a) - Date.parse(b));
       if (dates && dates.length > 1) {
         this.addFilter(filter, {
           text: dates.join(" ~ "),
@@ -248,6 +249,7 @@ export default {
             filter = { ...filter };
             filter.dates = [...this.$route.query[k].split(",")];
             this.addDateFilter(filter);
+            this.compFilters[index] = filter;
           } else {
             filter.choices.forEach((c) => {
               this.$route.query[k].split(",").includes(c.value + "") &&
@@ -278,7 +280,7 @@ export default {
 <docs>
 ## Filter config
 
-The filters prop is a list of `Filter` objects made of several keys: 
+The filters prop is a list of `Filter` objects made of several keys:
 
 - **"text"** `String` ==> The name of the filter that will be renered inside the filter menu.
 - **"value"** `String` ==> The dotted path of the value we need to filter on.
