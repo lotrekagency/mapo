@@ -246,10 +246,8 @@ export default {
         if (index !== -1) {
           let filter = this.compFilters[index];
           if (filter.datepicker) {
-            filter = { ...filter };
             filter.dates = [...this.$route.query[k].split(",")];
             this.addDateFilter(filter);
-            this.compFilters[index] = filter;
           } else {
             filter.choices.forEach((c) => {
               this.$route.query[k].split(",").includes(c.value + "") &&
@@ -259,6 +257,17 @@ export default {
         }
       });
     },
+    loadFilters() {
+      this.compFilters = this.filters.map(filter => {
+        if (filter.datepicker) {
+          return {
+            ...filter,
+            dates: [],
+          };
+        }
+        return filter;
+      });
+    }
   },
   watch: {
     activeFilters: {
@@ -270,8 +279,8 @@ export default {
       }, 200),
     },
   },
-  mounted() {
-    this.compFilters = this.filters;
+  created() {
+    this.loadFilters();
     this.restoreFromQparams();
   },
 };
