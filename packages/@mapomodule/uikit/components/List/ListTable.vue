@@ -155,18 +155,15 @@ export default {
     restoreFromQparams(){
       this.options = {
         ...this.options,
-        sortBy: this.$route.query.sort?.split(".") || [],
-        sortDesc: this.$route.query.order?.split(".").map((e) => e == "desc") || [],
+        sortBy: this.$route.query.sort?.split(",").map(p => p.replace(/^-/, '')) || [],
+        sortDesc: this.$route.query.order?.split(",").map((p) => p.startsWith('-')) || [],
         itemsPerPage: parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
       };
     },
     getOrderParams(options) {
       const { sortBy, sortDesc, page, itemsPerPage } = options;
-      const sort = sortBy.length ? sortBy.join(".") : undefined;
-      const order = sortDesc.length
-        ? sortDesc.map((e) => (e ? "desc" : "asc")).join(".")
-        : undefined;
-      return { sort, order, items: itemsPerPage, page: page !== 1 ? page : undefined };
+      const sort = sortBy.map((field, i) => (sortDesc[i] ? "-" : "") + field).join(",") || undefined;
+      return { sort, items: itemsPerPage, page: page !== 1 ? page : undefined };
     },
     getHttpParams() {
       const params = new URLSearchParams();

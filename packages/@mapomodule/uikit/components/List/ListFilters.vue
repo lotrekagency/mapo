@@ -162,7 +162,7 @@ export default {
       dates.sort((a,b) => Date.parse(a) - Date.parse(b));
       if (dates && dates.length > 1) {
         this.addFilter(filter, {
-          text: dates.join(" ~ "),
+          text: dates.map(date => new Date(date).toLocaleDateString()).join(" ~ "),
           value: dates.join(","),
         });
       } else if (!dates || !dates.length) {
