@@ -11,6 +11,7 @@
           navigable
           addItem
           http
+          canSelectAll
           searchable
         >
         </List>
