@@ -7,7 +7,7 @@
       :loading="loading"
       :options.sync="options"
       :search="searchable && !httpEnabled ? searchValue : ''"
-      :server-items-length="httpPaginator.count || -1"
+      :server-items-length="httpPaginator.count || (options.page * options.itemsPerPage) || -1"
       :class="{ 'mapo__listtable__all_selected': selectAll }"
     >
       <template v-slot:top>
@@ -203,9 +203,10 @@ export default {
     restoreFromQparams() {
       this.options = {
         ...this.options,
-        sortBy: this.$route.query.sort?.split(",").map(p => p.replace(/^-/, '')) || [],
-        sortDesc: this.$route.query.order?.split(",").map((p) => p.startsWith('-')) || [],
+        sortBy: this.$route.query.sort?.split(",").map(p => p.replace(/^-/, '')) || this.options.sortBy || [],
+        sortDesc: this.$route.query.order?.split(",").map((p) => p.startsWith('-'))|| this.options.sortDesc || [],
         itemsPerPage: parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
+        page: parseInt(this.$route.query.page)|| this.options.page || 1,
       };
       this.searchValue = this.$route.query.search;
     },
