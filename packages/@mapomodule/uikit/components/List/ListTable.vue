@@ -6,18 +6,34 @@
       :items="httpEnabled ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
+      :search="searchable && !httpEnabled ? searchValue : ''"
       :server-items-length="httpPaginator.count || -1"
+      :class="{ 'mapo__listtable__all_selected': selectAll }"
     >
       <template v-slot:top>
         <v-toolbar flat>
+          <v-text-field
+            v-if="searchable"
+            v-model="searchValue"
+            @input="loadingSearch = true; changeSearch()"
+            prepend-inner-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            outlined
+            dense
+            clearable
+            :loading="loadingSearch"
+            style="max-width: 300px"
+          ></v-text-field>
+          <v-spacer></v-spacer>
+          <slot name="dtable.top.center"></slot>
+          <v-spacer></v-spacer>
           <v-btn text v-if="shouldEdit" @click="editItem()">
             <v-icon small left class="mr-2"> mdi-plus </v-icon>
             Quick add
           </v-btn>
-          <v-spacer></v-spacer>
-          <slot name="dtable.top.center"></slot>
-          <v-spacer></v-spacer>
-          <v-btn class="ma-2" @click="getDataFromApi" icon>
+          <v-btn class="ma-2" @click="getDataFromApi(false)" icon>
             <v-icon>mdi-update</v-icon>
           </v-btn>
         </v-toolbar>
@@ -27,6 +43,12 @@
         <NuxtLink :to="detailLink(item)">
           {{ item[firstColName] }}
         </NuxtLink>
+      </template>
+      <template v-slot:item.data-table-select="{ isSelected, select }" v-if="selectAll">
+        <v-simple-checkbox v-model="selectAll" @input="select"></v-simple-checkbox>
+      </template>
+      <template v-slot:header.data-table-select="{ on, props }" v-if="selectAll">
+        <v-simple-checkbox v-model="selectAll" @input="on.input"></v-simple-checkbox>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon v-if="shouldEdit" small class="mr-2" @click="editItem(item)">
@@ -52,19 +74,24 @@
       <template v-for="slot in filterSlots($slots, 'qedit.')" :slot="slot">
         <slot :name="`qedit.${slot}`"></slot>
       </template>
-      <template
-        v-for="slot in filterSlots($scopedSlots, 'qedit.')"
-        v-slot:[slot]="props"
-      >
+      <template v-for="slot in filterSlots($scopedSlots, 'qedit.')" v-slot:[slot]="props">
         <slot :name="`qedit.${slot}`" v-bind="props" />
       </template>
     </list-quick-edit>
   </div>
 </template>
 
+<style lang="scss">
+.mapo__listtable__all_selected {
+  .v-data-table__selected {
+    background: none !important;
+  }
+}
+</style>
 
 <script>
 import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
+import { debounce } from "@mapomodule/utils/helpers/debounce";
 
 export default {
   name: "ListTable",
@@ -72,8 +99,11 @@ export default {
     items: [],
     loading: true,
     selection: [],
+    selectAll: false,
     options: {},
     httpPaginator: {},
+    searchValue: "",
+    loadingSearch: false,
     disableHttp: false
   }),
   props: {
@@ -97,44 +127,62 @@ export default {
       type: Array,
       default: () => [],
     },
+    searchable: {
+      type: Boolean,
+      default: false,
+    },
   },
   watch: {
     selection(val) {
       this.$emit("input", val);
     },
-    filters:{
+    selectAll(val) {
+      this.$emit("input", val ? "all" : this.selection);
+    },
+    filters: {
       deep: true,
-      handler(){
+      handler() {
         this.httpEnabled && this.getDataFromApi();
-      }
+      },
     },
     options: {
       deep: true,
       handler(options) {
         this.disableHttp = options.itemsPerPage === -1;
         this.setQparams(options);
-        this.httpEnabled && this.getDataFromApi();
+        this.httpEnabled && this.getDataFromApi(false);
       },
     },
-    disableHttp(){
+    disableHttp() {
       this.getDataFromApi();
-    }
+    },
   },
   methods: {
-    getDataFromApi() {
+    getDataFromApi(clearSelection = true) {
+      if (clearSelection) {
+        this.selection = [];
+        this.selectAll = false;
+      }
+      this.loading = true;
+      this.httpEnabled && this.debouncedDataFromApi();
+    },
+    debouncedDataFromApi: debounce(function () {
       return new Promise((resolve, reject) => {
         this.selection = [];
-        this.loading = true;
         if (!this.httpEnabled) {
-          this.crud.list().then((data) => {
+          this.crud
+            .list()
+            .then((data) => {
               this.items = data;
               this.loading = false;
               resolve(data);
             })
             .catch((error) => reject(error));
         } else {
-          const params = this.getHttpParams()
-          this.crud.list({ params }).then((data) => {
+          const params = this.getHttpParams();
+          this.crud
+            .list({ params })
+            .then((data) => {
               this.items = data.items;
               this.httpPaginator = data.paginator;
               this.loading = false;
@@ -143,7 +191,7 @@ export default {
             .catch((error) => reject(error));
         }
       });
-    },
+    }, 500),
     setQparams(options) {
       this.$router.push({
         query: {
@@ -152,13 +200,14 @@ export default {
         },
       });
     },
-    restoreFromQparams(){
+    restoreFromQparams() {
       this.options = {
         ...this.options,
         sortBy: this.$route.query.sort?.split(",").map(p => p.replace(/^-/, '')) || [],
         sortDesc: this.$route.query.order?.split(",").map((p) => p.startsWith('-')) || [],
         itemsPerPage: parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
       };
+      this.searchValue = this.$route.query.search;
     },
     getOrderParams(options) {
       const { sortBy, sortDesc, page, itemsPerPage } = options;
@@ -168,21 +217,26 @@ export default {
     getHttpParams() {
       const params = new URLSearchParams();
       for (const [key, value] of Object.entries(this.getOrderParams(this.options))) {
-        value !== undefined && params.append(key, value)
+        value !== undefined && params.append(key, value);
       }
-      this.filters.forEach(fi => {
-        const query = []
-        const format = (val) => val.replaceAll('.', '__')
-        if (fi.datepicker){
-          const dates = fi.active[0].value.split(',')
-          query.push(`${format(fi.value)}__gte=${dates[0]}`, `${format(fi.value)}__lte=${dates[1]}`)
+      this.filters.forEach((fi) => {
+        const query = [];
+        const format = (val) => val.replaceAll(".", "__");
+        if (fi.datepicker) {
+          const dates = fi.active[0].value.split(",");
+          query.push(
+            `${format(fi.value)}__gte=${dates[0]}`,
+            `${format(fi.value)}__lte=${dates[1]}`
+          );
         } else if (fi.active.length > 1) {
-          query.push(`${format(fi.value)}=[${ fi.active.map(a=>a.value).join(",")}]`)
+          query.push(`${format(fi.value)}=[${fi.active.map((a) => a.value).join(",")}]`);
         } else {
-          query.push(`${format(fi.value)}=${ fi.active[0].value}`)
+          query.push(`${format(fi.value)}=${fi.active[0].value}`);
         }
         query.forEach(q => params.append('fltr', q))
-      })
+      });
+      if (this.searchValue && this.searchable)
+        params.append("search", this.searchValue);
       return params;
     },
     editItem(item) {
@@ -191,18 +245,33 @@ export default {
     deleteItem(item) {
       const callback = (item) =>
         this.crud.delete(item[this.lookup]).then(this.getDataFromApi);
-        this.$mapo.$confirm
-          .open({
-            title: "Delete",
-            question: "Are you sure you want to delete this item?",
-            approveButton: { text: "Delete", attrs: { color: "red" } }
-          }).then((res) => (res ? callback(item) : null));
+      this.$mapo.$confirm
+        .open({
+          title: "Delete",
+          question: "Are you sure you want to delete this item?",
+          approveButton: { text: "Delete", attrs: { color: "red" } },
+        })
+        .then((res) => (res ? callback(item) : null));
     },
     filterSlots(slots, scope) {
       return Object.keys(slots)
         .filter((name) => name.startsWith(scope))
         .map((name) => name.replace(scope, ""));
     },
+    toggleSelectAll() {
+      this.selectAll = !this.selectAll;
+    },
+    changeSearch: debounce(function () {
+      this.$router.push({
+        query: {
+          ...this.$route.query,
+          search: this.searchValue,
+        },
+      });
+
+      this.httpEnabled && this.getDataFromApi();
+      this.loadingSearch = false;
+    }, 1000)
   },
   computed: {
     filteredItems() {
@@ -231,9 +300,7 @@ export default {
     },
     firstColName() {
       return (
-        this.$attrs.headers &&
-        this.$attrs.headers.length &&
-        this.$attrs.headers[0].value
+        this.$attrs.headers && this.$attrs.headers.length && this.$attrs.headers[0].value
       );
     },
     shouldEdit() {
@@ -243,12 +310,12 @@ export default {
         (this.$attrs.editFields && this.$attrs.editFields.length)
       );
     },
-    httpEnabled(){
-      return this.http && !this.disableHttp
-    }
+    httpEnabled() {
+      return this.http && !this.disableHttp;
+    },
   },
   mounted() {
-    this.restoreFromQparams()
+    this.restoreFromQparams();
     this.httpEnabled || this.getDataFromApi();
   },
 };

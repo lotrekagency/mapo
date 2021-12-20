@@ -12,6 +12,8 @@
           addItem
           http
           multi-sort
+          can-select-all
+          searchable
         >
         </List>
       </v-col>
