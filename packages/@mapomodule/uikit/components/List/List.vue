@@ -102,8 +102,8 @@ export default {
   },
   watch: {
     selection(val) {
-      // Fires when you select some row of the table.
       this.allSelected = val == 'all';
+      // Fires when you select some row of the table.
       // @arg Emit "all" if all items are selected, else the list of the selected rows.
       this.$emit("selectionChange", val);
     },
@@ -165,6 +165,8 @@ This is an interactive example. You can play with it but remember that all http 
     endpoint="api/camomilla/articles"
     title="List Example"
     addItem
+    canSelectAll
+    searchable
   >
   </List>
 </v-app>

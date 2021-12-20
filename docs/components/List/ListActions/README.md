@@ -11,6 +11,7 @@ This components renders the select box in the upper-left. This select box contai
 |lookup|The key used to identify each object passed to the action.|`String`|`false`|id|
 |actions|This is the main configuration of the component. It contains a list of actions.|[`Array<Action>`](#action-config)|`false`|The bulk delete action.|
 |selection|❌ This is an internal prop. Sorry..|-|`false`|-|
+|selectionQuery|❌ This is an internal prop. Sorry..|-|`false`|-|
 |crud|❌ This is an internal prop. Sorry..|-|`true`|-|
 
 <!-- @vuese:ListActions:props:end -->
@@ -20,13 +21,16 @@ This components renders the select box in the upper-left. This select box contai
 ## Action config
 
 
-The actions prop is a list of `Action` objects made of two keys: 
+The actions prop is a list of `Action` objects containing these keys:
 
 - **"label"** `String` ==> The name of the action that will be renered inside the select button.
+- **"handleMultiple"** `Boolean` ==> Make the action callable on multiple items. Default: `true`.
+- **"handleAll"** `Boolean` ==> Make the action callable on all items. Default: `false`.
 - **"handler"** `Function` ==> The callback function that will be executed once the user confirms the action.
 
 The handler function will be called with a ctx containing:
- - **"selection"** `Array<Object>`==> The list of selected objects.
+ - **"selection"** `Array<Object>` or `String` ==> `"all"` if all items are selected else the list of selected objects.
+ - **"selectionQuery"** `URLSearchParams` ==> GET parameters for the current list of objects.
  - **"lookup"** `String` ==> The lookup prop.
  - **"crud"** [`Crud`](/core/#api.crud) ==> The inherited crud from [List](../List/) component.
 

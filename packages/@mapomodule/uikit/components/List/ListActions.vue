@@ -114,7 +114,7 @@ export default {
 ## Action config
 
 
-The actions prop is a list of `Action` objects made of two keys:
+The actions prop is a list of `Action` objects containing these keys:
 
 - **"label"** `String` ==> The name of the action that will be renered inside the select button.
 - **"handleMultiple"** `Boolean` ==> Make the action callable on multiple items. Default: `true`.
