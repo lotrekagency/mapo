@@ -12,6 +12,7 @@
           addItem
           http
           canSelectAll
+          searchable
         >
         </List>
       </v-col>
