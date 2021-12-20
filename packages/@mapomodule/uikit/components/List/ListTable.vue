@@ -164,7 +164,7 @@ export default {
         this.selectAll = false;
       }
       this.loading = true;
-      this.httpEnabled && this.debouncedDataFromApi();
+      this.debouncedDataFromApi();
     },
     debouncedDataFromApi: debounce(function () {
       return new Promise((resolve, reject) => {
