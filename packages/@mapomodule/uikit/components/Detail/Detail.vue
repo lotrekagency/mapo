@@ -283,6 +283,9 @@ export default {
       if (val && !this.model.translations[val]) {
         this.model.translations[val] = {};
       }
+      // Fired when the current language changes.
+      // @arg Emits the language name as a string.
+      this.$emit("langChange", val);
     },
     model(val) {
       // Fired when the v-model changes.
