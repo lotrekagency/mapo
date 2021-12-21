@@ -1,6 +1,6 @@
 <template>
   <div v-if="compFilters.length">
-    <v-menu offset-y nudge-right="100%" tile :close-on-content-click="false" v-bind="{ ...$attrs, value: null }" >
+    <v-menu offset-y min-width="250px" max-width="400px" tile :close-on-content-click="false" v-bind="{ ...$attrs, value: null }" >
       <template v-slot:activator="{ on }">
         <v-row class="flex-sm-row-reverse">
           <v-col cols="12" sm="3" class="d-flex justify-end align-center">

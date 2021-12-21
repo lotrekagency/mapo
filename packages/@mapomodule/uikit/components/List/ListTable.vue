@@ -163,7 +163,7 @@ export default {
         this.selection = [];
         this.selectAll = false;
       }
-      this.loading = true;
+      this.loading = this.httpEnabled;
       this.httpEnabled && this.debouncedDataFromApi();
     },
     debouncedDataFromApi: debounce(function () {
@@ -317,7 +317,12 @@ export default {
   },
   mounted() {
     this.restoreFromQparams();
-    this.httpEnabled || this.getDataFromApi();
+    if (this.httpEnabled) {
+      this.getDataFromApi();
+    } else {
+      this.items = this.$attrs.items;
+      this.loading = false;
+    }
   },
 };
 </script>
