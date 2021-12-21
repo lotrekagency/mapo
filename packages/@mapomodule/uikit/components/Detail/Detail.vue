@@ -205,7 +205,10 @@ export default {
       default: () => []
     },
     // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
-    endpoint: String,
+    endpoint: {
+      type:  String,
+      default: null
+    },
     // The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.
     identifier: {
       // `String|Number`.
