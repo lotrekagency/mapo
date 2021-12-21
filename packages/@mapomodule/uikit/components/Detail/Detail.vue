@@ -183,6 +183,11 @@ export default {
     };
   },
   props: {
+    // V-model of the object we are editing.
+    value: {
+      type: Object,
+      required: true
+    },
     // The main configuration that determines the arrangement of the fields in the detail layout.
     fields: {
       // [`DetailConfiguration`](#detailconfiguration)
@@ -249,6 +254,7 @@ export default {
     },
     parseConf(field) {
       const conf = typeof field === "string" ? { value: field } : field;
+      conf.value = conf.value || ""
       conf.value = conf.value.replace(/^translations\..*\./, "");
       conf.slotName = `fields.${conf.value}`;
       if (this.currentLang && !field.synci18n) {
@@ -277,6 +283,14 @@ export default {
       if (val && !this.model.translations[val]) {
         this.model.translations[val] = {};
       }
+    },
+    model(val) {
+      // Fired when the v-model changes.
+      // @arg Emits the entire payload modified.
+      this.$emit("input", val);
+    },
+    value(val) {
+      this.model = val;
     }
   },
   computed: {
