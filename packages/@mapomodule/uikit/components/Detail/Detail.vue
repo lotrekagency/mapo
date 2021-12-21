@@ -186,7 +186,12 @@ export default {
     // V-model of the object we are editing.
     value: {
       type: Object,
-      required: true
+      required: false
+    },
+    // Set the current lang to value.
+    lang: {
+      type: String,
+      required: false
     },
     // The main configuration that determines the arrangement of the fields in the detail layout.
     fields: {
@@ -285,12 +290,17 @@ export default {
       }
       // Fired when the current language changes.
       // @arg Emits the language name as a string.
-      this.$emit("langChange", val);
+      this.$emit("update:lang", val);
     },
     model(val) {
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
       this.$emit("input", val);
+    },
+    lang(val){
+      if (val in this.langs){
+        this.currentLang = val
+      }
     },
     value(val) {
       this.model = val;
