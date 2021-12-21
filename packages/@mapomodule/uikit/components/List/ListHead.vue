@@ -1,13 +1,15 @@
 <template>
   <div class="list__head">
     <h2 class="list__head__title display-1">{{ title }}</h2>
-    <v-btn
-      v-if="addItem"
-      class="rounded-0 elevation-0"
-      color="primary"
-      :to="{path: `${$route.path}/new`}"
-      >Add new <v-icon>mdi-plus</v-icon></v-btn
-    >
+    <div class="list__head__button">
+      <v-btn
+        v-if="addItem"
+        class="rounded-0 elevation-0"
+        color="primary"
+        :to="{ path: `${$route.path}/new` }"
+        >Add new &emsp; <v-icon>mdi-plus</v-icon></v-btn
+      >
+    </div>
   </div>
 </template>
 
@@ -18,10 +20,18 @@
   &__head {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 4rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
     &__title {
       margin-right: 2rem;
+      margin-bottom: 1rem;
+    }
+    &__button {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
     }
   }
 }
@@ -40,10 +50,10 @@ export default {
       // The route name.
       default() {
         return this.$route.name;
-      },
+      }
     },
     // This is a boolean that determines the visibility of "new item" button. If set to true will provide the user a link to a detail page for new content creation.
-    addItem: Boolean,
-  },
+    addItem: Boolean
+  }
 };
 </script>

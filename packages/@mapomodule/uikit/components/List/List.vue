@@ -3,7 +3,7 @@
     <ListHead v-bind="$attrs" />
 
     <div>
-        <v-row class="mb-4">
+        <v-row class="mb-1">
           <v-col cols="12" md="4">
             <ListActions
               v-bind="$attrs"
@@ -14,9 +14,22 @@
             />
           </v-col>
           <v-col cols="12" md="8" class="d-flex flex-nowrap justify-end align-center">
-            <!-- Overrides counter for selected items.  -->
+            <ListFilters v-bind="$attrs" v-model="filters">
+              <template v-for="(_, slot) in $slots" :slot="slot">
+                <!-- @vuese-ignore -->
+                <slot :name="slot"></slot>
+              </template>
+              <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+                <!-- @vuese-ignore -->
+                <slot :name="slot" v-bind="props" />
+              </template>
+            </ListFilters>
+          </v-col>
+        </v-row>
+        <div class="d-flex justify-end">
+          <!-- Overrides counter for selected items.  -->
             <slot name="item-counter" v-bind="{ selection, canSelectAll, allSelected, toggleSelectAll }">
-              <div class="caption mr-1">
+              <div  v-if="selection" class="caption mr-1 mb-1">
                 <b v-if="allSelected">All items selected</b>
                 <span v-else-if="selection.length">
                 {{ selection.length }} items selected
@@ -32,18 +45,7 @@
                 </span>
               </div>
             </slot>
-            <ListFilters v-bind="$attrs" v-model="filters">
-              <template v-for="(_, slot) in $slots" :slot="slot">
-                <!-- @vuese-ignore -->
-                <slot :name="slot"></slot>
-              </template>
-              <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
-                <!-- @vuese-ignore -->
-                <slot :name="slot" v-bind="props" />
-              </template>
-            </ListFilters>
-          </v-col>
-        </v-row>
+        </div>
     </div>
     <div>
       <ListTable
