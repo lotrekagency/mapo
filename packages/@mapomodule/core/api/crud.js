@@ -1,4 +1,5 @@
-const trimslashes = (str) => str.replace(/^\/|\/$/g, '')
+const trimslashes = (str) => (str || "").replace(/^\/|\/$/g, '')
+const endpointError = "This crud is badly configured. No endpoint was passed"
 
 /**
  * This function generates a fully functional crud helper given the endpoint.
@@ -16,7 +17,8 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     list(config) {
-        return $axios.$get(`/${trimslashes(endpoint)}/`, { ...higherConf, ...config })
+        const func = $axios.$get(`/${trimslashes(endpoint)}/`, { ...higherConf, ...config })
+        return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
     /**
@@ -27,7 +29,8 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     create(payload, config) {
-        return $axios.$post(`/${trimslashes(endpoint)}/`, payload, { ...higherConf, ...config })
+        const func = $axios.$post(`/${trimslashes(endpoint)}/`, payload, { ...higherConf, ...config })
+        return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
     /**
@@ -38,7 +41,8 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     detail(id, config) {
-        return $axios.$get(`/${trimslashes(endpoint)}/${id}/`, { ...higherConf, ...config })
+        const func = $axios.$get(`/${trimslashes(endpoint)}/${id}/`, { ...higherConf, ...config })
+        return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
     /**
@@ -49,7 +53,8 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     updateOrCreate(payload, config) {
-        return payload.id ? this.update(payload.id, payload, { ...higherConf, ...config }) : this.create(payload, { ...higherConf, ...config })
+        const func = payload.id ? this.update(payload.id, payload, { ...higherConf, ...config }) : this.create(payload, { ...higherConf, ...config })
+        return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
     /**
@@ -61,7 +66,8 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     update(id, payload, config) {
-        return $axios.$put(`/${trimslashes(endpoint)}/${id}/`, payload, { ...higherConf, ...config })
+        const func = $axios.$put(`/${trimslashes(endpoint)}/${id}/`, payload, { ...higherConf, ...config })
+        return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
     /**
@@ -73,7 +79,8 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     partialUpdate(id, payload, config) {
-        return $axios.$patch(`/${trimslashes(endpoint)}/${id}/`, payload, { ...higherConf, ...config })
+        const func = $axios.$patch(`/${trimslashes(endpoint)}/${id}/`, payload, { ...higherConf, ...config })
+        return endpoint !== null ? func : Promise.reject(endpointError)
     },
     /** 
      * This makes a DELETE http call to the crud endpoint slash the given id. Returns as a promise the server response.
@@ -83,7 +90,8 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     delete(id, config) {
-        return $axios.$delete(`/${trimslashes(endpoint)}/${id}/`, { ...higherConf, ...config })
+        const func = $axios.$delete(`/${trimslashes(endpoint)}/${id}/`, { ...higherConf, ...config })
+        return endpoint !== null ? func : Promise.reject(endpointError)
     }
 })
 /**
