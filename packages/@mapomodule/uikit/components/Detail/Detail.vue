@@ -298,7 +298,7 @@ export default {
       this.$emit("input", val);
     },
     lang(val){
-      if (val in this.langs){
+      if (this.langs.includes(val)){
         this.currentLang = val
       }
     },
