@@ -83,8 +83,7 @@ export default {
       default: "id",
     },
     crud: {
-      type: Object,
-      required: true,
+      type: Object
     },
   },
   watch: {
@@ -147,12 +146,20 @@ export default {
       this.dialog = false;
     },
     apiEdit() {
-      return this.crud
-        .partialUpdate(this.itemRef[this.lookup], this.editedItem)
-        .then((res) => this.close(res));
+      if (this.crud) {
+        return this.crud
+          .partialUpdate(this.itemRef[this.lookup], this.editedItem)
+          .then((res) => this.close(res));
+      } else {
+        this.close({item: this.editedItem, id: this.itemRef && this.itemRef[this.lookup]});
+      }
     },
     apiCreate() {
-      return this.crud.create(this.editedItem).then((res) => this.close(res));
+      if (this.crud) {
+        return this.crud.create(this.editedItem).then((res) => this.close(res));
+      } else {
+        return this.close({item: this.editedItem, id: this.itemRef && this.itemRef[this.lookup]});
+      }
     },
   },
 };

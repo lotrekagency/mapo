@@ -51,7 +51,7 @@ export default {
           {
             label: "Permanent delete",
             handler: function ({ selection, lookup, crud }) {
-              return Promise.all(selection.map((i) => crud.delete(i[lookup])));
+              return Promise.all(selection.map((i) => crud && crud.delete(i[lookup])));
             },
           },
         ];
@@ -74,8 +74,7 @@ export default {
     // ❌ This is an internal prop. Sorry..
     crud: {
       // -
-      type: Object,
-      required: true,
+      type: Object
     },
   },
   computed: {

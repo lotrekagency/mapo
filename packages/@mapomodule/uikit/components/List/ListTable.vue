@@ -6,16 +6,24 @@
       :items="httpEnabled ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
-      :search="searchable && !httpEnabled ? searchValue : ''"
-      :server-items-length="httpPaginator.count || (options.page * options.itemsPerPage) || -1"
-      :class="{ 'mapo__listtable__all_selected': selectAll }"
+      :search="searchValue"
+      :server-items-length="
+        httpEnabled
+          ? httpPaginator.count || options.page * options.itemsPerPage || -1
+          : -1
+      "
+      :class="{ mapo__listtable__all_selected: selectAll }"
+      :item-key="lookup"
     >
       <template v-slot:top>
         <v-toolbar flat>
           <v-text-field
             v-if="searchable"
             v-model="searchValue"
-            @input="loadingSearch = true; changeSearch()"
+            @input="
+              loadingSearch = true;
+              changeSearch();
+            "
             prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
@@ -33,7 +41,7 @@
             <v-icon small left class="mr-2"> mdi-plus </v-icon>
             Quick add
           </v-btn>
-          <v-btn class="ma-2" @click="getDataFromApi(false)" icon>
+          <v-btn v-if="httpEnabled" class="ma-2" @click="getDataFromApi(false)" icon>
             <v-icon>mdi-update</v-icon>
           </v-btn>
         </v-toolbar>
@@ -69,7 +77,7 @@
     <list-quick-edit
       v-if="shouldEdit"
       ref="editModal"
-      v-bind="{ ...$attrs, value: false, crud }"
+      v-bind="{ ...$attrs, value: false, crud, lookup: lookup }"
     >
       <template v-for="slot in filterSlots($slots, 'qedit.')" :slot="slot">
         <slot :name="`qedit.${slot}`"></slot>
@@ -104,12 +112,11 @@ export default {
     httpPaginator: {},
     searchValue: "",
     loadingSearch: false,
-    disableHttp: false
+    disableHttp: false,
   }),
   props: {
     crud: {
       type: Object,
-      required: true,
     },
     http: Boolean,
     navigable: Boolean,
@@ -203,16 +210,24 @@ export default {
     restoreFromQparams() {
       this.options = {
         ...this.options,
-        sortBy: this.$route.query.sort?.split(",").map(p => p.replace(/^-/, '')) || this.options.sortBy || [],
-        sortDesc: this.$route.query.order?.split(",").map((p) => p.startsWith('-'))|| this.options.sortDesc || [],
-        itemsPerPage: parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
-        page: parseInt(this.$route.query.page)|| this.options.page || 1,
+        sortBy:
+          this.$route.query.sort?.split(",").map((p) => p.replace(/^-/, "")) ||
+          this.options.sortBy ||
+          [],
+        sortDesc:
+          this.$route.query.order?.split(",").map((p) => p.startsWith("-")) ||
+          this.options.sortDesc ||
+          [],
+        itemsPerPage:
+          parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
+        page: parseInt(this.$route.query.page) || this.options.page || 1,
       };
       this.searchValue = this.$route.query.search;
     },
     getOrderParams(options) {
       const { sortBy, sortDesc, page, itemsPerPage } = options;
-      const sort = sortBy.map((field, i) => (sortDesc[i] ? "-" : "") + field).join(",") || undefined;
+      const sort =
+        sortBy.map((field, i) => (sortDesc[i] ? "-" : "") + field).join(",") || undefined;
       return { sort, items: itemsPerPage, page: page !== 1 ? page : undefined };
     },
     getHttpParams() {
@@ -234,18 +249,41 @@ export default {
         } else {
           query.push(`${format(fi.value)}=${fi.active[0].value}`);
         }
-        query.forEach(q => params.append('fltr', q))
+        query.forEach((q) => params.append("fltr", q));
       });
-      if (this.searchValue && this.searchable)
-        params.append("search", this.searchValue);
+      if (this.searchValue && this.searchable) params.append("search", this.searchValue);
       return params;
     },
     editItem(item) {
-      this.$refs.editModal.open(item).then((r) => r && this.getDataFromApi());
+      this.$refs.editModal.open(item).then((r) => {
+        if (!r) return;
+        if (this.httpEnabled) {
+          this.getDataFromApi();
+        } else {
+          const index = this.items.findIndex((i) => i[this.lookup] === r.id);
+
+          if (index !== -1) {
+            this.items[index] = r.item;
+            this.items = [...this.items];
+          } else {
+            this.items.push(r.item);
+          }
+        }
+      });
     },
     deleteItem(item) {
-      const callback = (item) =>
-        this.crud.delete(item[this.lookup]).then(this.getDataFromApi);
+      const callback = (item) => {
+        if (this.httpEnabled) {
+          this.crud.delete(item[this.lookup]).then(this.getDataFromApi);
+        } else {
+          const index = this.items.findIndex((i) => i[this.lookup] === item[this.lookup]);
+
+          if (index !== -1) {
+            this.items.splice(index, 1);
+          }
+        }
+      };
+
       this.$mapo.$confirm
         .open({
           title: "Delete",
@@ -266,13 +304,13 @@ export default {
       this.$router.push({
         query: {
           ...this.$route.query,
-          search: this.searchValue,
+          search: this.searchValue || undefined,
         },
       });
 
       this.httpEnabled && this.getDataFromApi();
       this.loadingSearch = false;
-    }, 1000)
+    }, 1000),
   },
   computed: {
     filteredItems() {
