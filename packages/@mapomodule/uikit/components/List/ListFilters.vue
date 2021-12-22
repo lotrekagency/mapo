@@ -1,5 +1,5 @@
 <template>
-  <div v-if="compFilters.length">
+  <div v-if="compFilters.length" class="main">
     <v-menu offset-y min-width="250px" max-width="400px" tile :close-on-content-click="false" v-bind="{ ...$attrs, value: null }" >
       <template v-slot:activator="{ on }">
         <v-row class="flex-sm-row-reverse">
@@ -128,6 +128,9 @@
 </template>
 
 <style lang="scss" scoped>
+.main{
+  width: 100%;
+}
 .datapicker-clear-btn {
   margin: -20px 15px 0 0 ;
 }

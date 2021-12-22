@@ -26,47 +26,53 @@
           <slot name="body.top.underlang" v-bind="slotBindings"></slot>
           <!-- Use this to override the content of the main body. -->
           <slot name="body" v-bind="slotBindings">
-            <!-- The result of the [`DetailConfiguration`](#detailconfiguration) contained in the main body. -->
-            <div v-for="(field, index) in mainFields" :key="index">
-              <v-card v-if="field.group" class="my-2">
-                <v-card-title>
-                  <v-icon left> {{ field.group.icon }} </v-icon>
-                  <span>{{ field.group.name }}</span>
-                </v-card-title>
-                <v-card-text>
-                  <div
-                    v-for="(fields, fieldsI) in field.fields"
-                    :key="fieldsI"
-                    class="mb-4"
-                  >
-                    <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
-                    <slot
-                      :name="fields.slotName"
-                      v-bind="{
-                        conf: fields,
-                        ...slotBindings,
-                      }"
-                    >
-                      <!-- A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
-                      <DetailField
-                        v-model="model"
-                        :conf="fields"
-                        :errors="errors"
-                      />
-                    </slot>
-                  </div>
-                </v-card-text>
-              </v-card>
-              <slot
-                v-else
-                :name="field.slotName"
-                v-bind="{
-                  conf: field,
-                  ...slotBindings,
-                }"
+            <div class="row">
+              <!-- The result of the [`DetailConfiguration`](#detailconfiguration) contained in the main body. -->
+              <div
+                :class="field.class || 'col-12'"
+                v-for="(field, index) in mainFields"
+                :key="index"
               >
-                <DetailField v-model="model" :conf="field" :errors="errors" />
-              </slot>
+                <v-card v-if="field.group" class="my-2">
+                  <v-card-title>
+                    <v-icon left> {{ field.group.icon }} </v-icon>
+                    <span>{{ field.group.name }}</span>
+                  </v-card-title>
+                  <v-card-text class="row">
+                    <div
+                      v-for="(fields, fieldsI) in field.fields"
+                      :key="fieldsI"
+                      :class="fields.class || 'col-12'"
+                    >
+                      <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
+                      <slot
+                        :name="fields.slotName"
+                        v-bind="{
+                          conf: fields,
+                          ...slotBindings,
+                        }"
+                      >
+                        <!-- A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
+                        <DetailField
+                          v-model="model"
+                          :conf="fields"
+                          :errors="errors"
+                        />
+                      </slot>
+                    </div>
+                  </v-card-text>
+                </v-card>
+                <slot
+                  v-else
+                  :name="field.slotName"
+                  v-bind="{
+                    conf: field,
+                    ...slotBindings,
+                  }"
+                >
+                  <DetailField v-model="model" :conf="field" :errors="errors" />
+                </slot>
+              </div>
             </div>
           </slot>
           <!-- Use this to add content under the main body. -->
@@ -118,45 +124,51 @@
             </slot>
             <!-- Use this to add content on the top of the sidebar fields (or under sidebar buttons). -->
             <slot name="side.top" v-bind="slotBindings"></slot>
-            <div v-for="(field, index) in sideFields" :key="index">
-              <v-card v-if="field.group" class="mb-4">
-                <v-card-title>
-                  <v-icon left> {{ field.group.icon }} </v-icon>
-                  <span>{{ field.group.name }}</span>
-                </v-card-title>
-                <v-card-text>
-                  <div
-                    v-for="(fields, fieldsI) in field.fields"
-                    :key="fieldsI"
-                    class="mb-4"
-                  >
-                    <!-- @vuese-ignore -->
-                    <slot
-                      :name="fields.slotName"
-                      v-bind="{
-                        conf: fields,
-                        ...slotBindings,
-                      }"
-                    >
-                      <DetailField
-                        v-model="model"
-                        :conf="fields"
-                        :errors="errors"
-                      />
-                    </slot>
-                  </div>
-                </v-card-text>
-              </v-card>
-              <slot
-                v-else
-                :name="field.slotName"
-                v-bind="{
-                  conf: field,
-                  ...slotBindings,
-                }"
+            <div class="row">
+              <div
+                :class="field.class || 'col-12'"
+                v-for="(field, index) in sideFields"
+                :key="index"
               >
-                <DetailField v-model="model" :conf="field" :errors="errors" />
-              </slot>
+                <v-card v-if="field.group" class="mb-4">
+                  <v-card-title>
+                    <v-icon left> {{ field.group.icon }} </v-icon>
+                    <span>{{ field.group.name }}</span>
+                  </v-card-title>
+                  <v-card-text class="row">
+                    <div
+                      v-for="(fields, fieldsI) in field.fields"
+                      :key="fieldsI"
+                      :class="field.class || 'col-12'"
+                    >
+                      <!-- @vuese-ignore -->
+                      <slot
+                        :name="fields.slotName"
+                        v-bind="{
+                          conf: fields,
+                          ...slotBindings,
+                        }"
+                      >
+                        <DetailField
+                          v-model="model"
+                          :conf="fields"
+                          :errors="errors"
+                        />
+                      </slot>
+                    </div>
+                  </v-card-text>
+                </v-card>
+                <slot
+                  v-else
+                  :name="field.slotName"
+                  v-bind="{
+                    conf: field,
+                    ...slotBindings,
+                  }"
+                >
+                  <DetailField v-model="model" :conf="field" :errors="errors" />
+                </slot>
+              </div>
             </div>
             <!-- 	Use this to add content under the sidebar fields. -->
             <slot name="side.bottom" v-bind="slotBindings"></slot>
@@ -183,6 +195,16 @@ export default {
     };
   },
   props: {
+    // V-model of the object we are editing.
+    value: {
+      type: Object,
+      required: false
+    },
+    // Set the current lang to value.
+    lang: {
+      type: String,
+      required: false
+    },
     // The main configuration that determines the arrangement of the fields in the detail layout.
     fields: {
       // [`DetailConfiguration`](#detailconfiguration)
@@ -195,7 +217,10 @@ export default {
       default: () => []
     },
     // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
-    endpoint: String,
+    endpoint: {
+      type: String,
+      default: null
+    },
     // The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.
     identifier: {
       // `String|Number`.
@@ -249,6 +274,7 @@ export default {
     },
     parseConf(field) {
       const conf = typeof field === "string" ? { value: field } : field;
+      conf.value = conf.value || "";
       conf.value = conf.value.replace(/^translations\..*\./, "");
       conf.slotName = `fields.${conf.value}`;
       if (this.currentLang && !field.synci18n) {
@@ -277,6 +303,22 @@ export default {
       if (val && !this.model.translations[val]) {
         this.model.translations[val] = {};
       }
+      // Fired when the current language changes.
+      // @arg Emits the language name as a string.
+      this.$emit("update:lang", val);
+    },
+    model(val) {
+      // Fired when the v-model changes.
+      // @arg Emits the entire payload modified.
+      this.$emit("input", val);
+    },
+    lang(val) {
+      if (this.langs.includes(val)) {
+        this.currentLang = val;
+      }
+    },
+    value(val) {
+      this.model = val;
     }
   },
   computed: {

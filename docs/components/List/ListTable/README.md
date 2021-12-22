@@ -16,6 +16,7 @@
   };
 }|
 |filters|-|`Array`|`false`|[]|
+|searchable|-|`Boolean`|`false`|false|
 
 <!-- @vuese:ListTable:props:end -->
 

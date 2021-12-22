@@ -1,4 +1,4 @@
-# mapomodule ![npm](https://img.shields.io/npm/v/mapomodule?style=flat-square) ![GitHub](https://img.shields.io/github/license/lotrekagency/mapo?style=flat-square)
+# mapomodule
 
 ## Setup
 Add `mapomodule` dependency to your project

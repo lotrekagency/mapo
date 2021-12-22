@@ -9,6 +9,7 @@ The purpose of this component is to provide you with a very quick way to create 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |endpoint|The url of the endpoint that provides the data to display. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.|`String`|`true`|-|
+|canSelectAll|Add option to select all items in all pages|`Boolean`|`false`|-|
 
 <!-- @vuese:List:props:end -->
 
@@ -19,9 +20,20 @@ The purpose of this component is to provide you with a very quick way to create 
 
 |Event Name|Description|Parameters|
 |---|---|---|
-|selectionChange|Fires when you select some row of the table.|Emit the list of the selected rows.|
+|selectionChange|Fires when you select some row of the table.|Emit "all" if all items are selected, else the list of the selected rows.|
 
 <!-- @vuese:List:events:end -->
+
+
+## Slots
+
+<!-- @vuese:List:slots:start -->
+
+|Name|Description|Default Slot Content|
+|---|---|---|
+|item-counter|Overrides counter for selected items.|-|
+
+<!-- @vuese:List:slots:end -->
 
 
 
@@ -42,10 +54,7 @@ Each component within it inherits its props and slots.
 For the list of available prop refer to the documentation of each single part.
 
 ### Slots
-This component has not individual slots, but reflects down to its parts each assigned slot. 
-
-Each part can be reached with a namespace.
-
+Other slots related to sub-components can be reached through these namespaces:
  - `"filter"` is the namespace of [`ListFilters`](../ListFilters/#slots) slots.
  - `"dtable"` is the namespace of [`ListTable`](../ListTable/#slots) slots.
  - `"qedit"` is the namespace of [`ListQuickEdit`](../ListQuickEdit/#slots) slots.
@@ -67,10 +76,12 @@ This is an interactive example. You can play with it but remember that all http 
     show-select
     :headers="headers"
     :editFields="editFields"
-    :filters="availableFilters" 
+    :filters="availableFilters"
     endpoint="api/camomilla/articles"
     title="List Example"
     addItem
+    canSelectAll
+    searchable
   >
   </List>
 </v-app>
