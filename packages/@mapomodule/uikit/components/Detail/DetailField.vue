@@ -1,5 +1,5 @@
 <template>
-  <component :is="is" v-model="model" v-bind="fieldProp"></component>
+  <component :is="is" v-model="model" v-bind="fieldAttrs"></component>
 </template>
 
 <script>
@@ -28,9 +28,9 @@ export default {
   data() {
     return {
       model: null,
-      fieldsMap: defaults.mapping,
-      fieldsProps: defaults.props,
-      fieldsAccess: defaults.accessor
+      defaultMap: defaults.mapping,
+      defaultAttrs: defaults.props,
+      defaultAccess: defaults.accessor
     };
   },
   props: {
@@ -90,15 +90,15 @@ export default {
       return {
         get: func,
         set: func,
-        ...(this.fieldsAccess[this.is] || {}),
+        ...(this.defaultAccess[this.is] || {}),
         ...this.conf.accessor
       };
     },
-    fieldProp() {
+    fieldAttrs() {
       return {
         label: this.label,
         errorMessages: getPointed(this.errors || {}, this.conf.value, []),
-        ...(this.fieldsProps[this.is] || {}),
+        ...(this.defaultAttrs[this.is] || {}),
         ...this.conf.attrs
       };
     },
@@ -120,7 +120,7 @@ export default {
     is() {
       return (
         this.conf.is ||
-        (this.conf.type && this.fieldsMap[this.conf.type]) ||
+        (this.conf.type && this.defaultMap[this.conf.type]) ||
         "v-text-field"
       );
     }
