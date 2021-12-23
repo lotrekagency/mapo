@@ -1,5 +1,5 @@
 <template>
-  <component :is="is" v-model="model" v-bind="fieldProp"></component>
+  <component :is="is" v-model="model" v-bind="fieldAttrs"></component>
 </template>
 
 <script>
@@ -8,6 +8,8 @@ import DateField from "@mapomodule/uikit/components/fields/DateField.vue";
 import M2mField from "@mapomodule/uikit/components/fields/M2mField.vue";
 import MediaM2mField from "@mapomodule/uikit/components/fields/MediaM2mField.vue";
 import MediaField from "@mapomodule/uikit/components/fields/MediaField.vue";
+import SeoPreview from "@mapomodule/uikit/components/fields/SeoPreview.vue";
+
 
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import defaults from "./defaults";
@@ -22,15 +24,16 @@ export default {
     DateField,
     M2mField,
     MediaM2mField,
-    MediaField
+    MediaField,
+    SeoPreview
   },
 
   data() {
     return {
       model: null,
-      fieldsMap: defaults.mapping,
-      fieldsProps: defaults.props,
-      fieldsAccess: defaults.accessor
+      defaultMap: defaults.mapping,
+      defaultAttrs: defaults.props,
+      defaultAccess: defaults.accessor
     };
   },
   props: {
@@ -55,8 +58,8 @@ export default {
         this.setModel(val);
       }
     },
-    conf(newConf, oldConf) {
-      if (newConf.value !== oldConf.value) {
+    "conf.value"(newValue, oldValue) {
+      if (newValue !== oldValue) {
         this.setModel();
       }
     },
@@ -90,15 +93,15 @@ export default {
       return {
         get: func,
         set: func,
-        ...(this.fieldsAccess[this.is] || {}),
+        ...(this.defaultAccess[this.is] || {}),
         ...this.conf.accessor
       };
     },
-    fieldProp() {
+    fieldAttrs() {
       return {
         label: this.label,
         errorMessages: getPointed(this.errors || {}, this.conf.value, []),
-        ...(this.fieldsProps[this.is] || {}),
+        ...(this.defaultAttrs[this.is] || {}),
         ...this.conf.attrs
       };
     },
@@ -120,7 +123,7 @@ export default {
     is() {
       return (
         this.conf.is ||
-        (this.conf.type && this.fieldsMap[this.conf.type]) ||
+        (this.conf.type && this.defaultMap[this.conf.type]) ||
         "v-text-field"
       );
     }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <media-manager-dialog ref="mediaManager"></media-manager-dialog>
-    <span v-if="label">{{ label }}:</span>
+    <span v-if="label" class="v-label" :class="{'error--text': errorMessages && errorMessages.length}">{{ label }}:</span>
     <div ref="editorNode">
       <v-skeleton-loader
         type="table-heading, list-item-two-line, list-item-avatar-two-line, list-item-three-lineimage, table-tfoot"
@@ -144,6 +144,9 @@ export default {
 .tox-notifications-container,
 .tox-statusbar__branding {
   display: none;
+}
+.v-label.error--text{
+  animation: v-shake 0.6s cubic-bezier(0.25, 0.8, 0.5, 1);
 }
 </style>
 

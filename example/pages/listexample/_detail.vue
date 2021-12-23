@@ -1,5 +1,6 @@
 <template>
   <Detail
+    v-model="model"
     endpoint="api/camomilla/articles"
     :identifier="$route.params.detail"
     :fields="fields"
@@ -11,6 +12,7 @@
 <script>
 export default {
   data: () => ({
+    model: {},
     fields: {
       main: [
         { value: "identifier", synci18n: true },
@@ -20,18 +22,14 @@ export default {
         //   type: "m2m",
         //   attrs: { endPoint: "api/camomilla/tags", itemText: "title" }
         // },
-        // { value: "content", type: "editor" },
+        { value: "content", type: "editor" },
         {
           group: "Seo",
           fields: [
-            "title",
+            { value: "title", class: "col-md-6" },
+            { value: "permalink", class: "col-md-6" },
             { value: "description", type: "textarea" },
-            "permalink",
-            { value: "og_description", type: "textarea" },
-            "og_title",
-            "og_type",
-            "og_url",
-            "canonical"
+            { type: "seoPreview" }
           ]
         }
       ],
