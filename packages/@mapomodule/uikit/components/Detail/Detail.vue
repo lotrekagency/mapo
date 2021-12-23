@@ -29,7 +29,8 @@
             <div class="row">
               <!-- The result of the [`DetailConfiguration`](#detailconfiguration) contained in the main body. -->
               <div
-                :class="field.class || 'col-12'"
+                class="col-12"
+                :class="field.class"
                 v-for="(field, index) in mainFields"
                 :key="index"
               >
@@ -42,7 +43,8 @@
                     <div
                       v-for="(fields, fieldsI) in field.fields"
                       :key="fieldsI"
-                      :class="fields.class || 'col-12'"
+                      class="col-12"
+                      :class="fields.class"
                     >
                       <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
                       <slot
@@ -126,7 +128,8 @@
             <slot name="side.top" v-bind="slotBindings"></slot>
             <div class="row">
               <div
-                :class="field.class || 'col-12'"
+                class="col-12"
+                :class="field.class"
                 v-for="(field, index) in sideFields"
                 :key="index"
               >
@@ -139,7 +142,8 @@
                     <div
                       v-for="(fields, fieldsI) in field.fields"
                       :key="fieldsI"
-                      :class="field.class || 'col-12'"
+                      class="col-12"
+                      :class="field.class"
                     >
                       <!-- @vuese-ignore -->
                       <slot
@@ -272,13 +276,22 @@ export default {
           }
         });
     },
-    parseConf(field) {
+    initLang(lang = this.currentLang) {
+      if (lang && !this.model.translations) {
+        this.model.translations = {};
+      }
+      if (lang && !this.model.translations[lang]) {
+        this.model.translations[lang] = {};
+      }
+    },
+    parseConf(field, i) {
       const conf = typeof field === "string" ? { value: field } : field;
       conf.value = conf.value || "";
-      conf.value = conf.value.replace(/^translations\..*\./, "");
-      conf.slotName = `fields.${conf.value}`;
+      conf.value = conf.value.replace(new RegExp(`^translations\.(${this.languages.join("|")})\.?`), "");
+      conf.slotName = `fields.${conf.value || i}`;
       if (this.currentLang && !field.synci18n) {
-        conf.value = `translations.${this.currentLang}.${conf.value}`;
+        const base = `translations.${this.currentLang}`;
+        conf.value = (conf.value && `${base}.${conf.value}`) || base;
       }
       return conf;
     },
@@ -288,21 +301,16 @@ export default {
         typeof group === "string"
           ? { name: group, icon }
           : { ...group, icon: group.icon || icon };
-      return fields.map(f =>
+      return fields.map((f, i) =>
         f.group
           ? { group: parseGroup(f.group), fields: this.mapConf(f.fields) }
-          : this.parseConf(f)
+          : this.parseConf(f, i)
       );
     }
   },
   watch: {
     currentLang(val) {
-      if (val && !this.model.translations) {
-        this.model.translations = {};
-      }
-      if (val && !this.model.translations[val]) {
-        this.model.translations[val] = {};
-      }
+      this.initLang();
       // Fired when the current language changes.
       // @arg Emits the language name as a string.
       this.$emit("update:lang", val);
@@ -313,12 +321,15 @@ export default {
       this.$emit("input", val);
     },
     lang(val) {
-      if (this.langs.includes(val)) {
+      if (val && this.langs.includes(val)) {
         this.currentLang = val;
       }
     },
     value(val) {
-      this.model = val;
+      if (val) {
+        this.model = val;
+        this.initLang();
+      }
     }
   },
   computed: {
@@ -373,7 +384,10 @@ export default {
   },
   mounted() {
     if (this.identifier && this.identifier !== "new") {
-      this.crud.detail(this.identifier).then(res => (this.model = res));
+      this.crud.detail(this.identifier).then(res => {
+        this.model = res;
+        this.initLang();
+      });
     }
   }
 };
