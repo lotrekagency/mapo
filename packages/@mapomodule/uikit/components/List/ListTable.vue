@@ -109,7 +109,7 @@ export default {
     httpPaginator: {},
     searchValue: "",
     loadingSearch: false,
-    disableHttp: false,
+    allSelected: false,
   }),
   props: {
     crud: {
@@ -157,12 +157,12 @@ export default {
     options: {
       deep: true,
       handler(options) {
-        this.disableHttp = options.itemsPerPage === -1 || (this.httpPaginator.count <= options.itemsPerPage);
+        this.allSelected = options.itemsPerPage === -1;
         this.setQparams(options);
         this.serverPaginationEnabled && this.getDataFromApi(false);
       },
     },
-    disableHttp() {
+    allSelected() {
       this.getDataFromApi();
     },
     data: {
@@ -201,7 +201,6 @@ export default {
             .then((data) => {
               this.items = data.items;
               this.httpPaginator = data.paginator;
-              this.disableHttp = this.disableHttp || this.httpPaginator.count <= this.options.itemsPerPage;
               this.loading = false;
               resolve(data);
             })
@@ -363,7 +362,7 @@ export default {
       );
     },
     serverPaginationEnabled() {
-      return this.serverPagination && !this.disableHttp && !this.offlineMode;
+      return this.serverPagination && !this.allSelected && !this.offlineMode;
     },
     offlineMode() {
       return !!this.data;
