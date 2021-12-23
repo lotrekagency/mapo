@@ -11,10 +11,13 @@
           multi-sort
           can-select-all
           searchable
-          :items="desserts"
+          :data.sync="desserts"
           :actions="[]"
         >
         </List>
+        <br>
+        <h3> Two way binding test </h3>
+        <pre>{{ desserts }}</pre>
       </v-col>
     </v-row>
   </div>

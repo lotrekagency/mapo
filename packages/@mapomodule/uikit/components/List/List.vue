@@ -95,7 +95,7 @@ export default {
   },
   computed: {
     crud() {
-      return this.endpoint ? this.$mapo.$api.crud(this.endpoint) : undefined;
+      return this.$mapo.$api.crud(this.endpoint);
     },
     selectionQuery() {
       return this.$refs?.dtable?.getHttpParams();

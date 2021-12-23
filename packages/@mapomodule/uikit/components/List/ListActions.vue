@@ -74,7 +74,8 @@ export default {
     // ❌ This is an internal prop. Sorry..
     crud: {
       // -
-      type: Object
+      type: Object,
+      required: true,
     },
   },
   computed: {

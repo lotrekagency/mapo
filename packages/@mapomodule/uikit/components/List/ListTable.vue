@@ -3,15 +3,11 @@
     <v-data-table
       v-model="selection"
       v-bind="$attrs"
-      :items="httpEnabled ? items : filteredItems"
+      :items="serverPaginationEnabled ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
       :search="searchValue"
-      :server-items-length="
-        httpEnabled
-          ? httpPaginator.count || options.page * options.itemsPerPage || -1
-          : -1
-      "
+      :server-items-length="serverItemsLength"
       :class="{ mapo__listtable__all_selected: selectAll }"
       :item-key="lookup"
     >
@@ -21,7 +17,7 @@
             v-if="searchable"
             v-model="searchValue"
             @input="
-              loadingSearch = true;
+              loadingSearch = serverPaginationEnabled;
               changeSearch();
             "
             prepend-inner-icon="mdi-magnify"
@@ -41,7 +37,7 @@
             <v-icon small left class="mr-2"> mdi-plus </v-icon>
             Quick add
           </v-btn>
-          <v-btn v-if="httpEnabled" class="ma-2" @click="getDataFromApi(false)" icon>
+          <v-btn v-if="serverPaginationEnabled" class="ma-2" @click="getDataFromApi(false)" icon>
             <v-icon>mdi-update</v-icon>
           </v-btn>
         </v-toolbar>
@@ -77,6 +73,7 @@
     <list-quick-edit
       v-if="shouldEdit"
       ref="editModal"
+      :offline="offlineMode"
       v-bind="{ ...$attrs, value: false, crud, lookup: lookup }"
     >
       <template v-for="slot in filterSlots($slots, 'qedit.')" :slot="slot">
@@ -117,8 +114,9 @@ export default {
   props: {
     crud: {
       type: Object,
+      required: true
     },
-    http: Boolean,
+    serverPagination: Boolean,
     navigable: Boolean,
     lookup: {
       type: String,
@@ -138,6 +136,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    data: {
+      type: Array,
+      required: false
+    },
   },
   watch: {
     selection(val) {
@@ -149,20 +151,26 @@ export default {
     filters: {
       deep: true,
       handler() {
-        this.httpEnabled && this.getDataFromApi();
+        this.serverPaginationEnabled && this.getDataFromApi();
       },
     },
     options: {
       deep: true,
       handler(options) {
-        this.disableHttp = options.itemsPerPage === -1;
+        this.disableHttp = options.itemsPerPage === -1 || (this.httpPaginator.count <= options.itemsPerPage);
         this.setQparams(options);
-        this.httpEnabled && this.getDataFromApi(false);
+        this.serverPaginationEnabled && this.getDataFromApi(false);
       },
     },
     disableHttp() {
       this.getDataFromApi();
     },
+    data: {
+      deep: true,
+      handler(data) {
+        if (data) this.items = data;
+      },
+    }
   },
   methods: {
     getDataFromApi(clearSelection = true) {
@@ -170,18 +178,19 @@ export default {
         this.selection = [];
         this.selectAll = false;
       }
-      this.loading = this.httpEnabled;
-      this.httpEnabled && this.debouncedDataFromApi();
+      this.loading = !this.offlineMode;
+      !this.offlineMode && this.debouncedDataFromApi();
     },
     debouncedDataFromApi: debounce(function () {
       return new Promise((resolve, reject) => {
         this.selection = [];
-        if (!this.httpEnabled) {
+        if (!this.serverPaginationEnabled) {
           this.crud
             .list()
             .then((data) => {
               this.items = data;
               this.loading = false;
+              this.httpPaginator = {};
               resolve(data);
             })
             .catch((error) => reject(error));
@@ -192,6 +201,7 @@ export default {
             .then((data) => {
               this.items = data.items;
               this.httpPaginator = data.paginator;
+              this.disableHttp = this.disableHttp || this.httpPaginator.count <= this.options.itemsPerPage;
               this.loading = false;
               resolve(data);
             })
@@ -257,29 +267,32 @@ export default {
     editItem(item) {
       this.$refs.editModal.open(item).then((r) => {
         if (!r) return;
-        if (this.httpEnabled) {
+        if (!this.offlineMode) {
           this.getDataFromApi();
         } else {
-          const index = this.items.findIndex((i) => i[this.lookup] === r.id);
+          let index = item ? this.items.findIndex((i) => i[this.lookup] === item[this.lookup]) : -1;
+          let update = true;
 
           if (index !== -1) {
-            this.items[index] = r.item;
-            this.items = [...this.items];
+            this.items.splice(index, 1, r);
           } else {
-            this.items.push(r.item);
+            index = this.items.push(r);
+            update = false;
           }
+          this.$emit("update:data", this.items, r, index);
         }
       });
     },
     deleteItem(item) {
       const callback = (item) => {
-        if (this.httpEnabled) {
+        if (!this.offlineMode) {
           this.crud.delete(item[this.lookup]).then(this.getDataFromApi);
         } else {
           const index = this.items.findIndex((i) => i[this.lookup] === item[this.lookup]);
 
           if (index !== -1) {
             this.items.splice(index, 1);
+            this.$emit("update:data", this.items, r, index);
           }
         }
       };
@@ -308,7 +321,7 @@ export default {
         },
       });
 
-      this.httpEnabled && this.getDataFromApi();
+      this.serverPaginationEnabled && this.getDataFromApi();
       this.loadingSearch = false;
     }, 1000),
   },
@@ -349,16 +362,22 @@ export default {
         (this.$attrs.editFields && this.$attrs.editFields.length)
       );
     },
-    httpEnabled() {
-      return this.http && !this.disableHttp;
+    serverPaginationEnabled() {
+      return this.serverPagination && !this.disableHttp && !this.offlineMode;
+    },
+    offlineMode() {
+      return !!this.data;
+    },
+    serverItemsLength() {
+      return this.httpPaginator.count || (this.serverPaginationEnabled && (this.options.page * this.options.itemsPerPage)) || -1;
     },
   },
   mounted() {
     this.restoreFromQparams();
-    if (this.httpEnabled) {
+    if (!this.offlineMode) {
       this.getDataFromApi();
     } else {
-      this.items = this.$attrs.items;
+      this.items = this.data;
       this.loading = false;
     }
   },
