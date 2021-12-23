@@ -9,7 +9,8 @@ const mapping = {
     editor: "tiny-mce",
     media: "media-field",
     m2m: "m2m-field",
-    mediaList: "media-m2m-field"
+    mediaList: "media-m2m-field",
+    seoPreview: "seo-preview"
 }
 
 const props = {
@@ -43,6 +44,10 @@ const accessor = {
     },
     "date-field": {
         get: dateFunc, set: dateFunc
+    },
+    "seo-preview": {
+        get: ({ val }) => ({ title: "", permalink: "", description: "", ...val }),
+        set: ({ val }) => ({ title: "", permalink: "", description: "", ...val })
     }
 }
 export default {

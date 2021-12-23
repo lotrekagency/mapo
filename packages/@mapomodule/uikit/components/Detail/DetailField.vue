@@ -8,6 +8,8 @@ import DateField from "@mapomodule/uikit/components/fields/DateField.vue";
 import M2mField from "@mapomodule/uikit/components/fields/M2mField.vue";
 import MediaM2mField from "@mapomodule/uikit/components/fields/MediaM2mField.vue";
 import MediaField from "@mapomodule/uikit/components/fields/MediaField.vue";
+import SeoPreview from "@mapomodule/uikit/components/fields/SeoPreview.vue";
+
 
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import defaults from "./defaults";
@@ -22,7 +24,8 @@ export default {
     DateField,
     M2mField,
     MediaM2mField,
-    MediaField
+    MediaField,
+    SeoPreview
   },
 
   data() {
