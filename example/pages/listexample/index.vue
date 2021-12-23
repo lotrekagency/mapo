@@ -1,23 +1,21 @@
 <template>
-  <div>
-    <v-row justify="center" align="center">
-      <v-col cols="12" sm="8" md="12">
-        <List
-          show-select
-          :headers="headers"
-          :editFields="editFields"
-          :filters="availableFilters"
-          endpoint="api/camomilla/articles"
-          navigable
-          addItem
-          http
-          canSelectAll
-          searchable
-        >
-        </List>
-      </v-col>
-    </v-row>
-  </div>
+<v-container fluid>
+  <List
+    show-select
+    :headers="headers"
+    :editFields="editFields"
+    :filters="availableFilters"
+    endpoint="api/camomilla/articles"
+    navigable
+    addItem
+    http
+    canSelectAll
+    searchable
+  >
+  </List>
+</v-container>
+
+
 </template>
 
 <script>
