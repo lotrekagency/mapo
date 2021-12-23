@@ -55,8 +55,8 @@ export default {
         this.setModel(val);
       }
     },
-    conf(newConf, oldConf) {
-      if (newConf.value !== oldConf.value) {
+    "conf.value"(newValue, oldValue) {
+      if (newValue !== oldValue) {
         this.setModel();
       }
     },
