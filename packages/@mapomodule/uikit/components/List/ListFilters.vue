@@ -1,68 +1,19 @@
 <template>
   <div v-if="compFilters.length" class="main">
-    <v-menu offset-y min-width="250px" max-width="400px" tile :close-on-content-click="false" v-bind="{ ...$attrs, value: null }" >
-      <template v-slot:activator="{ on }">
-        <v-row class="flex-sm-row-reverse">
-          <v-col cols="12" sm="3" class="d-flex justify-end align-center">
+    <v-row class="flex-sm-row-reverse">
+      <v-col cols="12" sm="3" class="d-flex justify-end align-center">
+        <v-menu offset-y min-width="250px" max-width="400px" nudge-top="-5px" tile :close-on-content-click="false" v-bind="{ ...$attrs, value: null }" >
+          <template v-slot:activator="{ on }">
             <v-btn v-bind="$attrs" v-on="on" text>
               filter <v-icon>mdi-filter-variant</v-icon>
             </v-btn>
-          </v-col>
-          <v-col v-if="activeFilters.length" cols="12" sm="9">
-            <v-slide-group v-bind="$attrs" show-arrows>
-              <v-chip
-                v-bind="$attrs"
-                class="ma-1"
-                close
-                label
-                @click:close="removeFilter(filter)"
-                v-for="(filter, i) in activeFilters"
-                :key="i"
-              >
-                <span>
-                  <small>
-                    <b>{{ filter.text.toUpperCase() }}: </b>
-                    {{ formatActiveChoices(filter.active).toUpperCase() }}
-                  </small>
-                </span>
-              </v-chip>
-            </v-slide-group>
-          </v-col>
-        </v-row>
-      </template>
+          </template>
 
-      <v-list class="pa-0">
-        <div v-for="(filter, index) in compFilters" :key="index">
-          <!-- This is a dynamic slot. You can use it to override filters. <br> For example use `filter.status` to completely override the rendering of the filter with `"status"` as value. -->
-          <slot
-            :name="`filter.${filter.value}`"
-            v-bind="{
-              filter,
-              addFilter,
-              removeFilterChoice,
-              toggleChoice,
-              activeFilters,
-            }"
-          >
-            <v-list-group>
-              <v-list-item-title slot="activator">
-                <!-- This is a dynamic slot. You can use it to override filters title. -->
-                <slot
-                  :name="`filter.${filter.value}.title`"
-                  v-bind="{
-                    filter,
-                    addFilter,
-                    removeFilterChoice,
-                    toggleChoice,
-                    activeFilters,
-                  }"
-                >
-                  {{ filter.text }}
-                </slot>
-              </v-list-item-title>
-              <!-- This is a dynamic slot. You can use it to override filters content.-->
+          <v-list class="pa-0">
+            <div v-for="(filter, index) in compFilters" :key="index">
+              <!-- This is a dynamic slot. You can use it to override filters. <br> For example use `filter.status` to completely override the rendering of the filter with `"status"` as value. -->
               <slot
-                :name="`filter.${filter.value}.content`"
+                :name="`filter.${filter.value}`"
                 v-bind="{
                   filter,
                   addFilter,
@@ -71,59 +22,108 @@
                   activeFilters,
                 }"
               >
-                <div v-if="filter.datepicker" class="d-flex flex-column align-end justify-center pb-2">
-                  <v-date-picker
-                    @input="addDateFilter(filter)"
-                    class="rounded-0"
-                    v-model="filter.dates"
-                    range
-                    full-width
-                    no-title
-                    color="primary"
-                  >
-                  </v-date-picker>
-                  <v-btn
-                    class="datapicker-clear-btn elevation-0"
-                    @click="removeFilter(filter)"
-                    small
-                    tile
-                    >clear</v-btn
-                  >
-                </div>
-                <v-list v-else class="overflow-y-auto pa-0" max-height="200" dense>
-                  <v-list-item
-                    v-for="(choice, i) in filter.choices"
-                    :key="i"
-                    class="v-list-item--link"
-                    active-class="primary--text"
-                    :input-value="isChoiceActive(filter, choice)"
-                    @click.native.stop="toggleChoice(filter, choice)"
-                  >
-                    <!-- This is a dynamic slot. You can use it to override filters icon. -->
+                <v-list-group>
+                  <v-list-item-title slot="activator">
+                    <!-- This is a dynamic slot. You can use it to override filters title. -->
                     <slot
-                      :name="`filter.${filter.value}.icon`"
-                      v-bind="{ filter, choice }"
+                      :name="`filter.${filter.value}.title`"
+                      v-bind="{
+                        filter,
+                        addFilter,
+                        removeFilterChoice,
+                        toggleChoice,
+                        activeFilters,
+                      }"
                     >
-                      <v-list-item-icon>
-                        <v-icon
-                          v-text="choice.icon || 'mdi-circle-small'"
-                        ></v-icon>
-                      </v-list-item-icon>
+                      {{ filter.text }}
                     </slot>
+                  </v-list-item-title>
+                  <!-- This is a dynamic slot. You can use it to override filters content.-->
+                  <slot
+                    :name="`filter.${filter.value}.content`"
+                    v-bind="{
+                      filter,
+                      addFilter,
+                      removeFilterChoice,
+                      toggleChoice,
+                      activeFilters,
+                    }"
+                  >
+                    <div v-if="filter.datepicker" class="d-flex flex-column align-end justify-center pb-2">
+                      <v-date-picker
+                        @input="addDateFilter(filter)"
+                        class="rounded-0"
+                        v-model="filter.dates"
+                        range
+                        full-width
+                        no-title
+                        color="primary"
+                      >
+                      </v-date-picker>
+                      <v-btn
+                        class="datapicker-clear-btn elevation-0"
+                        @click="removeFilter(filter)"
+                        small
+                        tile
+                        >clear</v-btn
+                      >
+                    </div>
+                    <v-list v-else class="overflow-y-auto pa-0" max-height="200" dense>
+                      <v-list-item
+                        v-for="(choice, i) in filter.choices"
+                        :key="i"
+                        class="v-list-item--link"
+                        active-class="primary--text"
+                        :input-value="isChoiceActive(filter, choice)"
+                        @click.native.stop="toggleChoice(filter, choice)"
+                      >
+                        <!-- This is a dynamic slot. You can use it to override filters icon. -->
+                        <slot
+                          :name="`filter.${filter.value}.icon`"
+                          v-bind="{ filter, choice }"
+                        >
+                          <v-list-item-icon>
+                            <v-icon
+                              v-text="choice.icon || 'mdi-circle-small'"
+                            ></v-icon>
+                          </v-list-item-icon>
+                        </slot>
 
-                    <v-list-item-content>
-                      <v-list-item-title
-                        v-text="choice.text"
-                      ></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
+                        <v-list-item-content>
+                          <v-list-item-title
+                            v-text="choice.text"
+                          ></v-list-item-title>
+                        </v-list-item-content>
+                      </v-list-item>
+                    </v-list>
+                  </slot>
+                </v-list-group>
               </slot>
-            </v-list-group>
-          </slot>
-        </div>
-      </v-list>
-    </v-menu>
+            </div>
+          </v-list>
+        </v-menu>
+      </v-col>
+      <v-col v-if="activeFilters.length" cols="12" sm="9">
+        <v-slide-group v-bind="$attrs" show-arrows>
+          <v-chip
+            v-bind="$attrs"
+            class="ma-1"
+            close
+            label
+            @click:close="removeFilter(filter)"
+            v-for="(filter, i) in activeFilters"
+            :key="i"
+          >
+            <span>
+              <small>
+                <b>{{ filter.text.toUpperCase() }}: </b>
+                {{ formatActiveChoices(filter.active).toUpperCase() }}
+              </small>
+            </span>
+          </v-chip>
+        </v-slide-group>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
