@@ -88,8 +88,7 @@ export default {
   props: {
     // The url of the endpoint that provides the data to display. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
     endpoint: {
-      type: String,
-      required: true,
+      type: String
     },
     // Add option to select all items in all pages
     canSelectAll: Boolean,

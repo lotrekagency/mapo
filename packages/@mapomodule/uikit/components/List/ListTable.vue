@@ -3,19 +3,23 @@
     <v-data-table
       v-model="selection"
       v-bind="$attrs"
-      :items="httpEnabled ? items : filteredItems"
+      :items="serverPaginationEnabled ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
-      :search="searchable && !httpEnabled ? searchValue : ''"
-      :server-items-length="httpPaginator.count || -1"
-      :class="{ 'mapo__listtable__all_selected': selectAll }"
+      :search="searchValue"
+      :server-items-length="serverItemsLength"
+      :class="{ mapo__listtable__all_selected: selectAll }"
+      :item-key="lookup"
     >
       <template v-slot:top>
         <v-toolbar flat>
           <v-text-field
             v-if="searchable"
             v-model="searchValue"
-            @input="loadingSearch = true; changeSearch()"
+            @input="
+              loadingSearch = serverPaginationEnabled;
+              changeSearch();
+            "
             prepend-inner-icon="mdi-magnify"
             label="Search"
             single-line
@@ -33,7 +37,7 @@
             <v-icon small left class="mr-2"> mdi-plus </v-icon>
             Quick add
           </v-btn>
-          <v-btn class="ma-2" @click="getDataFromApi(false)" icon>
+          <v-btn v-if="serverPaginationEnabled" class="ma-2" @click="getDataFromApi(false)" icon>
             <v-icon>mdi-update</v-icon>
           </v-btn>
         </v-toolbar>
@@ -69,7 +73,8 @@
     <list-quick-edit
       v-if="shouldEdit"
       ref="editModal"
-      v-bind="{ ...$attrs, value: false, crud }"
+      :offline="offlineMode"
+      v-bind="{ ...$attrs, value: false, crud, lookup: lookup }"
     >
       <template v-for="slot in filterSlots($slots, 'qedit.')" :slot="slot">
         <slot :name="`qedit.${slot}`"></slot>
@@ -104,14 +109,14 @@ export default {
     httpPaginator: {},
     searchValue: "",
     loadingSearch: false,
-    disableHttp: false
+    allSelected: false,
   }),
   props: {
     crud: {
       type: Object,
-      required: true,
+      required: true
     },
-    http: Boolean,
+    serverPagination: Boolean,
     navigable: Boolean,
     lookup: {
       type: String,
@@ -131,6 +136,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    data: {
+      type: Array,
+      required: false
+    },
   },
   watch: {
     selection(val) {
@@ -142,20 +151,26 @@ export default {
     filters: {
       deep: true,
       handler() {
-        this.httpEnabled && this.getDataFromApi();
+        this.serverPaginationEnabled && this.getDataFromApi();
       },
     },
     options: {
       deep: true,
       handler(options) {
-        this.disableHttp = options.itemsPerPage === -1;
+        this.allSelected = options.itemsPerPage === -1;
         this.setQparams(options);
-        this.httpEnabled && this.getDataFromApi(false);
+        this.serverPaginationEnabled && this.getDataFromApi(false);
       },
     },
-    disableHttp() {
+    allSelected() {
       this.getDataFromApi();
     },
+    data: {
+      deep: true,
+      handler(data) {
+        if (data) this.items = data;
+      },
+    }
   },
   methods: {
     getDataFromApi(clearSelection = true) {
@@ -163,18 +178,19 @@ export default {
         this.selection = [];
         this.selectAll = false;
       }
-      this.loading = true;
-      this.debouncedDataFromApi();
+      this.loading = !this.offlineMode;
+      !this.offlineMode && this.debouncedDataFromApi();
     },
     debouncedDataFromApi: debounce(function () {
       return new Promise((resolve, reject) => {
         this.selection = [];
-        if (!this.httpEnabled) {
+        if (!this.serverPaginationEnabled) {
           this.crud
             .list()
             .then((data) => {
               this.items = data;
               this.loading = false;
+              this.httpPaginator = {};
               resolve(data);
             })
             .catch((error) => reject(error));
@@ -203,20 +219,25 @@ export default {
     restoreFromQparams() {
       this.options = {
         ...this.options,
-        sortBy: this.$route.query.sort?.split(".") || [],
-        sortDesc: this.$route.query.order?.split(".").map((e) => e == "desc") || [],
+        sortBy:
+          this.$route.query.sort?.split(",").map((p) => p.replace(/^-/, "")) ||
+          this.options.sortBy ||
+          [],
+        sortDesc:
+          this.$route.query.order?.split(",").map((p) => p.startsWith("-")) ||
+          this.options.sortDesc ||
+          [],
         itemsPerPage:
           parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
+        page: parseInt(this.$route.query.page) || this.options.page || 1,
       };
       this.searchValue = this.$route.query.search;
     },
     getOrderParams(options) {
       const { sortBy, sortDesc, page, itemsPerPage } = options;
-      const sort = sortBy.length ? sortBy.join(".") : undefined;
-      const order = sortDesc.length
-        ? sortDesc.map((e) => (e ? "desc" : "asc")).join(".")
-        : undefined;
-      return { sort, order, items: itemsPerPage, page: page !== 1 ? page : undefined };
+      const sort =
+        sortBy.map((field, i) => (sortDesc[i] ? "-" : "") + field).join(",") || undefined;
+      return { sort, items: itemsPerPage, page: page !== 1 ? page : undefined };
     },
     getHttpParams() {
       const params = new URLSearchParams();
@@ -237,18 +258,44 @@ export default {
         } else {
           query.push(`${format(fi.value)}=${fi.active[0].value}`);
         }
-        query.forEach(q => params.append('fltr', q))
+        query.forEach((q) => params.append("fltr", q));
       });
-      if (this.searchValue && this.searchable)
-        params.append("search", this.searchValue);
+      if (this.searchValue && this.searchable) params.append("search", this.searchValue);
       return params;
     },
     editItem(item) {
-      this.$refs.editModal.open(item).then((r) => r && this.getDataFromApi());
+      this.$refs.editModal.open(item).then((r) => {
+        if (!r) return;
+        if (!this.offlineMode) {
+          this.getDataFromApi();
+        } else {
+          let index = item ? this.items.findIndex((i) => i[this.lookup] === item[this.lookup]) : -1;
+          let update = true;
+
+          if (index !== -1) {
+            this.items.splice(index, 1, r);
+          } else {
+            index = this.items.push(r);
+            update = false;
+          }
+          this.$emit("update:data", this.items, r, index);
+        }
+      });
     },
     deleteItem(item) {
-      const callback = (item) =>
-        this.crud.delete(item[this.lookup]).then(this.getDataFromApi);
+      const callback = (item) => {
+        if (!this.offlineMode) {
+          this.crud.delete(item[this.lookup]).then(this.getDataFromApi);
+        } else {
+          const index = this.items.findIndex((i) => i[this.lookup] === item[this.lookup]);
+
+          if (index !== -1) {
+            this.items.splice(index, 1);
+            this.$emit("update:data", this.items, r, index);
+          }
+        }
+      };
+
       this.$mapo.$confirm
         .open({
           title: "Delete",
@@ -269,13 +316,13 @@ export default {
       this.$router.push({
         query: {
           ...this.$route.query,
-          search: this.searchValue,
+          search: this.searchValue || undefined,
         },
       });
 
-      this.httpEnabled && this.getDataFromApi();
+      this.serverPaginationEnabled && this.getDataFromApi();
       this.loadingSearch = false;
-    }, 1000)
+    }, 1000),
   },
   computed: {
     filteredItems() {
@@ -314,13 +361,24 @@ export default {
         (this.$attrs.editFields && this.$attrs.editFields.length)
       );
     },
-    httpEnabled() {
-      return this.http && !this.disableHttp;
+    serverPaginationEnabled() {
+      return this.serverPagination && !this.allSelected && !this.offlineMode;
+    },
+    offlineMode() {
+      return !!this.data;
+    },
+    serverItemsLength() {
+      return this.httpPaginator.count || (this.serverPaginationEnabled && (this.options.page * this.options.itemsPerPage)) || -1;
     },
   },
   mounted() {
     this.restoreFromQparams();
-    this.httpEnabled || this.getDataFromApi();
+    if (!this.offlineMode) {
+      this.getDataFromApi();
+    } else {
+      this.items = this.data;
+      this.loading = false;
+    }
   },
 };
 </script>

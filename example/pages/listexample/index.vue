@@ -8,8 +8,9 @@
     endpoint="api/camomilla/articles"
     navigable
     addItem
-    http
-    canSelectAll
+    server-pagination
+    multi-sort
+    can-select-all
     searchable
   >
   </List>
