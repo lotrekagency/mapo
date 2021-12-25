@@ -7,7 +7,7 @@
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |crud|-|`Object`|`true`|-|
-|http|-|`Boolean`|`false`|-|
+|serverPagination|-|`Boolean`|`false`|-|
 |navigable|-|`Boolean`|`false`|-|
 |lookup|-|`String`|`false`|id|
 |detailLink|-|`Function`|`false`|default(item) {
@@ -17,6 +17,7 @@
 }|
 |filters|-|`Array`|`false`|[]|
 |searchable|-|`Boolean`|`false`|false|
+|data|-|`Array`|`false`|-|
 
 <!-- @vuese:ListTable:props:end -->
 

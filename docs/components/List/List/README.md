@@ -8,7 +8,7 @@ The purpose of this component is to provide you with a very quick way to create 
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|endpoint|The url of the endpoint that provides the data to display. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.|`String`|`true`|-|
+|endpoint|The url of the endpoint that provides the data to display. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.|`String`|`false`|-|
 |canSelectAll|Add option to select all items in all pages|`Boolean`|`false`|-|
 
 <!-- @vuese:List:props:end -->
@@ -71,20 +71,22 @@ This is an interactive example. You can play with it but remember that all http 
 
 ::: demo
 <template>
-<v-app >
   <List
     show-select
+    lookup="name"
     :headers="headers"
     :editFields="editFields"
     :filters="availableFilters"
-    endpoint="api/camomilla/articles"
-    title="List Example"
-    addItem
-    canSelectAll
+    multi-sort
+    can-select-all
     searchable
+    :data.sync="desserts"
+    :actions="[]"
   >
   </List>
-</v-app>
+  <br>
+  <h3> Data: </h3>
+  <pre>{{ desserts }}</pre>
 </template>
 
 <script>
@@ -93,37 +95,66 @@ export default {
     return {
       headers: [
         {
-          text: "ID",
+          text: "Dessert (100g serving)",
           align: "start",
           sortable: false,
-          value: "id",
+          value: "name",
         },
-        { text: "Title", value: "title" },
-        { text: "Identifier", value: "identifier" },
+        { text: "Protein (g)", value: "protein" },
+        { text: "Gluten-Free", value: "glutenfree" },
         { text: "Actions", value: "actions", sortable: false },
       ],
       editFields: [
-        { attrs: { rules:[v => !!v || 'Title is required'] }, value: "title" },
-        { attrs: { rules:[v => !!v || 'Permalink is required'] }, value: "permalink" },
-        { attrs: { rules:[v => !!v || 'Identifier is required'] }, value: "identifier" },
+        { attrs: { rules: [(v) => !!v || "Name is required"] }, value: "name" },
+        { value: "protein" }
       ],
       availableFilters: [
         {
-          text: "Status",
-          value: "status",
+          text: "Gluten Free",
+          value: "glutenfree",
           choices: [
-            { text: "Draft", value: "DRF" },
-            { text: "Published", value: "PUB" },
-            { text: "Trash", value: "TRS" },
+            { text: "Yes", value: true },
+            { text: "No", value: false },
           ],
         },
+      ],
+      desserts: [
         {
-          text: "Date",
-          value: "date",
-          datepicker: true
+          name: "Frozen Yogurt",
+          protein: 4.0,
+          glutenfree: true,
+        },
+        {
+          name: "Ice cream sandwich",
+          protein: 4.3,
+          glutenfree: false,
+        },
+        {
+          name: "Eclair",
+          protein: 6.0,
+          glutenfree: false,
+        },
+        {
+          name: "Jelly bean",
+          protein: 0.0,
+          glutenfree: true,
+        },
+        {
+          name: "Lollipop",
+          protein: 0,
+          glutenfree: true,
+        },
+        {
+          name: "KitKat",
+          protein: 7,
+          glutenfree: false,
+        },
+        {
+          name: "KitKat2",
+          protein: 77,
+          glutenfree: false,
         },
       ],
-
     };
   },
 };

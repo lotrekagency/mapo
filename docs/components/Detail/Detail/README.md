@@ -8,14 +8,27 @@ The purpose of this component is to provide you with a very quick way to create 
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
+|value|V-model of the object we are editing.|`Object`|`false`|-|
+|lang|Set the current lang to value.|`String`|`false`|-|
 |fields|The main configuration that determines the arrangement of the fields in the detail layout.|[`DetailConfiguration`](#detailconfiguration)|`true`|-|
 |languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
-|endpoint|The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.|`String`|`false`|-|
+|endpoint|The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.|`String`|`false`|null|
 |identifier|The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.|`String|Number`.|`false`|new|
 |modelName|The title of the detail page.|`String`|`false`|-|
 |sticky|This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.|`Boolean`|`false`|true|
 
 <!-- @vuese:Detail:props:end -->
+
+
+## Events
+
+<!-- @vuese:Detail:events:start -->
+
+|Event Name|Description|Parameters|
+|---|---|---|
+|input|Fired when the v-model changes.|Emits the entire payload modified.|
+
+<!-- @vuese:Detail:events:end -->
 
 
 ## Slots
@@ -28,7 +41,7 @@ The purpose of this component is to provide you with a very quick way to create 
 |body.top|Use this to add content at the top of the central layout.|-|
 |body.lang|Use this to override the Language Switch panel.|[`DetailLangSwitch`](/components/detail/DetailLangSwitch/)|
 |body.top.underlang|Use this to add content under the Language Switch panel.|-|
-|body|Use this to override the content of the main body.|The result of the [`DetailConfiguration`](#detailconfiguration) contained in the main body.|
+|body|Use this to override the content of the main body.|-|
 |fields.slotName|This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`.|A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration).|
 |body.bottom|Use this to add content under the main body.|-|
 |side.buttons.top|Use this to add content on the top of the sidebar button panel.|-|

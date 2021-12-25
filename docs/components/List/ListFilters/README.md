@@ -41,7 +41,7 @@ This components renders the filter menu in the upper-right. The menu provides a 
 
 ## Filter config
 
-The filters prop is a list of `Filter` objects made of several keys: 
+The filters prop is a list of `Filter` objects made of several keys:
 
 - **"text"** `String` ==> The name of the filter that will be renered inside the filter menu.
 - **"value"** `String` ==> The dotted path of the value we need to filter on.

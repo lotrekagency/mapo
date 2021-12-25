@@ -13,6 +13,7 @@ This components renders a dialog that let the user quick edit (or add) an elemen
 |editFields|-|`Array`|`false`|[]|
 |lookup|-|`String`|`false`|id|
 |crud|-|`Object`|`true`|-|
+|offline|-|`Boolean`|`false`|-|
 
 <!-- @vuese:ListQuickEdit:props:end -->
 
