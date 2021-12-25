@@ -71,8 +71,10 @@ This is an interactive example. You can play with it but remember that all http 
 
 ::: demo
 <template>
-  <List
+  <v-app>
+    <List
     show-select
+    title="Sweets archive:"
     lookup="name"
     :headers="headers"
     :editFields="editFields"
@@ -82,11 +84,12 @@ This is an interactive example. You can play with it but remember that all http 
     searchable
     :data.sync="desserts"
     :actions="[]"
-  >
-  </List>
-  <br>
-  <h3> Data: </h3>
-  <pre>{{ desserts }}</pre>
+    >
+    </List>
+    <br>
+    <h3> Data: </h3>
+    <pre>{{ desserts }}</pre>
+  </v-app>
 </template>
 
 <script>
