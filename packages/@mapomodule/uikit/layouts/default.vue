@@ -1,9 +1,9 @@
 <template>
-  <v-app class="app__wrapper">
+  <v-app>
     <Sidebar />
     <Topbar :title="title" :drawer="this.$store.getters['mapo/app/drawer']" />
     <v-main>
-      <v-container>
+      <v-container fluid>
         <nuxt />
         <root-components />
       </v-container>
@@ -11,15 +11,6 @@
   </v-app>
 </template>
 
-<style lang="scss" scoped>
-@import "@mapomodule/uikit/assets/variables.scss";
-
-.app {
-  &__wrapper {
-    // background: $w-1;
-  }
-}
-</style>
 
 <script>
 export default {

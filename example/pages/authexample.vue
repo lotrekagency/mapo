@@ -42,8 +42,9 @@
 
 <style scoped>
 .user-info {
-  background: #333333;
   border-radius: 8px;
+  border: 3px solid #333333;
+  padding: 1rem;
   margin: 10px 20%;
 }
 </style>

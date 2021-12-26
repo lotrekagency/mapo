@@ -20,7 +20,6 @@
 
 <style scoped>
 .mapo-info {
-  background: #333333;
   border-radius: 8px;
   margin: 10px 5%;
   padding: 10px;
