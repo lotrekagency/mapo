@@ -1,7 +1,6 @@
 <template>
-  <div class="sidebar__list">
+  <v-list dense class="py-0 overflow-y-auto">
     <SidebarListItem
-      class="sidebar__list__item"
       v-for="(item, i) in routes"
       :key="i"
       :link="item.link"
@@ -9,17 +8,8 @@
       :childrens="item.childrens"
       :icon="item.icon"
     />
-  </div>
+  </v-list>
 </template>
-
-<style lang="scss" scoped>
-.sidebar {
-  &__list {
-    display: flex;
-    flex-direction: column;
-  }
-}
-</style>
 
 <script>
 import { buildRoutes } from "../routebuilder";

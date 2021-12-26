@@ -1,52 +1,37 @@
 <template>
-  <div class="sidebar__ender">
-    <sidebar-list-item
-      class="sidebar__ender__item"
-      v-for="(item, i) in routes"
-      :key="i"
-      :link="item.link"
-      :label="item.label"
-      :childrens="item.childrens"
-      :icon="item.icon"
-    />
-    <logout-button class="sidebar__ender__item sidebar__ender__item--logout" />
+  <div>
+    <v-divider></v-divider>
+    <v-list dense class="py-0">
+      <SidebarListItem
+        v-for="(item, i) in routes"
+        :key="i"
+        :link="item.link"
+        :label="item.label"
+        :childrens="item.childrens"
+        :icon="item.icon"
+      />
+    </v-list>
+    <v-divider></v-divider>
+    <v-list-item dense class="logout__button" link @click.native="logout">
+      <v-list-item-icon>
+        <v-icon>mdi-logout</v-icon>
+      </v-list-item-icon>
+      <v-list-item-title> Logout </v-list-item-title>
+    </v-list-item>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "@mapomodule/uikit/assets/variables.scss";
-
-.sidebar {
-  &__ender {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    &__icon {
-      font-size: 1rem;
-      margin-right: 0.5rem;
-    }
-    &__item {
-      display: block;
-      width: 100%;
-      text-decoration: none;
-      color: white;
-      background: $b-2;
-      transition: all linear 0.25s;
-      border-radius: 0;
-      &:hover {
-        background: rgba($b-2, 0.25);
-      }
-      &--logout {
-        background: $black !important;
-        &:hover {
-          background: rgba($black, 0.25) !important;
-        }
-      }
-    }
+.logout__button{
+  &.theme--light{
+    background: #ffffffd6;
+    filter: invert(1);
+  }
+  &.theme--dark{
+      background: #121212;
   }
 }
 </style>
-
 <script>
 import { buildRoutes } from "../routebuilder";
 
@@ -55,14 +40,14 @@ export default {
   name: "SidebarFooter",
   data() {
     return {
-      defaultIcon: ({label}) => `mdi-alpha-${label[0]}-box`.toLowerCase(),
-      routes: this.routes,
+      defaultIcon: ({ label }) => `mdi-alpha-${label[0]}-box`.toLowerCase(),
+      routes: this.routes
     };
   },
-  mounted: function () {
+  mounted() {
     this.routes = this.buildRoutes(
       this.$router.options.routes.filter(
-        (route) => route.meta && route.meta.sidebarFooter === true
+        route => route.meta && route.meta.sidebarFooter === true
       )
     );
   },
@@ -70,6 +55,9 @@ export default {
     buildRoutes(routes) {
       return buildRoutes(routes, this.defaultIcon);
     },
-  },
+    logout() {
+      this.$store.dispatch("mapo/user/logout");
+    }
+  }
 };
 </script>
