@@ -6,7 +6,7 @@
       :items="serverPaginationEnabled ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
-      :search="searchValue"
+      :search="searchString"
       :server-items-length="serverItemsLength"
       :class="{ mapo__listtable__all_selected: selectAll }"
       :item-key="lookup"
@@ -15,10 +15,10 @@
         <v-toolbar flat>
           <v-text-field
             v-if="searchable"
-            v-model="searchValue"
+            v-model="searchString"
             @input="
               loadingSearch = serverPaginationEnabled;
-              changeSearch();
+              search();
             "
             prepend-inner-icon="mdi-magnify"
             label="Search"
@@ -33,7 +33,7 @@
           <v-spacer></v-spacer>
           <slot name="dtable.top.center"></slot>
           <v-spacer></v-spacer>
-          <v-btn text v-if="shouldEdit" @click="editItem()">
+          <v-btn text v-if="quickModeEnabled" @click="quickAction()">
             <v-icon small left class="mr-2"> mdi-plus </v-icon>
             Quick add
           </v-btn>
@@ -55,31 +55,31 @@
         <v-simple-checkbox v-model="selectAll" @input="on.input"></v-simple-checkbox>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon v-if="shouldEdit" small class="mr-2" @click="editItem(item)">
+        <v-icon v-if="quickModeEnabled" small class="mr-2" @click="quickAction(item)">
           mdi-pencil
         </v-icon>
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
       </template>
-      <template v-for="slot in filterSlots($slots, 'dtable.')" :slot="slot">
+      <template v-for="slot in nameSpacedSlots($slots, 'dtable.')" :slot="slot">
         <slot :name="`dtable.${slot}`"></slot>
       </template>
       <template
-        v-for="slot in filterSlots($scopedSlots, 'dtable.')"
+        v-for="slot in nameSpacedSlots($scopedSlots, 'dtable.')"
         v-slot:[slot]="props"
       >
         <slot :name="`dtable.${slot}`" v-bind="props" />
       </template>
     </v-data-table>
     <list-quick-edit
-      v-if="shouldEdit"
+      v-if="quickModeEnabled"
       ref="editModal"
       :offline="offlineMode"
       v-bind="{ ...$attrs, value: false, crud, lookup: lookup }"
     >
-      <template v-for="slot in filterSlots($slots, 'qedit.')" :slot="slot">
+      <template v-for="slot in nameSpacedSlots($slots, 'qedit.')" :slot="slot">
         <slot :name="`qedit.${slot}`"></slot>
       </template>
-      <template v-for="slot in filterSlots($scopedSlots, 'qedit.')" v-slot:[slot]="props">
+      <template v-for="slot in nameSpacedSlots($scopedSlots, 'qedit.')" v-slot:[slot]="props">
         <slot :name="`qedit.${slot}`" v-bind="props" />
       </template>
     </list-quick-edit>
@@ -107,9 +107,9 @@ export default {
     selectAll: false,
     options: {},
     httpPaginator: {},
-    searchValue: "",
+    searchString: "",
     loadingSearch: false,
-    allSelected: false,
+    noPagination: false,
   }),
   props: {
     crud: {
@@ -157,12 +157,12 @@ export default {
     options: {
       deep: true,
       handler(options) {
-        this.allSelected = options.itemsPerPage === -1;
+        this.noPagination = options.itemsPerPage === -1;
         this.setQparams(options);
         this.serverPaginationEnabled && this.getDataFromApi(false);
       },
     },
-    allSelected() {
+    noPagination() {
       this.getDataFromApi();
     },
     data: {
@@ -231,7 +231,7 @@ export default {
           parseInt(this.$route.query.items) || this.options.itemsPerPage || 10,
         page: parseInt(this.$route.query.page) || this.options.page || 1,
       };
-      this.searchValue = this.$route.query.search;
+      this.searchString = this.$route.query.search;
     },
     getOrderParams(options) {
       const { sortBy, sortDesc, page, itemsPerPage } = options;
@@ -260,10 +260,10 @@ export default {
         }
         query.forEach((q) => params.append("fltr", q));
       });
-      if (this.searchValue && this.searchable) params.append("search", this.searchValue);
+      if (this.searchString && this.searchable) params.append("search", this.searchString);
       return params;
     },
-    editItem(item) {
+    quickAction(item) {
       this.$refs.editModal.open(item).then((r) => {
         if (!r) return;
         if (!this.offlineMode) {
@@ -304,7 +304,7 @@ export default {
         })
         .then((res) => (res ? callback(item) : null));
     },
-    filterSlots(slots, scope) {
+    nameSpacedSlots(slots, scope) {
       return Object.keys(slots)
         .filter((name) => name.startsWith(scope))
         .map((name) => name.replace(scope, ""));
@@ -312,11 +312,11 @@ export default {
     toggleSelectAll() {
       this.selectAll = !this.selectAll;
     },
-    changeSearch: debounce(function () {
+    search: debounce(function () {
       this.$router.push({
         query: {
           ...this.$route.query,
-          search: this.searchValue || undefined,
+          search: this.searchString || undefined,
         },
       });
 
@@ -354,15 +354,15 @@ export default {
         this.$attrs.headers && this.$attrs.headers.length && this.$attrs.headers[0].value
       );
     },
-    shouldEdit() {
+    quickModeEnabled() {
       return (
-        this.filterSlots(this.$slots, "qedit.body").length ||
-        this.filterSlots(this.$scopedSlots, "qedit.body").length ||
+        this.nameSpacedSlots(this.$slots, "qedit.body").length ||
+        this.nameSpacedSlots(this.$scopedSlots, "qedit.body").length ||
         (this.$attrs.editFields && this.$attrs.editFields.length)
       );
     },
     serverPaginationEnabled() {
-      return this.serverPagination && !this.allSelected && !this.offlineMode;
+      return this.serverPagination && !this.noPagination && !this.offlineMode;
     },
     offlineMode() {
       return !!this.data;
