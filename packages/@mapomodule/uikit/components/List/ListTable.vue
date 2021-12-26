@@ -28,16 +28,16 @@
             dense
             clearable
             :loading="loadingSearch"
-            style="max-width: 300px"
+            class="search-box"
           ></v-text-field>
           <v-spacer></v-spacer>
           <slot name="dtable.top.center"></slot>
           <v-spacer></v-spacer>
-          <v-btn text v-if="quickModeEnabled" @click="quickAction()">
-            <v-icon small left class="mr-2"> mdi-plus </v-icon>
-            Quick add
+          <v-btn text v-if="quickModeEnabled" class="ml-2" @click="quickAction()">
+            <v-icon small left class="d-none d-sm-block mr-2"> mdi-plus </v-icon>
+            <span class="d-none d-sm-block">Quick</span> add
           </v-btn>
-          <v-btn v-if="serverPaginationEnabled" class="ma-2" @click="getDataFromApi(false)" icon>
+          <v-btn v-if="serverPaginationEnabled" class=" mx-sm-2 ma-2 mx-0" @click="getDataFromApi(false)" icon>
             <v-icon>mdi-update</v-icon>
           </v-btn>
         </v-toolbar>
@@ -91,6 +91,22 @@
   .v-data-table__selected {
     background: none !important;
   }
+}
+.search-box{
+  max-width: 300px;
+ @media (max-width: 400px) {
+    &.v-input--is-focused{
+    position: absolute;
+    z-index: 1;
+    width: calc(100% - 32px);
+    &.theme--dark{
+      background: #272727;
+    }
+    &.theme--light{
+      background: #fff;
+    }
+  }
+ }
 }
 </style>
 
