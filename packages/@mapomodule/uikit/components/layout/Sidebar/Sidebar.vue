@@ -26,7 +26,7 @@
         <v-divider></v-divider>
       </div>
       <div class="menu_container">
-        <SidebarList />
+        <SidebarList :force-collapse="miniVariant" />
         <SidebarFooter />
       </div>
     </div>

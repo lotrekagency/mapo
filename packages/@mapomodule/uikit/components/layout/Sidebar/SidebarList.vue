@@ -7,6 +7,7 @@
       :label="item.label"
       :childrens="item.childrens"
       :icon="item.icon"
+      :force-collapse="forceCollapse"
     />
   </v-list>
 </template>
@@ -17,13 +18,19 @@ import { buildRoutes } from "../routebuilder";
 // @vuese
 export default {
   name: "SidebarList",
+  props: {
+    forceCollapse: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       defaultIcon: ({label}) => `mdi-alpha-${label[0]}-circle`.toLowerCase(),
       routes: this.routes,
     };
   },
-  mounted: function () {
+  mounted() {
     this.routes = this.buildRoutes(this.$router.options.routes.filter(route => !route.meta || !route.meta.sidebarFooter));
   },
   methods: {

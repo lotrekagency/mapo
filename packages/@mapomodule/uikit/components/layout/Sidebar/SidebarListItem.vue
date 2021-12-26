@@ -22,7 +22,7 @@
       >
     </v-list-item>
 
-    <div :style="indent" v-if="childrens.length && expanded">
+    <div :style="indent" v-if="childrens.length && expanded && !forceCollapse">
       <SidebarListItem
         class="sidebar__list__item"
         v-for="(item, i) in childrens"
@@ -77,7 +77,8 @@ export default {
     label: String,
     icon: String,
     childrens: Array,
-    depth: Number
+    depth: Number,
+    forceCollapse: Boolean
   }
 };
 </script>
