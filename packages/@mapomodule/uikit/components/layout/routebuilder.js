@@ -13,7 +13,7 @@ function buildRoutes(routes, defaultIcon) {
             .map((route) => {
                 const { meta, path, name } = route
                 const label = (route.meta && route.meta.label) || (path.split("/").pop() || "").replaceAll(':', '').replaceAll('-', ' ') || 'home'
-                const icon = (route.meta && route.meta.icon) || getDefaultIcon({ route, label }, defaultIcon)
+                const icon = route.meta && route.meta.icon !== undefined ? route.meta.icon : getDefaultIcon({ route, label }, defaultIcon)
                 return { label, icon, meta, name, link: path, relPath: path.slice(1), childrens: [] };
             }),
         defaultIcon
