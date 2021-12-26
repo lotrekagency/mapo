@@ -11,6 +11,7 @@
 |icon|-|`String`|`false`|-|
 |childrens|-|`Array`|`false`|-|
 |depth|-|`Number`|`false`|-|
+|forceCollapse|-|`Boolean`|`false`|-|
 
 <!-- @vuese:SidebarListItem:props:end -->
 
