@@ -502,6 +502,7 @@ export default {
             "title",
             { value: "description", type: "textarea" },
             "permalink",
+            { type: "seoPreview" }
           ]
         }
       ],
