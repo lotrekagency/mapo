@@ -9,6 +9,7 @@
         :label="item.label"
         :childrens="item.childrens"
         :icon="item.icon"
+        :force-collapse="forceCollapse"
       />
     </v-list>
     <v-divider></v-divider>
@@ -38,6 +39,12 @@ import { buildRoutes } from "../routebuilder";
 // @vuese
 export default {
   name: "SidebarFooter",
+  props: {
+    forceCollapse: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       defaultIcon: ({ label }) => `mdi-alpha-${label[0]}-box`.toLowerCase(),

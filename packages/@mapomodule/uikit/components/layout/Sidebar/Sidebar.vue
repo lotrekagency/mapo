@@ -27,7 +27,7 @@
       </div>
       <div class="menu_container">
         <SidebarList :force-collapse="miniVariant" />
-        <SidebarFooter />
+        <SidebarFooter :force-collapse="miniVariant" />
       </div>
     </div>
   </v-navigation-drawer>

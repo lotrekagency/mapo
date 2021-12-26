@@ -27,6 +27,7 @@
         class="sidebar__list__item"
         v-for="(item, i) in childrens"
         :key="i"
+        :force-collapse="forceCollapse"
         :link="item.link"
         :label="item.label"
         :childrens="item.childrens"
