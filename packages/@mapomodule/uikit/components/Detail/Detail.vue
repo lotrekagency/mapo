@@ -16,7 +16,7 @@
           <slot name="body.lang" v-bind="slotBindings">
             <!-- [`DetailLangSwitch`](/components/detail/DetailLangSwitch/)  -->
             <DetailLangSwitch
-              v-if="langs && langs.length"
+              v-if="langs && langs.length > 1"
               class="mb-4"
               v-model="currentLang"
               :langs="langs"
