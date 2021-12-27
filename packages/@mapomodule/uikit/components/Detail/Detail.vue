@@ -39,30 +39,32 @@
                     <v-icon left> {{ field.group.icon }} </v-icon>
                     <span>{{ field.group.name }}</span>
                   </v-card-title>
-                  <v-card-text class="row">
-                    <div
-                      v-for="(fields, fieldsI) in field.fields"
-                      :key="fieldsI"
-                      class="col-12"
-                      :class="fields.class"
-                    >
-                      <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
-                      <slot
-                        :name="fields.slotName"
-                        v-bind="{
-                          conf: fields,
-                          ...slotBindings,
-                        }"
+                  <div class="container">
+                    <div class="row">
+                      <div
+                        v-for="(fields, fieldsI) in field.fields"
+                        :key="fieldsI"
+                        class="col-12"
+                        :class="fields.class"
                       >
-                        <!-- A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
-                        <DetailField
-                          v-model="model"
-                          :conf="fields"
-                          :errors="errors"
-                        />
-                      </slot>
+                        <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
+                        <slot
+                          :name="fields.slotName"
+                          v-bind="{
+                            conf: fields,
+                            ...slotBindings,
+                          }"
+                        >
+                          <!-- A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
+                          <DetailField
+                            v-model="model"
+                            :conf="fields"
+                            :errors="errors"
+                          />
+                        </slot>
+                      </div>
                     </div>
-                  </v-card-text>
+                  </div>
                 </v-card>
                 <slot
                   v-else
@@ -138,29 +140,31 @@
                     <v-icon left> {{ field.group.icon }} </v-icon>
                     <span>{{ field.group.name }}</span>
                   </v-card-title>
-                  <v-card-text class="row">
-                    <div
-                      v-for="(fields, fieldsI) in field.fields"
-                      :key="fieldsI"
-                      class="col-12"
-                      :class="field.class"
-                    >
-                      <!-- @vuese-ignore -->
-                      <slot
-                        :name="fields.slotName"
-                        v-bind="{
-                          conf: fields,
-                          ...slotBindings,
-                        }"
+                  <div class="container">
+                    <div class="row">
+                      <div
+                        v-for="(fields, fieldsI) in field.fields"
+                        :key="fieldsI"
+                        class="col-12"
+                        :class="field.class"
                       >
-                        <DetailField
-                          v-model="model"
-                          :conf="fields"
-                          :errors="errors"
-                        />
-                      </slot>
+                        <!-- @vuese-ignore -->
+                        <slot
+                          :name="fields.slotName"
+                          v-bind="{
+                            conf: fields,
+                            ...slotBindings,
+                          }"
+                        >
+                          <DetailField
+                            v-model="model"
+                            :conf="fields"
+                            :errors="errors"
+                          />
+                        </slot>
+                      </div>
                     </div>
-                  </v-card-text>
+                  </div>
                 </v-card>
                 <slot
                   v-else
