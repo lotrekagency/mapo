@@ -28,7 +28,7 @@
             dense
             clearable
             :loading="loadingSearch"
-            class="search-box"
+            class="search-input"
           ></v-text-field>
           <v-spacer></v-spacer>
           <slot name="dtable.top.center"></slot>
@@ -86,13 +86,13 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .mapo__listtable__all_selected {
   .v-data-table__selected {
     background: none !important;
   }
 }
-.search-box{
+.search-input{
   max-width: 300px;
  @media (max-width: 400px) {
     &.v-input--is-focused{
