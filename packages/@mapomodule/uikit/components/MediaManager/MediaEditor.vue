@@ -158,6 +158,7 @@ table tr td:nth-child(2) {
     top: 10px;
     left: 10px;
     color: #333333 !important;
+    background: #e0e0e096;
   }
 }
 </style>
