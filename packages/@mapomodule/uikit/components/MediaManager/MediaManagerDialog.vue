@@ -1,18 +1,17 @@
 <template>
   <div>
     <slot v-bind="{ on, attrs }" name="activator"></slot>
-    <v-dialog v-model="dialog" width="800">
-      <v-card>
-        <MediaManager
+    <v-dialog v-model="dialog" width="800" scrollable>
+        <media-manager
           @selectionChange="selectionChange($event)"
           v-bind="{ select, noFolders }"
           elevation="0"
-        />
-        <v-card-actions v-if="select == 'multi'">
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="done">done</v-btn>
-        </v-card-actions>
-      </v-card>
+        >
+          <template v-slot:actions>
+            <v-spacer></v-spacer>
+            <v-btn v-if="select == 'multi'" color="primary" text @click="done">done</v-btn>
+          </template>
+        </media-manager>
     </v-dialog>
   </div>
 </template>

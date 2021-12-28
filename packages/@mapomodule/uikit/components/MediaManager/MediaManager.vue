@@ -1,6 +1,6 @@
 <template>
   <v-card elevation="0">
-    <div class="d-flex flex-wrap-reverse">
+    <v-card-title class="d-flex flex-wrap-reverse pa-0">
       <div>
         <v-tabs v-model="tab" right background-color="transparent">
           <v-tab>Gallery</v-tab>
@@ -11,8 +11,8 @@
       <v-btn class="ma-2" @click="getRoot" icon>
         <v-icon>mdi-update</v-icon>
       </v-btn>
-    </div>
-    <div>
+    </v-card-title>
+    <v-card-text class="pa-0">
       <MediaFolders
         v-if="!noFolders"
         v-bind="{ folders, parentFolders, loading }"
@@ -48,7 +48,11 @@
           />
         </v-tab-item>
       </v-tabs-items>
-    </div>
+    </v-card-text>
+    <v-card-actions>
+      <!-- Slot to provide custom button actions inside the media manager -->
+      <slot name="actions"></slot>
+    </v-card-actions>
   </v-card>
 </template>
 

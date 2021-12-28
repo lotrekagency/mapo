@@ -36,11 +36,11 @@
       <h4 class="text-truncate mt-2">{{ fileName }}</h4>
       <div class="dialog">
         <div class="dialog__container">
-          <v-card flat tile class="dialog__content"
+          <v-card flat tile class="dialog__content overflow-y-auto"
             :class="{ 'py-0': !editing }"
-            :max-height="editing ? '425px' : '0px'"
+            :max-height="editing ? height : '0px'"
           >
-            <v-card-text class="overflow-y-auto flex-grow-0">
+            <v-card-text class="flex-grow-0">
               <v-row class="flex-md-row-reverse">
                 <v-col md="6" cols="12" class="info-media">
                   <table class="text-caption fill-height pb-md-10">
@@ -149,7 +149,6 @@ table tr td:nth-child(2) {
     width: 100%;
   }
   &__content {
-    overflow-y: hidden;
     transition-property: max-height, padding;
     transition-duration: 0.3s;
     transition-timing-function: ease-out;
@@ -211,7 +210,13 @@ export default {
         transform: this.editing ? "rotate(180deg)" : "rotate(0deg)",
         transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
       };
-    }
+    },
+    height () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return '50vh'
+        default: return 425
+      }
+    },
   },
   watch: {
     value(val) {
