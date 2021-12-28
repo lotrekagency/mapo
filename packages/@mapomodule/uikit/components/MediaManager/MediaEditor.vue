@@ -1,20 +1,18 @@
 <template>
   <div v-if="media">
-    <div class="d-flex align-center justify-space-between">
-      <v-btn class="ma-2" @click="close" icon>
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-      <span class="subtitle-2">{{ fileName }}</span>
-      <div></div>
-    </div>
-    <v-container class="px-6">
+    <v-container class="px-md-6">
+      <div class="backbutton">
+        <v-btn class="backbutton__button" small @click="close" icon>
+          <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+      </div>
       <v-img
         :src="media.file"
         :lazy-src="media.thumbnail"
-        max-height="300"
+        height="400"
         contain
         aspect-ratio="1"
-        class="grey lighten-2 mb-4 elevation-2"
+        class="grey lighten-2 elevation-2"
       >
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">
@@ -25,86 +23,142 @@
           </v-row>
         </template>
       </v-img>
-      <v-row class="flex-md-row-reverse">
-        <v-col md="6" cols="12" class="info-media">
-          <table class="text-caption fill-height pb-md-10">
-            <tr>
-              <td class="pr-3"><b>Filename:</b></td>
-              <td>{{ fileName }}</td>
-            </tr>
-            <tr>
-              <td class="pr-3"><b>Extension:</b></td>
-              <td>{{ extension }}</td>
-            </tr>
-            <tr>
-              <td class="pr-3"><b>Created:</b></td>
-              <td>{{ dateCreated }}</td>
-            </tr>
-            <tr>
-              <td class="pr-3"><b>Size:</b></td>
-              <td>{{ fileSize }}</td>
-            </tr>
-            <tr>
-              <td class="pr-3"><b>Url:</b></td>
-              <td>
-                <a :href="media.file" target="_blank">{{ media.file }}</a>
-              </td>
-            </tr>
-            <tr>
-              <td class="pr-3"><b>Linked models:</b></td>
-              <td>{{ media.liks }}</td>
-            </tr>
-          </table>
-        </v-col>
-        <v-col md="6" cols="12">
-          <v-row>
-            <v-col sm="6" md="12" cols="12">
-              <v-text-field
-                dense
-                v-model="media.name"
-                label="Name"
-              ></v-text-field>
-            </v-col>
-            <v-col sm="6" md="12" cols="12">
-              <v-text-field
-                dense
-                v-model="media.title"
-                label="Title"
-              ></v-text-field>
-            </v-col>
-            <v-col sm="6" md="12" cols="12">
-              <v-text-field
-                dense
-                v-model="media.description"
-                label="Description"
-              ></v-text-field>
-            </v-col>
-            <v-col sm="6" md="12" cols="12">
-              <v-text-field
-                dense
-                v-model="media.alt_text"
-                label="Alt name"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <div class="d-flex justify-end">
-            <v-btn text color="primary" @click="saveMedia">
-              <v-icon left> mdi-upload </v-icon>
+      <v-overlay
+        absolute
+        v-model="editing"
+        @click="editing = false"
+      ></v-overlay>
+      <h4 class="text-truncate mt-2">{{ fileName }}</h4>
+      <div class="dialog">
+        <div class="dialog__container">
+          <v-card flat tile class="dialog__content"
+            :class="{ 'py-0': !editing }"
+            :max-height="editing ? '425px' : '0px'"
+          >
+            <v-card-text class="overflow-y-auto flex-grow-0">
+              <v-row class="flex-md-row-reverse">
+                <v-col md="6" cols="12" class="info-media">
+                  <table class="text-caption fill-height pb-md-10">
+                    <tr>
+                      <td class="pr-3"><b>Filename:</b></td>
+                      <td>{{ fileName }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-3"><b>Extension:</b></td>
+                      <td>{{ extension }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-3"><b>Created:</b></td>
+                      <td>{{ dateCreated }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-3"><b>Size:</b></td>
+                      <td>{{ fileSize }}</td>
+                    </tr>
+                    <tr>
+                      <td class="pr-3"><b>Url:</b></td>
+                      <td>
+                        <a :href="media.file" target="_blank">{{ media.file }}</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="pr-3"><b>Linked models:</b></td>
+                      <td>{{ media.liks }}</td>
+                    </tr>
+                  </table>
+                </v-col>
+                <v-col md="6" cols="12">
+                  <v-row>
+                    <v-col sm="6" md="12" cols="12">
+                      <v-text-field
+                        dense
+                        v-model="media.name"
+                        label="Name"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="6" md="12" cols="12">
+                      <v-text-field
+                        dense
+                        v-model="media.title"
+                        label="Title"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="6" md="12" cols="12">
+                      <v-text-field
+                        dense
+                        v-model="media.description"
+                        label="Description"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col sm="6" md="12" cols="12">
+                      <v-text-field
+                        dense
+                        v-model="media.alt_text"
+                        label="Alt name"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+          <v-btn
+            tile
+            depressed
+            width="100%"
+            :class="{ 'pr-0': editing }"
+            @click="editing = !editing"
+          >
+            <span>Edit</span>
+            <v-icon :style="rotate">mdi-chevron-up</v-icon>
+            <v-spacer v-if="editing"></v-spacer>
+            <v-btn v-if="editing" text tile color="primary" @click="saveMedia">
               save
             </v-btn>
-            <v-btn text color="error" @click="deleteMedia">
-              <v-icon left> mdi-delete </v-icon>
+            <v-btn
+              v-if="editing"
+              text
+              tile
+              color="error"
+              @click.stop="deleteMedia"
+            >
               delete
             </v-btn>
-          </div>
-        </v-col>
-      </v-row>
+          </v-btn>
+        </div>
+      </div>
     </v-container>
   </div>
 </template>
 <style lang="scss" scoped>
 table tr td:nth-child(2) {
   overflow-wrap: anywhere;
+}
+.dialog {
+  position: relative;
+  height: 56px;
+  z-index: 6;
+  &__container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  &__content {
+    overflow-y: hidden;
+    transition-property: max-height, padding;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-out;
+  }
+}
+.backbutton {
+  position: relative;
+  &__button {
+    position: absolute;
+    z-index: 1;
+    top: 10px;
+    left: 10px;
+    color: #333333 !important;
+  }
 }
 </style>
 <script>
@@ -114,7 +168,8 @@ export default {
   name: "MediaEditor",
   data() {
     return {
-      media: null
+      media: null,
+      editing: false
     };
   },
   props: {
@@ -135,11 +190,18 @@ export default {
     },
     fileName() {
       return this.media && this.media.file && this.media.file.split("/").pop();
+    },
+    rotate() {
+      return {
+        transform: this.editing ? "rotate(180deg)" : "rotate(0deg)",
+        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
+      };
     }
   },
   watch: {
     value(val) {
       this.media = val;
+      this.editing = false;
     }
   },
   methods: {

@@ -1,6 +1,7 @@
 <template>
   <div class="fill-height">
-    <div class="d-flex align-center">
+    <MediaManager elevation="0" class="transparent" />
+    <div class="btn__container">
       <media-manager-dialog
         v-model="dialog"
         :dark="darkTheme"
@@ -8,23 +9,26 @@
         select="multi"
       >
         <template v-slot:activator="{ on, attrs }">
-          <v-btn color="red lighten-2 mb-4" dark v-bind="attrs" v-on="on">
+          <v-btn color="red lighten-2 mb-4" v-bind="attrs" v-on="on">
             Open media dialog
           </v-btn>
         </template>
       </media-manager-dialog>
-      <v-spacer></v-spacer>
-      <v-switch
-        v-model="darkTheme"
-        :label="`Dialog dark theme: ${darkTheme.toString()}`"
-        light
-        inset
-      ></v-switch>
     </div>
-
-    <MediaManager elevation="0" class="transparent" />
   </div>
 </template>
+
+<style lang="scss" scoped>
+.btn__container{
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 36px;
+}
+</style>
+
 <script>
 export default {
   data() {

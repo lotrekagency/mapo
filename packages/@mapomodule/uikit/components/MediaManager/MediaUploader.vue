@@ -2,12 +2,14 @@
   <v-container>
     <drop-area @change="updateMediaList($event)" multiple>
       <template v-slot:actions="{ clearList }">
-        <v-btn @click="clearList" icon>
-          <v-icon ref="closeButton">mdi-close</v-icon>
-        </v-btn>
-        <v-btn @click="updateAll" icon>
-          <v-icon>mdi-upload</v-icon>
-        </v-btn>
+        <div v-if="mediaList && mediaList.length">
+          <v-btn @click="clearList" icon>
+            <v-icon ref="closeButton">mdi-close</v-icon>
+          </v-btn>
+          <v-btn @click="updateAll" icon>
+            <v-icon>mdi-upload</v-icon>
+          </v-btn>
+        </div>
       </template>
       <template v-slot:editContent="{ editedItem }">
         <v-container>
@@ -62,17 +64,17 @@ export default {
       count: 0,
       progress: 0,
       mediaList: [],
-      _mediaFileCrud: null,
+      _mediaFileCrud: null
     };
   },
   props: {
     parentFolder: {
-      type: Object,
+      type: Object
     },
     folders: {
       type: Array,
-      default: () => [],
-    },
+      default: () => []
+    }
   },
   computed: {
     mediaFileCrud() {
@@ -88,19 +90,19 @@ export default {
       return [
         {
           text: (this.parentFolder && this.parentFolder.path) || "/",
-          value: (this.parentFolder && this.parentFolder.id) || null,
+          value: (this.parentFolder && this.parentFolder.id) || null
         },
-        ...this.folders.map((folder) => ({
+        ...this.folders.map(folder => ({
           text: folder.path,
-          value: folder.id,
-        })),
+          value: folder.id
+        }))
       ];
-    },
+    }
   },
   methods: {
     updateMediaList(mediaList) {
       this.mediaList = mediaList;
-      this.mediaList.forEach((media) => {
+      this.mediaList.forEach(media => {
         media.info.title = media.info.title || media.info.name;
         media.info.alt_text = media.info.alt_text || media.info.name;
         media.info.description = media.info.description || media.info.name;
@@ -114,7 +116,7 @@ export default {
     },
     updateAll() {
       return Promise.all(
-        this.mediaList.map((media) =>
+        this.mediaList.map(media =>
           this.uploadMedia(
             Object.assign(
               { file: media.blob },
@@ -122,27 +124,28 @@ export default {
                 title: media.info.title,
                 alt_text: media.info.alt_text,
                 description: media.info.description,
-                folder: media.info.folder,
+                folder: media.info.folder
               }
             )
           )
         )
-      ).then((response) => {
-        this.$mapo.$snack.open({
-          message: `${
-            response.length || this.mediaList.length
-          } files succesfully uploaded`,
-        });
-        this.$emit("Upload", (response.length && response) || this.mediaList);
-        this.$refs.closeButton.$el.click();
+      ).then(response => {
+        if (this.mediaList && this.mediaList.length) {
+          this.$mapo.$snack.open({
+            message: `${response.length ||
+              this.mediaList.length} files succesfully uploaded`
+          });
+          this.$emit("Upload", (response.length && response) || this.mediaList);
+          this.$refs.closeButton.$el.click();
+        }
       });
     },
     uploadMedia(media) {
-      const index = this.mediaList.findIndex((el) => el.blob === media.file);
+      const index = this.mediaList.findIndex(el => el.blob === media.file);
       const payload = this.$mapo.$api.multipart(media, ["file"]);
       const conf = {
         headers: { "Content-Type": "multipart/form-data" },
-        onUploadProgress: function (event) {
+        onUploadProgress: function(event) {
           this.mediaList[index].progress = Math.ceil(
             (event.loaded / event.total) * 100
           );
@@ -153,10 +156,10 @@ export default {
             (acc, media) => acc + (media.progress === 100),
             0
           );
-        }.bind(this),
+        }.bind(this)
       };
       return this.mediaFileCrud.create(payload, conf);
-    },
-  },
+    }
+  }
 };
 </script>

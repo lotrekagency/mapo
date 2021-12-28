@@ -1,6 +1,18 @@
 <template>
   <div>
     <v-card-actions class="flex-wrap">
+      <div v-if="parentFolder" class="h-100">
+        <v-btn
+          class="px-2"
+          tile
+          block
+          text
+          depressed
+          @click="goToFolder(updirFolder)"
+        >
+          <v-icon> mdi-arrow-left </v-icon>
+        </v-btn>
+      </div>
       <div
         v-for="folder in folders"
         :key="folder.id"
@@ -12,7 +24,7 @@
           </v-icon>
 
           <div>
-            <div class="d-flex" :style="hideSlug">
+            <div class="d-flex justify-item-center" :style="hideSlug">
               <span class="folder_slug">
                 {{ folder.slug }}
               </span>
@@ -61,6 +73,23 @@
         </v-tooltip>
       </div>
     </v-card-actions>
+    <v-progress-linear
+      :active="loading"
+      indeterminate
+      height="2"
+    ></v-progress-linear>
+
+    <v-divider></v-divider>
+    <div v-if="parentFolders && parentFolders.length">
+      <span class="mx-2 mt-1 d-flex align-center">
+        <span class="mb-1">
+          <v-icon @click="goToFolder()" small>mdi-home</v-icon></span
+        >
+        <span v-for="(f, i) in parentFolders" :key="i"
+          >/<a class="fpath__button" @click="goToFolder(f)">{{ f.slug }}</a>
+        </span>
+      </span>
+    </div>
     <v-dialog v-model="dialog" max-width="300px">
       <v-card>
         <v-card-title>
@@ -101,6 +130,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.fpath__button {
+  &:hover {
+    text-decoration: underline;
+  }
+}
 </style>
 
 <script>
@@ -119,31 +153,15 @@ export default {
       ]
     };
   },
-  computed: {
-    rotate() {
-      return {
-        transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
-        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
-      };
-    },
-    hideSlug() {
-      return {
-        maxWidth: this.expanded ? "105px" : "50px",
-        maxHeight: this.expanded ? "24px" : "18px",
-        opacity: this.expanded ? 0.8 : 0.8,
-        transform: this.expanded ? "scale(1)" : "scale(0.7)",
-        transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
-      };
-    }
-  },
   props: {
+    loading: Boolean,
     folders: {
       type: Array,
       default: () => []
     },
-    parentFolder: {
-      type: Object,
-      default: () => ({})
+    parentFolders: {
+      type: Array,
+      default: () => []
     }
   },
   methods: {
@@ -173,6 +191,39 @@ export default {
     closeEdit() {
       this.dialog = false;
       this.folderEdit = {};
+    }
+  },
+  computed: {
+    rotate() {
+      return {
+        transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
+        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
+      };
+    },
+    hideSlug() {
+      return {
+        maxWidth: this.expanded ? "105px" : "50px",
+        maxHeight: this.expanded ? "24px" : "18px",
+        opacity: this.expanded ? 0.8 : 0.8,
+        transform: this.expanded ? "scale(1)" : "scale(0.7)",
+        transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
+      };
+    },
+    parentFolder() {
+      return (
+        (this.parentFolders &&
+          this.parentFolders.length > 0 &&
+          this.parentFolders[this.parentFolders.length - 1]) ||
+        null
+      );
+    },
+    updirFolder() {
+      return (
+        (this.parentFolders &&
+          this.parentFolders.length > 1 &&
+          this.parentFolders[this.parentFolders.length - 2]) ||
+        null
+      );
     }
   }
 };

@@ -69,7 +69,7 @@
       <!-- Slot to provide custom button actions inside the drop area -->
       <slot v-bind:clearList="clearList" name="actions">
         <!-- `<v-btn @click="clearList" icon><v-icon>mdi-close</v-icon></v-btn>` -->
-        <v-btn @click="clearList" icon>
+        <v-btn v-if="uploadedFiles && uploadedFiles.length" @click="clearList" icon>
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </slot>

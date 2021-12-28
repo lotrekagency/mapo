@@ -1,35 +1,21 @@
 <template>
-  <v-card v-bind="{ light, dark, elevation }">
-    <div v-if="!editMedia" class="d-flex">
-      <div class="d-flex">
-        <v-btn class="ma-2" @click="getRoot" icon>
-          <v-icon>mdi-update</v-icon>
-        </v-btn>
-        <v-btn
-          v-if="parentFolder"
-          class="ma-2"
-          @click="getRoot({ folder: { id: parentFolder.updir } })"
-          icon
-        >
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-        <span class="ma-2 d-flex align-center">{{
-          parentFolder ? parentFolder.path : "/"
-        }}</span>
-      </div>
-      <v-spacer></v-spacer>
+  <v-card elevation="0">
+    <div class="d-flex flex-wrap-reverse">
       <div>
         <v-tabs v-model="tab" right background-color="transparent">
           <v-tab>Gallery</v-tab>
           <v-tab>Uploader</v-tab>
         </v-tabs>
       </div>
+      <v-spacer></v-spacer>
+      <v-btn class="ma-2" @click="getRoot" icon>
+        <v-icon>mdi-update</v-icon>
+      </v-btn>
     </div>
-
-    <div v-if="!editMedia">
+    <div>
       <MediaFolders
         v-if="!noFolders"
-        v-bind="{ folders, parentFolder }"
+        v-bind="{ folders, parentFolders, loading }"
         @updateFolder="updateOrCreateFolder($event)"
         @deleteFolder="deleteFolder($event)"
         @goToFolder="
@@ -37,52 +23,50 @@
           getRoot();
         "
       />
-      <v-divider v-if="!noFolders" class="mb-4"></v-divider>
-
       <v-tabs-items v-model="tab" class="transparent">
         <v-tab-item>
           <MediaGallery
+            v-if="!editMedia"
             v-bind="{ select, page, pages, medias }"
             @selectionChange="selectionChange($event)"
             @pageChange="getRoot({ page: $event })"
             @editMedia="openEditor($event)"
           />
+          <MediaEditor
+            v-model="editMedia"
+            @deleteMedia="deleteMedia($event)"
+            @updateMedia="updateMedia($event)"
+          />
         </v-tab-item>
         <v-tab-item>
           <MediaUploader
             v-bind="{ folders, parentFolder }"
-            @Upload="getRoot({ page: 1 })"
+            @Upload="
+              tab = 0;
+              getRoot({ page: 1 });
+            "
           />
         </v-tab-item>
       </v-tabs-items>
     </div>
-    <MediaEditor
-      v-model="editMedia"
-      @deleteMedia="deleteMedia($event)"
-      @updateMedia="updateMedia($event)"
-    />
   </v-card>
 </template>
 
-<style lang="scss" scoped>
-</style>
-
 <script>
-import MediaFolders from './MediaFolders.vue';
 export default {
   name: "MediaManager",
-  components: { MediaFolders },
   data() {
     return {
       _mediaFolderCrud: null,
       _mediaFileCrud: null,
       medias: [],
       folders: [],
-      parentFolder: null,
+      parentFolders: [],
       page: 1,
       pages: 1,
-      tab: null,
+      tab: 0,
       editMedia: null,
+      loading: false
     };
   },
   props: {
@@ -91,23 +75,11 @@ export default {
       default: "none",
       validator(val) {
         return ["none", "single", "multi"].indexOf(val) !== -1;
-      },
+      }
     },
     noFolders: {
       type: Boolean,
-      default: false,
-    },
-    light: {
-      type: Boolean,
-      default: false,
-    },
-    dark: {
-      type: Boolean,
-      default: false,
-    },
-    elevation: {
-      type: Number | String,
-      default: undefined,
+      default: false
     },
   },
   computed: {
@@ -122,9 +94,34 @@ export default {
         this._mediaFileCrud || this.$mapo.$api.crud("api/camomilla/media");
       return this._mediaFileCrud;
     },
+    parentFolder: {
+      get() {
+        return (
+          (this.parentFolders.length &&
+            this.parentFolders[this.parentFolders.length - 1]) ||
+          null
+        );
+      },
+      set(val) {
+        if (!val || !val.path) {
+          this.parentFolders = [];
+        } else {
+          const index = this.parentFolders.findIndex(f => f.path == val.path);
+          if (index == -1) {
+            this.parentFolders.push(val);
+          } else {
+            this.parentFolders.splice(
+              index + 1,
+              this.parentFolders.length - (index + 1)
+            );
+          }
+        }
+      }
+    }
   },
   methods: {
-    getRoot: async function (context) {
+    async getRoot(context) {
+      this.loading = true
       const { page, folder } = context || {};
       const { id } = folder || this.parentFolder || {};
       let response;
@@ -132,12 +129,14 @@ export default {
       const params = { page: this.page };
       if (id) {
         response = await this.mediaFolderCrud.detail(id, {
-          params,
+          params
         });
       } else {
         response = await this.mediaFolderCrud.list({ params });
       }
       this.processResponse(response);
+      this.loading = false
+      this.editMedia = null
     },
 
     updateOrCreateFolder(folder) {
@@ -168,7 +167,7 @@ export default {
         .partialUpdate(media.id, payload, conf)
         .then(() =>
           this.$mapo.$snack.open({
-            message: "file info succesfully updated.",
+            message: "file info succesfully updated."
           })
         );
     },
@@ -184,10 +183,10 @@ export default {
     },
     async openEditor(event) {
       this.editMedia = await this.detailMedia(event.id);
-    },
+    }
   },
   async fetch() {
     await this.getRoot();
-  },
+  }
 };
 </script>
