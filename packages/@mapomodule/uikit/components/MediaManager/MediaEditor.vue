@@ -1,9 +1,12 @@
 <template>
   <div v-if="media">
     <v-container class="px-md-6">
-      <div class="backbutton">
-        <v-btn class="backbutton__button" small @click="close" icon>
+      <div class="img_overlay">
+        <v-btn class="img_overlay__button img_overlay__button--back" small icon @click="close">
           <v-icon>mdi-arrow-left</v-icon>
+        </v-btn>
+        <v-btn class="img_overlay__button img_overlay__button--href" small icon :href="media.file" target="_blank" >
+          <v-icon>mdi-open-in-new</v-icon>
         </v-btn>
       </div>
       <v-img
@@ -150,15 +153,20 @@ table tr td:nth-child(2) {
     transition-timing-function: ease-out;
   }
 }
-.backbutton {
+.img_overlay {
   position: relative;
   &__button {
     position: absolute;
     z-index: 1;
-    top: 10px;
-    left: 10px;
     color: #333333 !important;
     background: #e0e0e096;
+    top: 10px;
+    &--back{
+      left: 10px;
+    }
+    &--href{
+      right: 10px;
+    }
   }
 }
 </style>
