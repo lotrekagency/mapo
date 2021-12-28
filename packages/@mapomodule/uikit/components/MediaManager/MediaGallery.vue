@@ -1,6 +1,6 @@
 <template>
   <div class="pa-4">
-    <v-row v-if="selection.length" class="selection mb-4 mx-1">
+    <v-row v-if="selection.length" class="selection mb-4 grey darken-2">
       <v-col
         v-for="media in selection"
         :key="media.file"
@@ -14,14 +14,16 @@
           :src="media.file"
           :lazy-src="media.thumbnail"
           aspect-ratio="1"
-          class="grey lighten-2 elevation-4 selection__item"
+          class="grey lighten-2 elevation-4 cursor-pointer selection__item"
         >
           <template v-slot:placeholder>
             <v-row class="fill-height ma-0" align="center" justify="center">
               <v-progress-circular
+              v-if="media.is_image"
                 indeterminate
                 color="grey lighten-5"
               ></v-progress-circular>
+              <v-icon v-else size="20px" color="grey">mdi-file</v-icon>
             </v-row>
           </template>
         </v-img>
@@ -112,9 +114,7 @@
   }
 }
 .selection {
-  border-radius: 5px;
-  background: #79797908;
-  box-shadow: inset 5px 5px 18px #151515, inset -5px -5px 18px #151515;
+  margin: -16px;
   &__confirm {
     margin: auto 0 auto auto;
     display: flex;
@@ -132,6 +132,7 @@
     height: 100%;
     background: #00000082;
     border: solid #ffffff6e 2px;
+    color: white;
   }
 }
 .selected {
@@ -142,9 +143,6 @@
     width: 100%;
     height: 100%;
   }
-}
-.theme--light .selection {
-  box-shadow: inset 5px 5px 10px #e3e3e3, inset -5px -5px 10px #e3e3e3;
 }
 </style>
 
