@@ -10,8 +10,8 @@
         </v-btn>
       </div>
       <v-img
-        :src="media.file"
-        :lazy-src="media.thumbnail"
+        :src="media.is_image && media.file || null"
+        :lazy-src="media.is_image && media.thumbnail || null"
         height="400"
         contain
         aspect-ratio="1"

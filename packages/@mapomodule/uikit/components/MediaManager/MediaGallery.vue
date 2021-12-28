@@ -11,8 +11,8 @@
         @click.stop="selectMedia(media)"
       >
         <v-img
-          :src="media.file"
-          :lazy-src="media.thumbnail"
+          :src="media.is_image && media.file || null"
+          :lazy-src="media.is_image && media.thumbnail || null"
           aspect-ratio="1"
           class="grey lighten-2 elevation-4 cursor-pointer selection__item"
         >
@@ -61,8 +61,8 @@
         </v-btn>
 
         <v-img
-          :src="media.file"
-          :lazy-src="media.thumbnail"
+          :src="media.is_image && media.file || null"
+          :lazy-src="media.is_image && media.thumbnail || null"
           aspect-ratio="1"
           class="grey lighten-2 elevation-4 cursor-pointer"
           :class="{ selected: isSelected(media)}"

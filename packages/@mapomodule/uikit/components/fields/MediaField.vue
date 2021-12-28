@@ -12,8 +12,8 @@
       <div style="position: relative">
         <v-img
           v-if="mediaExists"
-          :src="internalValue.file"
-          :lazy-src="internalValue.thumbnail"
+          :src="internalValue.is_image && internalValue.file || null"
+          :lazy-src="internalValue.is_image && internalValue.thumbnail || null"
           :class="{'grey lighten-2 rounded': !internalValue.is_image}"
           v-bind="{
             aspectRatio,
