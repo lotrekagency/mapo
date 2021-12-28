@@ -13,7 +13,7 @@
       </span>
     </div>
     <v-card-actions class="flex-wrap">
-      <div v-if="parentFolder" class="h-100">
+      <div v-if="parentFolder" class="d-none d-sm-block">
         <v-btn
           class="px-2"
           tile
@@ -28,9 +28,10 @@
       <div
         v-for="folder in folders"
         :key="folder.id"
-        class="d-flex child-flex mx-2"
+        class="d-flex child-flex"
+        :class="{ 'mx-2': expanded }"
       >
-        <div>
+        <div class="folder_grid d-flex flex-column" :class="{ expanded }">
           <v-icon @click.stop="goToFolder(folder)" :size="expanded ? 100 : 40">
             mdi-folder
           </v-icon>
@@ -38,20 +39,18 @@
           <div>
             <div class="d-flex justify-item-center" :style="hideSlug">
               <span class="folder_slug">
-                {{ folder.slug }}
+                {{ folder.title }}
               </span>
               <v-icon
-                v-if="expanded"
                 size="20"
-                class="ma-0 ml-auto"
+                class="folder_grid__editicon ma-0 ml-auto"
                 @click.stop="createFolder(folder)"
                 >mdi-pencil</v-icon
               >
               <v-icon
                 size="20"
-                class="ma-0"
+                class="folder_grid__editicon ma-0"
                 @click.stop="deleteFolder(folder)"
-                v-if="expanded"
                 >mdi-delete</v-icon
               >
             </div>
@@ -106,10 +105,6 @@
                   v-model="folderEdit.title"
                   label="Folder name"
                 ></v-text-field>
-                <v-text-field
-                  v-model="folderEdit.slug"
-                  label="Folder slug"
-                ></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -125,13 +120,30 @@
   </div>
 </template>
 <style lang="scss" scoped>
-.folder_slug {
-  width: 65px;
-  display: inline-block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.folder_grid {
+  .folder_slug {
+    width: 65px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    line-height: 20px;
+  }
+  &__editicon {
+    display: none;
+  }
+  &.expanded {
+    .folder_slug {
+      text-align: left;
+      padding-left: 5px;
+    }
+    .folder_grid__editicon {
+      display: block;
+    }
+  }
 }
+
 .fpath__button {
   padding-left: 7px;
   color: grey;
@@ -195,12 +207,23 @@ export default {
         .then(res => res && this.$emit("deleteFolder", folder));
     },
     saveFolder() {
+      this.folderEdit.slug = this.slugify(this.folderEdit.title);
       this.$emit("updateFolder", this.folderEdit);
       this.closeEdit();
     },
     closeEdit() {
       this.dialog = false;
       this.folderEdit = {};
+    },
+    slugify(text) {
+      return text
+        .toString()
+        .toLowerCase()
+        .replace(/\s+/g, "-") // Replace spaces with -
+        .replace(/[^\w\-]+/g, "") // Remove all non-word chars
+        .replace(/\-\-+/g, "-") // Replace multiple - with single -
+        .replace(/^-+/, "") // Trim - from start of text
+        .replace(/-+$/, ""); // Trim - from end of text
     }
   },
   computed: {
