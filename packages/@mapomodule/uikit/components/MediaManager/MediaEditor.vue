@@ -20,9 +20,11 @@
         <template v-slot:placeholder>
           <v-row class="fill-height ma-0" align="center" justify="center">
             <v-progress-circular
+              v-if="media.is_image"
               indeterminate
               color="grey lighten-5"
             ></v-progress-circular>
+            <v-icon v-else size="70px" color="grey">mdi-file</v-icon>
           </v-row>
         </template>
       </v-img>
