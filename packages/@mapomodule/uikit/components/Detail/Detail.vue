@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <div>
     <!-- Use this to override the title of the detail component. -->
     <slot name="title" v-bind="slotBindings">
       <!-- `<h1> "Create | Edit" + modelName </h1>` -->
@@ -184,7 +184,7 @@
         </v-col>
       </v-row>
     </v-form>
-  </v-container>
+  </div>
 </template>
 
 
