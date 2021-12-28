@@ -6,8 +6,9 @@
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
+|loading|-|`Boolean`|`false`|-|
 |folders|-|`Array`|`false`|[]|
-|parentFolder|-|`Object`|`false`|{}|
+|parentFolders|-|`Array`|`false`|[]|
 
 <!-- @vuese:MediaFolders:props:end -->
 

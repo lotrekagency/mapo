@@ -8,9 +8,6 @@
 |---|---|---|---|---|
 |select|-|`String`|`false`|none|
 |noFolders|-|`Boolean`|`false`|false|
-|light|-|`Boolean`|`false`|false|
-|dark|-|`Boolean`|`false`|false|
-|elevation|-|—|`false`|undefined|
 
 <!-- @vuese:MediaManager:props:end -->
 

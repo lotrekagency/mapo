@@ -9,9 +9,6 @@
 |value|-|`Boolean`|`false`|-|
 |noFolders|-|`Boolean`|`false`|false|
 |select|-|`String`|`false`|single|
-|light|-|`Boolean`|`false`|false|
-|dark|-|`Boolean`|`false`|false|
-|elevation|-|—|`false`|undefined|
 
 <!-- @vuese:MediaManagerDialog:props:end -->
 
