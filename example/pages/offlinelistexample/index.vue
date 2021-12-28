@@ -1,5 +1,5 @@
 <template>
-  <div>
+<v-container fluid>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="12">
         <List
@@ -20,7 +20,7 @@
         <pre>{{ desserts }}</pre>
       </v-col>
     </v-row>
-  </div>
+</v-container>
 </template>
 
 <script>

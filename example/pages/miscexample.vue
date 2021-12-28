@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container fluid>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="12">
         <v-btn dark class="mb-2" @click.native="disabled = !disabled">
@@ -8,7 +8,7 @@
         <TinyMce v-model="tinyInput" :disabled="disabled" />
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>

@@ -1,12 +1,14 @@
 <template>
-  <Detail
-    v-model="model"
-    endpoint="api/camomilla/articles"
-    :identifier="$route.params.detail"
-    :fields="fields"
-    :languages="['it', 'en', 'de']"
-    modelName="article"
-  />
+  <v-container fluid>
+    <Detail
+      v-model="model"
+      endpoint="api/camomilla/articles"
+      :identifier="$route.params.detail"
+      :fields="fields"
+      :languages="['it', 'en', 'de']"
+      modelName="article"
+    />
+  </v-container>
 </template>
 
 <script>
