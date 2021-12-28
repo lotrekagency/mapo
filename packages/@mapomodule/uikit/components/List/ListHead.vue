@@ -1,6 +1,6 @@
 <template>
   <div class="list__head">
-    <h2 class="list__head__title display-1">{{ title }}</h2>
+    <h1 class="list__head__title display-1">{{ title }}</h1>
     <div class="list__head__button">
       <v-btn
         v-if="addItem"

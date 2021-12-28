@@ -1,7 +1,8 @@
 <template>
-  <div class="fill-height">
-    <MediaManager elevation="0" class="transparent" />
-    <div class="btn__container">
+  <div class="d-flex flex-column fill-height">
+    <MediaManager noFolders class="transparent" />
+    <v-spacer></v-spacer>
+    <div class="d-flex justify-center">
       <media-manager-dialog
         v-model="dialog"
         :dark="darkTheme"
@@ -18,16 +19,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.btn__container{
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 10px 36px;
-}
-</style>
 
 <script>
 export default {

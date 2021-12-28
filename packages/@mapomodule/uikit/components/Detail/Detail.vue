@@ -1,10 +1,10 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <!-- Use this to override the title of the detail component. -->
     <slot name="title" v-bind="slotBindings">
       <!-- `<h1> "Create | Edit" + modelName </h1>` -->
-      <v-row class="mb-14">
-        <h1>{{ isNew ? "Create" : "Edit" }} {{ modelName }}</h1>
+      <v-row class="mb-5">
+        <v-col col="12"><h1 class="display-1">{{ isNew ? "Create" : "Edit" }} {{ modelName }}</h1></v-col>
       </v-row>
     </slot>
     <v-form ref="form">

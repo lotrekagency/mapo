@@ -3,10 +3,8 @@
     <Sidebar />
     <Topbar :title="title" :drawer="this.$store.getters['mapo/app/drawer']" />
     <v-main>
-      <v-container fluid>
-        <nuxt />
-        <root-components />
-      </v-container>
+      <nuxt />
+      <root-components />
     </v-main>
   </v-app>
 </template>
