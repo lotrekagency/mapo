@@ -10,7 +10,6 @@
           </v-btn>
         </template>
       </media-manager-dialog>
-      <pre>{{ selection }}</pre>
     </div>
   </div>
 </template>
