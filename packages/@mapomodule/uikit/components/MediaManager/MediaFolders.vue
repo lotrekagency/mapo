@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div v-if="parentFolders && parentFolders.length">
+      <span class="mx-2 mt-1 d-flex flex-wrap align-center">
+        <span class="mb-1">
+          <v-icon @click="goToFolder()" small>mdi-home</v-icon></span
+        >
+        <span class="fpath__button" v-for="(f, i) in parentFolders" :key="i"
+          >/<a @click="i !== parentFolders.length - 1 && goToFolder(f)">{{
+            f.slug
+          }}</a>
+        </span>
+      </span>
+    </div>
     <v-card-actions class="flex-wrap">
       <div v-if="parentFolder" class="h-100">
         <v-btn
@@ -80,16 +92,6 @@
     ></v-progress-linear>
 
     <v-divider></v-divider>
-    <div v-if="parentFolders && parentFolders.length">
-      <span class="mx-2 mt-1 d-flex align-center">
-        <span class="mb-1">
-          <v-icon @click="goToFolder()" small>mdi-home</v-icon></span
-        >
-        <span v-for="(f, i) in parentFolders" :key="i"
-          >/<a class="fpath__button" @click="goToFolder(f)">{{ f.slug }}</a>
-        </span>
-      </span>
-    </div>
     <v-dialog v-model="dialog" max-width="300px">
       <v-card>
         <v-card-title>
@@ -131,8 +133,16 @@
   text-overflow: ellipsis;
 }
 .fpath__button {
-  &:hover {
-    text-decoration: underline;
+  padding-left: 7px;
+  color: grey;
+  a {
+    margin-left: 7px;
+  }
+  &:last-child {
+    a {
+      color: unset;
+      cursor: auto;
+    }
   }
 }
 </style>
