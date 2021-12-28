@@ -14,6 +14,7 @@
           v-if="mediaExists"
           :src="internalValue.file"
           :lazy-src="internalValue.thumbnail"
+          :class="{'grey lighten-2 rounded': !internalValue.is_image}"
           v-bind="{
             aspectRatio,
             contain,
@@ -33,9 +34,15 @@
               justify="center"
             >
               <v-progress-circular
+                v-if="internalValue.is_image"
                 indeterminate
                 color="grey"
               ></v-progress-circular>
+              <div class="d-flex flex-column align-center justify-space-between fill-height" style="width: 100%" v-else>
+              <div></div>
+              <v-icon size="70px" color="grey">mdi-file</v-icon>
+              <span class="grey--text text--darken-3 text-truncate pl-1 pr-8" style="width: 100%">{{fileName}}</span>
+              </div>
             </v-row>
           </template>
         </v-img>
@@ -164,6 +171,9 @@ export default {
     },
     overlay() {
       return this.isHovered && this.mediaExists;
+    },
+    fileName() {
+      return this.internalValue && this.internalValue.file && this.internalValue.file.split("/").pop();
     },
   },
 
