@@ -26,9 +26,9 @@
       <v-tabs-items v-model="tab" class="transparent">
         <v-tab-item>
           <MediaGallery
-            v-if="!editMedia"
             v-bind="{ select, page, pages, medias }"
             @selectionChange="selectionChange($event)"
+            :class="{ 'd-none': editMedia }"
             @pageChange="getRoot({ page: $event })"
             @editMedia="openEditor($event)"
           />

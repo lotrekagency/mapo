@@ -53,16 +53,17 @@
           :ripple="false"
           color="white"
           class="img-container__btn"
+          :class="{'d-none': select == 'none'}"
         >
           <v-icon>mdi-circle-edit-outline</v-icon>
         </v-btn>
 
         <v-img
-          v-bind:class="{ selected: isSelected(media) }"
           :src="media.file"
           :lazy-src="media.thumbnail"
           aspect-ratio="1"
-          class="grey lighten-2 elevation-4"
+          class="grey lighten-2 elevation-4 cursor-pointer"
+          :class="{ selected: isSelected(media)}"
           @click.stop="selectMedia(media)"
         >
           <template v-slot:placeholder>
@@ -95,6 +96,9 @@
 </template>
 
 <style lang="scss" scoped>
+.cursor-pointer{
+  cursor: pointer;
+}
 .img-container {
   display: flex;
   position: relative;
@@ -189,15 +193,21 @@ export default {
       return this.selection.findIndex((m) => m.id === media.id) !== -1;
     },
     selectMedia(media) {
-      if (this.select == "single") {
-        this.$emit("selectionChange", media);
-      } else if (this.select == "multi") {
-        const index = this.selection.findIndex((m) => m.id === media.id);
-        index == -1
-          ? this.selection.push(media)
-          : this.selection.splice(index, 1);
-        this.selection = this.selection.slice();
-        this.$emit("selectionChange", this.selection);
+      switch (this.select) {
+        case "single":
+          this.$emit("selectionChange", media);
+          break;
+        case "multi":
+          const index = this.selection.findIndex(m => m.id === media.id);
+          index == -1
+            ? this.selection.push(media)
+            : this.selection.splice(index, 1);
+          this.selection = this.selection.slice();
+          this.$emit("selectionChange", this.selection);
+          break;
+        default:
+          this.editMedia(media);
+          break;
       }
     },
     editMedia(media) {
