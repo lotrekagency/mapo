@@ -116,7 +116,7 @@
           >
             <span>Edit</span>
             <v-icon :style="rotate">mdi-chevron-up</v-icon>
-            <v-spacer v-if="editing"></v-spacer>
+            <div class="edit_spacer" :class="{ 'flex-grow-1': editing}"></div>
             <v-btn v-if="editing" text tile color="primary" @click="saveMedia">
               save
             </v-btn>
@@ -154,6 +154,10 @@ table tr td:nth-child(2) {
     transition-duration: 0.3s;
     transition-timing-function: ease-out;
   }
+}
+.edit_spacer{
+  flex-grow: 0;
+  transition: flex-grow .3s ease-out;
 }
 .img_overlay {
   position: relative;
