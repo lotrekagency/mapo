@@ -2,16 +2,17 @@
   <div>
     <slot v-bind="{ on, attrs }" name="activator"></slot>
     <v-dialog v-model="dialog" width="800" scrollable>
-        <media-manager
-          @selectionChange="selectionChange($event)"
-          v-bind="{ select, noFolders }"
-          elevation="0"
-        >
-          <template v-slot:actions>
-            <v-spacer></v-spacer>
-            <v-btn v-if="select == 'multi'" color="primary" text @click="done">done</v-btn>
-          </template>
-        </media-manager>
+      <media-manager
+        @selectionChange="selectionChange($event)"
+        v-bind="{ select, noFolders }"
+        elevation="0"
+        ref="mediaManager"
+      >
+        <template v-slot:actions>
+          <v-spacer></v-spacer>
+          <v-btn v-if="select == 'multi'" color="primary" text @click="done">done</v-btn>
+        </template>
+      </media-manager>
     </v-dialog>
   </div>
 </template>
@@ -46,7 +47,7 @@ export default {
       validator(val) {
         return ["none", "single", "multi"].indexOf(val) !== -1;
       },
-    }
+    },
   },
   watch: {
     value(val) {
@@ -58,6 +59,7 @@ export default {
       if (!val && this.reject) {
         this.reject();
       }
+      if (!val) this.$refs.mediaManager.reset();
     },
   },
   methods: {

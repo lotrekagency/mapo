@@ -75,23 +75,25 @@
 <script>
 import { debounce } from "@mapomodule/utils/helpers/debounce";
 
+const initialData = () => ({
+  _mediaFolderCrud: null,
+  _mediaFileCrud: null,
+  medias: [],
+  folders: [],
+  parentFolders: [],
+  page: 1,
+  pages: 1,
+  tab: 0,
+  editMedia: null,
+  loading: false,
+  searchValue: "",
+  loadingSearch: false,
+});
+
 export default {
   name: "MediaManager",
   data() {
-    return {
-      _mediaFolderCrud: null,
-      _mediaFileCrud: null,
-      medias: [],
-      folders: [],
-      parentFolders: [],
-      page: 1,
-      pages: 1,
-      tab: 0,
-      editMedia: null,
-      loading: false,
-      searchValue: "",
-      loadingSearch: false,
-    };
+    return initialData();
   },
   props: {
     select: {
@@ -215,7 +217,11 @@ export default {
     },
     search: debounce(function () {
       this.getRoot().then(() => this.loadingSearch = false);
-    }, 500)
+    }, 500),
+    reset() {
+      Object.assign(this.$data, initialData());
+      this.getRoot();
+    }
   },
   async fetch() {
     await this.getRoot();
