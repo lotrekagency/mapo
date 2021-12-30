@@ -4,6 +4,8 @@
     <v-dialog v-model="dialog" width="800" scrollable>
       <media-manager
         @selectionChange="selectionChange($event)"
+        :selection="$attrs.selection"
+        @update:selection="$emit('update:selection', $event)"
         v-bind="{ select, noFolders }"
         elevation="0"
         ref="mediaManager"

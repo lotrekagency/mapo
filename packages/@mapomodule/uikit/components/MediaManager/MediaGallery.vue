@@ -1,8 +1,8 @@
 <template>
   <div class="pa-4">
-    <v-row v-if="selection.length" class="selection mb-4 grey darken-2">
+    <v-row v-if="internalSelection.length && select == 'multi'" class="selection mb-4 grey darken-2">
       <v-col
-        v-for="media in selection"
+        v-for="media in internalSelection"
         :key="media.file"
         class="d-flex"
         cols="2"
@@ -151,7 +151,7 @@ export default {
   name: "MediaGallery",
   data() {
     return {
-      selection: [],
+      internalSelection: [],
     };
   },
   props: {
@@ -175,6 +175,15 @@ export default {
         return ["none", "single", "multi"].indexOf(value) !== -1;
       },
     },
+    selection: {
+      type: Array,
+      required: false
+    },
+  },
+  watch: {
+    selection(value) {
+      if (value !== undefined) this.internalSelection = value;
+    },
   },
   computed: {
     currentPage: {
@@ -188,20 +197,23 @@ export default {
   },
   methods: {
     isSelected(media) {
-      return this.selection.findIndex((m) => m.id === media.id) !== -1;
+      return this.internalSelection.findIndex((m) => m.id === media.id) !== -1;
     },
     selectMedia(media) {
       switch (this.select) {
         case "single":
           this.$emit("selectionChange", media);
+          this.internalSelection = [media];
+          this.$emit("update:selection", this.internalSelection);
           break;
         case "multi":
-          const index = this.selection.findIndex(m => m.id === media.id);
+          const index = this.internalSelection.findIndex(m => m.id === media.id);
           index == -1
-            ? this.selection.push(media)
-            : this.selection.splice(index, 1);
-          this.selection = this.selection.slice();
-          this.$emit("selectionChange", this.selection);
+            ? this.internalSelection.push(media)
+            : this.internalSelection.splice(index, 1);
+          this.internalSelection = this.internalSelection.slice();
+          this.$emit("selectionChange", this.internalSelection);
+          this.$emit("update:selection", this.internalSelection);
           break;
         default:
           this.editMedia(media);
@@ -214,6 +226,9 @@ export default {
     fileName(media) {
       return media && media.file && media.file.split("/").pop();
     },
+  },
+  mounted() {
+    if (this.selection !== undefined) this.internalSelection = this.selection;
   },
 };
 </script>

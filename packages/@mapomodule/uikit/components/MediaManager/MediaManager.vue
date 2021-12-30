@@ -43,6 +43,8 @@
         <v-tab-item>
           <MediaGallery
             v-bind="{ select, page, pages, medias }"
+            :selection="$attrs.selection"
+            @update:selection="$emit('update:selection', $event)"
             @selectionChange="selectionChange($event)"
             :class="{ 'd-none': editMedia }"
             @pageChange="getRoot({ page: $event })"
