@@ -8,6 +8,22 @@
         </v-tabs>
       </div>
       <v-spacer></v-spacer>
+      <v-text-field
+        v-model="searchValue"
+        @input="
+          loadingSearch = true;
+          search();
+        "
+        prepend-inner-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
+        outlined
+        dense
+        clearable
+        :loading="loadingSearch"
+        class="mx-2 shrink"
+      ></v-text-field>
       <v-btn class="ma-2" @click="getRoot" icon>
         <v-icon>mdi-update</v-icon>
       </v-btn>
@@ -57,6 +73,8 @@
 </template>
 
 <script>
+import { debounce } from "@mapomodule/utils/helpers/debounce";
+
 export default {
   name: "MediaManager",
   data() {
@@ -70,7 +88,9 @@ export default {
       pages: 1,
       tab: 0,
       editMedia: null,
-      loading: false
+      loading: false,
+      searchValue: "",
+      loadingSearch: false,
     };
   },
   props: {
@@ -130,7 +150,7 @@ export default {
       const { id } = folder || this.parentFolder || {};
       let response;
       this.page = page || this.page;
-      const params = { page: this.page };
+      const params = { page: this.page, search: this.searchValue || undefined };
       if (id) {
         response = await this.mediaFolderCrud.detail(id, {
           params
@@ -189,8 +209,13 @@ export default {
       this.$emit("selectionChange", event);
     },
     async openEditor(event) {
+      this.searchValue = "";
+      this.getRoot();
       this.editMedia = await this.detailMedia(event.id);
-    }
+    },
+    search: debounce(function () {
+      this.getRoot().then(() => this.loadingSearch = false);
+    }, 500)
   },
   async fetch() {
     await this.getRoot();
