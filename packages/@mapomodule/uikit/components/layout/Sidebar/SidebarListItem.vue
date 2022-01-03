@@ -3,6 +3,7 @@
     <v-list-item
       :style="indent"
       :exact-path="expanded"
+      :input-value="!expanded && !link && activeChild"
       @click.native="!link && (expanded = !expanded)"
       link
       :to="link"
@@ -56,22 +57,26 @@ export default {
   name: "SidebarListItem",
   data() {
     return {
-      expanded: false
+      expanded: false,
+      nestDepth: 14
     };
   },
   computed: {
     indent() {
       return {
-        paddingLeft: `calc(1rem + ${+this.depth * 14}px)`,
-        marginLeft: this.depth > 1 && `calc(-1rem - ${(this.depth - 1) * 14}px)`
+        paddingLeft: `calc(1rem + ${+this.depth * this.nestDepth}px)`,
+        marginLeft: this.depth > 1 && `calc(-1rem - ${(this.depth - 1) * this.nestDepth}px)`,
       };
     },
     rotate() {
       return {
         transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
-        transition: "transform 225ms cubic-bezier(0.4, 0, 0.2, 1)"
+        transition: "transform 225ms cubic-bezier(0.4, 0, 0.2, 1)",
       };
-    }
+    },
+    activeChild() {
+      return (this.childrens || []).some((child) => this.$nuxt.$route.path.startsWith(child.link));
+    },
   },
   props: {
     link: String,
@@ -79,7 +84,7 @@ export default {
     icon: String,
     childrens: Array,
     depth: Number,
-    forceCollapse: Boolean
-  }
+    forceCollapse: Boolean,
+  },
 };
 </script>
