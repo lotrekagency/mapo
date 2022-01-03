@@ -163,17 +163,20 @@ export default {
       return this.mediaFileCrud.detail(media_id);
     },
 
-    updateMedia(media) {
+    async updateMedia(media) {
       const files = ["file", "objectURL", "thumbnail"];
       const payload = this.$mapo.$api.multipart(media, files);
       const conf = { headers: { "Content-Type": "multipart/form-data" } };
-      return this.mediaFileCrud
-        .partialUpdate(media.id, payload, conf)
-        .then(() =>
-          this.$mapo.$snack.open({
-            message: "file info succesfully updated."
-          })
-        );
+      const res = await this.mediaFileCrud.partialUpdate(media.id, payload, conf)
+      if (media.file){
+        this.medias = []
+        await this.getRoot()
+      }
+      this.editMedia = res
+      this.$mapo.$snack.open({
+        message: "file info succesfully updated."
+      })
+      return res
     },
     processResponse(resp) {
       this.medias = resp?.media?.items || [];

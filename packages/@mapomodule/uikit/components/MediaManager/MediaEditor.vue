@@ -102,6 +102,47 @@
                         label="Alt name"
                       ></v-text-field>
                     </v-col>
+                    <v-col sm="6" md="12" cols="12" class="d-flex align-center">
+                      <div class="d-flex flex-column flex-grow-1">
+                        <v-file-input
+                          v-model="newFile"
+                          :accept="media.is_image ? 'image/*' : '*'"
+                          label="New file"
+                          show-size
+                          dense
+                          prepend-icon
+                        ></v-file-input>
+                        <v-checkbox
+                          v-if="newFile"
+                          v-model="sameUrl"
+                          label="Maintain old url"
+                          class="ma-0"
+                          hide-details
+                          dense
+                        ></v-checkbox>
+                      </div>
+                      <v-img
+                        v-if="newFile && newFilePreview"
+                        :src="newFilePreview"
+                        aspect-ratio="1"
+                        min-width="70px"
+                        max-width="110px"
+                        class="grey lighten-2 ml-3"
+                      >
+                        <template v-slot:placeholder>
+                          <v-row
+                            class="fill-height ma-0"
+                            align="center"
+                            justify="center"
+                          >
+                            <v-progress-circular
+                              indeterminate
+                              color="grey lighten-5"
+                            ></v-progress-circular>
+                          </v-row>
+                        </template>
+                      </v-img>
+                    </v-col>
                   </v-row>
                 </v-col>
               </v-row>
@@ -116,7 +157,7 @@
           >
             <span>Edit</span>
             <v-icon :style="rotate">mdi-chevron-up</v-icon>
-            <div class="edit_spacer" :class="{ 'flex-grow-1': editing}"></div>
+            <div class="edit_spacer" :class="{ 'flex-grow-1': editing }"></div>
             <v-btn v-if="editing" text tile color="primary" @click="saveMedia">
               save
             </v-btn>
@@ -154,9 +195,9 @@ table tr td:nth-child(2) {
     transition-timing-function: ease-out;
   }
 }
-.edit_spacer{
+.edit_spacer {
   flex-grow: 0;
-  transition: flex-grow .3s ease-out;
+  transition: flex-grow 0.3s ease-out;
 }
 .img_overlay {
   position: relative;
@@ -166,10 +207,10 @@ table tr td:nth-child(2) {
     color: #333333 !important;
     background: #e0e0e096;
     top: 10px;
-    &--back{
+    &--back {
       left: 10px;
     }
-    &--href{
+    &--href {
       right: 10px;
     }
   }
@@ -183,14 +224,16 @@ export default {
   data() {
     return {
       media: null,
-      editing: false
+      editing: false,
+      newFile: null,
+      sameUrl: false,
     };
   },
   props: {
     value: {
       type: Object,
-      default: () => null
-    }
+      default: () => null,
+    },
   },
   computed: {
     fileSize() {
@@ -208,38 +251,56 @@ export default {
     rotate() {
       return {
         transform: this.editing ? "rotate(180deg)" : "rotate(0deg)",
-        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
+        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
       };
     },
-    height () {
+    height() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return '50vh'
-        default: return 425
+        case "xs":
+          return "50vh";
+        default:
+          return 425;
       }
+    },
+    newFilePreview() {
+      return this.newFile.type.startsWith("image/") ? URL.createObjectURL(this.newFile) : null;
     },
   },
   watch: {
     value(val) {
       this.media = val;
       this.editing = false;
-    }
+      this.newFile = null;
+      this.sameUrl = false;
+    },
   },
   methods: {
     saveMedia() {
-      this.$emit("updateMedia", this.media);
+      const media = {
+        id: this.media.id,
+        name: this.media.name,
+        title: this.media.title,
+        description: this.media.description,
+        alt_text: this.media.alt_text,
+        file: this.newFile || undefined,
+        same_url: (this.newFile && this.sameUrl) || undefined,
+      };
+      this.newFile = null;
+      this.sameUrl = false;
+      this.$emit("updateMedia", media);
     },
     deleteMedia() {
       this.$mapo.$confirm
         .open({
           title: "Delete",
           question: "Are you sure you want to delete this media?",
-          approveButton: { text: "Delete", attrs: { color: "red" } }
+          approveButton: { text: "Delete", attrs: { color: "red" } },
         })
-        .then(res => res && this.$emit("deleteMedia", this.media));
+        .then((res) => res && this.$emit("deleteMedia", this.media));
     },
     close() {
       this.$emit("input", null);
-    }
-  }
+    },
+  },
 };
 </script>
