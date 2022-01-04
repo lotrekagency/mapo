@@ -26,6 +26,7 @@ export default {
       selection: [],
       dialog: false,
       attrs: { ...this.$attrs },
+      reset: false,
       on: {
         click: (event) => {
           event.preventDefault();
@@ -65,7 +66,8 @@ export default {
       if (!val && this.reject) {
         this.reject();
       }
-      if (!val) this.$refs.mediaManager.reset();
+      if (val && this.reset) this.$refs.mediaManager.reset();
+      this.reset = !val;
     },
   },
   methods: {
