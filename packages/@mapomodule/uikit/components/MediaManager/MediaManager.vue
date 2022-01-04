@@ -215,8 +215,6 @@ export default {
       this.$emit("selectionChange", event);
     },
     async openEditor(event) {
-      this.searchValue = "";
-      this.getRoot();
       this.editMedia = await this.detailMedia(event.id);
     },
     search: debounce(function () {
