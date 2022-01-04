@@ -103,18 +103,21 @@ export default {
       default: "none",
       validator(val) {
         return ["none", "single", "multi"].indexOf(val) !== -1;
-      }
+      },
     },
     noFolders: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    mime: {
+      type: String,
+      required: false,
     },
   },
   computed: {
     mediaFolderCrud() {
       this._mediaFolderCrud =
-        this._mediaFolderCrud ||
-        this.$mapo.$api.crud("api/camomilla/media-folders");
+        this._mediaFolderCrud || this.$mapo.$api.crud("api/camomilla/media-folders");
       return this._mediaFolderCrud;
     },
     mediaFileCrud() {
@@ -134,43 +137,42 @@ export default {
         if (!val || !val.path) {
           this.parentFolders = [];
         } else {
-          const index = this.parentFolders.findIndex(f => f.path == val.path);
+          const index = this.parentFolders.findIndex((f) => f.path == val.path);
           if (index == -1) {
             this.parentFolders.push(val);
           } else {
-            this.parentFolders.splice(
-              index + 1,
-              this.parentFolders.length - (index + 1)
-            );
+            this.parentFolders.splice(index + 1, this.parentFolders.length - (index + 1));
           }
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     async getRoot(context) {
-      this.loading = true
+      this.loading = true;
       const { page, folder } = context || {};
       const { id } = folder || this.parentFolder || {};
       let response;
       this.page = page || this.page;
-      const params = { page: this.page, search: this.searchValue || undefined };
+      const params = {
+        page: this.page,
+        search: this.searchValue || undefined,
+        fltr: this.mime ? `mime_type=${this.mime}` : undefined,
+      };
       if (id) {
         response = await this.mediaFolderCrud.detail(id, {
-          params
+          params,
         });
       } else {
         response = await this.mediaFolderCrud.list({ params });
       }
       this.processResponse(response);
-      this.loading = false
-      this.editMedia = null
+      this.loading = false;
+      this.editMedia = null;
     },
 
     updateOrCreateFolder(folder) {
-      return this.mediaFolderCrud
-        .updateOrCreate(folder)
-        .then(() => this.getRoot());
+      return this.mediaFolderCrud.updateOrCreate(folder).then(() => this.getRoot());
     },
 
     deleteFolder(folder) {
@@ -218,15 +220,15 @@ export default {
       this.editMedia = await this.detailMedia(event.id);
     },
     search: debounce(function () {
-      this.getRoot().then(() => this.loadingSearch = false);
+      this.getRoot().then(() => (this.loadingSearch = false));
     }, 500),
     reset() {
       Object.assign(this.$data, initialData());
       this.getRoot();
-    }
+    },
   },
   async fetch() {
     await this.getRoot();
-  }
+  },
 };
 </script>

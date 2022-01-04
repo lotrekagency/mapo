@@ -6,7 +6,7 @@
         @selectionChange="selectionChange($event)"
         :selection="$attrs.selection"
         @update:selection="$emit('update:selection', $event)"
-        v-bind="{ select, noFolders }"
+        v-bind="{ select, noFolders, mime }"
         elevation="0"
         ref="mediaManager"
       >
@@ -49,6 +49,10 @@ export default {
       validator(val) {
         return ["none", "single", "multi"].indexOf(val) !== -1;
       },
+    },
+    mime: {
+      type: String,
+      required: false
     },
   },
   watch: {
