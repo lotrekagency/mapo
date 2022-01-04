@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      defaultIcon: ({label}) => `mdi-alpha-${label[0]}-circle`.toLowerCase(),
+      defaultIcon: ({label}) => `mdi-alpha-${label[0]}-box-outline`.toLowerCase(),
       routes: this.routes,
     };
   },
