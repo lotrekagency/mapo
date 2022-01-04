@@ -8,6 +8,22 @@
         </v-tabs>
       </div>
       <v-spacer></v-spacer>
+      <v-text-field
+        v-model="searchValue"
+        @input="
+          loadingSearch = true;
+          search();
+        "
+        prepend-inner-icon="mdi-magnify"
+        label="Search"
+        single-line
+        hide-details
+        outlined
+        dense
+        clearable
+        :loading="loadingSearch"
+        class="mx-2 shrink"
+      ></v-text-field>
       <v-btn class="ma-2" @click="getRoot" icon>
         <v-icon>mdi-update</v-icon>
       </v-btn>
@@ -27,6 +43,8 @@
         <v-tab-item>
           <MediaGallery
             v-bind="{ select, page, pages, medias }"
+            :selection="$attrs.selection"
+            @update:selection="$emit('update:selection', $event)"
             @selectionChange="selectionChange($event)"
             :class="{ 'd-none': editMedia }"
             @pageChange="getRoot({ page: $event })"
@@ -57,21 +75,27 @@
 </template>
 
 <script>
+import { debounce } from "@mapomodule/utils/helpers/debounce";
+
+const initialData = () => ({
+  _mediaFolderCrud: null,
+  _mediaFileCrud: null,
+  medias: [],
+  folders: [],
+  parentFolders: [],
+  page: 1,
+  pages: 1,
+  tab: 0,
+  editMedia: null,
+  loading: false,
+  searchValue: "",
+  loadingSearch: false,
+});
+
 export default {
   name: "MediaManager",
   data() {
-    return {
-      _mediaFolderCrud: null,
-      _mediaFileCrud: null,
-      medias: [],
-      folders: [],
-      parentFolders: [],
-      page: 1,
-      pages: 1,
-      tab: 0,
-      editMedia: null,
-      loading: false
-    };
+    return initialData();
   },
   props: {
     select: {
@@ -79,18 +103,21 @@ export default {
       default: "none",
       validator(val) {
         return ["none", "single", "multi"].indexOf(val) !== -1;
-      }
+      },
     },
     noFolders: {
       type: Boolean,
-      default: false
+      default: false,
+    },
+    mime: {
+      type: String,
+      required: false,
     },
   },
   computed: {
     mediaFolderCrud() {
       this._mediaFolderCrud =
-        this._mediaFolderCrud ||
-        this.$mapo.$api.crud("api/camomilla/media-folders");
+        this._mediaFolderCrud || this.$mapo.$api.crud("api/camomilla/media-folders");
       return this._mediaFolderCrud;
     },
     mediaFileCrud() {
@@ -110,43 +137,42 @@ export default {
         if (!val || !val.path) {
           this.parentFolders = [];
         } else {
-          const index = this.parentFolders.findIndex(f => f.path == val.path);
+          const index = this.parentFolders.findIndex((f) => f.path == val.path);
           if (index == -1) {
             this.parentFolders.push(val);
           } else {
-            this.parentFolders.splice(
-              index + 1,
-              this.parentFolders.length - (index + 1)
-            );
+            this.parentFolders.splice(index + 1, this.parentFolders.length - (index + 1));
           }
         }
-      }
-    }
+      },
+    },
   },
   methods: {
     async getRoot(context) {
-      this.loading = true
+      this.loading = true;
       const { page, folder } = context || {};
       const { id } = folder || this.parentFolder || {};
       let response;
       this.page = page || this.page;
-      const params = { page: this.page };
+      const params = {
+        page: this.page,
+        search: this.searchValue || undefined,
+        fltr: this.mime ? `mime_type=${this.mime}` : undefined,
+      };
       if (id) {
         response = await this.mediaFolderCrud.detail(id, {
-          params
+          params,
         });
       } else {
         response = await this.mediaFolderCrud.list({ params });
       }
       this.processResponse(response);
-      this.loading = false
-      this.editMedia = null
+      this.loading = false;
+      this.editMedia = null;
     },
 
     updateOrCreateFolder(folder) {
-      return this.mediaFolderCrud
-        .updateOrCreate(folder)
-        .then(() => this.getRoot());
+      return this.mediaFolderCrud.updateOrCreate(folder).then(() => this.getRoot());
     },
 
     deleteFolder(folder) {
@@ -189,11 +215,20 @@ export default {
       this.$emit("selectionChange", event);
     },
     async openEditor(event) {
+      this.searchValue = "";
+      this.getRoot();
       this.editMedia = await this.detailMedia(event.id);
-    }
+    },
+    search: debounce(function () {
+      this.getRoot().then(() => (this.loadingSearch = false));
+    }, 500),
+    reset() {
+      Object.assign(this.$data, initialData());
+      this.getRoot();
+    },
   },
   async fetch() {
     await this.getRoot();
-  }
+  },
 };
 </script>
