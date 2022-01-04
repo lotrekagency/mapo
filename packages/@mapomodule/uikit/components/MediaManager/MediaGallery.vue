@@ -10,23 +10,11 @@
         md="1"
         @click.stop="selectMedia(media)"
       >
-        <v-img
-          :src="media.is_image && media.file || null"
-          :lazy-src="media.is_image && media.thumbnail || null"
-          aspect-ratio="1"
-          class="grey lighten-2 elevation-4 cursor-pointer selection__item"
-        >
-          <template v-slot:placeholder>
-            <v-row class="fill-height ma-0" align="center" justify="center">
-              <v-progress-circular
-              v-if="media.is_image"
-                indeterminate
-                color="grey lighten-5"
-              ></v-progress-circular>
-              <v-icon v-else size="20px" color="grey">mdi-file</v-icon>
-            </v-row>
-          </template>
-        </v-img>
+        <MediaPreview
+          :media="media"
+          icon-size="20px"
+          class="elevation-4 cursor-pointer selection__item"
+        />
       </v-col>
     </v-row>
     <v-row
@@ -59,30 +47,13 @@
         >
           <v-icon>mdi-circle-edit-outline</v-icon>
         </v-btn>
-
-        <v-img
-          :src="media.is_image && media.file || null"
-          :lazy-src="media.is_image && media.thumbnail || null"
-          aspect-ratio="1"
-          class="grey lighten-2 elevation-4 cursor-pointer"
-          :class="{ selected: isSelected(media)}"
-          @click.stop="selectMedia(media)"
-        >
-          <template v-slot:placeholder>
-            <v-row class="fill-height ma-0" align="center" justify="center">
-              <v-progress-circular
-                v-if="media.is_image"
-                indeterminate
-                color="grey lighten-5"
-              ></v-progress-circular>
-              <div class="d-flex flex-column align-center justify-space-between fill-height" style="width: 100%" v-else>
-              <div></div>
-              <v-icon size="70px" color="grey">mdi-file</v-icon>
-              <span class="grey--text text--darken-3 text-truncate pl-1 pr-8" style="width: 100%">{{fileName(media)}}</span>
-              </div>
-            </v-row>
-          </template>
-        </v-img>
+        <MediaPreview
+          class="elevation-4 cursor-pointer"
+          :media="media"
+          :selected="isSelected(media)"
+          @click.native="selectMedia(media)"
+          filename
+        />
       </v-col>
     </v-row>
     <v-row>

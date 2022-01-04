@@ -9,31 +9,18 @@
           <v-icon>mdi-open-in-new</v-icon>
         </v-btn>
       </div>
-      <v-img
-        :src="media.is_image && media.file || null"
-        :lazy-src="media.is_image && media.thumbnail || null"
+      <MediaPreview
+        :media="media"
         height="400"
         contain
-        aspect-ratio="1"
-        class="grey lighten-2 elevation-2"
-      >
-        <template v-slot:placeholder>
-          <v-row class="fill-height ma-0" align="center" justify="center">
-            <v-progress-circular
-              v-if="media.is_image"
-              indeterminate
-              color="grey lighten-5"
-            ></v-progress-circular>
-            <v-icon v-else size="70px" color="grey">mdi-file</v-icon>
-          </v-row>
-        </template>
-      </v-img>
+        filename
+        class="elevation-2"
+      />
       <v-overlay
         absolute
         v-model="editing"
         @click="editing = false"
       ></v-overlay>
-      <h4 class="text-truncate mt-2">{{ fileName }}</h4>
       <div class="dialog">
         <div class="dialog__container">
           <v-card flat tile class="dialog__content overflow-y-auto"
@@ -49,8 +36,8 @@
                       <td>{{ fileName }}</td>
                     </tr>
                     <tr>
-                      <td class="pr-3"><b>Extension:</b></td>
-                      <td>{{ extension }}</td>
+                      <td class="pr-3"><b>Mime type:</b></td>
+                      <td>{{ media.mime_type }}</td>
                     </tr>
                     <tr>
                       <td class="pr-3"><b>Created:</b></td>
@@ -241,9 +228,6 @@ export default {
     },
     dateCreated() {
       return this.media && new Date(this.media.created).toLocaleString();
-    },
-    extension() {
-      return this.media && this.media.file && this.media.file.split(".").pop();
     },
     fileName() {
       return this.media && this.media.file && this.media.file.split("/").pop();
