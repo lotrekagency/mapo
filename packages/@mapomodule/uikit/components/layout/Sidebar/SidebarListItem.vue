@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ child, expanded, 'spider-menu': spiderMenu }">
     <v-list-item
       :style="indent"
       :exact-path="expanded"
@@ -25,15 +25,16 @@
 
     <div :style="indent" v-if="childrens.length && expanded && !forceCollapse">
       <SidebarListItem
-        class="sidebar__list__item"
         v-for="(item, i) in childrens"
         :key="i"
-        :force-collapse="forceCollapse"
         :link="item.link"
         :label="item.label"
         :childrens="item.childrens"
         :depth="(depth || 0) + 1"
         :icon="item.icon"
+        :force-collapse="forceCollapse"
+        :spider-menu="spiderMenu"
+        child
       />
     </div>
   </div>
@@ -50,6 +51,41 @@
     border-radius: 50%;
   }
 }
+.spider-menu.child {
+  .v-list-item__icon {
+    &::after {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 30px;
+      top: -9px;
+      margin-left: -4px;
+      border-bottom: solid 3px #acacac;
+      border-left: solid 3px #acacac;
+      z-index: -1;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      width: 5px;
+      height: 10px;
+      top: 21px;
+      margin-left: -4px;
+      border-left: solid 3px #acacac;
+      z-index: -1;
+    }
+  }
+}
+.spider-menu.child:last-child {
+  .v-list-item__icon {
+    &::before {
+      height: 0px;
+    }
+    &::after {
+      border-bottom-left-radius: 3px;
+    }
+  }
+}
 </style>
 
 <script>
@@ -58,7 +94,7 @@ export default {
   data() {
     return {
       expanded: false,
-      nestDepth: 14
+      nestDepth: 14,
     };
   },
   computed: {
@@ -85,6 +121,8 @@ export default {
     childrens: Array,
     depth: Number,
     forceCollapse: Boolean,
+    child: Boolean,
+    spiderMenu: Boolean,
   },
 };
 </script>

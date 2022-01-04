@@ -8,6 +8,7 @@
       :childrens="item.childrens"
       :icon="item.icon"
       :force-collapse="forceCollapse"
+      spider-menu
     />
   </v-list>
 </template>
