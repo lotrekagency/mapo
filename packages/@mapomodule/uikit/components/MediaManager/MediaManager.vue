@@ -9,6 +9,7 @@
       </div>
       <v-spacer></v-spacer>
       <v-text-field
+        v-show="tab == 0"
         v-model="searchValue"
         @input="
           loadingSearch = true;
@@ -42,11 +43,11 @@
       <v-tabs-items v-model="tab" class="transparent">
         <v-tab-item>
           <MediaGallery
+            v-show="!editMedia"
             v-bind="{ select, page, pages, medias }"
             :selection="$attrs.selection"
             @update:selection="$emit('update:selection', $event)"
             @selectionChange="selectionChange($event)"
-            :class="{ 'd-none': editMedia }"
             @pageChange="getRoot({ page: $event })"
             @editMedia="openEditor($event)"
           />
