@@ -116,7 +116,7 @@ export default {
               let html;
               switch (result.mime_type && result.mime_type.split("/")[0]) {
                 case "image":
-                  html = `<img width="50%" src="${result.file}">`;
+                  html = `<img width="300px" src="${result.file}" alt="${result.alt_text}">`;
                   break;
                 case "video":
                   html = `<video controls><source src="${result.file}" type="${result.mime_type}"></video>`;
