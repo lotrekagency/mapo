@@ -53,6 +53,7 @@
           :selected="isSelected(media)"
           @click.native="selectMedia(media)"
           filename
+          video-preview
         />
       </v-col>
     </v-row>

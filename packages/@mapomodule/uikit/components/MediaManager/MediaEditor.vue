@@ -14,6 +14,7 @@
         height="400"
         contain
         filename
+        video-controls
         class="elevation-2"
       />
       <v-overlay

@@ -4,8 +4,13 @@
     :lazy-src="(media.is_image && media.thumbnail) || null"
     aspect-ratio="1"
     class="grey lighten-2"
-    :class="{ selected }"
+    :class="{
+      selected,
+      'video-controls': videoControls,
+      'video-preview': videoPreview,
+    }"
     v-bind="$attrs"
+    v-on="videoListeners"
   >
     <template v-slot:placeholder>
       <v-row class="fill-height ma-0" align="center" justify="center">
@@ -14,6 +19,24 @@
           indeterminate
           color="grey lighten-5"
         ></v-progress-circular>
+        <div
+          class="d-flex justify-center align-center"
+          :class="{ playing }"
+          style="width: 100%; height: 100%"
+          v-else-if="isVideo"
+        >
+          <video
+            :width="$attrs.contain && '100%'"
+            height="100%"
+            ref="video"
+            :controls="videoControls"
+          >
+            <source :src="media.file" :type="media.mime_type" />
+          </video>
+          <v-icon v-if="!videoControls" :size="size" class="video-preview-icon"
+            >mdi-play</v-icon
+          >
+        </div>
         <div
           class="
             d-flex
@@ -30,7 +53,7 @@
           <span
             class="grey--text text--darken-3 text-truncate pl-1 pr-8"
             style="width: 100%"
-            >{{ filename && name || undefined }}</span
+            >{{ (filename && name) || undefined }}</span
           >
         </div>
       </v-row>
@@ -38,10 +61,36 @@
   </v-img>
 </template>
 
+<style lang="scss">
+.v-image.video-controls {
+  .v-image__placeholder {
+    z-index: 0;
+  }
+}
+.v-image.video-preview {
+  .v-image__placeholder {
+    height: calc(100% + 1px);
+  }
+}
+.video-preview-icon.v-icon.v-icon {
+  position: absolute;
+  color: #00000080;
+  background: #e0e0e080;
+  border-radius: 50%;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+.playing .video-preview-icon.v-icon.v-icon {
+  opacity: 0;
+  transform: scale(1.2);
+}
+</style>
+
 <script>
 export default {
   data() {
-    return {};
+    return {
+      playing: false,
+    };
   },
   props: {
     media: {
@@ -57,17 +106,62 @@ export default {
       default: false,
     },
     iconSize: {
-        type: String || Number,
-        default: '70px'
-    }
+      type: String || Number,
+      default: "70px",
+    },
+    videoPreview: {
+      type: Boolean,
+      default: false,
+    },
+    videoControls: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     name() {
       return this.media && this.media.file && this.media.file.split("/").pop();
     },
-    size(){
-        return this.iconSize && (typeof this.iconSize == 'string' ? this.iconSize : this.iconSize + 'px') || '70px'
-    }
+    size() {
+      return (
+        (this.iconSize &&
+          (typeof this.iconSize == "string"
+            ? this.iconSize
+            : this.iconSize + "px")) ||
+        "70px"
+      );
+    },
+    isVideo() {
+      return this.media.mime_type.startsWith("video/");
+    },
+    videoListeners() {
+      if (this.isVideo && this.videoPreview) {
+        return {
+          mouseenter: this.startVideoPreview,
+          mouseleave: this.stopVideoPreview,
+        };
+      }
+    },
+  },
+  methods: {
+    startVideoPreview() {
+      const video = this.$refs.video;
+      if (video) {
+        video.loop = true;
+        video.muted = true;
+        video.currentTime = 1;
+        video.play();
+        this.playing = true;
+      }
+    },
+    stopVideoPreview() {
+      const video = this.$refs.video;
+      if (video) {
+        video.currentTime = 0;
+        video.pause();
+        this.playing = false;
+      }
+    },
   },
 };
 </script>
