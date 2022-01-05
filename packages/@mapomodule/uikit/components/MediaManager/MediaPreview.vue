@@ -97,6 +97,7 @@ export default {
   data() {
     return {
       playing: false,
+      playPromise: null,
     };
   },
   props: {
@@ -156,17 +157,19 @@ export default {
   methods: {
     startVideoPreview() {
       const video = this.$refs.video;
-      if (video) {
+      if (video && !this.playing) {
         video.loop = true;
         video.muted = true;
         video.currentTime = 1;
-        video.play();
-        this.playing = true;
+        this.playPromise = video.play().then(() => (this.playing = true));
       }
     },
-    stopVideoPreview() {
+    async stopVideoPreview() {
+      if (this.playPromise) {
+        await this.playPromise;
+      }
       const video = this.$refs.video;
-      if (video) {
+      if (video && this.playing) {
         video.currentTime = 0;
         video.pause();
         this.playing = false;
