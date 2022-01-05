@@ -6,7 +6,7 @@
     class="grey lighten-2"
     :class="{
       selected,
-      'video-controls': videoControls,
+      'media-controls': mediaControls,
       'video-preview': videoPreview,
     }"
     v-bind="$attrs"
@@ -29,11 +29,15 @@
             :width="$attrs.contain && '100%'"
             height="100%"
             ref="video"
-            :controls="videoControls"
+            :controls="mediaControls"
           >
             <source :src="media.file" :type="media.mime_type" />
           </video>
-          <v-icon v-if="!videoControls" :size="size" class="video-preview-icon"
+          <v-icon
+            v-if="!mediaControls"
+            :size="size"
+            color="grey darken-4"
+            class="grey lighten-2 rounded-circle video-preview-icon"
             >mdi-play</v-icon
           >
         </div>
@@ -49,7 +53,12 @@
           v-else
         >
           <div></div>
-          <v-icon :size="size" color="grey">mdi-file</v-icon>
+          <v-icon :size="size" color="grey darken-2">
+            {{ isAudio ? "mdi-headphones" : "mdi-file" }}
+          </v-icon>
+          <audio v-if="isAudio && mediaControls" controls>
+            <source :src="media.file" :type="media.mime_type" />
+          </audio>
           <span
             class="grey--text text--darken-3 text-truncate pl-1 pr-8"
             style="width: 100%"
@@ -62,7 +71,7 @@
 </template>
 
 <style lang="scss">
-.v-image.video-controls {
+.v-image.media-controls {
   .v-image__placeholder {
     z-index: 0;
   }
@@ -74,9 +83,7 @@
 }
 .video-preview-icon.v-icon.v-icon {
   position: absolute;
-  color: #00000080;
-  background: #e0e0e080;
-  border-radius: 50%;
+  opacity: 0.5;
   transition: transform 0.3s ease-out, opacity 0.3s ease-out;
 }
 .playing .video-preview-icon.v-icon.v-icon {
@@ -113,7 +120,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    videoControls: {
+    mediaControls: {
       type: Boolean,
       default: false,
     },
@@ -133,6 +140,9 @@ export default {
     },
     isVideo() {
       return this.media.mime_type.startsWith("video/");
+    },
+    isAudio() {
+      return this.media.mime_type.startsWith("audio/");
     },
     videoListeners() {
       if (this.isVideo && this.videoPreview) {

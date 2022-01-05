@@ -121,6 +121,9 @@ export default {
                 case "video":
                   html = `<video controls><source src="${result.file}" type="${result.mime_type}"></video>`;
                   break;
+                case "audio":
+                  html = `<audio controls><source src="${result.file}" type="${result.mime_type}"></audio>`;
+                  break;
                 default:
                   html = `<a href="${result.file}" target="_blank">${result.file}</a>`;
                   break;

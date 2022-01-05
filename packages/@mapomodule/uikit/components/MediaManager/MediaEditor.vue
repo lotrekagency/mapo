@@ -14,7 +14,7 @@
         height="400"
         contain
         filename
-        video-controls
+        media-controls
         class="elevation-2"
       />
       <v-overlay
@@ -94,7 +94,7 @@
                       <div class="d-flex flex-column flex-grow-1">
                         <v-file-input
                           v-model="newFile"
-                          :accept="media.is_image ? 'image/*' : '*'"
+                          :accept="accept"
                           label="New file"
                           show-size
                           dense
@@ -171,7 +171,7 @@ table tr td:nth-child(2) {
 .dialog {
   position: relative;
   height: 56px;
-  z-index: 6;
+  z-index: 5;
   &__container {
     position: absolute;
     bottom: 0;
@@ -245,6 +245,18 @@ export default {
           return "50vh";
         default:
           return 425;
+      }
+    },
+    accept(){
+      switch (this.media.mime_type && this.media.mime_type.split("/")[0]) {
+        case "image":
+          return "image/*"
+        case "video":
+          return "video/*"
+        case "audio":
+          return "audio/*"
+        default:
+          return "*"
       }
     },
     newFilePreview() {
