@@ -74,7 +74,7 @@ export default {
 
   methods: {
     initEditor() {
-      initMapoMedia(this.insertImgCallback);
+      initMapoMedia(this.insertMediaCallback);
       window.tinymce.init(
         Object.assign(defaults, this.conf, {
           target: this.$refs.editorNode,
@@ -108,15 +108,28 @@ export default {
         });
       }
     },
-    insertImgCallback: async function () {
+    insertMediaCallback: async function () {
       return new Promise((resolve, reject) => {
-        this.$refs.mediaManager
-          .open()
-          .then((result) =>
-            result
-              ? resolve(`<img width="50%" src="${result.file}">`)
-              : reject("No image selected")
-          )
+        this.$refs.mediaManager.open()
+          .then((result) => {
+            if (result) {
+              let html;
+              switch (result.mime_type && result.mime_type.split("/")[0]) {
+                case "image":
+                  html = `<img width="50%" src="${result.file}">`;
+                  break;
+                case "video":
+                  html = `<video controls><source src="${result.file}" type="${result.mime_type}"></video>`;
+                  break;
+                default:
+                  html = `<a href="${result.file}" target="_blank">${result.file}</a>`;
+                  break;
+              }
+              resolve(html);
+            } else {
+              reject("No image selected");
+            }
+          })
           .catch((error) => reject(error));
       });
     },
