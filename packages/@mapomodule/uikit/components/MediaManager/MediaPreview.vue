@@ -139,10 +139,10 @@ export default {
       );
     },
     isVideo() {
-      return this.media.mime_type.startsWith("video/");
+      return this.media.mime_type && this.media.mime_type.startsWith("video/");
     },
     isAudio() {
-      return this.media.mime_type.startsWith("audio/");
+      return this.media.mime_type && this.media.mime_type.startsWith("audio/");
     },
     videoListeners() {
       if (this.isVideo && this.videoPreview) {
