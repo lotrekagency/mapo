@@ -9,6 +9,7 @@
 |value|-|`Boolean`|`false`|-|
 |noFolders|-|`Boolean`|`false`|false|
 |select|-|`String`|`false`|single|
+|mime|-|`String`|`false`|-|
 
 <!-- @vuese:MediaManagerDialog:props:end -->
 

@@ -12,6 +12,8 @@
 |childrens|-|`Array`|`false`|-|
 |depth|-|`Number`|`false`|-|
 |forceCollapse|-|`Boolean`|`false`|-|
+|child|-|`Boolean`|`false`|-|
+|spiderMenu|-|`Boolean`|`false`|-|
 
 <!-- @vuese:SidebarListItem:props:end -->
 

@@ -10,6 +10,7 @@
 |page|-|`Number`|`false`|1|
 |pages|-|`Number`|`false`|1|
 |select|-|`String`|`false`|-|
+|selection|-|`Array`|`false`|-|
 
 <!-- @vuese:MediaGallery:props:end -->
 
