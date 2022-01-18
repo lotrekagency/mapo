@@ -2,7 +2,7 @@
   <v-snackbar v-model="snackbar">
     {{ message }}
     <template v-slot:action="{ attrs }">
-      <v-btn color="green" text v-bind="attrs" @click="closeSnack">
+      <v-btn color="primary" text v-bind="attrs" @click="closeSnack">
         Close
       </v-btn>
     </template>
