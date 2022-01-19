@@ -18,7 +18,10 @@ export default ({ store }) => {
             commit('app/SET_CLIPPED', sidebar_clipped)
             if (__mapo_session) {
               commit('user/SET_TOKEN', __mapo_session)
-              await dispatch('user/getInfo').catch(() => dispatch('user/logout'))
+              await dispatch('user/getInfo').catch((e) => {
+                console.error(`Error occurred calling backend app:\n${e.stack || e}\nCannot maintain your session in ssr.`); 
+                dispatch('user/logout')
+              })
             }
           }
         }
