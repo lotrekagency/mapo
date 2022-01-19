@@ -26,7 +26,7 @@ export default {
   props: {
     // V-model property. It is the array to be modified. 
     value: {
-      type: Array,
+      type: Array | null,
       required: true
     },
     // This is the array of options from which you can choose.
@@ -80,7 +80,7 @@ export default {
   },
   watch: {
     items(val) {
-      this.proxyItems = val;
+      this.proxyItems = val || [];
     }
   },
   mounted() {

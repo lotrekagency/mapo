@@ -18,12 +18,12 @@ export default {
     fields: {
       main: [
         { value: "identifier", synci18n: true },
-        // {
-        //   value: "tags",
-        //   synci18n: true,
-        //   type: "m2m",
-        //   attrs: { endPoint: "api/camomilla/tags", itemText: "title" }
-        // },
+        {
+          value: "tags",
+          synci18n: true,
+          type: "m2m",
+          attrs: { endPoint: "api/camomilla/tags", itemText: "title" }
+        },
         { value: "content", type: "editor" },
         {
           group: "Seo",
