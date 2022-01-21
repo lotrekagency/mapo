@@ -265,7 +265,8 @@ export default {
         return this.crud
           .partialUpdate(
             this.modelBkp[this.lookup],
-            diffObjs(this.modelBkp, this.model)
+            // diffObjs(this.modelBkp, this.model) disabled since it creates some errors in translations
+            this.model
           )
           .then((res) => this.close(res))
           .catch(this.handleError);
