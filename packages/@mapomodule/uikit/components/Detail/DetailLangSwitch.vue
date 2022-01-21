@@ -1,5 +1,5 @@
 <template>
-  <v-tabs v-model="tab">
+  <v-tabs v-model="tab" show-arrows>
     <v-tab v-for="lang in langs" :key="lang">
       <v-badge :value="hasErrors(lang)" color="error" dot>
         {{ lang }}
