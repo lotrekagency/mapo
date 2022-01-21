@@ -2,7 +2,7 @@
   <v-snackbar v-model="snackbar">
     {{ message }}
     <template v-slot:action="{ attrs }">
-      <v-btn color="primary" text v-bind="attrs" @click="closeSnack">
+      <v-btn :color="color" text v-bind="attrs" @click="closeSnack">
         Close
       </v-btn>
     </template>
@@ -23,7 +23,7 @@ export default {
   data: () => ({
     snackbar: false,
     message: null,
-    color: "green",
+    color: "primary",
   }),
   computed: {
     ...mapGetters({
@@ -34,7 +34,6 @@ export default {
     closeSnack() {
       this.snackbar = false;
       this.message = null;
-      this.color = "green";
     },
   },
 
@@ -48,7 +47,7 @@ export default {
       if (val) {
         this.snackbar = true;
         this.message = val.message;
-        this.color = val.color || this.color;
+        this.color = val.color || "primary";
       } else {
         this.closeSnack();
       }
