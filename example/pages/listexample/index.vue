@@ -5,6 +5,7 @@
     :headers="headers"
     :editFields="editFields"
     :filters="availableFilters"
+    :languages="['it', 'en', 'de']"
     endpoint="api/camomilla/articles"
     navigable
     addItem
@@ -35,9 +36,16 @@ export default {
         { text: "Actions", value: "actions", sortable: false },
       ],
       editFields: [
-        { attrs: { rules:[v => !!v || 'Title is required'] }, value: "title" },
-        { attrs: { rules:[v => !!v || 'Permalink is required'] }, value: "permalink" },
-        { attrs: { rules:[v => !!v || 'Identifier is required'] }, value: "identifier" },
+        { value: "identifier", synci18n: true },
+        { value: "content", type: "editor" },
+        {
+          group: "Seo",
+          fields: [
+            { value: "title", class: "col-md-6" },
+            { value: "permalink", class: "col-md-6" },
+            { value: "description", type: "textarea" },
+          ]
+        }
       ],
       availableFilters: [
         {

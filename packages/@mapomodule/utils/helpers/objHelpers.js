@@ -25,15 +25,28 @@ function setPointed(obj, kpointed, val) {
 }
 
 function filterObj(obj, kpointedArr) {
-    return kpointedArr.reduce((acc, kpointed) => {
+    return (kpointedArr || []).reduce((acc, kpointed) => {
         setPointed(acc, kpointed, getPointed(obj, kpointed))
         return acc
     }, {})
+}
+function diffObjs(obj1, obj2) {
+    const a = deepClone(obj1)
+    const b = deepClone(obj2)
+    for (const i in b){
+        if (JSON.stringify(a[i]) === JSON.stringify(b[i])){
+            delete b[i]
+        } else if (!Array.isArray(b[i]) && typeof b[i] == 'object') {
+            b[i] = diffObjs(a[i], b[i])
+        }
+    }
+    return b;
 }
 
 module.exports = {
     deepClone,
     getPointed,
     setPointed,
-    filterObj
+    filterObj,
+    diffObjs
 }
