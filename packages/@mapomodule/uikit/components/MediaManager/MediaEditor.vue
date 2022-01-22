@@ -56,7 +56,13 @@
                     </tr>
                     <tr>
                       <td class="pr-3"><b>Linked models:</b></td>
-                      <td>{{ media.liks }}</td>
+                      <td>
+                        <ul>
+                          <li v-for="link in media.links" :key="link.id">
+                            <b>{{link.model}} (id:{{link.id}})</b> - {{link.name}}
+                          </li>
+                        </ul>
+                      </td>
                     </tr>
                   </table>
                 </v-col>

@@ -201,7 +201,7 @@ export default {
       }
       this.editMedia = res
       this.$mapo.$snack.open({
-        message: "file info succesfully updated."
+        message: "File info succesfully updated."
       })
       return res
     },
