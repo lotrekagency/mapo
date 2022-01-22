@@ -9,17 +9,15 @@ module.exports = ({ $axios, store }) => {
         })
     
         $axios.onResponse((response) => {
-            if (response.status !== 200) {
-                if (response.status === 401 || response.status === 402 || response.status === 403) {
-                    store.dispatch('mapo/user/logout');
-                }
+            if (response.status === 401) {
+                store.dispatch('mapo/user/logout');
             }
             return response
         })
     
         $axios.onError((error) => {
             const { status } = error.response || {}
-            if (status === 401 || status === 402 || status === 403) {
+            if (status === 401) {
                 store.dispatch('mapo/user/logout');
             }
             return Promise.reject(error)
