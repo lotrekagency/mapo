@@ -92,6 +92,7 @@
           </v-container>
         </v-card-text>
         <v-card-actions>
+          <v-messages v-if="nonFieldErrors.length" v-model="nonFieldErrors" color="error"></v-messages>
           <slot name="actions" v-bind="slotBindings">
             <v-spacer></v-spacer>
             <v-btn text @click="close()"> Cancel </v-btn>
@@ -178,6 +179,9 @@ export default {
     },
     loading() {
       return this.isNew ? false : !Object.keys(this.model || {}).length;
+    },
+    nonFieldErrors(){
+      return this.errors?.non_field_errors || []
     },
     slotBindings() {
       return {
