@@ -293,7 +293,7 @@ export default {
       this.$mapo.$snack.open({
         message: badRequest
           ? "Bad input, correct wrong fields."
-          : "Something whent bad, please try again later...",
+          : error.response?.data?.detail || "Something whent bad, please try again later...",
         color: "error",
       });
     },

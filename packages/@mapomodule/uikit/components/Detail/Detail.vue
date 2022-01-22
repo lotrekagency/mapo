@@ -254,7 +254,7 @@ export default {
           this.errors =
             (error.response.status == 400 && error.response.data) || null;
           this.$mapo.$snack.open({
-            message: "Something whent bad, please try again later...",
+            message: error.response?.data?.detail || "Something whent bad, please try again later...",
             color: "error"
           });
         });
@@ -273,7 +273,7 @@ export default {
               .then(() => this.$router.back())
               .catch(error =>
                 this.$mapo.$snack.open({
-                  message: "Something whent bad, please try again later...",
+                  message: error.response?.data?.detail || "Something whent bad, please try again later...",
                   color: "error"
                 })
               );
