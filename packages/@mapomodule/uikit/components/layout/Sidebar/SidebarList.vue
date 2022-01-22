@@ -5,6 +5,7 @@
       :key="i"
       :link="item.link"
       :label="item.label"
+      :meta="item.meta"
       :childrens="item.childrens"
       :icon="item.icon"
       :force-collapse="forceCollapse"

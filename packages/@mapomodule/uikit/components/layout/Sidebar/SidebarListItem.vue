@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ child, expanded, 'spider-menu': spiderMenu }">
+  <div v-if="userCanSee" :class="{ child, expanded, 'spider-menu': spiderMenu }">
     <v-list-item
       :style="indent"
       :exact-path="expanded"
@@ -29,6 +29,7 @@
         :key="i"
         :link="item.link"
         :label="item.label"
+        :meta="item.meta"
         :childrens="item.childrens"
         :depth="(depth || 0) + 1"
         :icon="item.icon"
@@ -113,12 +114,27 @@ export default {
     activeChild() {
       return (this.childrens || []).some((child) => this.$nuxt.$route.path.startsWith(child.link));
     },
+    userCanSee() {
+      const middleware = typeof this.meta?.middleware == "string" ? [this.meta.middleware] : this.meta?.middleware || []
+      if (middleware.includes("permissions")){
+        const userInfo = this.$mapo.$auth.user.info
+        if (userInfo.is_superuser) return true
+        const { model } = this.meta?.permissions || {}
+        const userPermission = (userInfo.user_permissions || []).filter(perm => perm.codename.endsWith(model)).map(({ codename }) => codename.replace(`_${model}`, ''))
+        return userPermission.includes('view')
+      }
+      if (middleware.includes("auth")){
+        return this.$mapo.$auth.user.isLoggedIn
+      }
+      return true
+    },
   },
   props: {
     link: String,
     label: String,
     icon: String,
     childrens: Array,
+    meta: Object,
     depth: Number,
     forceCollapse: Boolean,
     child: Boolean,
