@@ -45,7 +45,8 @@ const extractProperies = (filename, options) => {
             }
         })
     }
-    return data.meta && Object.keys(data).length === 1 ? data.meta : data
+    const { meta, ...props } = data
+    return { ...meta, ...props }
 }
 
 export default function (moduleOptions) {
@@ -54,7 +55,7 @@ export default function (moduleOptions) {
         ...this.options.routeMeta,
         ...moduleOptions,
     }
-    const properties = ['meta', ...options.additionalProperties]
+    const properties = ['meta', 'middleware', ...options.additionalProperties]
 
     let localRoutes = []
     let filesWatcher
