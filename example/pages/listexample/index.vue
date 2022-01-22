@@ -1,27 +1,27 @@
 <template>
-<v-container fluid>
-  <List
-    show-select
-    :headers="headers"
-    :editFields="editFields"
-    :filters="availableFilters"
-    :languages="['it', 'en', 'de']"
-    endpoint="api/camomilla/articles"
-    navigable
-    addItem
-    server-pagination
-    multi-sort
-    can-select-all
-    searchable
-  >
-  </List>
-</v-container>
-
-
+  <v-container fluid>
+    <List
+      show-select
+      :headers="headers"
+      :editFields="editFields"
+      :filters="availableFilters"
+      :languages="['it', 'en', 'de']"
+      endpoint="api/camomilla/articles"
+      navigable
+      addItem
+      server-pagination
+      multi-sort
+      can-select-all
+      searchable
+    >
+    </List>
+  </v-container>
 </template>
 
 <script>
 export default {
+  meta: { permissions: { model: "article" } },
+  middleware: ["auth", "permissions"],
   data() {
     return {
       headers: [
@@ -44,8 +44,8 @@ export default {
             { value: "title", class: "col-md-6" },
             { value: "permalink", class: "col-md-6" },
             { value: "description", type: "textarea" },
-          ]
-        }
+          ],
+        },
       ],
       availableFilters: [
         {
@@ -60,10 +60,9 @@ export default {
         {
           text: "Date",
           value: "date",
-          datepicker: true
+          datepicker: true,
         },
       ],
-
     };
   },
 };

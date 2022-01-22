@@ -13,6 +13,8 @@
 
 <script>
 export default {
+  meta: { permissions: { model: "article" } },
+  middleware: ["auth", "permissions"],
   data: () => ({
     model: {},
     fields: {
