@@ -16,9 +16,11 @@
           </div>
           <v-spacer></v-spacer>
           <slot name="title" v-bind="slotBindings">
-            <v-icon class="mr-4">{{
-              isNew ? "mdi-plus-circle-outline" : "mdi-pencil-outline"
-            }}</v-icon>
+            <v-hover v-slot="{ hover }">
+              <v-icon @click="hover && close()" class="mr-4">{{
+                hover ? "mdi-close" : isNew ? "mdi-plus-circle-outline" : "mdi-pencil-outline"
+              }}</v-icon>
+            </v-hover>
           </slot>
         </v-card-title>
         <v-card-text class="pa-0 px-2">
