@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div :style="style" class="overflow-y-auto">
     <v-checkbox
       v-for="(option, index) in options"
       :key="index"
       :label="option[itemText]"
       :input-value="isSelected(option)"
       @change="changed($event, option)"
+      class="ma-0"
     >
     </v-checkbox>
   </div>
@@ -42,6 +43,10 @@ export default {
       type: String,
       default: "*"
     },
+    maxHeight: {
+      type: Number | String,
+      default: "400px"
+    },
     lookup: {
       type: String,
       default: "id"
@@ -58,6 +63,11 @@ export default {
     },
     options() {
       return this.mapping(this.proxyItems);
+    },
+    style() {
+      return {
+        maxHeight: !this.maxHeight ? undefined : typeof this.maxHeight == "number" ? this.maxHeight + "px" : this.maxHeight
+      }
     }
   },
   methods: {
