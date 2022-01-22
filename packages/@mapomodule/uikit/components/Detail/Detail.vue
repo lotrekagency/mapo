@@ -291,7 +291,7 @@ export default {
     parseConf(field, i) {
       const conf = typeof field === "string" ? { value: field } : field;
       conf.value = conf.value || "";
-      conf.value = conf.value.replace(new RegExp(`^translations\.(${this.languages.join("|")})\.?`), "");
+      conf.value = conf.value.replace(new RegExp(`^translations\.(${this.langs.join("|")})\.?`), "");
       conf.slotName = `fields.${conf.value || i}`;
       if (this.currentLang && !field.synci18n) {
         const base = `translations.${this.currentLang}`;
@@ -361,7 +361,7 @@ export default {
     },
     langs() {
       return (
-        this.model?.active_languages?.languages.map(l => l.id) || this.languages
+        this.model?.lang_info?.site_languages.map(l => l.id) || this.languages
       );
     },
     slotBindings() {

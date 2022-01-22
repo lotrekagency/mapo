@@ -172,10 +172,7 @@ export default {
       return this.mapConf(this.editFields || []);
     },
     langs() {
-      return (
-        this.model?.active_languages?.languages.map((l) => l.id) ||
-        this.languages
-      );
+      return this.model?.lang_info?.site_languages.map((l) => l.id) || this.languages;
     },
     loading() {
       return this.isNew ? false : !Object.keys(this.model || {}).length;
@@ -223,7 +220,7 @@ export default {
       const conf = typeof field === "string" ? { value: field } : field;
       conf.value = conf.value || "";
       conf.value = conf.value.replace(
-        new RegExp(`^translations\.(${this.languages.join("|")})\.?`),
+        new RegExp(`^translations\.(${this.langs.join("|")})\.?`),
         ""
       );
       conf.slotName = `fields.${conf.value || i}`;
