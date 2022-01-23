@@ -3,8 +3,9 @@ import transformRequestInMultipart from '@mapomodule/core/api/multipart'
 import initInterceptors from '@mapomodule/core/interceptor'
 
 function getRouteMiddlewares(route) {
-    const mid = route.meta?.middleware
-    return (typeof mid === "string" ? [mid] : mid) || []
+    const meta = Array.isArray(route?.meta) ? route.meta[0] : route.meta
+    const { middleware } = meta
+    return (typeof middleware === "string" ? [middleware] : middleware) || []
 }
 
 
