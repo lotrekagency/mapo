@@ -5,6 +5,7 @@
       v-bind="$attrs"
       v-model="action"
       :items="filteredActions"
+      :item-disabled="isDisabled"
       item-text="label"
       item-value="handler"
       outlined
@@ -53,6 +54,7 @@ export default {
             handler: function ({ selection, lookup, crud }) {
               return Promise.all(selection.map((i) => crud && crud.delete(i[lookup])));
             },
+            permissions: "delete"
           },
         ];
       },
@@ -89,6 +91,19 @@ export default {
     }
   },
   methods: {
+    isDisabled(action){ 
+      const p = typeof action.permissions == "string" ? [action.permissions] : action.permissions || []
+      if (p.length){
+        return !p.every(a => this.userCan(a))
+      }
+      return false
+    },
+    userCan(action) {
+      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")){
+        return this.$mapo.$auth.user.permissions.includes(action)
+      }
+      return true
+    },
     handleAction() {
       if (!this.selectAll && !this.selection.length) {
         return this.$mapo.$snack.open({
@@ -120,6 +135,7 @@ The actions prop is a list of `Action` objects containing these keys:
 - **"handleMultiple"** `Boolean` ==> Make the action callable on multiple items. Default: `true`.
 - **"handleAll"** `Boolean` ==> Make the action callable on all items. Default: `false`.
 - **"handler"** `Function` ==> The callback function that will be executed once the user confirms the action.
+- **"permissions"** `String | Array` ==> The list of permissions needed by the user to perform action in a page with permission middleware
 
 The handler function will be called with a ctx containing:
  - **"selection"** `Array<Object>` or `String` ==> `"all"` if all items are selected else the list of selected objects.
@@ -140,6 +156,7 @@ const actions = [
         selection.map((i) => crud.delete(i[lookup]))
       );
     },
+    permissions: "delete"
   }
 ]
 ```
