@@ -18,7 +18,7 @@ export default {
   props: {
     // V-model property. It is the array to be modified.
     value: {
-      type: Array | null,
+      type: Object | Array | null,
       required: true,
     },
     // This is the array of options from which you can choose.
