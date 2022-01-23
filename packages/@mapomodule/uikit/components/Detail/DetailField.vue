@@ -5,7 +5,7 @@
 <script>
 import wygEditor from "@mapomodule/uikit/components/fields/wygEditor/wygEditor.vue";
 import DateField from "@mapomodule/uikit/components/fields/DateField.vue";
-import M2mField from "@mapomodule/uikit/components/fields/M2mField.vue";
+import FksField from "@mapomodule/uikit/components/fields/FksField.vue";
 import MediaM2mField from "@mapomodule/uikit/components/fields/MediaM2mField.vue";
 import MediaField from "@mapomodule/uikit/components/fields/MediaField.vue";
 import SeoPreview from "@mapomodule/uikit/components/fields/SeoPreview.vue";
@@ -22,7 +22,7 @@ export default {
   components: {
     wygEditor,
     DateField,
-    M2mField,
+    FksField,
     MediaM2mField,
     MediaField,
     SeoPreview

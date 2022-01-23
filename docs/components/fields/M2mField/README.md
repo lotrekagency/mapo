@@ -1,10 +1,10 @@
-# M2mField
+# FksField
 
 This component is made to simplify Many To Many associations. With this component you can modify an array selecting items from a list of checkboxes.
 
 ## Props
 
-<!-- @vuese:M2mField:props:start -->
+<!-- @vuese:FksField:props:start -->
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
@@ -16,17 +16,17 @@ This component is made to simplify Many To Many associations. With this componen
 |endPoint|-|`String`|`false`|-|
 |mapping|-|`Function`|`false`|items => items|
 
-<!-- @vuese:M2mField:props:end -->
+<!-- @vuese:FksField:props:end -->
 
 
 ## Events
 
-<!-- @vuese:M2mField:events:start -->
+<!-- @vuese:FksField:events:start -->
 
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|
 
-<!-- @vuese:M2mField:events:end -->
+<!-- @vuese:FksField:events:end -->
 
 

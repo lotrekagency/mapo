@@ -8,7 +8,7 @@ const mapping = {
     file: "vFileInput",
     editor: "wygEditor",
     media: "MediaField",
-    m2m: "M2mField",
+    m2m: "FksField",
     mediaList: "MediaM2mField",
     seoPreview: "SeoPreview"
 }
@@ -22,7 +22,7 @@ const props = {
         inset: true,
         ripple: false
     },
-    M2mField:{
+    FksField:{
         itemValue: "id",
         returnObject: true,
     },

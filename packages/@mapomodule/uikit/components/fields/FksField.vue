@@ -8,7 +8,7 @@
  */
 
 export default {
-  name: "M2mField",
+  name: "FksField",
   data() {
     return {
       model: null,
