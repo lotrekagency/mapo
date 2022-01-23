@@ -4,7 +4,7 @@ import initInterceptors from '@mapomodule/core/interceptor'
 
 function getRouteMiddlewares(route) {
     const meta = Array.isArray(route?.meta) ? route.meta[0] : route.meta
-    const { middleware } = meta
+    const { middleware } = meta || {}
     return (typeof middleware === "string" ? [middleware] : middleware) || []
 }
 
@@ -46,7 +46,7 @@ export default (ctx, inject) => {
                 get token() { return ctx.store.getters['mapo/user/token'] },
                 get info() { return ctx.store.getters['mapo/user/info'] },
                 get username() { return ctx.store.getters['mapo/user/username'] },
-                get permissions() { return ctx.store.getters['mapo/user/pagePermission'](ctx.app.context.route.name) },
+                get permissions() { return ctx.store.getters['mapo/user/pagePermission'](ctx.app?.context?.route?.name || "") },
                 get role() { return ctx.store.getters['mapo/user/role'] }
             },
             /**
@@ -54,7 +54,7 @@ export default (ctx, inject) => {
              * This returns the current route middlewares if routemeta is enabled.
              */
             get routeMiddlewares() {
-                return getRouteMiddlewares(ctx.app.context.route)
+                return getRouteMiddlewares(ctx.app?.context?.route || {})
             },
             /**
              * 
