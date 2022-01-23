@@ -8,7 +8,7 @@
             <slot name="lang" v-bind="slotBindings">
               <!-- [`DetailLangSwitch`](/components/detail/DetailLangSwitch/)  -->
               <DetailLangSwitch
-                v-if="langs && langs.length > 1"
+                v-if="langs.length > 1"
                 v-model="currentLang"
                 :langs="langs"
                 :errors="errors"
@@ -17,7 +17,7 @@
           <v-spacer></v-spacer>
           <slot name="title" v-bind="slotBindings">
             <v-hover v-slot="{ hover }">
-              <v-icon @click="hover && close()" class="mr-4">{{
+              <v-icon @click="hover && close()" class="mr-4" :class="{'mt-4': !langs.length}">{{
                 hover ? "mdi-close" : isNew ? "mdi-plus-circle-outline" : "mdi-pencil-outline"
               }}</v-icon>
             </v-hover>
@@ -175,7 +175,7 @@ export default {
       return this.mapConf(this.editFields || []);
     },
     langs() {
-      return this.model?.lang_info?.site_languages.map((l) => l.id) || this.languages;
+      return this.model?.lang_info?.site_languages.map((l) => l.id) || this.languages || [];
     },
     loading() {
       return this.isNew ? false : !Object.keys(this.model || {}).length;
