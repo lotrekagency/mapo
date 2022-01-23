@@ -24,7 +24,7 @@ export default {
           value: "tags",
           synci18n: true,
           type: "m2m",
-          attrs: { endPoint: "api/camomilla/tags", itemText: "title" }
+          attrs: { endpoint: "api/camomilla/tags", itemText: "title" }
         },
         { value: "content", type: "editor" },
         {
