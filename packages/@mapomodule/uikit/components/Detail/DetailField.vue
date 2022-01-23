@@ -101,7 +101,8 @@ export default {
       return {
         label: this.label,
         errorMessages: getPointed(this.errors || {}, this.conf.value, []),
-        ...(this.defaultAttrs[this.is] || {}),
+        ...this.defaultAttrs.All,
+        ...(this.defaultAttrs[this.is.replace(/-./g, x=>x[1].toUpperCase())] || {}),
         ...this.conf.attrs
       };
     },
@@ -124,7 +125,7 @@ export default {
       return (
         this.conf.is ||
         (this.conf.type && this.defaultMap[this.conf.type]) ||
-        "v-text-field"
+        "vTextField"
       );
     }
   }

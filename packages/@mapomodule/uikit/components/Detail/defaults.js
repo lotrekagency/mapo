@@ -1,36 +1,34 @@
 const mapping = {
-    text: "v-text-field",
-    select: "v-select",
-    date: "date-field",
-    textarea: "v-textarea",
-    switch: "v-switch",
-    slider: "v-slider",
-    file: "v-file-input",
-    editor: "tiny-mce",
-    media: "media-field",
-    m2m: "m2m-field",
-    mediaList: "media-m2m-field",
-    seoPreview: "seo-preview"
+    text: "vTextField",
+    select: "vSelect",
+    date: "DateField",
+    textarea: "vTextarea",
+    switch: "vSwitch",
+    slider: "vSlider",
+    file: "vFileInput",
+    editor: "TinyMce",
+    media: "MediaField",
+    m2m: "M2mField",
+    mediaList: "MediaM2mField",
+    seoPreview: "SeoPreview"
 }
 
 const props = {
-    "v-text-field": {
-        outlined: true
-    },
-    "v-textarea": {
-        outlined: true
-    },
-    "date-field": {
-        outlined: true
-    },
-    "v-select": {
-        outlined: true,
+    vSelect: {
         itemText: "text",
         itemValue: "value"
     },
-    "v-switch": {
+    vSwitch: {
         inset: true,
         ripple: false
+    },
+    M2mField:{
+        itemValue: "id",
+        returnObject: true,
+    },
+    All : {
+        outlined: true,
+        // dense: true
     }
 }
 
@@ -39,13 +37,13 @@ const dateFunc = function ({ val }) {
 };
 
 const accessor = {
-    "v-date-picker": {
+    vDatePicker: {
         get: dateFunc, set: dateFunc
     },
-    "date-field": {
+    DateField: {
         get: dateFunc, set: dateFunc
     },
-    "seo-preview": {
+    SeoPreview: {
         get: ({ val }) => ({ title: "", permalink: "", description: "", ...val }),
         set: ({ val }) => ({ title: "", permalink: "", description: "", ...val })
     }

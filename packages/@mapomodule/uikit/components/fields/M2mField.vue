@@ -31,8 +31,6 @@ export default {
   computed: {
     fieldAttrs() {
       return {
-        itemValue: "id",
-        returnObject: true,
         chips: this.$attrs.multiple === false ? false : true,
         multiple: true,
         ...this.$attrs,
