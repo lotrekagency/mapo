@@ -33,7 +33,7 @@
           <v-spacer></v-spacer>
           <slot name="dtable.top.center"></slot>
           <v-spacer></v-spacer>
-          <v-btn text v-if="quickModeEnabled" class="ml-2" @click="quickAction()">
+          <v-btn :disabled="!userCan('add')" text v-if="quickModeEnabled" class="ml-2" @click="quickAction()">
             <v-icon small left class="d-none d-sm-block mr-2"> mdi-plus </v-icon>
             <span class="d-none d-sm-block">Quick</span> add
           </v-btn>
@@ -55,10 +55,10 @@
         <v-simple-checkbox v-model="selectAll" @input="on.input"></v-simple-checkbox>
       </template>
       <template v-slot:[`item.actions`]="{ item }">
-        <v-icon v-if="quickModeEnabled" small class="mr-2" @click="quickAction(item)">
+        <v-icon :disabled="!userCan('change')" v-if="quickModeEnabled" small class="mr-2" @click="quickAction(item)">
           mdi-pencil
         </v-icon>
-        <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+        <v-icon :disabled="!userCan('delete')" small @click="deleteItem(item)"> mdi-delete </v-icon>
       </template>
       <template v-for="slot in nameSpacedSlots($slots, 'dtable.')" :slot="slot">
         <slot :name="`dtable.${slot}`"></slot>
@@ -339,6 +339,12 @@ export default {
       this.serverPaginationEnabled && this.getDataFromApi();
       this.loadingSearch = false;
     }, 1000),
+    userCan(action) {
+      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")){
+        return this.$mapo.$auth.user.permissions.includes(action)
+      }
+      return true
+    },
   },
   computed: {
     filteredItems() {
