@@ -31,7 +31,7 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       const url = process.env.AUTH_API || '/api/camomilla/token-auth/'
-      this.$axios.post(url, { username: username.trim(), password: password.trim() }).then(response => {
+      this.$axios.post(url, { username: (username || "").trim(), password: (password || "").trim() }).then(response => {
         const { token } = response.data
         commit('SET_TOKEN', token)
         setToken(token)

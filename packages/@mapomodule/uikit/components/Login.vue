@@ -17,6 +17,7 @@
             filled
             dense
             light
+            :error-messages="errors.username"
           ></v-text-field>
           <v-text-field
             class="rounded-0"
@@ -29,13 +30,20 @@
             dense
             filled
             light
+            :error-messages="errors.password"
             :type="showPass ? 'text' : 'password'"
           ></v-text-field>
           <div class="text-center">
             <v-btn type="submit" class="rounded-0" elevation="0" dark>
               Log In
             </v-btn>
+            <v-messages
+              v-model="errors.non_field_errors"
+              color="error"
+              class="mt-4 text-center"
+            />
           </div>
+      
         </v-form>
       </div>
     </div>
@@ -48,6 +56,7 @@ export default {
       username: "",
       password: null,
       showPass: false,
+      errors: {}
     };
   },
   watch: {
@@ -77,11 +86,11 @@ export default {
             query: this.otherQuery,
           })
         )
-        .catch((err) => {
-          console.log(err)
-          this.$mapo.$snack.open({message: err})
-          this.hasErr = true;
-          this.errMsg = err.message;
+        .catch((error) => {
+          this.errors = error.response?.data || {}
+          if (!Object.keys(this.errors).length){
+            this.$mapo.$snack.open({message: "Cannot login right now. Try again later.", color: "error"})
+          }
         });
     },
   },
