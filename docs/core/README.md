@@ -182,9 +182,28 @@ From here you can reach some utilities that simplify the interaction with the us
 **Kind**: global variable  
 
 * [$auth](#$auth)
+    * [.routeMiddlewares](#$auth.routeMiddlewares)
+    * [.getRouteMiddlewares](#$auth.getRouteMiddlewares) ⇒ <code>Array</code>
     * [.login(payload)](#$auth.login)
     * [.logout()](#$auth.logout)
     * [.getInfo()](#$auth.getInfo) ⇒ <code>UserData</code>
+
+<a name="$auth.routeMiddlewares"></a>
+
+### $auth.routeMiddlewares
+This returns the current route middlewares if routemeta is enabled.
+
+**Kind**: static property of [<code>$auth</code>](#$auth)  
+<a name="$auth.getRouteMiddlewares"></a>
+
+### $auth.getRouteMiddlewares ⇒ <code>Array</code>
+This returns the middlewares of a given route if routemeta is enabled.
+
+**Kind**: static property of [<code>$auth</code>](#$auth)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| route | <code>Object</code> | { meta } the route object with meta info. |
 
 <a name="$auth.login"></a>
 

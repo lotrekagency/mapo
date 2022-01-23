@@ -8,13 +8,9 @@ This component is made to simplify Many To Many associations. With this componen
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|value|V-model property. It is the array to be modified.|`Array`|`true`|-|
+|value|V-model property. It is the array to be modified.|—|`true`|-|
 |items|This is the array of options from which you can choose.|`Array`|`false`|[]|
-|itemText|-|`String`|`false`|text|
-|itemValue|-|`String`|`false`|*|
-|lookup|-|`String`|`false`|id|
-|endPoint|-|`String`|`false`|-|
-|mapping|-|`Function`|`false`|items => items|
+|endpoint|-|`String`|`false`|-|
 
 <!-- @vuese:FksField:props:end -->
 

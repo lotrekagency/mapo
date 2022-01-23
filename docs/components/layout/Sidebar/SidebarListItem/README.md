@@ -10,6 +10,7 @@
 |label|-|`String`|`false`|-|
 |icon|-|`String`|`false`|-|
 |childrens|-|`Array`|`false`|-|
+|meta|-|`Object`|`false`|-|
 |depth|-|`Number`|`false`|-|
 |forceCollapse|-|`Boolean`|`false`|-|
 |child|-|`Boolean`|`false`|-|

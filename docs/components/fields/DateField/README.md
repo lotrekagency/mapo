@@ -10,6 +10,7 @@ This component is used to edit a date in iso format. It is a combination of "v-t
 |---|---|---|---|---|
 |value|V-model property. Is the date to be modified. It can be also array in case of date range.|`String|Array`|`false`|-|
 |range|Determines if we need to work with date ranges.|`Boolean`|`false`|false|
+|readonly|This set the component status to readonly, stopping the user interaction.|`Boolean`|`false`|false|
 
 <!-- @vuese:DateField:props:end -->
 

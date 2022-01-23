@@ -12,7 +12,7 @@ This component wraps a [wygEditor](https://www.tiny.cloud/) instance. With the u
 |conf|This is the main configuration of wygEditor. If setted will be merged with this component defaults.|`Object`|`false`|{}|
 |label|This label will be shown at the top of the editor.|`String`|`false`|-|
 |errorMessages|This is an array of validation errors that will be displayed under the editor.|`Array`|`false`|-|
-|disabled|This set the component status to disabled, stopping the user interaction.|`Boolean`|`false`|false|
+|readonly|This set the component status to readonly, stopping the user interaction.|`Boolean`|`false`|false|
 |bindevents|Use this prop to bind events. If set to true the component will emit every [wygEditor Event](https://www.tiny.cloud/docs/advanced/events/).|`Boolean`|`false`|false|
 
 <!-- @vuese:wygEditor:props:end -->

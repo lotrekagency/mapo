@@ -18,6 +18,7 @@
 |maxHeight|-|—|`false`|undefined|
 |minWidth|-|—|`false`|undefined|
 |minHeight|-|—|`false`|300|
+|readonly|This set the component status to readonly, stopping the user interaction.|`Boolean`|`false`|false|
 
 <!-- @vuese:MediaField:props:end -->
 

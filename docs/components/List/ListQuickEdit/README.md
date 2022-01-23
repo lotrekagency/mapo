@@ -9,8 +9,8 @@ This components renders a dialog that let the user quick edit (or add) an elemen
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|V-model|`Boolean`|`false`|-|
-|editTitle|-|`String`|`false`|-|
-|editFields|-|`Array`|`false`|[]|
+|editFields|The main configuration that determines the arrangement of the fields in the detail layout.|`Array`|`false`|[]|
+|languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
 |lookup|-|`String`|`false`|id|
 |crud|-|`Object`|`true`|-|
 |offline|-|`Boolean`|`false`|-|
@@ -36,8 +36,12 @@ This components renders a dialog that let the user quick edit (or add) an elemen
 |Name|Description|Default Slot Content|
 |---|---|---|
 |activator|-|-|
+|lang|-|[`DetailLangSwitch`](/components/detail/DetailLangSwitch/)|
 |title|-|-|
+|body.top|Use this to add content on top of body.|-|
 |body|-|-|
+|fields.slotName|This is a dynamic slot. You can use it to override a field component. For example use `qedit.fields.title` to override the component of the field with value `title`.|A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration).|
+|body.bottom|Use this to add content under the main body.|-|
 |actions|-|-|
 
 <!-- @vuese:ListQuickEdit:slots:end -->

@@ -18,6 +18,7 @@
 |elevation|-|—|`false`|undefined|
 |flat|-|`Boolean`|`false`|false|
 |dark|-|`Boolean`|`false`|false|
+|readonly|This set the component status to readonly, stopping the user interaction.|`Boolean`|`false`|false|
 
 <!-- @vuese:MediaM2mField:props:end -->
 
