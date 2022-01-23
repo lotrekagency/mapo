@@ -202,7 +202,7 @@ export default {
         .open({
           title: "Delete",
           question: "Are you sure to delelete this folder and all its content?",
-          approveButton: { text: "Delete", attrs: { color: "red" } }
+          approveButton: { text: "Delete", attrs: { color: "red", text: true } }
         })
         .then(res => res && this.$emit("deleteFolder", folder));
     },

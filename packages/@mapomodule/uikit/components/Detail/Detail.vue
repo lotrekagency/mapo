@@ -34,7 +34,7 @@
                 v-for="(field, index) in mainFields"
                 :key="index"
               >
-                <v-card v-if="field.group" class="my-2">
+                <v-card v-if="field.group" class="my-2 rounded-0">
                   <v-card-title>
                     <v-icon left> {{ field.group.icon }} </v-icon>
                     <span>{{ field.group.name }}</span>
@@ -136,7 +136,7 @@
                 v-for="(field, index) in sideFields"
                 :key="index"
               >
-                <v-card v-if="field.group" class="mb-4">
+                <v-card v-if="field.group" class="rounded-0 mb-4">
                   <v-card-title>
                     <v-icon left> {{ field.group.icon }} </v-icon>
                     <span>{{ field.group.name }}</span>
@@ -265,7 +265,7 @@ export default {
         .open({
           title: "Delete",
           question: "Are you sure you want to delete this item?",
-          approveButton: { text: "Delete", attrs: { color: "red" } }
+          approveButton: { text: "Delete", attrs: { color: "red", text: true } }
         })
         .then(res => {
           if (res) {

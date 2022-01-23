@@ -297,7 +297,7 @@ export default {
         .open({
           title: "Delete",
           question: "Are you sure you want to delete this media?",
-          approveButton: { text: "Delete", attrs: { color: "red" } },
+          approveButton: { text: "Delete", attrs: { color: "red", text: true } },
         })
         .then((res) => res && this.$emit("deleteMedia", this.media));
     },

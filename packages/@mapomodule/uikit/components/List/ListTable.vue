@@ -28,7 +28,7 @@
             dense
             clearable
             :loading="loadingSearch"
-            class="search-input"
+            class="search-input rounded-0"
           ></v-text-field>
           <v-spacer></v-spacer>
           <slot name="dtable.top.center"></slot>
@@ -316,7 +316,7 @@ export default {
         .open({
           title: "Delete",
           question: "Are you sure you want to delete this item?",
-          approveButton: { text: "Delete", attrs: { color: "red" } },
+          approveButton: { text: "Delete", attrs: { color: "red", text: true } },
         })
         .then((res) => (res ? callback(item) : null));
     },

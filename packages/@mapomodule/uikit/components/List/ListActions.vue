@@ -13,6 +13,7 @@
       hide-details
       clearable
       no-data-text="No actions available"
+      class="rounded-0"
     ></v-select>
     <v-btn
       class="rounded-0 elevation-0 ml-2"

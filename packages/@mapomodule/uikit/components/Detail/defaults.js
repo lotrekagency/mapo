@@ -18,6 +18,9 @@ const props = {
         itemText: "text",
         itemValue: "value"
     },
+    MediaField: {
+        outlined: false
+    },
     vSwitch: {
         inset: true,
         ripple: false
@@ -28,7 +31,7 @@ const props = {
     },
     All : {
         outlined: true,
-        // dense: true
+        class: "rounded-0",
     }
 }
 

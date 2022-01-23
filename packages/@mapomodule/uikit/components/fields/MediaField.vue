@@ -14,7 +14,8 @@
           v-if="mediaExists"
           :src="internalValue.is_image && internalValue.file || null"
           :lazy-src="internalValue.is_image && internalValue.thumbnail || null"
-          :class="{'grey lighten-2 rounded': !internalValue.is_image}"
+          
+          :class="{'grey lighten-2': !internalValue.is_image}"
           v-bind="{
             aspectRatio,
             contain,
@@ -50,6 +51,7 @@
         <!-- If the media is not avaible, it shows a btn to add new media -->
         <v-card
           v-else-if="!rmAddBtn"
+          class="rounded-0"
           v-bind="{
             height,
             width,
@@ -63,7 +65,7 @@
           <v-card-title>{{ label }}</v-card-title>
 
           <v-card-actions>
-            <v-btn :disabled="readonly" @click="editing = true" block :min-height="minHeight">
+            <v-btn tile :disabled="readonly" @click="editing = true" block :min-height="minHeight">
               <v-icon size="80"> mdi-plus-circle-outline </v-icon>
             </v-btn>
           </v-card-actions>
@@ -190,7 +192,8 @@ export default {
       this.$mapo.$confirm
         .open({
           title: "Remove",
-          question: "Are you sure to want to remove this media?"
+          question: "Are you sure to want to remove this media?",
+          approveButton: { text: "Remove", attrs: { color: "red", text: true } }
         })
         .then((res) => (res ? (this.internalValue = null) : null));
     },
