@@ -1,16 +1,5 @@
 <template>
-  <div :style="style" class="overflow-y-auto">
-    <v-checkbox
-      v-for="(option, index) in options"
-      :key="index"
-      :label="option[itemText]"
-      :input-value="isSelected(option)"
-      @change="changed($event, option)"
-      class="ma-0"
-      :disabled="readonly"
-    >
-    </v-checkbox>
-  </div>
+  <v-select v-bind="fieldAttrs" v-model="model" :items="options"></v-select>
 </template>
 
 <script>
@@ -22,90 +11,52 @@ export default {
   name: "M2mField",
   data() {
     return {
-      proxyItems: []
+      model: null,
+      options: [],
     };
   },
   props: {
-    // V-model property. It is the array to be modified. 
+    // V-model property. It is the array to be modified.
     value: {
       type: Array | null,
-      required: true
+      required: true,
     },
     // This is the array of options from which you can choose.
     items: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
-    // This set the component status to readonly, stopping the user interaction.
-    readonly: {
-      type: Boolean,
-      default: false,
-    },
-    itemText: {
-      type: String,
-      default: "text"
-    },
-    itemValue: {
-      type: String,
-      default: "*"
-    },
-    maxHeight: {
-      type: Number | String,
-      default: "400px"
-    },
-    lookup: {
-      type: String,
-      default: "id"
-    },
-    endPoint: String,
-    mapping: {
-      type: Function,
-      default: items => items
-    }
+    endpoint: String,
   },
   computed: {
-    hasKey() {
-      return this.itemValue !== "*";
-    },
-    options() {
-      return this.mapping(this.proxyItems);
-    },
-    style() {
+    fieldAttrs() {
       return {
-        maxHeight: !this.maxHeight ? undefined : typeof this.maxHeight == "number" ? this.maxHeight + "px" : this.maxHeight
-      }
-    }
-  },
-  methods: {
-    isSelected(option) {
-      return !!(this.value || []).find(
-        e => e[this.lookup] == option[this.lookup]
-      );
+        itemValue: "id",
+        returnObject: true,
+        chips: true,
+        multiple: true,
+        ...this.$attrs,
+      };
     },
-    changed(value, option) {
-      let val = this.hasKey ? option[this.itemValue] : option;
-      let newArr = [...(this.value || [])];
-      if (value) {
-        newArr.push(val);
-      } else {
-        let i = newArr.findIndex(e => e[this.lookup] == option[this.lookup]);
-        i !== -1 && newArr.splice(i, 1);
-      }
-      this.$emit("input", newArr);
-    }
   },
   watch: {
     items(val) {
-      this.proxyItems = val || [];
-    }
+      this.options = val || [];
+    },
+    value(val) {
+      this.model = val;
+    },
+    model(val) {
+      this.$emit("input", val);
+    },
   },
   mounted() {
-    if (this.endPoint && (!this.items || !this.items.length)) {
+    if (this.endpoint) {
       this.$mapo.$api
-        .crud(this.endPoint)
+        .crud(this.endpoint)
         .list()
-        .then(res => (this.proxyItems = res));
+        .then((res) => (this.options = res));
     }
-  }
+  },
 };
 </script>
