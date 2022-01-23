@@ -33,7 +33,7 @@
           <v-spacer></v-spacer>
           <slot name="dtable.top.center"></slot>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!userCan('add')" text v-if="quickModeEnabled" class="ml-2" @click="quickAction()">
+          <v-btn text v-if="quickModeEnabled && userCan('add')" class="ml-2" @click="quickAction()">
             <v-icon small left class="d-none d-sm-block mr-2"> mdi-plus </v-icon>
             <span class="d-none d-sm-block">Quick</span> add
           </v-btn>
