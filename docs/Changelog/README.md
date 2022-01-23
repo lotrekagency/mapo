@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.8](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2022-01-23)
+
+
+### Bug Fixes
+
+* **auth:** logout user only on 401 ([818f3d5](https://github.com/lotrekagency/mapo/commit/818f3d5ff315635438ac9bc9566a1b2fd2c5cf03))
+* **detail:** fix lang switch crop in small devices ([fc05f1e](https://github.com/lotrekagency/mapo/commit/fc05f1e437c8c9318354a95c9edd19fb12e0cff9))
+* **detailfield:** fix default prop handling ([b3297f1](https://github.com/lotrekagency/mapo/commit/b3297f10a1ca2bf8db1690c6dcf680baaf96f71b))
+* **langs:** fixed lang detection from model api ([1653740](https://github.com/lotrekagency/mapo/commit/165374080e91571e89b1fc48f43983b681b1ffc0))
+* **list:** remove quickadd if user cannot add ([aef919e](https://github.com/lotrekagency/mapo/commit/aef919ee94c71475b812378126369233df09d055))
+* **login:** fix bad handling of login call ([2d73570](https://github.com/lotrekagency/mapo/commit/2d73570720c91cf8922ed750adeb8cf7f89360c7))
+* **m2m:** let v-model be an object to let field manage fk ([5500870](https://github.com/lotrekagency/mapo/commit/550087025235adf5016ea9340090b3ce1278e126))
+* **mediamanager:** fix linked models ([35611ed](https://github.com/lotrekagency/mapo/commit/35611ed104643c72d5317beef3349928eed09ee8))
+* **permission:** fix bad store initialization on ssr ([f075824](https://github.com/lotrekagency/mapo/commit/f075824561d6a71ce07ecbba70e994102abd623b))
+* **permissions:** add route permissions with routename instead on path ([16ff6ee](https://github.com/lotrekagency/mapo/commit/16ff6eee5e3a8ddbf9e7aea1ba05e8a88fb43932))
+* **permissions:** collect route middleware info directly from ([e1937cc](https://github.com/lotrekagency/mapo/commit/e1937cc835cd4d331a43c4bbf9581c16bfc03f41))
+* **quickedit:** fix close button position ([8e15d47](https://github.com/lotrekagency/mapo/commit/8e15d47c6dd69dfbb2cbf3f70f2fb342202bf9a2))
+* **quickedit:** temporary disable patch diff to fix translation problems ([1ec4b04](https://github.com/lotrekagency/mapo/commit/1ec4b04723d2d25ffdabfb5e5e69dd7c66735fe4))
+* **sidebar:** fix footer menu auth ([6a986ba](https://github.com/lotrekagency/mapo/commit/6a986ba6def87a341e2bf670278716811336c725))
+* **snackbar:** fix snack color ([9fcc053](https://github.com/lotrekagency/mapo/commit/9fcc053a1a52c3970706dcb4393be3aec0aa8c55))
+* fix m2mfield for null values ([fbdf045](https://github.com/lotrekagency/mapo/commit/fbdf0456660b4cc6f46ac7d0ca40278451e87059))
+* **uikit:** fix color mismatch in some components ([06cc23c](https://github.com/lotrekagency/mapo/commit/06cc23c8835c891e9ff15d277ba8bc4e54f1b8b8))
+
+
+### Features
+
+* **detail:** added permission logics to detail component ([475d063](https://github.com/lotrekagency/mapo/commit/475d063ac1979380ec64afc057786a6b2ec142ba))
+* **detail:** added permission logics to list actions component ([eebe25a](https://github.com/lotrekagency/mapo/commit/eebe25a8e0ef6f7d89dd7e1eca762d65ecc090a0))
+* **detail:** added permission logics to list component ([83343ca](https://github.com/lotrekagency/mapo/commit/83343ca4038002d4528de0ec5d746c4420d5d157))
+* **detail:** added permission logics to list head component ([95a37a2](https://github.com/lotrekagency/mapo/commit/95a37a2139726eed85824cf425dd15022d37bf88))
+* **detail:** show backend error messages on model update ([a456a81](https://github.com/lotrekagency/mapo/commit/a456a81610b7b95e231f33cc35f2c87fb9a80071))
+* **fields:** added readonly prop to date custom field ([682bab5](https://github.com/lotrekagency/mapo/commit/682bab59ce88a0dbfa1be644103ccf8b0cb6bf41))
+* **fields:** added readonly prop to various custom fields ([ed45190](https://github.com/lotrekagency/mapo/commit/ed45190cec6250bb26e91b26dc570e07e0fd800c))
+* **m2m:** added autocomplete by default ([1956427](https://github.com/lotrekagency/mapo/commit/19564271f71a289d840a3e1200098e911935da4f))
+* **m2m:** autodisable chips if multiple = false ([5dcc88d](https://github.com/lotrekagency/mapo/commit/5dcc88d671b4c06bd378573a27c9bc1b44b4b736))
+* **m2m:** restyle m2m field ([bb49f3d](https://github.com/lotrekagency/mapo/commit/bb49f3dbf9ba3d6fb2a78e69113645fdde2e1cce))
+* **M2m:** added max height ([d32a383](https://github.com/lotrekagency/mapo/commit/d32a3831f903d20924408536b2921fba3f5e683e))
+* **quickedit:** add close button on hover ([c365f51](https://github.com/lotrekagency/mapo/commit/c365f515dbb2edbf9d964c63b170bf3247309d70))
+* **quickedit:** added non field errors ([4b63e73](https://github.com/lotrekagency/mapo/commit/4b63e734818a0d690831c39ccbe73403400dffd4))
+* **quickedit:** merge detail component logics in to quickedit ([691f610](https://github.com/lotrekagency/mapo/commit/691f610b156f58a5d30598d89bf06425d90451d8))
+* **routeMeta:** added middleware to routemeta ([80bb2cd](https://github.com/lotrekagency/mapo/commit/80bb2cd767f87a0de485c0db7af31f4ad3b39dd3))
+* **sidebar:** hide not navigable entries depending on user permissions ([349dd6c](https://github.com/lotrekagency/mapo/commit/349dd6c102cdf80d25de4db988f1ccf29047dfcd))
+* **uikit:** more consistent ui style ([54c464f](https://github.com/lotrekagency/mapo/commit/54c464f0c8ea86d87e5ae2004b7744bb4126ebba))
+* add error stack trace to node when the ssr session breaks ([8c835d7](https://github.com/lotrekagency/mapo/commit/8c835d73fa10959ed678a55642d30a588482a3d3))
+
+
+
+
+
 # [1.0.0-alpha.7](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.6...v1.0.0-alpha.7) (2022-01-13)
 
 
