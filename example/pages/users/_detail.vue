@@ -22,13 +22,24 @@ export default {
         { value: "email", synci18n: true },
         { value: "first_name", synci18n: true },
         { value: "last_name", synci18n: true },
-
+        { value: "password", synci18n: true, attrs: { type: "password" } },
       ],
       sidenav: [
-        { group: "Permissions", fields: [
-          { value: "user_permissions", synci18n: true, type: "m2m", attrs: { endPoint: "api/camomilla/permissions", itemText: "name" } },
-        ] }
-       
+        { value: "is_superuser", type: "switch", synci18n: true },
+        {
+          group: "Permissions",
+          fields: [
+            {
+              value: "user_permissions",
+              synci18n: true,
+              type: "m2m",
+              attrs: {
+                endPoint: "api/camomilla/permissions",
+                itemText: "name",
+              },
+            },
+          ],
+        },
       ],
     },
   }),
