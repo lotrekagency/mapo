@@ -2,6 +2,12 @@ import createRepository from '@mapomodule/core/api/crud'
 import transformRequestInMultipart from '@mapomodule/core/api/multipart'
 import initInterceptors from '@mapomodule/core/interceptor'
 
+function getRouteMiddlewares(route) {
+    const mid = route.meta?.middleware
+    return (typeof mid === "string" ? [mid] : mid) || []
+}
+
+
 export default (ctx, inject) => {
 
     initInterceptors(ctx)
@@ -39,9 +45,23 @@ export default (ctx, inject) => {
                 get token() { return ctx.store.getters['mapo/user/token'] },
                 get info() { return ctx.store.getters['mapo/user/info'] },
                 get username() { return ctx.store.getters['mapo/user/username'] },
-                get permissions() { return ctx.store.getters['mapo/user/pagePermission'](ctx.app.context.route.path) },
+                get permissions() { return ctx.store.getters['mapo/user/pagePermission'](ctx.app.context.route.name) },
                 get role() { return ctx.store.getters['mapo/user/role'] }
-            }
+            },
+            /**
+             * 
+             * This returns the current route middlewares if routemeta is enabled.
+             */
+            get routeMiddlewares() {
+                return getRouteMiddlewares(ctx.app.context.route)
+            },
+            /**
+             * 
+             * This returns the middlewares of a given route if routemeta is enabled.
+             * @param { Object } route { meta } the route object with meta info.
+             * @returns { Array } 
+             */
+            getRouteMiddlewares: getRouteMiddlewares
         },
         /**
          * From here you can manage the default popup messaging system of mapo.
