@@ -40,8 +40,8 @@ export default {
     label: String,
     // This is an array of validation errors that will be displayed under the editor.
     errorMessages: Array,
-    // This set the component status to disabled, stopping the user interaction.
-    disabled: {
+    // This set the component status to readonly, stopping the user interaction.
+    readonly: {
       type: Boolean,
       default: false,
     },
@@ -78,7 +78,7 @@ export default {
       window.tinymce.init(
         Object.assign(defaults, this.conf, {
           target: this.$refs.editorNode,
-          readonly: this.disabled,
+          readonly: this.readonly,
           setup: (ctx) => this.setupEditor(ctx),
         })
       );
@@ -147,7 +147,7 @@ export default {
         this.editor.setContent(val);
       }
     },
-    disabled(val) {
+    readonly(val) {
       if (this.editor && this.editor.initialized) {
         this.editor.setMode(val ? "readonly" : "design");
       }

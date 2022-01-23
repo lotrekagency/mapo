@@ -62,7 +62,7 @@
 
       <v-card-actions class="paginator mt-auto" v-if="pages">
         <v-row justify="center" class="py-2">
-          <v-btn text @click="prev">
+          <v-btn :disabled="readonly" text @click="prev">
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-item-group v-model="page" class="text-center mx-1" mandatory>
@@ -71,12 +71,12 @@
               :key="`btn-${n}`"
               v-slot="{ active, toggle }"
             >
-              <v-btn :input-value="active" icon @click="toggle">
+              <v-btn :disabled="readonly" :input-value="active" icon @click="toggle">
                 <v-icon>mdi-record</v-icon>
               </v-btn>
             </v-item>
           </v-item-group>
-          <v-btn text @click="next">
+          <v-btn :disabled="readonly" text @click="next">
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
         </v-row>
@@ -170,6 +170,11 @@ export default {
     },
 
     dark: {
+      type: Boolean,
+      default: false,
+    },
+    // This set the component status to readonly, stopping the user interaction.
+    readonly: {
       type: Boolean,
       default: false,
     },

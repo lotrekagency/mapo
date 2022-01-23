@@ -7,6 +7,7 @@
       :input-value="isSelected(option)"
       @change="changed($event, option)"
       class="ma-0"
+      :disabled="readonly"
     >
     </v-checkbox>
   </div>
@@ -34,6 +35,11 @@ export default {
     items: {
       type: Array,
       default: () => []
+    },
+    // This set the component status to readonly, stopping the user interaction.
+    readonly: {
+      type: Boolean,
+      default: false,
     },
     itemText: {
       type: String,

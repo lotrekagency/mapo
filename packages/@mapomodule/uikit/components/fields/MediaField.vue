@@ -63,7 +63,7 @@
           <v-card-title>{{ label }}</v-card-title>
 
           <v-card-actions>
-            <v-btn @click="editing = true" block :min-height="minHeight">
+            <v-btn :disabled="readonly" @click="editing = true" block :min-height="minHeight">
               <v-icon size="80"> mdi-plus-circle-outline </v-icon>
             </v-btn>
           </v-card-actions>
@@ -78,13 +78,13 @@
           </v-row>
           <v-row>
             <v-col cols="6">
-              <v-btn @click="editing = true" fab v-bind="$attrs">
+              <v-btn :disabled="readonly" @click="editing = true" fab v-bind="$attrs">
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
             </v-col>
 
             <v-col cols="6">
-              <v-btn @click="confirmDelete" fab v-bind="$attrs">
+              <v-btn :disabled="readonly" @click="confirmDelete" fab v-bind="$attrs">
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-col>
@@ -162,6 +162,11 @@ export default {
     minHeight: {
       type: String | Number,
       default: 300,
+    },
+    // This set the component status to readonly, stopping the user interaction.
+    readonly: {
+      type: Boolean,
+      default: false,
     },
   },
 
