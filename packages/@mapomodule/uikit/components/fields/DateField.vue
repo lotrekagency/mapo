@@ -15,8 +15,8 @@
           prepend-inner-icon="mdi-calendar"
           readonly
           v-bind="{ ...$attrs, ...attrs }"
-          v-on="on"
-          clearable
+          v-on="readonly ? undefined : on"
+          :clearable="!readonly"
         ></v-text-field>
       </template>
       <v-date-picker v-model="model" :range="range" no-title>
@@ -49,7 +49,12 @@ export default {
     range: {
       type: Boolean,
       default: false
-    }
+    },
+    // This set the component status to readonly, stopping the user interaction.
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
   },
   watch: {
     value(val) {
