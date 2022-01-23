@@ -102,7 +102,7 @@ Here the list of the FieldConfiguration type association.
  - `switch` ==> [v-switch](https://vuetifyjs.com/en/components/switches/),
  - `slider` ==> [v-slider](https://vuetifyjs.com/en/components/sliders/),
  - `file` ==> [v-file-input](https://vuetifyjs.com/en/components/file-inputs/),
- - `editor` ==> [tiny-mce](/components/fields/TinyMce/TinyMce/),
+ - `editor` ==> [wyg-editor](/components/fields/wygEditor/wygEditor/),
  - `media` ==> [media-field](/components/fields/MediaField/),
  - `m2m` ==> [m2m-field](/components/fields/M2mField/),
  - `mediaList` ==> [media-m2m-field](/components/fields/MediaM2mField/)

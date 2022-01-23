@@ -5,7 +5,7 @@
         <v-btn dark class="mb-2" @click.native="readonly = !readonly">
           {{ readonly ? "Enable" : "Disable" }} editor
         </v-btn>
-        <TinyMce v-model="tinyInput" :readonly="readonly" />
+        <wygEditor v-model="tinyInput" :readonly="readonly" />
       </v-col>
     </v-row>
   </v-container>

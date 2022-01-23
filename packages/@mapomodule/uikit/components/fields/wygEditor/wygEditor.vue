@@ -20,18 +20,18 @@ import defaults from "./defaults.js";
 import validEvents from "./utils/events.js";
 
 /**
- * This component wraps a [TinyMce](https://www.tiny.cloud/) instance. With the use of the v-model you can use this component to edit any content you like. 
+ * This component wraps a [wygEditor](https://www.tiny.cloud/) instance. With the use of the v-model you can use this component to edit any content you like. 
  */
 
 export default {
-  name: "TinyMce",
+  name: "wygEditor",
   props: {
-    // V-model property. Is the content that will populate the TinyMce instance.
+    // V-model property. Is the content that will populate the wygEditor instance.
     value: {
       type: String,
       default: "",
     },
-    // This is the main configuration of TinyMce. If setted will be merged with this component defaults.
+    // This is the main configuration of wygEditor. If setted will be merged with this component defaults.
     conf: {
       type: Object,
       default: () => ({}),
@@ -45,7 +45,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    // Use this prop to bind events. If set to true the component will emit every [TinyMce Event](https://www.tiny.cloud/docs/advanced/events/).
+    // Use this prop to bind events. If set to true the component will emit every [wygEditor Event](https://www.tiny.cloud/docs/advanced/events/).
     bindevents: {
       type: Boolean,
       default: false,
@@ -103,7 +103,7 @@ export default {
     bindEvents(editor) {
       if (this.bindevents) {
         validEvents.forEach((eventName) => {
-          // This is a dynamic event emitter. If you activate the bindevents prop, you will be able to listen to every [TinyMce Event](https://www.tiny.cloud/docs/advanced/events/).
+          // This is a dynamic event emitter. If you activate the bindevents prop, you will be able to listen to every [wygEditor Event](https://www.tiny.cloud/docs/advanced/events/).
           editor.on(eventName, (event) => this.$emit(eventName, event));
         });
       }
@@ -170,7 +170,7 @@ export default {
 
 ### Defaults
 
-This is the default [TinyMce configuration](https://www.tiny.cloud/docs/configure/).
+This is the default [wygEditor configuration](https://www.tiny.cloud/docs/configure/).
 
 ```js
 {

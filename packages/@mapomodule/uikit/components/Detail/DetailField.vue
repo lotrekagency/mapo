@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import TinyMce from "@mapomodule/uikit/components/fields/TinyMce/TinyMce.vue";
+import wygEditor from "@mapomodule/uikit/components/fields/wygEditor/wygEditor.vue";
 import DateField from "@mapomodule/uikit/components/fields/DateField.vue";
 import M2mField from "@mapomodule/uikit/components/fields/M2mField.vue";
 import MediaM2mField from "@mapomodule/uikit/components/fields/MediaM2mField.vue";
@@ -20,7 +20,7 @@ import defaults from "./defaults";
 export default {
   name: "DetailField",
   components: {
-    TinyMce,
+    wygEditor,
     DateField,
     M2mField,
     MediaM2mField,

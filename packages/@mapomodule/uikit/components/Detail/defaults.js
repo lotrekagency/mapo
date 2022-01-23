@@ -6,7 +6,7 @@ const mapping = {
     switch: "vSwitch",
     slider: "vSlider",
     file: "vFileInput",
-    editor: "TinyMce",
+    editor: "wygEditor",
     media: "MediaField",
     m2m: "M2mField",
     mediaList: "MediaM2mField",
