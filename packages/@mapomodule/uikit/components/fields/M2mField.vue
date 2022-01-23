@@ -1,5 +1,5 @@
 <template>
-  <v-select v-bind="fieldAttrs" v-model="model" :items="options"></v-select>
+  <v-autocomplete v-bind="fieldAttrs" v-model="model" :items="options"></v-autocomplete>
 </template>
 
 <script>
