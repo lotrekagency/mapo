@@ -93,14 +93,14 @@
                 <!-- Use this to override the Save button. -->
                 <slot name="button.save" v-bind="slotBindings">
                   <!-- The Save button. -->
-                  <v-btn class="mb-2" tile block @click="saveItem(true)">{{
+                  <v-btn :disabled="isReadonly" class="mb-2" tile block @click="saveItem(true)">{{
                     isNew ? "Create" : "Save"
                   }}</v-btn>
                 </slot>
                 <!-- Use this to override the Save and continue button. -->
                 <slot name="button.savecontinue" v-bind="slotBindings">
                   <!-- The Save and continue button. -->
-                  <v-btn class="mb-2" tile block @click="saveItem(false)"
+                  <v-btn :disabled="isReadonly" class="mb-2" tile block @click="saveItem(false)"
                     >{{ isNew ? "Create" : "Save" }} and continue</v-btn
                   >
                 </slot>
@@ -120,6 +120,7 @@
                     color="error"
                     tile
                     block
+                    :disabled="!canDelete"
                     @click="deleteItem"
                     >Delete</v-btn
                   >
@@ -297,6 +298,9 @@ export default {
         const base = `translations.${this.currentLang}`;
         conf.value = (conf.value && `${base}.${conf.value}`) || base;
       }
+      if (this.isReadonly){
+        conf.attrs = {...conf.attrs, readonly: true}
+      }
       return conf;
     },
     mapConf(fields) {
@@ -339,6 +343,18 @@ export default {
   computed: {
     crud() {
       return this.$mapo.$api.crud(this.endpoint);
+    },
+    isReadonly() {
+      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")){
+        return !this.$mapo.$auth.user.permissions.includes(this.isNew ? "add" : "change")
+      }
+      return false
+    },
+    canDelete() {
+      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")){
+        return this.$mapo.$auth.user.permissions.includes("delete")
+      }
+      return true
     },
     mainFields() {
       return this.mapConf(
