@@ -2,10 +2,10 @@
   <v-container fluid>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="12">
-        <v-btn dark class="mb-2" @click.native="disabled = !disabled">
-          {{ disabled ? "Enable" : "Disable" }} editor
+        <v-btn dark class="mb-2" @click.native="readonly = !readonly">
+          {{ readonly ? "Enable" : "Disable" }} editor
         </v-btn>
-        <TinyMce v-model="tinyInput" :disabled="disabled" />
+        <TinyMce v-model="tinyInput" :readonly="readonly" />
       </v-col>
     </v-row>
   </v-container>
@@ -15,7 +15,7 @@
 export default {
   data() {
     return {
-      disabled: false,
+      readonly: false,
       tinyInput: `
         <p style="text-align: center;"><span style="color: #bdc3c7;">&rarr; This is a full-featured editor demo. Please explore!
         &larr;</span></p>

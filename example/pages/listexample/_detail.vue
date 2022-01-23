@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  meta: { permissions: { model: "article" } },
+  meta: { sidebarHide: true, permissions: { model: "article" } },
   middleware: ["auth", "permissions"],
   data: () => ({
     model: {},
@@ -68,8 +68,5 @@ export default {
       ]
     }
   }),
-  meta: {
-    sidebarHide: true
-  }
 };
 </script>
