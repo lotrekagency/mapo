@@ -3,7 +3,7 @@
     <h1 class="list__head__title display-1">{{ title }}</h1>
     <div class="list__head__button">
       <v-btn
-        v-if="addItem"
+        v-if="addItem && canAdd"
         class="rounded-0 elevation-0"
         color="primary"
         :to="{ path: `${$route.path}/new` }"
@@ -54,6 +54,14 @@ export default {
     },
     // This is a boolean that determines the visibility of "new item" button. If set to true will provide the user a link to a detail page for new content creation.
     addItem: Boolean
+  },
+  computed: {
+    canAdd() {
+      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")){
+        return this.$mapo.$auth.user.permissions.includes("add")
+      }
+      return true
+    },
   }
 };
 </script>
