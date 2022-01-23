@@ -39,6 +39,12 @@ export default {
       ],
       sidenav: [
         {
+          value: "categories",
+          synci18n: true,
+          type: "m2m",
+          attrs: { endpoint: "api/camomilla/categories", itemText: "title"}
+        },
+        {
           group: "Status",
           fields: [
             { value: "trash", type: "switch", synci18n: true },
