@@ -115,7 +115,7 @@ export default {
       return (this.childrens || []).some((child) => this.$nuxt.$route.path.startsWith(child.link));
     },
     userCanSee() {
-      const middleware = typeof this.meta?.middleware == "string" ? [this.meta.middleware] : this.meta?.middleware || []
+      const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: this.meta })
       if (middleware.includes("permissions")){
         const userInfo = this.$mapo.$auth.user.info
         if (userInfo.is_superuser) return true
