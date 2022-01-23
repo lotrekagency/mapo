@@ -33,7 +33,7 @@ export default {
       return {
         itemValue: "id",
         returnObject: true,
-        chips: true,
+        chips: this.$attrs.multiple === false ? false : true,
         multiple: true,
         ...this.$attrs,
       };
