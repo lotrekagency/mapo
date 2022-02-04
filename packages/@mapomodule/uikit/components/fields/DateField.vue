@@ -17,6 +17,7 @@
           v-bind="{ ...$attrs, ...attrs }"
           v-on="readonly ? undefined : on"
           :clearable="!readonly"
+          class="rounded-0"
         ></v-text-field>
       </template>
       <v-date-picker v-model="model" :range="range" no-title>
