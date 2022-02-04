@@ -21,7 +21,8 @@ function setPointed(obj, kpointed, val) {
         obj[arr[0]] = val
         return obj
     }
-    return setPointed(obj[arr[0]] || {}, arr.slice(1), val)
+    obj[arr[0]] = obj[arr[0]] || {}
+    return setPointed(obj[arr[0]], arr.slice(1), val)
 }
 
 function filterObj(obj, kpointedArr) {
