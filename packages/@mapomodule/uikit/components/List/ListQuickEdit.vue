@@ -241,7 +241,7 @@ export default {
       const parseGroup = (group) =>
         typeof group === "string"
           ? { name: group, icon }
-          : { ...group, icon: group.icon || icon };
+          : { ...group, icon: group.icon !== undefined ? group.icon : icon };
       return fields.map((f, i) =>
         f.group
           ? { group: parseGroup(f.group), fields: this.mapConf(f.fields) }
