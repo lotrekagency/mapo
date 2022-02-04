@@ -1,6 +1,15 @@
 <template>
-  <component :is="is" v-model="model" v-bind="fieldAttrs"></component>
+  <div>
+    <span class="mapo-label" :class="`mapo-label-${conf.value}`">{{label}}</span>
+    <component :is="is" v-model="model" v-bind="fieldAttrs"></component>
+  </div>
 </template>
+
+<style>
+.mapo-label {
+  display: none;
+}
+</style>
 
 <script>
 import wygEditor from "@mapomodule/uikit/components/fields/wygEditor/wygEditor.vue";
@@ -25,7 +34,7 @@ export default {
     FksField,
     MediaM2mField,
     MediaField,
-    SeoPreview
+    SeoPreview,
   },
 
   data() {
@@ -33,14 +42,14 @@ export default {
       model: null,
       defaultMap: defaults.mapping,
       defaultAttrs: defaults.props,
-      defaultAccess: defaults.accessor
+      defaultAccess: defaults.accessor,
     };
   },
   props: {
     // V-model of the payload needed to edit the field value in realtime.
     value: {
       type: Object,
-      required: true
+      required: true,
     },
     // An object representing all the errors of all fields. This means that this component will find the error of its field following the dottedPath of the value in the error dict.
     errors: Object,
@@ -48,15 +57,15 @@ export default {
     conf: {
       // [`FieldConfiguration`](/components/detail/Detail/#fieldconfiguration)
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   watch: {
     value: {
       deep: true,
       handler(val) {
         this.setModel(val);
-      }
+      },
     },
     "conf.value"(newValue, oldValue) {
       if (newValue !== oldValue) {
@@ -73,28 +82,28 @@ export default {
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
       this.$emit("input", dump);
-    }
+    },
   },
   methods: {
     setModel(val = this.value) {
       var model = this.accessor.get({
         model: { ...val },
-        val: getPointed({ ...val }, this.conf.value)
+        val: getPointed({ ...val }, this.conf.value),
       });
       if (val && JSON.stringify(this.model) !== JSON.stringify(model))
         this.model = model;
-    }
+    },
   },
   computed: {
     accessor() {
-      let func = function({ val }) {
+      let func = function ({ val }) {
         return val;
       };
       return {
         get: func,
         set: func,
         ...(this.defaultAccess[this.is] || {}),
-        ...this.conf.accessor
+        ...this.conf.accessor,
       };
     },
     fieldAttrs() {
@@ -103,14 +112,14 @@ export default {
         errorMessages: getPointed(this.errors || {}, this.conf.value, []),
         ...this.defaultAttrs.All,
         ...(this.defaultAttrs[this.is.replace(/-./g, x=>x[1].toUpperCase())] || {}),
-        ...this.conf.attrs
+        ...this.conf.attrs,
       };
     },
     label() {
       if (this.conf.label !== undefined) {
         return this.conf.label;
       }
-      const titleCase = string =>
+      const titleCase = (string) =>
         (string && string[0].toUpperCase() + string.slice(1).toLowerCase()) ||
         "";
       return titleCase(
@@ -127,7 +136,7 @@ export default {
         (this.conf.type && this.defaultMap[this.conf.type]) ||
         "vTextField"
       );
-    }
-  }
+    },
+  },
 };
 </script>
