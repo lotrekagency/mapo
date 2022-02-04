@@ -461,7 +461,7 @@ Here the list of the FieldConfiguration type association.
  - `file` ==> [v-file-input](https://vuetifyjs.com/en/components/file-inputs/),
  - `editor` ==> [wyg-editor](/components/fields/wygEditor/wygEditor/),
  - `media` ==> [media-field](/components/fields/MediaField/),
- - `m2m` ==> [fks-field](/components/fields/FksField/),
+ - `m2m` or `fks` ==> [fks-field](/components/fields/FksField/),
  - `mediaList` ==> [media-fks-field](/components/fields/MediaM2mField/)
 
 

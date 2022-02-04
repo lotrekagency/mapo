@@ -8,6 +8,7 @@ const mapping = {
     file: "vFileInput",
     editor: "wygEditor",
     media: "MediaField",
+    fks: "FksField",
     m2m: "FksField",
     mediaList: "MediaM2mField",
     seoPreview: "SeoPreview"
