@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.9](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2022-02-08)
+
+
+### Bug Fixes
+
+* **datefield:** graphic fix for datefield ([2cf2a8f](https://github.com/lotrekagency/mapo/commit/2cf2a8fe4a18717c6a1b1589e9fbc10273399fb5))
+* **fksfield:** added fks alias to field ([d5b5ecf](https://github.com/lotrekagency/mapo/commit/d5b5ecf9f7bc7b270a8a2f22940281ef8453fb78))
+
+
+### Features
+
+* **detail:** added possibility to remove group icon in detail field configuration ([a8f63e0](https://github.com/lotrekagency/mapo/commit/a8f63e00a03b5467db057f6ab813621e480eaeae))
+* **detailfield:** added hidden label to simplify external graphic personalization of fields ([4e1de0d](https://github.com/lotrekagency/mapo/commit/4e1de0d9a256241ce010daaf058b6282c7279808))
+
+
+
+
+
 # [1.0.0-alpha.8](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.7...v1.0.0-alpha.8) (2022-01-23)
 
 
