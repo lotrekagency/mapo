@@ -16,6 +16,7 @@ The purpose of this component is to provide you with a very quick way to create 
 |identifier|The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.|`String|Number`.|`false`|new|
 |modelName|The title of the detail page.|`String`|`false`|-|
 |sticky|This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.|`Boolean`|`false`|true|
+|multipart|Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.|`String`|`false`|auto|
 
 <!-- @vuese:Detail:props:end -->
 
@@ -104,7 +105,7 @@ Here the list of the FieldConfiguration type association.
  - `file` ==> [v-file-input](https://vuetifyjs.com/en/components/file-inputs/),
  - `editor` ==> [wyg-editor](/components/fields/wygEditor/wygEditor/),
  - `media` ==> [media-field](/components/fields/MediaField/),
- - `m2m` ==> [fks-field](/components/fields/FksField/),
+ - `m2m` or `fks` ==> [fks-field](/components/fields/FksField/),
  - `mediaList` ==> [media-fks-field](/components/fields/MediaM2mField/)
 
 

@@ -46,11 +46,11 @@ From here you can reach some utilities that simplify the interaction with the ba
 * [$api](#$api)
     * [.crud(endpoint, [higherConf])](#$api.crud)
         * [.list([config])](#$api.crud.list) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
-        * [.create(payload, [config])](#$api.crud.create) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+        * [.create(payload, [config], options)](#$api.crud.create) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
         * [.detail(id, [config])](#$api.crud.detail) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
-        * [.updateOrCreate(payload, [config])](#$api.crud.updateOrCreate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
-        * [.update(id, payload, [config])](#$api.crud.update) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
-        * [.partialUpdate(id, payload, [config])](#$api.crud.partialUpdate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+        * [.updateOrCreate(payload, [config], options)](#$api.crud.updateOrCreate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+        * [.update(id, payload, [config], options)](#$api.crud.update) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+        * [.partialUpdate(id, payload, [config], options)](#$api.crud.partialUpdate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
         * [.delete(id, [config])](#$api.crud.delete) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
     * [.multipart(payload, file_attributes)](#$api.multipart) ⇒ [<code>FormData</code>](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 
@@ -69,11 +69,11 @@ This function generates a fully functional crud helper given the endpoint.
 
 * [.crud(endpoint, [higherConf])](#$api.crud)
     * [.list([config])](#$api.crud.list) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
-    * [.create(payload, [config])](#$api.crud.create) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+    * [.create(payload, [config], options)](#$api.crud.create) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
     * [.detail(id, [config])](#$api.crud.detail) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
-    * [.updateOrCreate(payload, [config])](#$api.crud.updateOrCreate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
-    * [.update(id, payload, [config])](#$api.crud.update) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
-    * [.partialUpdate(id, payload, [config])](#$api.crud.partialUpdate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+    * [.updateOrCreate(payload, [config], options)](#$api.crud.updateOrCreate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+    * [.update(id, payload, [config], options)](#$api.crud.update) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+    * [.partialUpdate(id, payload, [config], options)](#$api.crud.partialUpdate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
     * [.delete(id, [config])](#$api.crud.delete) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
 
 <a name="$api.crud.list"></a>
@@ -89,7 +89,7 @@ This makes a GET http call to the crud endpoint. Returns as a promise the server
 
 <a name="$api.crud.create"></a>
 
-#### crud.create(payload, [config]) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+#### crud.create(payload, [config], options) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
 This makes a POST http call with the data specified in the payload to the crud endpoint. Returns as a promise the server response.
 
 **Kind**: static method of [<code>crud</code>](#$api.crud)  
@@ -98,6 +98,8 @@ This makes a POST http call with the data specified in the payload to the crud e
 | --- | --- | --- |
 | payload | <code>Object</code> | The payload containing the data that we want to send. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
+| options | <code>Object</code> | Additional option configuration. Here you can configure some mapo reserved options. |
+| options.multipart | <code>String</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
 
 <a name="$api.crud.detail"></a>
 
@@ -113,7 +115,7 @@ This makes a GET http call to the crud endpoint slash the given id. Returns as a
 
 <a name="$api.crud.updateOrCreate"></a>
 
-#### crud.updateOrCreate(payload, [config]) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+#### crud.updateOrCreate(payload, [config], options) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
 This shortcut calls the update method or the create method depending on the presence of the id field in the payload.
 
 **Kind**: static method of [<code>crud</code>](#$api.crud)  
@@ -122,10 +124,12 @@ This shortcut calls the update method or the create method depending on the pres
 | --- | --- | --- |
 | payload | <code>Object</code> | The payload containing the data that we want to send. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
+| options | <code>Object</code> | Additional option configuration. Here you can configure some mapo reserved options. |
+| options.multipart | <code>String</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
 
 <a name="$api.crud.update"></a>
 
-#### crud.update(id, payload, [config]) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+#### crud.update(id, payload, [config], options) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
 This makes a PUT http call to the crud endpoint slash the given id, sending the payload. Returns as a promise the server response.
 
 **Kind**: static method of [<code>crud</code>](#$api.crud)  
@@ -135,10 +139,12 @@ This makes a PUT http call to the crud endpoint slash the given id, sending the 
 | id | <code>String</code> | The id of the data we want to update. |
 | payload | <code>Object</code> | The payload containing the data that we want to send. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
+| options | <code>Object</code> | Additional option configuration. Here you can configure some mapo reserved options. |
+| options.multipart | <code>String</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
 
 <a name="$api.crud.partialUpdate"></a>
 
-#### crud.partialUpdate(id, payload, [config]) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+#### crud.partialUpdate(id, payload, [config], options) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
 This makes a PATCH http call to the crud endpoint slash the given id, sending the payload. Returns as a promise the server response.
 
 **Kind**: static method of [<code>crud</code>](#$api.crud)  
@@ -148,6 +154,8 @@ This makes a PATCH http call to the crud endpoint slash the given id, sending th
 | id | <code>String</code> | The id of the data we want to partially update. |
 | payload | <code>Object</code> | The payload containing the data that we want to send. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
+| options | <code>Object</code> | Additional option configuration. Here you can configure some mapo reserved options. |
+| options.multipart | <code>String</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
 
 <a name="$api.crud.delete"></a>
 
@@ -169,10 +177,10 @@ and all the files each one in a single attribute named with the dotted path of t
 
 **Kind**: static method of [<code>$api</code>](#$api)  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| payload | <code>Object</code> | The payload of the request that needs to be trasformed. |
-| file_attributes | <code>Array.&lt;String&gt;</code> | The list of dotted path of all the file attributes that need to be attached to the request. |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| payload | <code>Object</code> |  | The payload of the request that needs to be trasformed. |
+| file_attributes | <code>String</code> \| <code>Array.&lt;String&gt;</code> | <code>auto</code> | The list of dotted path of all the file attributes that need to be attached to the request. If unset autodiscovery is applyed. If set to 'fallback' if no files are found it returns the payload as it is. |
 
 <a name="$auth"></a>
 
