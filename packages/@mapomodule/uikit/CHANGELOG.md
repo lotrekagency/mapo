@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.10](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2022-02-11)
+
+
+### Bug Fixes
+
+* fix list table first entry key path (issue [#14](https://github.com/lotrekagency/mapo/issues/14)) ([f29f25a](https://github.com/lotrekagency/mapo/commit/f29f25ae1b593c0ecd83f6ab6ceac5a7eaa74e2d))
+
+
+### Features
+
+* **core:** Completely rewritten multipart capabilities, now the crud helper autodiscovers whet to use a multipart request. ([0a6546c](https://github.com/lotrekagency/mapo/commit/0a6546c9adeaf1fcf57a88105101e476b8b786dc))
+
+
+
+
+
 # [1.0.0-alpha.9](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.8...v1.0.0-alpha.9) (2022-02-08)
 
 
