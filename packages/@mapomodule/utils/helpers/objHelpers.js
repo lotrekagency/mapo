@@ -11,7 +11,7 @@ function deepClone(obj) {
 }
 
 function getPointed(obj, kpointed, def) {
-    const result = kpointed.split(".").reduce((o, k) => typeof (o) == 'object' ? o[k] : o, obj)
+    const result = kpointed.split(".").reduce((o, k) => typeof (o) == 'object' ? (o || {})[k] : o, obj)
     return result === undefined ? def : result
 }
 
