@@ -34,6 +34,9 @@ The $mapo service can be accessed from context and this in pages, components, pl
 <dt><a href="#ConfirmDialogOptions">ConfirmDialogOptions</a> : <code><a href="#ConfirmDialogOptions">ConfirmDialogOptions</a></code></dt>
 <dd><p>The payload for the open function of the ConfirmDialog.</p>
 </dd>
+<dt><a href="#MapoRequestConfig">MapoRequestConfig</a> : <code><a href="#MapoRequestConfig">MapoRequestConfig</a></code></dt>
+<dd><p>Additional option configuration. Here you can configure some mapo reserved options.</p>
+</dd>
 </dl>
 
 <a name="$api"></a>
@@ -98,8 +101,7 @@ This makes a POST http call with the data specified in the payload to the crud e
 | --- | --- | --- |
 | payload | <code>Object</code> | The payload containing the data that we want to send. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
-| options | <code>Object</code> | Additional option configuration. Here you can configure some mapo reserved options. |
-| options.multipart | <code>String</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
+| options | [<code>MapoRequestConfig</code>](#MapoRequestConfig) | Additional option configuration. Here you can configure some mapo reserved options. Like the multipart autodiscover politic. |
 
 <a name="$api.crud.detail"></a>
 
@@ -124,8 +126,7 @@ This shortcut calls the update method or the create method depending on the pres
 | --- | --- | --- |
 | payload | <code>Object</code> | The payload containing the data that we want to send. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
-| options | <code>Object</code> | Additional option configuration. Here you can configure some mapo reserved options. |
-| options.multipart | <code>String</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
+| options | [<code>MapoRequestConfig</code>](#MapoRequestConfig) | Additional option configuration. Here you can configure some mapo reserved options. Like the multipart autodiscover politic. |
 
 <a name="$api.crud.update"></a>
 
@@ -139,8 +140,7 @@ This makes a PUT http call to the crud endpoint slash the given id, sending the 
 | id | <code>String</code> | The id of the data we want to update. |
 | payload | <code>Object</code> | The payload containing the data that we want to send. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
-| options | <code>Object</code> | Additional option configuration. Here you can configure some mapo reserved options. |
-| options.multipart | <code>String</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
+| options | [<code>MapoRequestConfig</code>](#MapoRequestConfig) | Additional option configuration. Here you can configure some mapo reserved options. Like the multipart autodiscover politic. |
 
 <a name="$api.crud.partialUpdate"></a>
 
@@ -154,8 +154,7 @@ This makes a PATCH http call to the crud endpoint slash the given id, sending th
 | id | <code>String</code> | The id of the data we want to partially update. |
 | payload | <code>Object</code> | The payload containing the data that we want to send. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
-| options | <code>Object</code> | Additional option configuration. Here you can configure some mapo reserved options. |
-| options.multipart | <code>String</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
+| options | [<code>MapoRequestConfig</code>](#MapoRequestConfig) | Additional option configuration. Here you can configure some mapo reserved options. Like the multipart autodiscover politic. |
 
 <a name="$api.crud.delete"></a>
 
@@ -328,4 +327,16 @@ The payload for the open function of the ConfirmDialog.
 | dismissButton | <code>string</code> | The text in the dismiss Button. |
 | approveButton | <code>string</code> | The text in the approve Button. |
 | attrs | <code>Object</code> | An object with [props](https://vuetifyjs.com/en/api/v-dialog/) you want to inject into the confirm dialog. |
+
+<a name="MapoRequestConfig"></a>
+
+## MapoRequestConfig : [<code>MapoRequestConfig</code>](#MapoRequestConfig)
+Additional option configuration. Here you can configure some mapo reserved options.
+
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| multipart | <code>string</code> | Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart. |
 
