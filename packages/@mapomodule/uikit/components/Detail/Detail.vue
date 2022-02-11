@@ -242,14 +242,23 @@ export default {
     sticky: {
       type: Boolean,
       default: true
-    }
+    },
+    // Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
+    multipart: {
+      type: String,
+      default: "auto",
+      validator: function (value) {
+        // The value must match one of these strings
+        return ["auto", "force", "disable"].indexOf(value) !== -1;
+      },
+    },
   },
   methods: {
     saveItem(back = false) {
       this.errors = null;
       this.$refs.form?.resetValidation();
       this.crud
-        .updateOrCreate(this.model)
+        .updateOrCreate(this.model, {}, { multipart: this.multipart })
         .then(() => back && this.$router.back())
         .catch(error => {
           this.errors =

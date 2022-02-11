@@ -1,4 +1,4 @@
-const deepClone = require('@mapomodule/utils/helpers/objHelpers').deepClone
+const { deepClone, getPointed, setPointed, filesInObject } = require('@mapomodule/utils/helpers/objHelpers')
 
 /**
  * This lets you transform a js object containing files in a multipart request with all the classic data in a single attribute (data) 
@@ -6,33 +6,29 @@ const deepClone = require('@mapomodule/utils/helpers/objHelpers').deepClone
  * 
  * @alias $api.multipart
  * @param {Object} payload The payload of the request that needs to be trasformed. 
- * @param {String[]} file_attributes The list of dotted path of all the file attributes that need to be attached to the request.
+ * @param {String | String[]} file_attributes The list of dotted path of all the file attributes that need to be attached to the request. If unset autodiscovery is applyed. If set to 'fallback' if no files are found it returns the payload as it is.
  * @returns {external:FormData}
 */
-function transformRequestInMultipart(payload, file_attributes = []) {
-
-    const cleanObject = (object, file_attributes, base = '', files = {}) => {
-        for (const key in object) {
-            if (file_attributes.includes(key) && object[key] && typeof object[key] != 'string') {
-                files[base + key] = object[key];
-                delete object[key];
-            }
-            if (typeof object[key] == 'object') {
-                cleanObject(object[key], file_attributes, base + key + '.', files);
-            }
-            if (file_attributes.includes(key) && object[key] && typeof object[key] == 'string') {
-                delete object[key];
-            }
+function transformRequestInMultipart(payload, file_attributes = "auto") {
+    var file_paths = []
+    if (["auto", "force"].includes(file_attributes)) {
+        file_paths = filesInObject(payload)
+        if (file_attributes == "auto" && !file_paths.length){
+            return payload
         }
-        return { data: object, files: files };
+    } else if (Array.isArray(file_attributes)) {
+        file_paths = file_attributes
     }
-
-    const tmp_obj = deepClone(payload);
-    const blob = cleanObject(tmp_obj, file_attributes);
+    const data = deepClone(payload);
+    const files = file_paths.reduce((acc, path) => {
+        const file = getPointed(data, path, undefined)
+        setPointed(data, path, undefined);
+        return { [path]: file, ...acc }
+    }, {})
     const formData = new FormData();
-    formData.append('data', JSON.stringify(blob.data));
-    for (const key in blob.files) {
-        formData.append(key, blob.files[key]);
+    formData.append('data', JSON.stringify(data));
+    for (const key in files) {
+        formData.append(key, files[key]);
     }
     return formData;
 }

@@ -31,11 +31,63 @@ function filterObj(obj, kpointedArr) {
         return acc
     }, {})
 }
+
+function isFileInstance(input) {
+    if ('File' in window && input instanceof File)
+        return true;
+    else return false;
+}
+
+function isBlobInstance(input) {
+    if ('Blob' in window && input instanceof Blob)
+        return true;
+    else return false;
+}
+
+function isFileOrBlob(input) {
+    return isFileInstance(input) || isBlobInstance(input)
+}
+
+function filesInObject(obj) {
+    return findPropPaths(obj, ({ val }) => isFileOrBlob(val))
+}
+
+function findPropPaths(obj, predicate) {
+    const discoveredObjects = [];
+    const path = [];
+    const results = [];
+    if (!obj && (typeof obj !== "object" || Array.isArray(obj))) {
+        throw new TypeError("First argument of finPropPath is not the correct type Object");
+    }
+    if (typeof predicate !== "function") {
+        throw new TypeError("Predicate is not a function");
+    }
+    (function find(obj) {
+        for (const key of Object.keys(obj)) {
+            if (predicate({ val: obj[key], obj, path, key }) === true) {
+                path.push(key);
+                results.push(path.join("."));
+                path.pop();
+            }
+            const o = obj[key];
+            if (o && typeof o === "object" && !Array.isArray(o)) {
+                if (!discoveredObjects.find(obj => obj === o)) {
+                    path.push(key);
+                    discoveredObjects.push(o);
+                    find(o);
+                    path.pop();
+                }
+            }
+        }
+    }(obj));
+    return results;
+}
+
 function diffObjs(obj1, obj2) {
     const a = deepClone(obj1)
     const b = deepClone(obj2)
-    for (const i in b){
-        if (JSON.stringify(a[i]) === JSON.stringify(b[i])){
+    for (const i in b) {
+        if (JSON.stringify(a[i]) === JSON.stringify(b[i])) {
             delete b[i]
         } else if (!Array.isArray(b[i]) && typeof b[i] == 'object') {
             b[i] = diffObjs(a[i], b[i])
@@ -49,5 +101,10 @@ module.exports = {
     getPointed,
     setPointed,
     filterObj,
+    isFileInstance,
+    isBlobInstance,
+    isFileOrBlob,
+    filesInObject,
+    findPropPaths,
     diffObjs
 }

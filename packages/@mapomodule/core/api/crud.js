@@ -1,4 +1,13 @@
+const transformRequestInMultipart = require('@mapomodule/core/api/multipart')
 const trimslashes = (str) => (str || "").replace(/^\/|\/$/g, '')
+const preparePayload = (payload, options) => {
+    const { multipart } = options
+    console.log(multipart, typeof multipart === 'string')
+    if (!(payload instanceof FormData) && (typeof multipart === 'string') && multipart !== 'disable') {
+        payload = transformRequestInMultipart(payload, multipart);
+    }
+    return payload
+}
 const endpointError = "This crud is badly configured. No endpoint was passed"
 
 /**
@@ -26,10 +35,13 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @alias $api.crud.create
      * @param {Object} payload The payload containing the data that we want to send.
      * @param {external:AxiosRequestConfig} [config] This is a further axios configuration object that allows you to override the options previously setted.
+     * @param {Object} options Additional option configuration. Here you can configure some mapo reserved options.
+     * @param {String} options.multipart Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
      * @returns {Promise<external:AxiosResponse>}
      */
-    create(payload, config) {
-        const func = $axios.$post(`/${trimslashes(endpoint)}/`, payload, { ...higherConf, ...config })
+    create(payload, config, options) {
+
+        const func = $axios.$post(`/${trimslashes(endpoint)}/`, preparePayload(payload, options), { ...higherConf, ...config })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
@@ -50,10 +62,12 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @alias $api.crud.updateOrCreate
      * @param {Object} payload The payload containing the data that we want to send.
      * @param {external:AxiosRequestConfig} [config] This is a further axios configuration object that allows you to override the options previously setted.
+     * @param {Object} options Additional option configuration. Here you can configure some mapo reserved options.
+     * @param {String} options.multipart Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
      * @returns {Promise<external:AxiosResponse>}
      */
-    updateOrCreate(payload, config) {
-        const func = payload.id ? this.update(payload.id, payload, { ...higherConf, ...config }) : this.create(payload, { ...higherConf, ...config })
+    updateOrCreate(payload, config, options) {
+        const func = payload.id ? this.update(payload.id, payload, { ...higherConf, ...config }, options) : this.create(payload, { ...higherConf, ...config }, options)
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
@@ -63,10 +77,12 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @param {String} id The id of the data we want to update.
      * @param {Object} payload The payload containing the data that we want to send.
      * @param {external:AxiosRequestConfig} [config] This is a further axios configuration object that allows you to override the options previously setted.
+     * @param {Object} options Additional option configuration. Here you can configure some mapo reserved options.
+     * @param {String} options.multipart Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
      * @returns {Promise<external:AxiosResponse>}
      */
-    update(id, payload, config) {
-        const func = $axios.$put(`/${trimslashes(endpoint)}/${id}/`, payload, { ...higherConf, ...config })
+    update(id, payload, config, options) {
+        const func = $axios.$put(`/${trimslashes(endpoint)}/${id}/`, preparePayload(payload, options), { ...higherConf, ...config })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
@@ -76,10 +92,12 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
      * @param {String} id The id of the data we want to partially update.
      * @param {Object} payload The payload containing the data that we want to send.
      * @param {external:AxiosRequestConfig} [config] This is a further axios configuration object that allows you to override the options previously setted.
+     * @param {Object} options Additional option configuration. Here you can configure some mapo reserved options.
+     * @param {String} options.multipart Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
      * @returns {Promise<external:AxiosResponse>}
      */
-    partialUpdate(id, payload, config) {
-        const func = $axios.$patch(`/${trimslashes(endpoint)}/${id}/`, payload, { ...higherConf, ...config })
+    partialUpdate(id, payload, config, options) {
+        const func = $axios.$patch(`/${trimslashes(endpoint)}/${id}/`, preparePayload(payload, options), { ...higherConf, ...config })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
     /** 
