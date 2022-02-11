@@ -45,7 +45,7 @@
       </template>
       <template v-if="navigable" v-slot:[`item.${firstColName}`]="{ item }">
         <NuxtLink :to="detailLink(item)">
-          {{ item[firstColName] }}
+          {{ getPointed(item, firstColName, "Unknown") }}
         </NuxtLink>
       </template>
       <template v-slot:item.data-table-select="{ isSelected, select }" v-if="selectAll">
@@ -189,6 +189,7 @@ export default {
     }
   },
   methods: {
+    getPointed: getPointed,
     getDataFromApi(clearSelection = true) {
       if (clearSelection) {
         this.selection = [];
