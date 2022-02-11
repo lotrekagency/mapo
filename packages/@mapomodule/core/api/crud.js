@@ -1,8 +1,7 @@
 const transformRequestInMultipart = require('@mapomodule/core/api/multipart')
 const trimslashes = (str) => (str || "").replace(/^\/|\/$/g, '')
 const preparePayload = (payload, options) => {
-    const { multipart } = options
-    console.log(multipart, typeof multipart === 'string')
+    const { multipart } = (options || {})
     if (!(payload instanceof FormData) && (typeof multipart === 'string') && multipart !== 'disable') {
         payload = transformRequestInMultipart(payload, multipart);
     }
