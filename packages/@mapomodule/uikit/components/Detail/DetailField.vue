@@ -18,6 +18,7 @@ import FksField from "@mapomodule/uikit/components/fields/FksField.vue";
 import MediaM2mField from "@mapomodule/uikit/components/fields/MediaM2mField.vue";
 import MediaField from "@mapomodule/uikit/components/fields/MediaField.vue";
 import SeoPreview from "@mapomodule/uikit/components/fields/SeoPreview.vue";
+import FileField from "@mapomodule/uikit/components/fields/FileField.vue";
 
 
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
@@ -35,6 +36,7 @@ export default {
     MediaM2mField,
     MediaField,
     SeoPreview,
+    FileField
   },
 
   data() {
