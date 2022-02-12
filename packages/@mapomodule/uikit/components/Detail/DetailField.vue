@@ -20,7 +20,6 @@ import MediaField from "@mapomodule/uikit/components/fields/MediaField.vue";
 import SeoPreview from "@mapomodule/uikit/components/fields/SeoPreview.vue";
 import FileField from "@mapomodule/uikit/components/fields/FileField.vue";
 
-
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import defaults from "./defaults";
 
@@ -36,7 +35,7 @@ export default {
     MediaM2mField,
     MediaField,
     SeoPreview,
-    FileField
+    FileField,
   },
 
   data() {
@@ -111,9 +110,22 @@ export default {
     fieldAttrs() {
       return {
         label: this.label,
-        errorMessages: getPointed(this.errors || {}, this.conf.value, []),
+        errorMessages: this.conf.value
+          .split(".")
+          .map((_, i, a) => a.slice(0, i + 1).join("."))
+          .reduce((acc, next) => {
+            const error = getPointed(this.errors || {}, next, []);
+            if (Array.isArray(error)) {
+              acc = [...acc, ...error];
+            } else if (typeof error == "string") {
+              acc = [...acc, error];
+            }
+            return acc;
+          }, []),
         ...this.defaultAttrs.All,
-        ...(this.defaultAttrs[this.is.replace(/-./g, x=>x[1].toUpperCase())] || {}),
+        ...(this.defaultAttrs[
+          this.is.replace(/-./g, (x) => x[1].toUpperCase())
+        ] || {}),
         ...this.conf.attrs,
       };
     },
