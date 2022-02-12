@@ -91,8 +91,10 @@ export default {
   },
   methods: {
     clear() {
-      this.model = null;
       this.fileUrl = null;
+      this.file = null;
+      this.model = null;
+      this.$emit("input", null);
     },
     modelSet(val) {
       if (!val) {
