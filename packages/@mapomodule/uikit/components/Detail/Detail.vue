@@ -259,7 +259,7 @@ export default {
       this.$refs.form?.resetValidation();
       this.crud
         .updateOrCreate(this.model, {}, { multipart: this.multipart })
-        .then(() => back && this.$router.back())
+        .then((resp) => { back ? this.$router.back() : this.model = resp })
         .catch(error => {
           this.errors =
             (error.response.status == 400 && error.response.data) || null;

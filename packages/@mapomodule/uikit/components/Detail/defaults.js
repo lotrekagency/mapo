@@ -5,7 +5,7 @@ const mapping = {
     textarea: "vTextarea",
     switch: "vSwitch",
     slider: "vSlider",
-    file: "vFileInput",
+    file: "FileField",
     editor: "wygEditor",
     media: "MediaField",
     fks: "FksField",
