@@ -18,22 +18,16 @@ export default {
     model: {},
     fields: {
       main: [
+        { value: "test_file", type: "file" },
+        { value: "test_image", type: "file" },
+        { value: "test_text" },
+        { value: "inner_fields.test_text" },
+        { value: "inner_fields.test_file", type: "file" },
+        { value: "inner_fields.test_image", type: "file" },
 
-// test_file
-// test_json
-// test_date
-// test_text
-// test_image
-
-        { value: "test_file", type: 'file' },
-        { value: "test_image", type: 'file' },
-        { value: "test_text"},
-        
-        
       ],
-      sidenav: [
-      ]
-    }
+      sidenav: [],
+    },
   }),
 };
 </script>
