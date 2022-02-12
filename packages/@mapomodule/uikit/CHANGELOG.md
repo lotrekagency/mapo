@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.11](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2022-02-12)
+
+
+### Bug Fixes
+
+* add lower lever errors for nested fields ([beea774](https://github.com/lotrekagency/mapo/commit/beea774e977020e4728a5c7d06b038684cb89000))
+* fix filefield clear button ([297b8de](https://github.com/lotrekagency/mapo/commit/297b8ded8070223ef59263c7fa136843f40442af))
+* replace model with response in detail composnent ([77d9565](https://github.com/lotrekagency/mapo/commit/77d95658332acf6f14f33921768d512dc0037c3d))
+
+
+### Features
+
+* added brand new FileField ([6928b86](https://github.com/lotrekagency/mapo/commit/6928b86aadb24503b39722d17878660b1f053c3d))
+
+
+
+
+
 # [1.0.0-alpha.10](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.9...v1.0.0-alpha.10) (2022-02-11)
 
 
