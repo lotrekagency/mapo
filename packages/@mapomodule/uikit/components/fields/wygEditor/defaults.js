@@ -1,10 +1,10 @@
 var useDarkMode = false;
 
 export default {
-    plugins: 'mapomedia preview paste importcss searchreplace autolink directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons',
+    plugins: 'mapomedia preview paste importcss searchreplace autolink directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons',
     // imagetools_cors_hosts: ['picsum.photos'],
     menubar: 'file edit view insert format tools table help',
-    menu: { insert: { title: 'Insert', items: 'link mapomedia media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor toc | insertdatetime' } },
+    menu: { insert: { title: 'Insert', items: 'link mapomedia media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor | insertdatetime' } },
     toolbar: 'undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview | mapomedia media template link anchor codesample | ltr rtl',
     toolbar_sticky: true,
     image_advtab: true,
@@ -50,7 +50,7 @@ export default {
     quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote mapomedia quicktable',
     noneditable_noneditable_class: 'mceNonEditable',
     toolbar_mode: 'sliding',
-    contextmenu: 'link mapomedia imagetools table',
+    contextmenu: 'link mapomedia table',
     skin: useDarkMode ? 'oxide-dark' : 'oxide',
     content_css: useDarkMode ? 'dark' : 'default',
     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
