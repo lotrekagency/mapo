@@ -164,6 +164,9 @@ export default {
 .v-label.error--text{
   animation: v-shake 0.6s cubic-bezier(0.25, 0.8, 0.5, 1);
 }
+.tox-tinymce-aux {
+    z-index: 200 !important;
+}
 </style>
 
 <docs>
