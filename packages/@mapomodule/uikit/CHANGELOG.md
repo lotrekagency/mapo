@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.12](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2022-02-16)
+
+
+### Bug Fixes
+
+* **detail:** load v-model at mount time ([ad37268](https://github.com/lotrekagency/mapo/commit/ad3726832db1c7ae9e32c95fdeaf6d55b95224f0))
+
+
+### Features
+
+* added mapomedia to context menu and menubar replacing default image tool ([bb899d8](https://github.com/lotrekagency/mapo/commit/bb899d80c2f5835f1fb98fa9a0b3e3092b82951f))
+* changed default primary color ([37c3599](https://github.com/lotrekagency/mapo/commit/37c35995cdf033a5bcbf0a0acf71e9efadf69995))
+
+
+
+
+
 # [1.0.0-alpha.11](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.10...v1.0.0-alpha.11) (2022-02-12)
 
 
