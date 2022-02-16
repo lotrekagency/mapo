@@ -61,7 +61,7 @@ The purpose of this component is to provide you with a very quick way to create 
 
 ## DetailConfiguration
 
-The DetailConfiguration determines the behavior of the main form and is an `Array` of [`FieldConfiguration`](#fieldconfiguration). 
+The DetailConfiguration determines the behavior of the main form and is an `Array` of [`FieldConfiguration`](#fieldconfiguration).
 Each field configuration represents a field of the form.
 The configuration can also consist of an object with two keys `{ main sidenav }`.
 Each key is an `Array` of [`FieldConfiguration`](#fieldconfiguration) and will modify a different part of the component:
@@ -71,7 +71,7 @@ Each key is an `Array` of [`FieldConfiguration`](#fieldconfiguration) and will m
 
 ### FieldConfiguration
 
-The `FieldConfiguration` is a `String` containing the dottedPath of a value inside the payload we want to modify.  
+The `FieldConfiguration` is a `String` containing the dottedPath of a value inside the payload we want to modify.
 So, for example, if we have the payload: `{ image: { name: "...", url: "..." } }` we can modify the image name using the dottedPath `"image.name"`.
 
 The default component used to render a field of a form is a [`v-text-field`](https://vuetifyjs.com/en/components/text-fields/).
@@ -79,12 +79,12 @@ If you want more control over the generated component you can use an `Object` wi
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|value|The dottedPath of the value we want to modify.|`String`|`true`|-| 
-|synci18n|Determines if the field is translatable or not. If set to true the value will remain the same in all translations (untranslatable).|`Boolean`|`false`|`false`| 
-|type|Type of the field. This determines which component will be rendered. The list of possible choices can be found [here](#field-types) |`String`|`false`|`text`| 
-|accessor|[`Accessor`](#accessor) object to specify the setter and the getter of the field.|`Object`|`false`|`{set: x=>x, get: x=>x}`| 
-|attrs|The attributes that will be passed to the component.|`Object`|`false`|-| 
-|is|The component to be rendered in the form. This has a higher priority than the "type" attribute. Here you can pass in any regitered Vue component instance or name. [Learn more](https://vuejs.org/v2/guide/components.html#Dynamic-Components).|`String | VueComponent`|`false`|-| 
+|value|The dottedPath of the value we want to modify.|`String`|`true`|-|
+|synci18n|Determines if the field is translatable or not. If set to true the value will remain the same in all translations (untranslatable).|`Boolean`|`false`|`false`|
+|type|Type of the field. This determines which component will be rendered. The list of possible choices can be found [here](#field-types) |`String`|`false`|`text`|
+|accessor|[`Accessor`](#accessor) object to specify the setter and the getter of the field.|`Object`|`false`|`{set: x=>x, get: x=>x}`|
+|attrs|The attributes that will be passed to the component.|`Object`|`false`|-|
+|is|The component to be rendered in the form. This has a higher priority than the "type" attribute. Here you can pass in any regitered Vue component instance or name. [Learn more](https://vuejs.org/v2/guide/components.html#Dynamic-Components).|`String | VueComponent`|`false`|-|
 
 #### Accessor
 
@@ -94,7 +94,7 @@ Each function must return the processed value.
 
 #### Field types
 
-Here the list of the FieldConfiguration type association. 
+Here the list of the FieldConfiguration type association.
 
  - `text` ==> [v-text-field](https://vuetifyjs.com/en/components/text-fields/),
  - `select` ==> [v-select](https://vuetifyjs.com/en/components/selects/),
@@ -125,8 +125,8 @@ Here the list of the FieldConfiguration type association.
 
 ### FieldGroup
 
-You can use this mixed with `FieldConfiguration` to group multiple fields in one card with a title and an icon.  
-The `FieldGroup` has the key group that is a string repreenting the name of the group and the key fields that is an `Array` of [`FieldConfiguration`](#fieldconfiguration).  
+You can use this mixed with `FieldConfiguration` to group multiple fields in one card with a title and an icon.
+The `FieldGroup` has the key group that is a string repreenting the name of the group and the key fields that is an `Array` of [`FieldConfiguration`](#fieldconfiguration).
 The group key can also be an `Object`. In that case it contains the name and the icon for the group `{name: "...", icon: "..."}`. For a list of all available icons, visit the official [Material Design Icons](https://materialdesignicons.com/) page.
 
 <br><br>
