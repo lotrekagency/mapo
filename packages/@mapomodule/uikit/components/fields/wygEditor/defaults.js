@@ -1,7 +1,7 @@
 var useDarkMode = false;
 
 export default {
-    plugins: 'mapomedia preview paste importcss searchreplace autolink directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons',
+    plugins: 'mapomedia preview paste importcss searchreplace autolink directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons',
     // imagetools_cors_hosts: ['picsum.photos'],
     menubar: 'file edit view insert format tools table help',
     menu: { insert: { title: 'Insert', items: 'link mapomedia media template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor | insertdatetime' } },
