@@ -93,7 +93,7 @@
                 <!-- Use this to override the Save button. -->
                 <slot name="button.save" v-bind="slotBindings">
                   <!-- The Save button. -->
-                  <v-btn :disabled="isReadonly" class="mb-2" tile block @click="saveItem(true)">{{
+                  <v-btn v-show="canGoBack" :disabled="isReadonly" class="mb-2" tile block @click="saveItem(true)">{{
                     isNew ? "Create" : "Save"
                   }}</v-btn>
                 </slot>
@@ -107,7 +107,7 @@
                 <!-- Use this to override the Back button. -->
                 <slot name="button.back" v-bind="slotBindings">
                   <!-- The Back button. -->
-                  <v-btn class="mb-2" tile block @click="$router.back()"
+                  <v-btn v-show="canGoBack" class="mb-2" tile block @click="back"
                     >Back</v-btn
                   >
                 </slot>
@@ -254,12 +254,15 @@ export default {
     },
   },
   methods: {
+    back() {
+      this.$nuxt.context?.from?.name == "login" ? this.$router.go(-3) : this.$router.back()
+    },
     saveItem(back = false) {
       this.errors = null;
       this.$refs.form?.resetValidation();
       this.crud
         .updateOrCreate(this.model, {}, { multipart: this.multipart })
-        .then((resp) => { back ? this.$router.back() : this.model = resp })
+        .then((resp) => { back ? this.back() : this.model = resp })
         .catch(error => {
           this.errors =
             (error.response.status == 400 && error.response.data) || null;
@@ -280,7 +283,7 @@ export default {
           if (res) {
             this.crud
               .delete(this.identifier)
-              .then(() => this.$router.back())
+              .then(() => this.back())
               .catch(error =>
                 this.$mapo.$snack.open({
                   message: error.response?.data?.detail || "Something whent bad, please try again later...",
@@ -349,7 +352,13 @@ export default {
       }
     }
   },
-  computed: {
+computed: {
+    canGoBack() {
+      if (process.browser) {
+        return this.$nuxt.context?.from?.name !== "login" && window.history.length > 1 || window.history.length > 3
+      }
+      return true;
+    },
     crud() {
       return this.$mapo.$api.crud(this.endpoint);
     },
