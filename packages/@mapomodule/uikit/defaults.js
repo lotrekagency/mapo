@@ -6,7 +6,7 @@ export default {
         dark: true,
         themes: {
             dark: {
-                primary: '#309A00',
+                primary: '#51beaa',
                 accent: colors.grey.darken3,
                 secondary: colors.amber.darken3,
                 info: colors.teal.lighten1,
@@ -15,7 +15,7 @@ export default {
                 success: colors.green.accent3
             },
             light: {
-                primary: '#309A00',
+                primary: '#51beaa',
                 accent: colors.indigo.accent1,
                 secondary: colors.amber.accent2,
                 info: colors.teal.lighten1,
