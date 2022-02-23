@@ -225,8 +225,8 @@ export default {
   data() {
     return {
       model: {},
-      currentLang: null,
       modelLanguages: [],
+      currentLang: this.lang,
       errors: null
     };
   },
