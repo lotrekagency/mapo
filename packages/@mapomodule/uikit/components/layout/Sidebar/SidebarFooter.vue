@@ -14,7 +14,7 @@
       />
     </v-list>
     <v-divider></v-divider>
-    <v-list-item dense class="logout__button" link @click.native="logout">
+    <v-list-item v-if="$mapo.$auth.user.isLoggedIn" dense class="logout__button" link @click.native="logout">
       <v-list-item-icon>
         <v-icon>mdi-logout</v-icon>
       </v-list-item-icon>
