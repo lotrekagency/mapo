@@ -1,5 +1,18 @@
 <template>
   <div>
+  <div v-show="loading">
+    <v-progress-linear
+      color="primary"
+      indeterminate
+      absolute
+      style="top: 0;"
+    ></v-progress-linear>
+    <span class="detail-component-loading ">
+      <v-icon size="30">mdi-timer-sand</v-icon>
+      Fetching data..
+    </span>
+  </div>
+  <div v-show="!loading">
     <!-- Use this to override the title of the detail component. -->
     <slot name="title" v-bind="slotBindings">
       <!-- `<h1> "Create | Edit" + modelName </h1>` -->
@@ -186,8 +199,21 @@
       </v-row>
     </v-form>
   </div>
+  </div>
 </template>
 
+<style lang="scss" scoped>
+  .detail-component-loading {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+</style>
 
 <script>
 /**
@@ -425,6 +451,8 @@ computed: {
       this.crud.detail(this.identifier).then(res => {
         this.model = res;
         this.initLang();
+      }).catch(error => {
+        this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || "Ops some error occurred.." })
       });
     } else if (this.value) {
       this.model = this.value;
