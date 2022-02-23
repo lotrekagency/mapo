@@ -226,6 +226,7 @@ export default {
     return {
       model: {},
       currentLang: null,
+      modelLanguages: [],
       errors: null
     };
   },
@@ -420,9 +421,7 @@ computed: {
       return !Object.keys(this.model).length;
     },
     langs() {
-      return (
-        this.model?.lang_info?.site_languages.map(l => l.id) || this.languages
-      );
+      return this.modelLanguages || this.languages;
     },
     slotBindings() {
       return {
@@ -450,12 +449,14 @@ computed: {
     if (this.identifier && this.identifier !== "new") {
       this.crud.detail(this.identifier).then(res => {
         this.model = res;
+        this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id)
         this.initLang();
       }).catch(error => {
         this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || "Ops some error occurred.." })
       });
     } else if (this.value) {
       this.model = this.value;
+      this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id)
       this.initLang();
     }
   }
