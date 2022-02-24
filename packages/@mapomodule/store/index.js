@@ -13,9 +13,10 @@ export default ({ store }) => {
         root: true,
         handler: async ({ commit, dispatch }, { req }) => {
           if (req.headers.cookie) {
-            const { __mapo_session, sidebar_drawer, sidebar_clipped } = cookieparser.parse(req.headers.cookie)
+            const { __mapo_session, sidebar_drawer, sidebar_clipped, sidebar_minivariant } = cookieparser.parse(req.headers.cookie)
             commit('app/SET_DRAWER', sidebar_drawer)
             commit('app/SET_CLIPPED', sidebar_clipped)
+            commit('app/SET_MINIVARIANT', sidebar_minivariant)
             if (__mapo_session) {
               commit('user/SET_TOKEN', __mapo_session)
               await dispatch('user/getInfo').catch((e) => {

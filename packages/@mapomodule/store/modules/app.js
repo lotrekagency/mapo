@@ -3,7 +3,8 @@ import Cookies from 'js-cookie'
 const state = () => ({
   sidebar: {
     clipped: Cookies.get('sidebar_clipped') ? !!+Cookies.get('sidebar_clipped') : false,
-    drawer: Cookies.get('sidebar_drawer') ? !!+Cookies.get('sidebar_drawer') : false
+    drawer: Cookies.get('sidebar_drawer') ? !!+Cookies.get('sidebar_drawer') : false,
+    minivariant: Cookies.get('sidebar_minivariant') ? !!+Cookies.get('sidebar_minivariant') : false
   },
   snackbar: null
 })
@@ -30,6 +31,14 @@ const mutations = {
   SET_CLIPPED(state, value) {
     state.sidebar.clipped = !!value;
     Cookies.set('sidebar_clipped', +!!value)
+  },
+  TOGGLE_MINIVARIANT(state) {
+    state.sidebar.minivariant = !state.sidebar.minivariant;
+    Cookies.set('sidebar_minivariant', +!!state.sidebar.minivariant)
+  },
+  SET_MINIVARIANT(state, value) {
+    state.sidebar.minivariant = !!+value;
+    Cookies.set('sidebar_minivariant', +!!value)
   },
 }
 
@@ -73,12 +82,23 @@ const actions = {
         reject(error)
       }
     })
+  },
+  toggleSidebarMinivariant({ commit }) {
+    return new Promise((resolve, reject) => {
+      try {
+        commit('TOGGLE_MINIVARIANT')
+        resolve()
+      } catch (error) {
+        reject(error)
+      }
+    })
   }
 }
 
 const getters = {
   drawer: state => state.sidebar.drawer,
   clipped: state => state.sidebar.clipped,
+  minivariant: state => state.sidebar.minivariant,
   snackbar: state => state.snackbar,
 }
 
