@@ -8,3 +8,17 @@
     </v-main>
   </v-app>
 </template>
+
+<style lang="scss">
+.v-main__wrap {
+  .__nuxt-error-page {
+    background: transparent;
+    .error {
+      background: transparent !important;
+      svg {
+        // fill: #ff5252 !important;
+      }
+    }
+  }
+}
+</style>
