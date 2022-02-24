@@ -160,13 +160,14 @@ export default {
         search: this.searchValue || undefined,
         fltr: this.mime ? `mime_type=${this.mime}` : undefined,
       };
-      if (id) {
-        response = await this.mediaFolderCrud.detail(id, {
-          params,
-        });
-      } else {
-        response = await this.mediaFolderCrud.list({ params });
+      try {
+        response = id
+          ? await this.mediaFolderCrud.detail(id, { params })
+          : await this.mediaFolderCrud.list({ params });
+      } catch (error) {
+        console.error({ code: error.response.status, response: error.response.data})
       }
+
       this.processResponse(response);
       this.loading = false;
       this.editMedia = null;
