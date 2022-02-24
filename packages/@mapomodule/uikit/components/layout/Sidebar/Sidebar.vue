@@ -44,7 +44,7 @@ export default {
         if (this.$store.getters["mapo/app/drawer"] !== value)
           this.$store.dispatch("mapo/app/toggleSidebarDrawer");
         return value;
-      }
+      },
     },
     miniVariant: {
       get() {
@@ -54,19 +54,8 @@ export default {
         if (this.$store.getters["mapo/app/minivariant"] !== value)
           this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
         return value;
-      }
+      },
     },
-    username() {
-      return this.$mapo.$auth.user.username;
-    },
-    avatar() {
-      return this.$mapo.$auth.user.avatar;
-    }
   },
-  methods: {
-    drawerReverse() {
-      return (this.drawer = !this.drawer);
-    }
-  }
 };
 </script>

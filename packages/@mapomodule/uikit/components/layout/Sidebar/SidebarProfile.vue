@@ -6,8 +6,13 @@
     <v-list-item-icon v-else>
       <v-icon>mdi-account</v-icon>
     </v-list-item-icon>
-    <v-list-item-title>{{ this.$mapo.$auth.user.username }}</v-list-item-title>
-    <v-btn icon @click.stop="miniVariant = !miniVariant">
+    <v-list-item-title>
+      <span v-if="isLoggedIn">
+        {{ username }}
+      </span>
+      <NuxtLink v-else to="/login"> Login </NuxtLink>
+    </v-list-item-title>
+    <v-btn icon @click.stop="toggleMiniVariant">
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
   </v-list-item>
@@ -18,21 +23,19 @@
 // @vuese
 export default {
   computed: {
-    miniVariant: {
-      get() {
-        return this.$store.getters["mapo/app/minivariant"];
-      },
-      set(value) {
-        if (this.$store.getters["mapo/app/minivariant"] !== value)
-          this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
-        return value;
-      },
-    },
     username() {
-      return this.$mapo.$auth.user.username;
+      return this.isLoggedIn ? this.$mapo.$auth.user.username : "";
     },
     avatar() {
       return this.$mapo.$auth.user.avatar;
+    },
+    isLoggedIn() {
+      return this.$mapo.$auth.user.isLoggedIn;
+    },
+  },
+  methods: {
+    toggleMiniVariant() {
+      this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
     },
   },
 };
