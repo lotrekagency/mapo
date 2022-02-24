@@ -22,3 +22,12 @@
   }
 }
 </style>
+
+<script>
+import initDraggable from "@mapomodule/utils/plugins/v-draggable-modals";
+export default {
+  mounted() {
+    initDraggable();
+  },
+};
+</script>
