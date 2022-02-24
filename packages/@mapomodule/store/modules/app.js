@@ -29,7 +29,7 @@ const mutations = {
     Cookies.set('sidebar_clipped', +!!state.sidebar.clipped)
   },
   SET_CLIPPED(state, value) {
-    state.sidebar.clipped = !!value;
+    state.sidebar.clipped = !!+value;
     Cookies.set('sidebar_clipped', +!!value)
   },
   TOGGLE_MINIVARIANT(state) {
