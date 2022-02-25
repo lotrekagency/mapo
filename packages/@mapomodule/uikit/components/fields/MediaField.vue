@@ -104,6 +104,11 @@
 
       </div>
     </v-hover>
+    <v-messages
+      v-model="errorMessages"
+      color="error"
+      class="mt-2"
+    />
   </div>
 </template>
 
@@ -127,6 +132,10 @@ export default {
     title: {
       type: String,
       default: () => "",
+    },
+    errorMessages: {
+      type: String | Array,
+      default: () => []
     },
     rmAddBtn: {
       type: Boolean,
