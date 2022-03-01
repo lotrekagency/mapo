@@ -23,7 +23,7 @@
       >
     </v-list-item>
 
-    <div :style="indent" v-if="childrens.length && expanded && !forceCollapse">
+    <div class="child-menu" :style="indent" v-if="childrens.length && expanded && !forceCollapse">
       <SidebarListItem
         v-for="(item, i) in childrens"
         :key="i"
@@ -76,6 +76,19 @@
       z-index: -1;
     }
   }
+  .child-menu {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 0px;
+      height: 100%;
+      top: -9px;
+      margin-left: -4px;
+      border-left: solid 3px #acacac;
+      z-index: -1;
+    }
+  }
 }
 .spider-menu.child:last-child {
   .v-list-item__icon {
@@ -84,6 +97,11 @@
     }
     &::after {
       border-bottom-left-radius: 3px;
+    }
+  }
+  .child-menu{
+    &::after {
+      height: 0px;
     }
   }
 }
