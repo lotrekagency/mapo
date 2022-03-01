@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.14](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2022-03-01)
+
+
+### Features
+
+* added default choice to filtering ([75d4cb6](https://github.com/lotrekagency/mapo/commit/75d4cb6a4dfde8afc26bffe4b9d88ac3929bbdcd))
+
+
+
+
+
 # [1.0.0-alpha.13](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2022-03-01)
 
 
