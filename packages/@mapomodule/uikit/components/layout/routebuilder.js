@@ -22,7 +22,7 @@ function buildRoutes(routes, defaultIcon) {
 
 function nestReduce(array, defaultIcon) {
     return array.reduce((stack, route) => {
-        const names = route.relPath.split("/");
+        const names = (route.relPath || "").split("/");
         if (names.length === 1) {
             stack.push(route);
         } else {
@@ -31,7 +31,7 @@ function nestReduce(array, defaultIcon) {
             if (pIndex === -1) {
                 const label = (route.meta && route.meta.parentLabel) || name
                 const icon = (route.meta && route.meta.parentIcon) || getDefaultIcon({ route, label }, defaultIcon)
-                stack.push({ name, label, icon, childrens: [] });
+                stack.push({ name, label, icon, relPath: name, childrens: [] });
                 pIndex = stack.length - 1;
             }
             stack[pIndex].childrens.push(
