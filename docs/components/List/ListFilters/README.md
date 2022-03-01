@@ -45,6 +45,7 @@ The filters prop is a list of `Filter` objects made of several keys:
 
 - **"text"** `String` ==> The name of the filter that will be renered inside the filter menu.
 - **"value"** `String` ==> The dotted path of the value we need to filter on.
+- **"defaultChoice"** `String` ==> A choice value that is applied on the startup of the component. This lets you start the list with some filter already applied.
 - **"choices"** `Array<Choice>` ==> The list of choices rendered inside the filter. The text is the label, the value is the string we use as a filter.
 - **"datepicker"** `Boolean` ==> This is a boolean that determines if the filter has a datepicker layout.
 - **"multiple"** `Boolean` ==> This is a boolean that determines if the filter is exclusive or inclusive. In other words, if by selecting a choice it is added to the previous one or if it replaces it.
