@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.13](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2022-03-01)
+
+
+### Bug Fixes
+
+* added missing error messages to media field ([1489001](https://github.com/lotrekagency/mapo/commit/148900133c1671acc5a47fe994b41db07013ab2a))
+* clean default layout ([b32e5db](https://github.com/lotrekagency/mapo/commit/b32e5db6876420a3b53bb9da4cf13c7e53fb279f))
+* fix back button in detail page when you came from login or when you have no window history ([7881004](https://github.com/lotrekagency/mapo/commit/78810046d91d02fcfa845bcc7fce95cb011a21ae))
+* fix detail language load ([92a2718](https://github.com/lotrekagency/mapo/commit/92a271878b9f1f2585c3dcc18749adc7c7683ae1))
+* fix error page style ([d8753a1](https://github.com/lotrekagency/mapo/commit/d8753a1ae0a2c857cd4a5417694c17bcf9a5bb9d))
+* fix menu route building for nested folders ([1d15b17](https://github.com/lotrekagency/mapo/commit/1d15b17e3cbb75aa92e301429f667e119ecb9334))
+* fix sidebar menu styling for nested long menus ([ba87f59](https://github.com/lotrekagency/mapo/commit/ba87f5912db02f86c857d237b5408094b63ed164))
+* handle media manager requests errors. ([809704b](https://github.com/lotrekagency/mapo/commit/809704b7822b7991423e108bf1b8e398c19157e9))
+* **detail:** set current lang at mount time ([46c98a7](https://github.com/lotrekagency/mapo/commit/46c98a76a2a787e752b7fea7e2442b719338aa6f))
+* remove logout from sidebar if no user logged in ([e9d562b](https://github.com/lotrekagency/mapo/commit/e9d562b9f6f71a01f8235caa26c24a8f6d5c0f5d))
+* remove remaining toc plugin configuration from tinymce ([9defb47](https://github.com/lotrekagency/mapo/commit/9defb47c5da6e8b7fa87ee39943f9a66d48ca538))
+* remove toc and imagetools plugin from tinymce ([e1d12cf](https://github.com/lotrekagency/mapo/commit/e1d12cf72cf6aa488ed4135788fecd1ffa99da43))
+
+
+### Features
+
+* accept axios configuration in endpoint prop of FksField ([9dfca0b](https://github.com/lotrekagency/mapo/commit/9dfca0b5d2a488c0fdab5e8411454e7f0efe5904))
+* added loading page before content retrieve in detail page ([4f26c03](https://github.com/lotrekagency/mapo/commit/4f26c037ab095f931a3ff430b07451de9bef504f))
+* added login button to profile component if no user logged in ([354a25a](https://github.com/lotrekagency/mapo/commit/354a25a32164dc1d284cbe4542c65e04379b1c75))
+* detached SidebarProfile from sidebar component ([92c2894](https://github.com/lotrekagency/mapo/commit/92c28941e6069bbc4e15775ea380c453c7267420))
+* make all modals draggable 🛸 ([57da10d](https://github.com/lotrekagency/mapo/commit/57da10d17aa31d58e55fda5385d45d43beed8c4f))
+* pass errors to slot bindings inDetail component ([9303b39](https://github.com/lotrekagency/mapo/commit/9303b39be40810e526ad5f89428812cd3e7b349d))
+
+
+
+
+
 # [1.0.0-alpha.12](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.11...v1.0.0-alpha.12) (2022-02-16)
 
 
