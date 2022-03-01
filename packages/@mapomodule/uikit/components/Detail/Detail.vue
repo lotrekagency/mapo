@@ -426,6 +426,7 @@ computed: {
     slotBindings() {
       return {
         model: this.model,
+        errors: this.errors,
         currentLang: this.currentLang,
         crud: this.crud,
         isNew: this.isNew,
