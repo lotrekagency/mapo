@@ -10,7 +10,7 @@ This component is made to simplify Many To Many associations. With this componen
 |---|---|---|---|---|
 |value|V-model property. It is the array to be modified.|—|`true`|-|
 |items|This is the array of options from which you can choose.|`Array`|`false`|[]|
-|endpoint|-|`String`|`false`|-|
+|endpoint|-|—|`false`|-|
 
 <!-- @vuese:FksField:props:end -->
 

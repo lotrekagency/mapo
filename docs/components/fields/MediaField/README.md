@@ -9,6 +9,7 @@
 |value|-|`Object`|`false`|-|
 |label|-|`String`|`false`|-|
 |title|-|`String`|`false`|-|
+|errorMessages|-|—|`false`|[]|
 |rmAddBtn|-|`Boolean`|`false`|false|
 |aspectRatio|image reflections|—|`false`|undefined|
 |contain|-|`Boolean`|`false`|false|
