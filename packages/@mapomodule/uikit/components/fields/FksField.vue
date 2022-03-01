@@ -1,5 +1,9 @@
 <template>
-  <v-autocomplete v-bind="fieldAttrs" v-model="model" :items="options"></v-autocomplete>
+  <v-autocomplete
+    v-bind="fieldAttrs"
+    v-model="model"
+    :items="options"
+  ></v-autocomplete>
 </template>
 
 <script>
@@ -26,7 +30,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    endpoint: String,
+    endpoint: String | Object,
   },
   computed: {
     fieldAttrs() {
@@ -35,6 +39,22 @@ export default {
         multiple: true,
         ...this.$attrs,
       };
+    },
+    crudConfig() {
+      switch (typeof this.endpoint) {
+        case "string":
+          return {
+            url: this.endpoint,
+            conf: null,
+          };
+        case "object":
+          return {
+            url: this.endpoint.url,
+            conf: this.endpoint.conf,
+          };
+        default:
+          return { url: "", conf: null };
+      }
     },
   },
   watch: {
@@ -49,10 +69,10 @@ export default {
     },
   },
   mounted() {
-    if (this.endpoint) {
+    if (this.crudConfig.url) {
       this.$mapo.$api
-        .crud(this.endpoint)
-        .list()
+        .crud(this.crudConfig.url)
+        .list(this.crudConfig.conf)
         .then((res) => (this.options = res));
     }
   },
