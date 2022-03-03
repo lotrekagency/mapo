@@ -17,6 +17,7 @@ export default {
     return {
       model: null,
       options: [],
+      loading: false,
     };
   },
   props: {
@@ -37,6 +38,8 @@ export default {
       return {
         chips: this.$attrs.multiple === false ? false : true,
         multiple: true,
+        loading: this.loading,
+        noDataText: this.loading ? "Fetching data.." : undefined,
         ...this.$attrs,
       };
     },
@@ -70,10 +73,14 @@ export default {
   },
   mounted() {
     if (this.crudConfig.url) {
+      this.loading = true;
       this.$mapo.$api
         .crud(this.crudConfig.url)
         .list(this.crudConfig.conf)
-        .then((res) => (this.options = res));
+        .then((res) => {
+          this.options = res;
+          this.loading = false;
+        });
     }
   },
 };
