@@ -10,6 +10,7 @@
 </template>
 
 <style lang="scss">
+html { overflow-y: auto }
 .v-main__wrap {
   .__nuxt-error-page {
     background: transparent;
