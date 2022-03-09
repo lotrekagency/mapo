@@ -158,6 +158,12 @@ export default {
       type: Array,
       default: () => [],
     },
+    // This is the v-model of the component. It contains the active filters.
+    value: {
+       // [`Array<Filter>`](#filter-config)
+      type: Array,
+      default: () => [],
+    },
   },
   methods: {
     addDateFilter(filter) {
@@ -278,7 +284,13 @@ export default {
           }
         }
       })
-
+    },
+    cleanActiveFilters(){
+      this.compFilters.forEach(filter => {
+        if (!this.activeFilters.find((f) => f.value == filter.value)) {
+          this.removeFilter(filter)
+        }
+      })
     }
   },
   watch: {
@@ -290,6 +302,15 @@ export default {
         this.setQparams(val);
       }, 200),
     },
+    value: {
+      deep: true,
+      handler(val){
+        if (JSON.stringify(val) !== JSON.stringify(this.activeFilters)){
+          this.activeFilters = val
+          this.cleanActiveFilters()
+        }
+      }
+    }
   },
   created() {
     this.loadFilters();

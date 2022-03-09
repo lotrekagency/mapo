@@ -105,7 +105,22 @@ const createRepository = ($axios) => (endpoint, higherConf = {}) => ({
     delete(id, config) {
         const func = $axios.$delete(`/${trimslashes(endpoint)}/${id}/`, { ...higherConf, ...config })
         return endpoint !== null ? func : Promise.reject(endpointError)
-    }
+    },
+    /** 
+     * This makes a POST http call to the crud endpoint slash update_order. Returns as a promise the server response.
+     * Use this endpoint to change the order of the items in the list.
+     * @alias $api.crud.update_order
+     * @param {String} startId The id of the item we want to move in the list.
+     * @param {String} endId The id of the item in the position where we want to move.
+     * @param {external:AxiosRequestConfig} [config] This is a further axios configuration object that allows you to override the options previously setted.
+     * @returns {Promise<external:AxiosResponse>}
+     */
+     update_order(startId, endId, config) {
+        const func = $axios.$post(`/${trimslashes(endpoint)}/update_order/`, { startId, endId }, { ...higherConf, ...config })
+        return endpoint !== null ? func : Promise.reject(endpointError)
+    },
+
+    
 })
 /**
  * @external AxiosResponse

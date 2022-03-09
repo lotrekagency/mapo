@@ -13,6 +13,7 @@
       multi-sort
       can-select-all
       searchable
+      drag-reorder
     >
     </List>
   </v-container>

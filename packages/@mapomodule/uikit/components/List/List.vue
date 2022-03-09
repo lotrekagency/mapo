@@ -14,7 +14,7 @@
             />
           </v-col>
           <v-col cols="12" md="8" class="d-flex flex-nowrap justify-end align-center">
-            <ListFilters v-bind="$attrs" v-model="filters">
+            <ListFilters v-bind="$attrs" v-model="filters" :disabled="dragOrderingActive">
               <template v-for="(_, slot) in $slots" :slot="slot">
                 <!-- @vuese-ignore -->
                 <slot :name="slot"></slot>
@@ -52,6 +52,7 @@
         v-model="selection"
         v-bind="{...$attrs, crud, filters}"
         v-on="$listeners"
+        @drag-order-change="setDragOrdering"
         ref="dtable"
       >
         <template v-for="(_, slot) in $slots" :slot="slot">
@@ -82,7 +83,8 @@ export default {
       tabActiveStatus: 1,
       selection: [],
       allSelected: false,
-      filters: []
+      filters: [],
+      dragOrderingActive: false
     };
   },
   props: {
@@ -115,6 +117,12 @@ export default {
     },
     toggleSelectAll() {
       return this.$refs?.dtable?.toggleSelectAll();
+    },
+    setDragOrdering(val){
+        this.dragOrderingActive = val;
+        if(val){
+          this.filters = [];
+        }
     }
   },
   mounted() {},

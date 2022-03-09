@@ -3,6 +3,8 @@
     <v-data-table
       v-model="selection"
       v-bind="$attrs"
+      :headers="headers"
+      :show-select="!dragOrderingActive && $attrs['show-select']"
       :items="serverPaginationEnabled ? items : filteredItems"
       :loading="loading"
       :options.sync="options"
@@ -10,6 +12,9 @@
       :server-items-length="serverItemsLength"
       :class="{ mapo__listtable__all_selected: selectAll }"
       :item-key="lookup"
+      :disable-sort="dragOrderingActive"
+      v-sortable-data-table
+      @sorted="changeOrder"
     >
       <template v-slot:top>
         <v-toolbar flat>
@@ -43,6 +48,15 @@
         </v-toolbar>
         <slot name="dtable.top.under"></slot>
       </template>
+      <template v-if="dragReorder" v-slot:footer.prepend>
+        <v-tooltip right>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn v-bind="attrs" v-on="on" style="margin-left: 2px;" :class="{'primary--text': dragOrderingActive}" @click="dragOrderingActive = !dragOrderingActive" icon>
+            <v-icon>mdi-order-bool-ascending</v-icon></v-btn>
+          </template>
+          <span>Toggle reordering</span>
+        </v-tooltip>
+      </template>
       <template v-if="navigable" v-slot:[`item.${firstColName}`]="{ item }">
         <NuxtLink :to="detailLink(item)">
           {{ getPointed(item, firstColName, "Unknown") }}
@@ -59,6 +73,9 @@
           mdi-pencil
         </v-icon>
         <v-icon :disabled="!userCan('delete')" small @click="deleteItem(item)"> mdi-delete </v-icon>
+      </template>
+      <template v-slot:item.drag-column>
+        <v-icon class="handle-drag">mdi-drag</v-icon>
       </template>
       <template v-for="slot in nameSpacedSlots($slots, 'dtable.')" :slot="slot">
         <slot :name="`dtable.${slot}`"></slot>
@@ -108,11 +125,13 @@
   }
  }
 }
+.handle-drag{ cursor: grab; }
 </style>
 
 <script>
 import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
 import { debounce } from "@mapomodule/utils/helpers/debounce";
+import Sortable from "sortablejs"
 
 export default {
   name: "ListTable",
@@ -126,6 +145,7 @@ export default {
     searchString: "",
     loadingSearch: false,
     noPagination: false,
+    dragOrderingActive: false
   }),
   props: {
     crud: {
@@ -156,6 +176,24 @@ export default {
       type: Array,
       required: false
     },
+    dragReorder: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  directives: {
+    sortableDataTable: {
+      bind (el, binding, vnode) {
+        const options = {
+          animation: 150,
+          handle: '.handle-drag',
+          onUpdate: function (event) {
+            vnode.child.$emit('sorted', event)
+          },
+        }
+        Sortable.create(el.getElementsByTagName('tbody')[0], options)
+      }
+    }
   },
   watch: {
     selection(val) {
@@ -163,6 +201,13 @@ export default {
     },
     selectAll(val) {
       this.$emit("input", val ? "all" : this.selection);
+    },
+    dragOrderingActive(val) {
+      if (val) {
+        this.searchString = ""
+        this.options = {...this.options, sortBy: []}
+      }
+      this.$emit("drag-order-change", val)
     },
     filters: {
       deep: true,
@@ -225,6 +270,9 @@ export default {
         }
       });
     }, 500),
+    changeOrder(event){
+      this.crud.update_order(this.items[event.oldIndex][this.lookup], this.items[event.newIndex][this.lookup]);
+    },
     setQparams(options) {
       this.$router.push({
         query: {
@@ -376,6 +424,10 @@ export default {
       return (
         this.$attrs.headers && this.$attrs.headers.length && this.$attrs.headers[0].value
       );
+    },
+    headers() {
+      const dragColumn = { sortable: false, value: 'drag-column',  width: '64px' }
+      return this.dragOrderingActive ? [ dragColumn,...this.$attrs.headers ] : this.$attrs.headers
     },
     quickModeEnabled() {
       return (
