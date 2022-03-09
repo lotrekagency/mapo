@@ -271,7 +271,15 @@ export default {
       });
     }, 500),
     changeOrder(event){
-      this.crud.update_order(this.items[event.oldIndex][this.lookup], this.items[event.newIndex][this.lookup]);
+      this.crud.update_order(this.items[event.oldIndex][this.lookup], this.items[event.newIndex][this.lookup]).then(
+        res => res.reordered && this.getDataFromApi()
+      ).catch(error => {
+        this.getDataFromApi()
+        this.$mapo.$snack.open({
+          message: error.response?.data?.detail || "Reorder failed",
+          color: "error",
+        })
+      });
     },
     setQparams(options) {
       this.$router.push({
