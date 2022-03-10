@@ -152,5 +152,8 @@ export default {
       );
     },
   },
+  mounted(){
+    this.setModel()
+  }
 };
 </script>
