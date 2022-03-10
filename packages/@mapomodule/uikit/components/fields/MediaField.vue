@@ -218,5 +218,8 @@ export default {
       this.$emit("input", val);
     },
   },
+  mounted(){
+    this.internalValue = this.val
+  }
 };
 </script>
