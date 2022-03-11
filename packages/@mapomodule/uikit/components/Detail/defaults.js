@@ -11,7 +11,8 @@ const mapping = {
     fks: "FksField",
     m2m: "FksField",
     mediaList: "MediaM2mField",
-    seoPreview: "SeoPreview"
+    seoPreview: "SeoPreview",
+    repeater: "Repeater",
 }
 
 const props = {

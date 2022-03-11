@@ -19,6 +19,7 @@ import MediaM2mField from "@mapomodule/uikit/components/fields/MediaM2mField.vue
 import MediaField from "@mapomodule/uikit/components/fields/MediaField.vue";
 import SeoPreview from "@mapomodule/uikit/components/fields/SeoPreview.vue";
 import FileField from "@mapomodule/uikit/components/fields/FileField.vue";
+import Repeater from "@mapomodule/uikit/components/fields/Repeater.vue"
 
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import defaults from "./defaults";
@@ -36,6 +37,7 @@ export default {
     MediaField,
     SeoPreview,
     FileField,
+    Repeater,
   },
 
   data() {
