@@ -63,14 +63,14 @@ function findPropPaths(obj, predicate) {
         throw new TypeError("Predicate is not a function");
     }
     (function find(obj) {
-        for (const key of Object.keys(obj)) {
+        for (const key in obj) {
             if (predicate({ val: obj[key], obj, path, key }) === true) {
                 path.push(key);
                 results.push(path.join("."));
                 path.pop();
             }
             const o = obj[key];
-            if (o && typeof o === "object" && !Array.isArray(o)) {
+            if (o && typeof o === "object") {
                 if (!discoveredObjects.find(obj => obj === o)) {
                     path.push(key);
                     discoveredObjects.push(o);
