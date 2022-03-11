@@ -5,7 +5,7 @@
     <draggable
       v-model="items"
       handle=".repeater-handle-sort"
-      @change="sortCallback({ ...$event, items })"
+      @change="sortCallback({ ...$event, items, eventType: 'move' })"
     >
       <div
         class="repeater-wrapper"
@@ -169,13 +169,25 @@ export default {
   },
   methods: {
     addItem(index) {
-      const obj = {};
-      typeof index == "number"
-        ? this.items.splice(index, 0, obj)
-        : this.items.push(obj);
+      const element = {};
+      const newIndex = typeof index == "number" ? index : this.items.length;
+      this.items.splice(newIndex, 0, element);
+      this.sortable &&
+        this.sortCallback({
+          moved: { element, newIndex },
+          items: this.items,
+          eventType: "add",
+        });
     },
     removeItem(index) {
+      const element = this.items[index];
       this.items.splice(index, 1);
+      this.sortable &&
+        this.sortCallback({
+          moved: { element, oldIndex: index },
+          items: this.items,
+          eventType: "remove",
+        });
     },
     getErrors(index) {
       return (this.errorMessages || [])[index] || {};
