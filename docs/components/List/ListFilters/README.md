@@ -9,6 +9,7 @@ This components renders the filter menu in the upper-right. The menu provides a 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |filters|This is the main configuration of the component. It contains a list of filters.|[`Array<Filter>`](#filter-config)|`false`|[]|
+|value|This is the v-model of the component. It contains the active filters.|[`Array<Filter>`](#filter-config)|`false`|[]|
 
 <!-- @vuese:ListFilters:props:end -->
 

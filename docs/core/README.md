@@ -55,6 +55,7 @@ From here you can reach some utilities that simplify the interaction with the ba
         * [.update(id, payload, [config], options)](#$api.crud.update) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
         * [.partialUpdate(id, payload, [config], options)](#$api.crud.partialUpdate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
         * [.delete(id, [config])](#$api.crud.delete) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+        * [.update_order(startId, endId, [config])](#$api.crud.update_order) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
     * [.multipart(payload, file_attributes)](#$api.multipart) ⇒ [<code>FormData</code>](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
 
 <a name="$api.crud"></a>
@@ -78,6 +79,7 @@ This function generates a fully functional crud helper given the endpoint.
     * [.update(id, payload, [config], options)](#$api.crud.update) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
     * [.partialUpdate(id, payload, [config], options)](#$api.crud.partialUpdate) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
     * [.delete(id, [config])](#$api.crud.delete) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+    * [.update_order(startId, endId, [config])](#$api.crud.update_order) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
 
 <a name="$api.crud.list"></a>
 
@@ -166,6 +168,20 @@ This makes a DELETE http call to the crud endpoint slash the given id. Returns a
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>String</code> | The id of the data we want to delete from the server. |
+| [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
+
+<a name="$api.crud.update_order"></a>
+
+#### crud.update\_order(startId, endId, [config]) ⇒ [<code>Promise.&lt;AxiosResponse&gt;</code>](https://axios-http.com/docs/res_schema)
+This makes a POST http call to the crud endpoint slash update_order. Returns as a promise the server response.
+Use this endpoint to change the order of the items in the list.
+
+**Kind**: static method of [<code>crud</code>](#$api.crud)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| startId | <code>String</code> | The id of the item we want to move in the list. |
+| endId | <code>String</code> | The id of the item in the position where we want to move. |
 | [config] | [<code>AxiosRequestConfig</code>](https://axios-http.com/docs/req_config) | This is a further axios configuration object that allows you to override the options previously setted. |
 
 <a name="$api.multipart"></a>

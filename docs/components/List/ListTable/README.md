@@ -18,6 +18,7 @@
 |filters|-|`Array`|`false`|[]|
 |searchable|-|`Boolean`|`false`|false|
 |data|-|`Array`|`false`|-|
+|dragReorder|-|`Boolean`|`false`|false|
 
 <!-- @vuese:ListTable:props:end -->
 
@@ -28,7 +29,9 @@
 
 |Event Name|Description|Parameters|
 |---|---|---|
+|sorted|-|-|
 |input|-|-|
+|drag-order-change|-|-|
 
 <!-- @vuese:ListTable:events:end -->
 
