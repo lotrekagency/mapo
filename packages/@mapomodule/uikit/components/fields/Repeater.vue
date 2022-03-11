@@ -124,7 +124,7 @@
 import draggable from "vuedraggable";
 
 /**
- * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic field inside the main form.
+ * This component is made to manage a list of object that can be added/removed/reordered with a simple form.
  */
 export default {
   name: "Repeater",
@@ -137,23 +137,29 @@ export default {
     };
   },
   props: {
-    // V-model of the payload needed to edit the field value in realtime.
+    // V-model of the array needed to edit the objects in realtime.
     value: {
       type: Array,
       default: () => [],
     },
+    // Puts the input in an error state and passes through custom error messages.
     errorMessages: {
       type: Array,
       default: () => [],
     },
+    // Sets input label.
     label: {
       type: String,
     },
+    // The main configuration that determines the arrangement of the fields in each line.
     fields: {
+      // [`DetailConfiguration`](/components/Detail/Detail/#detailconfiguration)
       type: Array,
       default: () => [],
     },
+    // Makes the repeater field sortable.
     sortable: Boolean,
+    // This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list. 
     sortCallback: {
       type: Function,
       default: () => {},

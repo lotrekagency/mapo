@@ -8,7 +8,7 @@
 
 <script>
 /**
- * This component is made to simplify Many To Many associations. With this component you can modify an array selecting items from a list of checkboxes.
+ * This component is made to simplify ManyToMany and ForeignKeys associations. With this component you can modify an array selecting items from a list of checkboxes or a signle item selecting from a checkbox.
  */
 
 export default {
@@ -21,7 +21,7 @@ export default {
     };
   },
   props: {
-    // V-model property. It is the array to be modified.
+    // V-model property. It is the attribute to be modified.
     value: {
       type: Object | Array | null,
       required: true,
@@ -31,6 +31,7 @@ export default {
       type: Array,
       default: () => [],
     },
+    // This is the endpoint where the component can fetch options.
     endpoint: String | Object,
   },
   computed: {
