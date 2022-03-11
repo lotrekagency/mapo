@@ -26,7 +26,8 @@ export default {
           type: "m2m",
           attrs: { endpoint: "api/camomilla/tags", itemText: "title" }
         },
-        { value: "meta.variations", label: "Variations", type: "repeater", attrs: {
+        { value: "meta.variations", label: "Variations", synci18n: true, type: "repeater", attrs: {
+          sortable: true,
           fields: [
             { value: "sku", class: "col-md-6" },
             { value: "name", class: "col-md-6" },
