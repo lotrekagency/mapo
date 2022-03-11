@@ -2,60 +2,77 @@
   <div class="container pa-0">
     <span class="repeater-label">{{ label }}:</span>
     <v-divider />
-    <div class="repeater-wrapper" v-for="(model, index) in items" :key="index">
-      <div class="d-flex">
-        <v-divider vertical />
-        <div class="row ma-0">
-          <div
-            v-for="(field, i) in parsedFields"
-            :key="i"
-            :class="field.class || 'col-12'"
-          >
-            <DetailField
-              v-model="items[index]"
-              :conf="field"
-              :errors="getErrors(index)"
-            />
+    <draggable
+      v-model="items"
+      handle=".repeater-handle-sort"
+      @change="sortCallback({ ...$event, items })"
+    >
+      <div
+        class="repeater-wrapper"
+        v-for="(model, index) in items"
+        :key="index"
+      >
+        <div class="d-flex">
+          <v-divider vertical />
+          <div class="row ma-0">
+            <div
+              v-for="(field, i) in parsedFields"
+              :key="i"
+              :class="field.class || 'col-12'"
+            >
+              <DetailField
+                v-model="items[index]"
+                :conf="field"
+                :errors="getErrors(index)"
+              />
+            </div>
           </div>
-        </div>
-        <div class="repeater-side-bar grey lighten-2">
-          <span
-            class="repeater-counter grey--text text--darken-2 text-truncate"
-            >{{ index + 1 }}</span
-          >
-          <v-tooltip right>
-            <template v-slot:activator="{ on, attrs }">
-              <v-icon
-                v-bind="attrs"
-                v-on="on"
-                color="grey darken-3"
-                class="grey lighten-2 repeater-action repeater-add-line-index"
-                @click="addItem(index)"
-                >mdi-plus-circle-outline</v-icon
-              >
-            </template>
-            <span>Add here</span>
-          </v-tooltip>
-
-          <v-tooltip right>
-            <template v-slot:activator="{ on, attrs }">
-              <v-hover v-slot="{ hover }">
+          <div class="repeater-side-bar grey lighten-2">
+            <span
+              class="repeater-counter grey--text text--darken-2 text-truncate"
+              >{{ index + 1 }}</span
+            >
+            <v-tooltip right>
+              <template v-slot:activator="{ on, attrs }">
                 <v-icon
+                  v-if="sortable"
                   v-bind="attrs"
                   v-on="on"
-                  :color="hover ? 'error' : 'grey darken-3'"
-                  class="repeater-action repeater-remove-line"
-                  @click="removeItem(index)"
-                  >mdi-minus-circle-outline</v-icon
+                  color="grey darken-3"
+                  class="grey lighten-2 repeater-action repeater-add-line-index"
+                  @click="addItem(index)"
+                  >mdi-plus-circle-outline</v-icon
                 >
-              </v-hover>
-            </template>
-            <span>Remove</span>
-          </v-tooltip>
+              </template>
+              <span>Add here</span>
+            </v-tooltip>
+
+            <v-tooltip right>
+              <template v-slot:activator="{ on, attrs }">
+                <v-hover v-slot="{ hover }">
+                  <v-icon
+                    v-bind="attrs"
+                    v-on="on"
+                    :color="hover ? 'error' : 'grey darken-3'"
+                    class="repeater-action repeater-remove-line"
+                    @click="removeItem(index)"
+                    >mdi-minus-circle-outline</v-icon
+                  >
+                </v-hover>
+              </template>
+              <span>Remove</span>
+            </v-tooltip>
+            <v-icon
+              v-if="sortable"
+              color="grey darken-3"
+              class="repeater-action repeater-handle-sort"
+              >mdi-drag</v-icon
+            >
+          </div>
         </div>
+        <v-divider />
       </div>
-      <v-divider />
-    </div>
+    </draggable>
     <div class="d-flex justify-end">
       <v-btn class="repeater-add-line" @click="addItem" outlined tile text>
         <v-icon>mdi-plus</v-icon> Add</v-btn
@@ -91,6 +108,12 @@
     top: -11px;
     border-radius: 50%;
   }
+  .repeater-handle-sort {
+    position: absolute;
+    align-self: center;
+    bottom: 2px;
+    cursor: grab;
+  }
 }
 .repeater-add-line {
   border-top: none;
@@ -98,11 +121,16 @@
 </style>
 
 <script>
+import draggable from "vuedraggable";
+
 /**
  * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic field inside the main form.
  */
 export default {
   name: "Repeater",
+  components: {
+    draggable,
+  },
   data() {
     return {
       items: null,
@@ -124,6 +152,11 @@ export default {
     fields: {
       type: Array,
       default: () => [],
+    },
+    sortable: Boolean,
+    sortCallback: {
+      type: Function,
+      default: () => {},
     },
   },
   watch: {
