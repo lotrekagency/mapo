@@ -110,6 +110,14 @@ export default {
       // @arg Emit "all" if all items are selected, else the list of the selected rows.
       this.$emit("selectionChange", val);
     },
+    filters: {
+      deep: true,
+      handler(val) {
+        // Fires when you change filters options.
+        // @arg Emits the same array prop `filters` passed to the component and every filter object inside it contains an `active` array that contains the selected options.
+        this.$emit("filtersChange", val);
+      }
+    }
   },
   methods: {
     refresh() {
