@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.15](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2022-03-11)
+
+
+### Bug Fixes
+
+* fix detail component for single translatable languages ([cab50e5](https://github.com/lotrekagency/mapo/commit/cab50e5f62ee0a23ae58831b6800d36ca1006377))
+* fix detail-field bad mounting if v-model is too quick ([6198a7d](https://github.com/lotrekagency/mapo/commit/6198a7d695b6b5fee1f86030d8ca0c7fcfe232e4))
+* fix media-field bad mounting if v-model is too quick ([335a7c2](https://github.com/lotrekagency/mapo/commit/335a7c2b5e1b164f1e741fdae3ecd45dc2bb4e0f))
+* removed permanent scrollbar on page body ([2cb3f13](https://github.com/lotrekagency/mapo/commit/2cb3f132f00ee72f14c4327fd595340c9dcdac34))
+
+
+### Features
+
+* add sortable capabilities to repeater field ([c962f62](https://github.com/lotrekagency/mapo/commit/c962f626aaf84df4d57ede0b60aca34e4cbd10dd))
+* add sortCallback also to add and remove items in Repeater field ([1ae82c3](https://github.com/lotrekagency/mapo/commit/1ae82c3f63dd7f7ab28e90b308ccdcdf69219226))
+* added  Repeater field 🌶 ([f388094](https://github.com/lotrekagency/mapo/commit/f388094ebf93341f8559f13fd73ee1d2172cd73d))
+* **list:** added filtersChange event ([3d2a560](https://github.com/lotrekagency/mapo/commit/3d2a5607e7ecb368314b192af5b58613c57ff9d0))
+* manage backend errors on reordering ([1df55c2](https://github.com/lotrekagency/mapo/commit/1df55c22fe4def3723027a07845d9cd804e6ef3c))
+* **ordering:** added sortablejs to drag and reorder list ([eb8bf21](https://github.com/lotrekagency/mapo/commit/eb8bf21c3178c3ad62db5aa7c06c0562e944dea6))
+* added loading status to fksfield while fetching options ([07137ee](https://github.com/lotrekagency/mapo/commit/07137ee5b0fcc2ee23df7687af0066555cf2a53e))
+
+
+
+
+
 # [1.0.0-alpha.14](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.13...v1.0.0-alpha.14) (2022-03-01)
 
 

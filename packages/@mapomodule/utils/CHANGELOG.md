@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.15](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2022-03-11)
+
+
+### Features
+
+* enhance findPropPaths to deal also with arrays indexes ([158a9aa](https://github.com/lotrekagency/mapo/commit/158a9aa9329defbecbb39e1f19df2855dd3ece01))
+
+
+
+
+
 # [1.0.0-alpha.13](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2022-03-01)
 
 

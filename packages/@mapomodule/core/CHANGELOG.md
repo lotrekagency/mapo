@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.15](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2022-03-11)
+
+
+### Features
+
+* **ordering:** added sortablejs to drag and reorder list ([eb8bf21](https://github.com/lotrekagency/mapo/commit/eb8bf21c3178c3ad62db5aa7c06c0562e944dea6))
+
+
+
+
+
 # [1.0.0-alpha.13](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.12...v1.0.0-alpha.13) (2022-03-01)
 
 
