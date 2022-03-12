@@ -382,8 +382,8 @@ export default {
   },
 computed: {
     canGoBack() {
-      if (process && process.browser) {
-        return this.$nuxt.context?.from?.name !== "login" && window.history.length > 1 || window.history.length > 3
+      if (typeof window !== "undefined") {
+        return this.$nuxt?.context?.from?.name !== "login" && window.history.length > 1 || window.history.length > 3
       }
       return true;
     },
