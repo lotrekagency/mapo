@@ -143,6 +143,7 @@ This is an interactive example. You can play with it but remember that all http 
 ::: demo
 <template>
   <v-app>
+    <div class="d-flex justify-end"><ThemeToggle/></div>
     <Detail
       endpoint="api/camomilla/articles"
       identifier="new"
@@ -160,6 +161,14 @@ export default {
       main: [
         { value: "identifier", synci18n: true },
         { value: "content", type: "editor" },
+        { value: "sections", type: "repeater", attrs: {
+          sortable: true,
+          fields: [
+            { value: "title", class: "col-md-6" },
+            { value: "subtitle", class: "col-md-6" },
+            { value: "content", type: "textarea" },
+          ]}
+        },
         {
           group: "Seo",
           fields: [

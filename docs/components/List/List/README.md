@@ -73,6 +73,7 @@ This is an interactive example. You can play with it but remember that all http 
 ::: demo
 <template>
   <v-app>
+    <div class="d-flex justify-end"><ThemeToggle/></div>
     <List
     show-select
     title="Sweets archive:"
@@ -85,11 +86,12 @@ This is an interactive example. You can play with it but remember that all http 
     searchable
     :data.sync="desserts"
     :actions="[]"
+    drag-reorder
     >
     </List>
     <br>
     <h3> Data: </h3>
-    <pre>{{ desserts }}</pre>
+    <pre style="background-color: unset">{{ desserts }}</pre>
   </v-app>
 </template>
 
