@@ -5,7 +5,7 @@
     <draggable
       v-model="items"
       handle=".repeater-handle-sort"
-      :options="{ animation: 150 }"
+      animation="150"
       @change="sortCallback({ ...$event, items, eventType: 'move' })"
     >
       <div
@@ -47,7 +47,6 @@
               </template>
               <span>Add here</span>
             </v-tooltip>
-
             <v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
                 <v-hover v-slot="{ hover }">
