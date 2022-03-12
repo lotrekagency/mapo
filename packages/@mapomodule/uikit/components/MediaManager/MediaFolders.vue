@@ -12,7 +12,7 @@
         </span>
       </span>
     </div>
-    <v-card-actions class="flex-wrap">
+    <v-card-actions class="flex-wrap px-0">
       <div v-if="parentFolder" class="d-none d-sm-block">
         <v-btn
           class="px-2"
@@ -29,7 +29,7 @@
         v-for="folder in folders"
         :key="folder.id"
         class="d-flex child-flex"
-        :class="{ 'mx-2': expanded }"
+        :class="{ 'px-1': expanded }"
       >
         <div class="folder_grid d-flex flex-column" :class="{ expanded }">
           <v-icon @click.stop="goToFolder(folder)" :size="expanded ? 100 : 40">
@@ -122,6 +122,10 @@
 <style lang="scss" scoped>
 .media-folders-wrapper{
   width: 100%;
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.4rem;
 }
 .folder_grid {
   .folder_slug {
