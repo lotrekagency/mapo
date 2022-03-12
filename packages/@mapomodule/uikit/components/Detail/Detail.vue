@@ -510,11 +510,12 @@ Here the list of the FieldConfiguration type association.
  - `textarea` ==> [v-textarea](https://vuetifyjs.com/en/components/textareas/),
  - `switch` ==> [v-switch](https://vuetifyjs.com/en/components/switches/),
  - `slider` ==> [v-slider](https://vuetifyjs.com/en/components/sliders/),
- - `file` ==> [v-file-input](https://vuetifyjs.com/en/components/file-inputs/),
+ - `file` ==> [file-field](/components/fields/FileField/),
  - `editor` ==> [wyg-editor](/components/fields/wygEditor/wygEditor/),
  - `media` ==> [media-field](/components/fields/MediaField/),
+ - `mediaList` ==> [media-m2m-field](/components/fields/MediaM2mField/)
  - `m2m` or `fks` ==> [fks-field](/components/fields/FksField/),
- - `mediaList` ==> [media-fks-field](/components/fields/MediaM2mField/)
+ - `repeater` ==> [repeater](/components/fields/Repeater/),
 
 
 #### Example of a [`FieldConfiguration`](#fieldconfiguration):

@@ -39,7 +39,7 @@
 
 <script>
 /**
- * This component is made to enhance v-file-input. The main change from the vuetify component is the ability to maintain and show the url of the current saved file.
+ * This component is made to enhance [v-file-input](https://vuetifyjs.com/en/components/file-inputs/). The main upgrade from the vuetify component is the ability to maintain and show the url of the current saved file.
  */
 
 export default {

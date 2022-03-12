@@ -150,21 +150,19 @@ export default {
       type: Array,
       default: () => [],
     },
+    // The main configuration that determines the arrangement of the fields in each line.
+    fields: {
+      // [`Array<FieldConfiguration>`](/components/Detail/Detail/#fieldconfiguration)
+      type: Array,
+      default: () => [],
+    },
     // Puts the input in an error state and passes through custom error messages.
     errorMessages: {
       type: Array,
       default: () => [],
     },
     // Sets input label.
-    label: {
-      type: String,
-    },
-    // The main configuration that determines the arrangement of the fields in each line.
-    fields: {
-      // [`DetailConfiguration`](/components/Detail/Detail/#detailconfiguration)
-      type: Array,
-      default: () => [],
-    },
+    label: String,
     // Makes all the repeater items readonly.
     readonly: Boolean,
     // Makes the repeater field sortable.
