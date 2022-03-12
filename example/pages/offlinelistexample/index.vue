@@ -13,6 +13,7 @@
           searchable
           :data.sync="desserts"
           :actions="[]"
+          drag-reorder
         >
         </List>
         <br>
