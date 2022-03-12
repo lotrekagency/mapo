@@ -5,6 +5,7 @@
     <draggable
       v-model="items"
       handle=".repeater-handle-sort"
+      :options="{ animation: 150 }"
       @change="sortCallback({ ...$event, items, eventType: 'move' })"
     >
       <div
@@ -159,7 +160,7 @@ export default {
     },
     // Makes the repeater field sortable.
     sortable: Boolean,
-    // This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list. 
+    // This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list.
     sortCallback: {
       type: Function,
       default: () => {},
