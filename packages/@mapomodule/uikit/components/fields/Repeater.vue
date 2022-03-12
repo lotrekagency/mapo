@@ -36,7 +36,7 @@
             <v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
-                  v-if="sortable"
+                  v-if="!readonly && sortable"
                   v-bind="attrs"
                   v-on="on"
                   color="grey darken-3"
@@ -52,6 +52,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-hover v-slot="{ hover }">
                   <v-icon
+                    v-if="!readonly"
                     v-bind="attrs"
                     v-on="on"
                     :color="hover ? 'error' : 'grey darken-3'"
@@ -64,7 +65,7 @@
               <span>Remove</span>
             </v-tooltip>
             <v-icon
-              v-if="sortable"
+              v-if="!readonly && sortable"
               color="grey darken-3"
               class="repeater-action repeater-handle-sort"
               >mdi-drag</v-icon
@@ -75,7 +76,14 @@
       </div>
     </draggable>
     <div class="d-flex justify-end">
-      <v-btn class="repeater-add-line" @click="addItem" outlined tile text>
+      <v-btn
+        class="repeater-add-line"
+        @click="addItem"
+        :disabled="readonly"
+        outlined
+        tile
+        text
+      >
         <v-icon>mdi-plus</v-icon> Add</v-btn
       >
     </div>
@@ -158,6 +166,8 @@ export default {
       type: Array,
       default: () => [],
     },
+    // Makes all the repeater items readonly.
+    readonly: Boolean,
     // Makes the repeater field sortable.
     sortable: Boolean,
     // This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list.
@@ -203,7 +213,7 @@ export default {
       const conf = typeof field === "string" ? { value: field } : field;
       conf.value = conf.value || "";
       conf.slotName = `fields.${conf.value || i}`;
-      if (this.isReadonly) {
+      if (this.readonly) {
         conf.attrs = { ...conf.attrs, readonly: true };
       }
       return conf;
