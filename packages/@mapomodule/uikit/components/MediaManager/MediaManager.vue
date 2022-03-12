@@ -1,15 +1,18 @@
 <template>
   <v-card elevation="0">
-    <v-card-title class="d-flex flex-wrap-reverse pa-0">
+    <v-card-title class="d-flex flex-wrap pa-0">
       <div>
         <v-tabs v-model="tab" right background-color="transparent">
           <v-tab>Gallery</v-tab>
           <v-tab>Uploader</v-tab>
         </v-tabs>
       </div>
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-show="tab == 0"
+      <v-btn v-show="$vuetify.breakpoint.xs" class="ma-2 ml-auto" @click="getRoot" icon>
+        <v-icon>mdi-update</v-icon>
+      </v-btn>
+      <div class="d-flex ma-auto mr-0" :style="$vuetify.breakpoint.xs ? 'width: 100%' : ''">
+        <v-text-field
+        v-show="!editMedia && tab == 0"
         v-model="searchValue"
         @input="
           loadingSearch = true;
@@ -23,14 +26,14 @@
         dense
         clearable
         :loading="loadingSearch"
-        class="mx-2 shrink"
+        class="mx-2 mt-2"
       ></v-text-field>
-      <v-btn class="ma-2" @click="getRoot" icon>
+      <v-btn v-show="!$vuetify.breakpoint.xs" class="ma-2" @click="getRoot" icon>
         <v-icon>mdi-update</v-icon>
       </v-btn>
-    </v-card-title>
-    <v-card-text class="pa-0">
+      </div>
       <MediaFolders
+        v-show="!editMedia"
         v-if="!noFolders"
         v-bind="{ folders, parentFolders, loading }"
         @updateFolder="updateOrCreateFolder($event)"
@@ -40,6 +43,8 @@
           getRoot();
         "
       />
+    </v-card-title>
+    <v-card-text class="pa-0">
       <v-tabs-items v-model="tab" class="transparent">
         <v-tab-item>
           <MediaGallery

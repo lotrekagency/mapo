@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="media-folders-wrapper">
     <div v-if="parentFolders && parentFolders.length">
       <span class="mx-2 mt-1 d-flex flex-wrap align-center">
         <span class="mb-1">
@@ -120,6 +120,9 @@
   </div>
 </template>
 <style lang="scss" scoped>
+.media-folders-wrapper{
+  width: 100%;
+}
 .folder_grid {
   .folder_slug {
     width: 65px;

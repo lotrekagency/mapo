@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot v-bind="{ on, attrs }" name="activator"></slot>
-    <v-dialog v-model="dialog" width="800" scrollable>
+    <v-dialog v-model="dialog" max-width="100%" width="800" scrollable>
       <media-manager
         @selectionChange="selectionChange($event)"
         :selection="$attrs.selection"
