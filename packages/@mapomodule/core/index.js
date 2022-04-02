@@ -39,7 +39,7 @@ export default (ctx, inject) => {
              * 
              * This simply commits a logout to the vuex store.
              */
-            logout: () => ctx.store.dispatch("mapo/user/login"),
+            logout: () => ctx.store.dispatch("mapo/user/logout"),
             /**
              * This refresh user informations present in vuex store and returns them.
              * @returns {UserData}

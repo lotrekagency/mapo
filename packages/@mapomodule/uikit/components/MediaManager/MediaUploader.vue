@@ -80,7 +80,7 @@ export default {
     mediaFileCrud() {
       this._mediaFileCrud =
         this._mediaFileCrud ||
-        this.$mapo.$api.crud("api/camomilla/media");
+        this.$mapo.$api.crud("api/media");
       return this._mediaFileCrud;
     },
     completed() {

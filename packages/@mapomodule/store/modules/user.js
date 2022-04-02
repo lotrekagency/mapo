@@ -2,6 +2,7 @@ import { getToken, setToken, removeToken } from '@mapomodule/utils/helpers/auth'
 
 const state = () => ({
   token: getToken(),
+  isLoggedIn: false,
   info: {},
   page_permissions: {}
 })
@@ -10,11 +11,15 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
+  SET_LOGGEDIN: (state, bool) => {
+    state.isLoggedIn = !!bool
+  },
   SET_INFO: (state, info) => {
     state.info = info
   },
   CLEAN_DATA: (state) => {
     state.token = getToken()
+    state.isLoggedIn = false
     state.info = {}
     state.page_permissions = {}
   },
@@ -30,12 +35,13 @@ const actions = {
   login({ commit, dispatch }, userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
-      const url = process.env.AUTH_API || '/api/camomilla/token-auth/'
+      const url = process.env.AUTH_LOGIN_URL || '/api/auth/login'
       this.$axios.post(url, { username: (username || "").trim(), password: (password || "").trim() }).then(response => {
         const { token } = response.data
         commit('SET_TOKEN', token)
         setToken(token)
-        dispatch('getInfo').then(() => resolve()).catch(err => reject(err))
+        commit('SET_LOGGEDIN', true)
+        dispatch('getInfo').then(() => resolve())
       }).catch(error => {
         reject(error)
       })
@@ -44,17 +50,22 @@ const actions = {
 
   logout({ commit }) {
     return new Promise((resolve) => {
-      removeToken()
-      commit('CLEAN_DATA')
-      const { current } = this.$router.history
-      this.$router.push({ name: 'login', query: { redirect: current.path, ...current.query } })
-      resolve()
+      const url = process.env.AUTH_LOGIN_URL || '/api/auth/logout'
+      this.$axios.get(url).then(_ => {
+        removeToken()
+        commit('CLEAN_DATA')
+        const { current } = this.$router.history
+        this.$router.push({ name: 'login', query: { redirect: current.path, ...current.query } })
+        resolve()
+      }).catch(error => {
+        reject(error)
+      })
     })
   },
 
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {
-      const url = process.env.USER_INFO_API || '/api/camomilla/profiles/me/'
+      const url = process.env.USER_INFO_API || '/api/profiles/me/'
       this.$axios.get(url).then(response => {
         commit('SET_INFO', response.data)
         resolve(response.data)
@@ -80,7 +91,7 @@ const actions = {
 }
 
 const getters = {
-  isLoggedIn: state => !!state.token,
+  isLoggedIn: state => !!state.isLoggedIn,
   isSuperUser: state => !!state.info.is_superuser,
   token: state => state.token,
   username: state => state.info.username || 'Unknown',

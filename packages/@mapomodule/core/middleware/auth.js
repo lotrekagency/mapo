@@ -1,8 +1,8 @@
 import Middleware from '../../middleware' // little hack to inject middleware in root project :P
 
 Middleware.auth = Middleware.auth || function ({ route, redirect, query, store }) {
-    const hasToken = store.getters['mapo/user/token']
-    if (!hasToken) {
+    const isLoggedIn = store.getters['mapo/user/isLoggedIn']
+    if (!isLoggedIn) {
         query['redirect'] = route.path
         return redirect('/login', query)
     }

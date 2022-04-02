@@ -17,6 +17,7 @@
     "@mapomodule/routemeta": "^1.0.0-alpha.8",
     "@mapomodule/store": "^1.0.0-alpha.15",
     "@mapomodule/uikit": "^1.0.0-alpha.15",
+    "@mapomodule/integrations": "^1.0.0-alpha.15",
     "@nuxtjs/axios": "^5.13.6",
     "lodash.mergewith": "^4.6.2"
   },

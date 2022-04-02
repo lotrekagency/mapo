@@ -20,8 +20,7 @@ export default {
   },
   vuetify,
   axios: {
-    baseURL: 'http://localhost:8000',
-    browserBaseURL: 'http://localhost:8000',
+    withCredentials: true,
   },
 
   extendPlugins(plugins) {

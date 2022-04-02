@@ -123,12 +123,12 @@ export default {
   computed: {
     mediaFolderCrud() {
       this._mediaFolderCrud =
-        this._mediaFolderCrud || this.$mapo.$api.crud("api/camomilla/media-folders");
+        this._mediaFolderCrud || this.$mapo.$api.crud("api/media-folders");
       return this._mediaFolderCrud;
     },
     mediaFileCrud() {
       this._mediaFileCrud =
-        this._mediaFileCrud || this.$mapo.$api.crud("api/camomilla/media");
+        this._mediaFileCrud || this.$mapo.$api.crud("api/media");
       return this._mediaFileCrud;
     },
     parentFolder: {
