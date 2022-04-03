@@ -49,7 +49,7 @@ const actions = {
   },
 
   logout({ commit }) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       const url = process.env.AUTH_LOGIN_URL || '/api/auth/logout'
       this.$axios.get(url).then(_ => {
         removeToken()
@@ -58,6 +58,7 @@ const actions = {
         this.$router.push({ name: 'login', query: { redirect: current.path, ...current.query } })
         resolve()
       }).catch(error => {
+        commit('CLEAN_DATA')
         reject(error)
       })
     })

@@ -9,7 +9,7 @@ Middleware.permissions = Middleware.permissions || async function ({ route, erro
         return
     }
     const { model } = route.meta.permissions
-    const userPermission = userInfo.user_permissions.filter(perm => perm.codename.endsWith(model)).map(({ codename }) => codename.replace(`_${model}`, ''))
+    const userPermission = (userInfo.user_permissions || []).filter(perm => perm.codename.endsWith(model)).map(({ codename }) => codename.replace(`_${model}`, ''))
     if (!userPermission.includes('view')) {
         return error({ statusCode: 404, message: 'This page could not be found' })
     } else {

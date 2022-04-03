@@ -19,9 +19,9 @@ module.exports = ({ $axios, store }) => {
         })
 
         $axios.onError((error) => {
-            const { status } = error.response || {}
-            if (status === 401) {
-                store.dispatch('mapo/user/logout');
+            const { status, request } = error.response || {}
+            if (status === 401 && request?.path !== '/api/auth/logout') {
+                store.dispatch('mapo/user/logout')
             }
             if (status == 403) {
                 store.dispatch("mapo/app/showSnackMessage", { message: "Permission denied..", color: "error" })
