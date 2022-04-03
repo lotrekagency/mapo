@@ -12,7 +12,7 @@
           v-show="message"
           class="filefield-current"
           ><b class="mr-1">Current:</b>
-          <a :href="message" target="__blank">{{ message }}</a>
+          <a @click="openFile(message)">{{ message }}</a>
           <v-spacer></v-spacer>
           <v-icon @click="clear" class="mb-1" small>mdi-close</v-icon>
         </span>
@@ -100,9 +100,26 @@ export default {
         this.model = val;
       }
     },
+    openFile(url) {
+      const w = 700;
+      const h = 700;
+      const left = screen.width / 2 - w / 2;
+      const top = screen.height / 2 - h / 2;
+      window.open(
+        url,
+        url,
+        `width=${w},
+         height=${h},
+         top=${top},
+         left=${left}
+         `
+      );
+
+      return false;
+    },
   },
-  created(){
+  created() {
     this.model = this.value;
-  }
+  },
 };
 </script>
