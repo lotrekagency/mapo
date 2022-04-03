@@ -146,7 +146,7 @@ This is an interactive example. You can play with it but remember that all http 
   <v-app>
     <div class="d-flex justify-end"><ThemeToggle/></div>
     <Detail
-      endpoint="api/camomilla/articles"
+      endpoint="api/articles"
       identifier="new"
       :fields="fields"
       :languages="['it', 'en', 'de']"

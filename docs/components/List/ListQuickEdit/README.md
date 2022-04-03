@@ -13,6 +13,7 @@ This components renders a dialog that let the user quick edit (or add) an elemen
 |languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
 |lookup|-|`String`|`false`|id|
 |crud|-|`Object`|`true`|-|
+|dialogProps|-|`Object`|`false`|{"width":600,"scrollable":true}|
 |offline|-|`Boolean`|`false`|-|
 
 <!-- @vuese:ListQuickEdit:props:end -->
