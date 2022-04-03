@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.16](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2022-04-03)
+
+
+### Bug Fixes
+
+* **detail:** fix reference errors in detail component ([f5c3fb2](https://github.com/lotrekagency/mapo/commit/f5c3fb2eefb565ad4a0e58b8d899b86f683caa24))
+* **list:** fix offlineMode data table reordering ([55eb55f](https://github.com/lotrekagency/mapo/commit/55eb55f9fc6b13c7052f946ead68a860cde89e06))
+* **mediamanager:** fix dialog style ([732d748](https://github.com/lotrekagency/mapo/commit/732d74813d81dffc13530aa5a6c8ebf70513a6ef))
+* **mediamanager:** fix media folder style ([0ac29c8](https://github.com/lotrekagency/mapo/commit/0ac29c84efbce03f70ae81cf7fb9d264fac40c4c))
+* prevent filefield bad mount ([cc84540](https://github.com/lotrekagency/mapo/commit/cc84540bd9b93eba95fb8fb92a0862ddeedb0684))
+* **repeater:** fix reordering animation ([fe192fe](https://github.com/lotrekagency/mapo/commit/fe192fe42c44f7f4985d3ba430d5b3dd2d1da692))
+
+
+### Features
+
+* Added mapo integrations module! 🎉 ([76d2c80](https://github.com/lotrekagency/mapo/commit/76d2c805245b4cf49a33696339da52e4c17f4053))
+* **quick-edit:** added possibility to customize dialog props of ListQuickEdit ([f3028c0](https://github.com/lotrekagency/mapo/commit/f3028c0f1d5d5f4a93962158d55bcef3afc46dad))
+* **repeater:** added readonly state to repeater field ([d2aa979](https://github.com/lotrekagency/mapo/commit/d2aa979ffb653e9d53c066fb321b8db679c3b51b))
+* **theme:** added dark/light mode switcher ([1c45cb1](https://github.com/lotrekagency/mapo/commit/1c45cb1dd97f72c4fbf5e607c40e31c1ee615efb))
+
+
+### BREAKING CHANGES
+
+* This change removes all the camomilla cms references moving the compatibility layer in a detached package [mapo-integrations-camomilla](https://github.com/lotrekagency/mapo-integrations-camomilla). The guidelines to make mapo work with camomilla will be provided in the package readme.
+
+
+
+
+
 # [1.0.0-alpha.15](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2022-03-11)
 
 
