@@ -156,7 +156,7 @@ export default {
     dialogProps: {
       type: Object,
       required: false,
-      default: { width: 600, scrollable: true }
+      default: () => ({ width: 600, scrollable: true })
     },
     offline: Boolean,
   },
