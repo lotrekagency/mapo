@@ -8,6 +8,7 @@
 |---|---|---|---|---|
 |select|-|`String`|`false`|none|
 |noFolders|-|`Boolean`|`false`|false|
+|mime|-|`String`|`false`|-|
 
 <!-- @vuese:MediaManager:props:end -->
 
@@ -21,5 +22,16 @@
 |selectionChange|-|-|
 
 <!-- @vuese:MediaManager:events:end -->
+
+
+## Slots
+
+<!-- @vuese:MediaManager:slots:start -->
+
+|Name|Description|Default Slot Content|
+|---|---|---|
+|actions|Slot to provide custom button actions inside the media manager|-|
+
+<!-- @vuese:MediaManager:slots:end -->
 
 

@@ -100,9 +100,7 @@ const initialData = () => ({
 
 export default {
   name: "MediaManager",
-  data() {
-    return initialData();
-  },
+  data: initialData,
   props: {
     select: {
       type: String,
