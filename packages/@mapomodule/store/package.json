@@ -1,6 +1,6 @@
 {
   "name": "@mapomodule/store",
-  "version": "1.0.0-alpha.16",
+  "version": "1.0.0-alpha.17",
   "description": "This is part of Mapo nuxt module. Injects mapo vuex store.",
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
   "keywords": [

@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.17](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2022-04-03)
+
+
+### Bug Fixes
+
+* fix default dialogProps in quick edit component ([dd45bbd](https://github.com/lotrekagency/mapo/commit/dd45bbdee0cc68804cc6cad6ff2f672508fba6cd))
+* various fixes to auth loops ([58cdb58](https://github.com/lotrekagency/mapo/commit/58cdb586e88df8e595876ba4dd4d4cc11865f7e3))
+
+
+
+
+
 # [1.0.0-alpha.16](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.15...v1.0.0-alpha.16) (2022-04-03)
 
 
