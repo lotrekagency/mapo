@@ -1,7 +1,7 @@
 <template>
   <div>
     <slot v-bind="{ on, attrs }" name="activator"></slot>
-    <v-dialog v-model="dialog" width="600" scrollable>
+    <v-dialog v-model="dialog" v-bind="dialogProps">
       <v-card v-bind="$attrs">
         <v-card-title class="pa-0 mb-3">
           <div style="max-width: calc(100% - 40px)">
@@ -152,6 +152,11 @@ export default {
     crud: {
       type: Object,
       required: true,
+    },
+    dialogProps: {
+      type: Object,
+      required: false,
+      default: { width: 600, scrollable: true }
     },
     offline: Boolean,
   },
