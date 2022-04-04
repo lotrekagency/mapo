@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.18](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2022-04-04)
+
+
+### Features
+
+* Filefield opens files in popup window ([96be24a](https://github.com/lotrekagency/mapo/commit/96be24ac032005575b01f572d0b3211d03f92229))
+
+
+
+
+
 # [1.0.0-alpha.17](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2022-04-03)
 
 
