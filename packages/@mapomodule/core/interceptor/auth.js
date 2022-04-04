@@ -20,7 +20,7 @@ module.exports = ({ $axios, store }) => {
 
         $axios.onError((error) => {
             const { status, request } = error.response || {}
-            if (status === 401 && request?.path !== '/api/auth/logout') {
+            if (status === 401 && (request || {}).path !== '/api/auth/logout') {
                 store.dispatch('mapo/user/logout')
             }
             if (status == 403) {
