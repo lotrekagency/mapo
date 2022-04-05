@@ -137,6 +137,8 @@ import draggable from "vuedraggable";
 export default {
   name: "Repeater",
   components: {
+    // For recursive dynamic components is better to resolve dependency tree at runtime :P   
+    DetailField: () => import('@mapomodule/uikit/components/Detail/DetailField.vue'),
     draggable,
   },
   data() {
