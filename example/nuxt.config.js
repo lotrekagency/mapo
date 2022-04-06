@@ -1,6 +1,6 @@
 
 export default {
-  buildModules: [
+  modules: [
     'mapomodule'
   ],
   mapo: {

@@ -5,10 +5,10 @@ Add `mapomodule` dependency to your project
 ```sh
 yarn add --dev mapomodule # or npm install --save-dev mapomodule
 ```
-Add mapomodule to the buildModules section of nuxt.config.js
+Add mapomodule to the modules section of nuxt.config.js
 ```js
 {
-  buildModules: [
+  modules: [
     // Simple usage
     'mapomodule',
 
@@ -22,7 +22,7 @@ Add mapomodule to the buildModules section of nuxt.config.js
 
 ```js
 {
-  buildModules: [
+  modules: [
     'mapomodule'
   ],
   mapo: {
