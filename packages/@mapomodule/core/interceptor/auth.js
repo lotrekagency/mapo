@@ -1,5 +1,5 @@
 module.exports = ({ $axios, store }) => {
-    if ($axios && store){
+    if ($axios && store) {
         $axios.onRequest((config) => {
             const token = store.getters['mapo/user/token']
             if (token && token !== 'undefined') {
@@ -7,7 +7,7 @@ module.exports = ({ $axios, store }) => {
             }
             return config
         })
-    
+
         $axios.onResponse((response) => {
             if (response.status === 401) {
                 store.dispatch('mapo/user/logout');
@@ -20,7 +20,9 @@ module.exports = ({ $axios, store }) => {
 
         $axios.onError((error) => {
             const { status, request } = error.response || {}
-            if (status === 401 && (request || {}).path !== '/api/auth/logout') {
+            const baseURL = ($axios.defaults.baseURL || "").replace(/https?:\/\/[^\/]+/i, "")
+            const logoutPath = `${baseURL.endsWith("/") ? baseURL : baseURL + "/"}${process.env.AUTH_LOGIN_URL || "api/auth/logout"}`
+            if (status === 401 && (request || {}).path !== logoutPath) {
                 store.dispatch('mapo/user/logout')
             }
             if (status == 403) {
