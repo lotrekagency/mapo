@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.19](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2022-04-06)
+
+
+### Bug Fixes
+
+* fix repeater field in production build ([7c10bcb](https://github.com/lotrekagency/mapo/commit/7c10bcb02aa5332247a6a6652a7aa834935d707e))
+
+
+
+
+
 # [1.0.0-alpha.18](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2022-04-04)
 
 

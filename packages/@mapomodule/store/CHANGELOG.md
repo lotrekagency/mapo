@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.19](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2022-04-06)
+
+
+### Bug Fixes
+
+* fix logout redirects ([113dd6b](https://github.com/lotrekagency/mapo/commit/113dd6bb984268c75f9f25f62cca1ed200c947ad))
+
+
+
+
+
 # [1.0.0-alpha.17](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2022-04-03)
 
 
