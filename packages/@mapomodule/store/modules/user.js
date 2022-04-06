@@ -54,13 +54,13 @@ const actions = {
       this.$axios.get(url).then(_ => {
         removeToken()
         commit('CLEAN_DATA')
-        const { current } = this.$router.history
-        this.$router.push({ name: 'login', query: { redirect: current.path, ...current.query } })
+        typeof location !== "undefined" && location.reload()
         resolve()
       }).catch(error => {
         commit('CLEAN_DATA')
+        typeof location !== "undefined" && location.reload()
         reject(error)
-      })
+      }) 
     })
   },
 
