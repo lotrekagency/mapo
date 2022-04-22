@@ -17,7 +17,7 @@
           <v-divider vertical />
           <div class="row ma-0">
             <div
-              v-for="(field, i) in parsedFields"
+              v-for="(field, i) in parseFields(model)"
               :key="i"
               :class="field.class || 'col-12'"
             >
@@ -86,6 +86,38 @@
         <v-icon>mdi-plus</v-icon> Add</v-btn
       >
     </div>
+    <v-dialog v-if="hasTemplates" v-model="tModalOpen" width="600" scrollable>
+      <v-card>
+        <v-card-title class="text-h5"> Select template </v-card-title>
+        <v-card-text>
+          <div class="row mt-4">
+            <div
+              v-for="(template, i) in templates"
+              :key="i"
+              class="col-12 col-md-6 pa-0"
+            >
+              <div @click="tModalCallback(template)" class="template-button">
+                <span class="text-h5">{{ template.name }}</span
+                ><br />
+                <span>{{ template.description }}</span>
+                <v-img
+                  v-if="template.preview"
+                  max-height="150"
+                  min-width="250px"
+                  :src="template.preview"
+                />
+                <v-skeleton-loader
+                  v-else
+                  boilerplate
+                  min-width="250px"
+                  type="list-item-avatar-three-line"
+                />
+              </div>
+            </div>
+          </div>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -126,6 +158,15 @@
 .repeater-add-line {
   border-top: none;
 }
+.template-button {
+  padding: 0.5rem;
+  margin: 3px;
+  border: solid 1px #393939;
+  cursor: pointer;
+}
+.theme--light .template-button {
+  border-color: #e0e0e0;
+}
 </style>
 
 <script>
@@ -137,13 +178,15 @@ import draggable from "vuedraggable";
 export default {
   name: "Repeater",
   components: {
-    // For recursive dynamic components is better to resolve dependency tree at runtime :P   
-    DetailField: () => import('@mapomodule/uikit/components/Detail/DetailField.vue'),
+    // For recursive dynamic components is better to resolve dependency tree at runtime :P
+    DetailField: () => import("@mapomodule/uikit/components/Detail/DetailField.vue"),
     draggable,
   },
   data() {
     return {
       items: null,
+      tModalOpen: false,
+      tModalCallback: () => {},
     };
   },
   props: {
@@ -155,7 +198,7 @@ export default {
     // The main configuration that determines the arrangement of the fields in each line.
     fields: {
       // [`Array<FieldConfiguration>`](/components/Detail/Detail/#fieldconfiguration)
-      type: Array,
+      type: Array | Object,
       default: () => [],
     },
     // Puts the input in an error state and passes through custom error messages.
@@ -189,10 +232,18 @@ export default {
     items(val) {
       this.$emit("input", val);
     },
+    tModalOpen(val) {
+      !val && this.tModalCallback();
+    },
   },
   methods: {
-    addItem(index) {
+    async addItem(index) {
       const element = {};
+      if (this.hasTemplates) {
+        const template = await this.chooseTemplate();
+        if (!template) return;
+        element[template.tCodeField] = template.tCode;
+      }
       const newIndex = typeof index == "number" ? index : this.items.length;
       this.items.splice(newIndex, 0, element);
       this.sortable &&
@@ -212,6 +263,16 @@ export default {
           eventType: "remove",
         });
     },
+    async chooseTemplate() {
+      this.tModalOpen = true;
+      return new Promise((resolve) => {
+        this.tModalCallback = function (template) {
+          resolve(template);
+          this.tModalCallback = () => {};
+          this.tModalOpen = false;
+        };
+      });
+    },
     getErrors(index) {
       return (this.errorMessages || [])[index] || {};
     },
@@ -230,6 +291,7 @@ export default {
       return conf;
     },
     mapConf(fields) {
+      fields = JSON.parse(JSON.stringify(fields)); // this hack fixes rendering loop on multilang scenario. :/
       const icon = "mdi-cube-outline";
       const parseGroup = (group) =>
         typeof group === "string"
@@ -241,14 +303,39 @@ export default {
           : this.parseConf(f, i)
       );
     },
+    parseFields(model) {
+      if (this.hasTemplates) {
+        const template = this.templates.find(t => model[t.tCodeField] == t.tCode)
+        return template ? this.mapConf(template.fields) : [];
+      }
+      return this.mapConf(this.fields);
+    },
   },
   computed: {
-    parsedFields() {
-      return this.mapConf(this.fields);
+    hasTemplates() {
+      return typeof this.fields == "object" && !Array.isArray(this.fields);
+    },
+    templates() {
+      const templates = {};
+      if (this.hasTemplates) {
+        const titleCase = (string) => (string && string[0].toUpperCase() + string.slice(1).toLowerCase()) || "";
+        Object.keys(this.fields).forEach((tKey) => {
+          const tValue = this.fields[tKey];
+          const { preview, description } = tValue;
+          templates[tKey] = {
+            fields: tValue.fields || tValue,
+            name: tValue.name || titleCase(tKey.replace(/_/, " ")),
+            tCode: tValue.tCode || tKey,
+            tCodeField: tValue.tCodeField || "tCode",
+            preview, description,
+          };
+        });
+      }
+      return Object.values(templates);
     },
   },
   mounted() {
     this.items = this.value;
-  },  
+  },
 };
 </script>
