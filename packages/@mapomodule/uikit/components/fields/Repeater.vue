@@ -169,11 +169,18 @@ export default {
     readonly: Boolean,
     // Makes the repeater field sortable.
     sortable: Boolean,
+    // Make the repeater multilanguage. This means that is going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.
+    multilang: Boolean,
     // This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list.
     sortCallback: {
       type: Function,
       default: () => {},
     },
+    langs: {
+      type: Array,
+      default: () => [],
+    },
+    currentLang: String,
   },
   watch: {
     value(val) {
@@ -211,7 +218,12 @@ export default {
     parseConf(field, i) {
       const conf = typeof field === "string" ? { value: field } : field;
       conf.value = conf.value || "";
+      conf.value = this.multilang ? conf.value.replace(new RegExp(`^translations\.(${this.langs.join("|")})\.?`), "") : conf.value;
       conf.slotName = `fields.${conf.value || i}`;
+      if (this.multilang && this.currentLang && !field.synci18n) {
+        const base = `translations.${this.currentLang}`;
+        conf.value = (conf.value && `${base}.${conf.value}`) || base;
+      }
       if (this.readonly) {
         conf.attrs = { ...conf.attrs, readonly: true };
       }
@@ -237,6 +249,6 @@ export default {
   },
   mounted() {
     this.items = this.value;
-  },
+  },  
 };
 </script>

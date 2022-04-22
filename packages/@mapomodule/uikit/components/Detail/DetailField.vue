@@ -62,6 +62,11 @@ export default {
       type: Object,
       required: true,
     },
+    langs: {
+      type: Array,
+      default: () => []
+    },
+    currentLang: String
   },
   watch: {
     value: {
@@ -129,6 +134,8 @@ export default {
           this.is.replace(/-./g, (x) => x[1].toUpperCase())
         ] || {}),
         ...this.conf.attrs,
+        currentLang: this.currentLang,
+        langs: this.langs,
       };
     },
     label() {

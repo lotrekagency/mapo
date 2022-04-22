@@ -28,6 +28,7 @@ export default {
         },
         { value: "meta.variations", label: "Variations", synci18n: true, type: "repeater", attrs: {
           sortable: true,
+          // multilang: true,
           fields: [
             { value: "sku", class: "col-md-6" },
             { value: "name", class: "col-md-6" },

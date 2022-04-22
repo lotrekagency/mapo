@@ -61,6 +61,8 @@
                               <!-- A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
                               <DetailField
                                 v-model="model"
+                                :langs="langs"
+                                :currentLang="currentLang"
                                 :conf="fields"
                                 :errors="errors"
                               />
@@ -79,6 +81,8 @@
                     >
                       <DetailField
                         v-model="model"
+                        :langs="langs"
+                        :currentLang="currentLang"
                         :conf="field"
                         :errors="errors"
                       />
