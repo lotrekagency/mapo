@@ -169,7 +169,7 @@ export default {
     readonly: Boolean,
     // Makes the repeater field sortable.
     sortable: Boolean,
-    // Make the repeater multilanguage. This means that is going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.
+    // Make the repeater multilanguage. This means that it's going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.
     multilang: Boolean,
     // This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list.
     sortCallback: {
