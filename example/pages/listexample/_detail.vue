@@ -24,15 +24,55 @@ export default {
           value: "tags",
           synci18n: true,
           type: "m2m",
-          attrs: { endpoint: "api/camomilla/tags", itemText: "title" }
+          attrs: { endpoint: "api/camomilla/tags", itemText: "title" },
         },
-        { value: "meta.variations", label: "Variations", synci18n: true, type: "repeater", attrs: {
-          sortable: true,
-          // multilang: true,
-          fields: [
-            { value: "sku", class: "col-md-6" },
-            { value: "name", class: "col-md-6" },
-          ]}
+        {
+          value: "meta.variations",
+          label: "Variations",
+          synci18n: true,
+          type: "repeater",
+          attrs: {
+            sortable: true,
+            multilang: true,
+            fields: [
+              { value: "sku", class: "col-md-6" },
+              { value: "name", class: "col-md-6" },
+            ]
+          }
+        },
+        {
+          value: "meta.contents",
+          label: "Contents",
+          synci18n: true,
+          type: "repeater",
+          attrs: {
+            sortable: true,
+            // multilang: true,
+            fields: {
+              group_1: [
+                { value: "title", class: "col-md-6" },
+                { value: "date", type: "date", class: "col-md-4" },
+                { value: "casual", type: "switch", class: "col-md-2" },
+              ],
+              group_2: [
+                { value: "title", class: "col-md-6" },
+                { value: "date", type: "date", class: "col-md-4" },
+                { value: "casual", type: "switch", class: "col-md-2" },
+              ],
+              group_3: {
+                name: "Custom name",
+                preview: "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif",
+                description: "this template has title, subtitle and a content blocks.",
+                tCode: "stocazzo",
+                tCodeField: "polimorphic_c",
+                fields: [
+                  { value: "title", class: "col-md-6" },
+                  { value: "subtitle", class: "col-md-6" },
+                  { value: "content", type: "editor" },
+                ]
+              },
+            },
+          },
         },
         { value: "content", type: "editor" },
         {
@@ -41,16 +81,16 @@ export default {
             { value: "title", class: "col-md-6" },
             { value: "permalink", class: "col-md-6" },
             { value: "description", type: "textarea" },
-            { type: "seoPreview" }
-          ]
-        }
+            { type: "seoPreview" },
+          ],
+        },
       ],
       sidenav: [
         {
           value: "categories",
           synci18n: true,
           type: "m2m",
-          attrs: { endpoint: "api/camomilla/categories", itemText: "title"}
+          attrs: { endpoint: "api/camomilla/categories", itemText: "title" },
         },
         {
           group: "Status",
@@ -63,24 +103,24 @@ export default {
                 items: [
                   { text: "Draft", value: "DRF" },
                   { text: "Published", value: "PUB" },
-                  { text: "Trash", value: "TRS" }
-                ]
+                  { text: "Trash", value: "TRS" },
+                ],
               },
-              synci18n: true
+              synci18n: true,
             },
             {
               value: "pubblication_date",
               accessor: {
-                set: ({ val }) => val && new Date(val).toISOString()
+                set: ({ val }) => val && new Date(val).toISOString(),
               },
               type: "date",
-              synci18n: true
-            }
-          ]
+              synci18n: true,
+            },
+          ],
         },
-        { value: "highlight_image", type: "media", synci18n: true }
-      ]
-    }
+        { value: "highlight_image", type: "media", synci18n: true },
+      ],
+    },
   }),
 };
 </script>
