@@ -178,7 +178,7 @@ import draggable from "vuedraggable";
 export default {
   name: "Repeater",
   components: {
-    // For recursive dynamic components is better to resolve dependency tree at runtime :P
+    // For recursive dynamic components is better to resolve dependencies at runtime to avoid circular deps
     DetailField: () => import("@mapomodule/uikit/components/Detail/DetailField.vue"),
     draggable,
   },
@@ -291,12 +291,9 @@ export default {
       return conf;
     },
     mapConf(fields) {
-      fields = JSON.parse(JSON.stringify(fields)); // this hack fixes rendering loop on multilang scenario. :/
+      fields = this.multilang ? JSON.parse(JSON.stringify(fields)) : fields; // this hack fixes rendering loop on multilang scenario. :/
       const icon = "mdi-cube-outline";
-      const parseGroup = (group) =>
-        typeof group === "string"
-          ? { name: group, icon }
-          : { ...group, icon: group.icon !== undefined ? group.icon : icon };
+      const parseGroup = (group) => typeof group === "string" ? { name: group, icon } : { ...group, icon: group.icon !== undefined ? group.icon : icon };
       return fields.map((f, i) =>
         f.group
           ? { group: parseGroup(f.group), fields: this.mapConf(f.fields) }
