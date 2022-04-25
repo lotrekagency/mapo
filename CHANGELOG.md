@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.20](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2022-04-25)
+
+
+### Features
+
+* **repeater:** added multilanguage capabilities to Repeater Field ([4736d52](https://github.com/lotrekagency/mapo/commit/4736d52c0ef78adb0ac856056b950e7cfe7bfac1))
+* **repeater:** added templates to repeater to compose rows block by block ([c2546b1](https://github.com/lotrekagency/mapo/commit/c2546b1f04f303ed4728624367de3b05010473e3))
+
+
+
+
+
 # [1.0.0-alpha.19](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2022-04-06)
 
 
