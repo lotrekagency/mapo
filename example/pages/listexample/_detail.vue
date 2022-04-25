@@ -33,7 +33,7 @@ export default {
           type: "repeater",
           attrs: {
             sortable: true,
-            multilang: true,
+            translatable: true,
             fields: [
               { value: "sku", class: "col-md-6" },
               { value: "name", class: "col-md-6" },
@@ -47,7 +47,7 @@ export default {
           type: "repeater",
           attrs: {
             sortable: true,
-            // multilang: true,
+            // translatable: true,
             fields: {
               group_1: [
                 { value: "title", class: "col-md-6" },

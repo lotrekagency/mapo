@@ -213,7 +213,7 @@ export default {
     // Makes the repeater field sortable.
     sortable: Boolean,
     // Make the repeater multilanguage. This means that it's going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.
-    multilang: Boolean,
+    translatable: Boolean,
     // This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list.
     sortCallback: {
       type: Function,
@@ -279,9 +279,9 @@ export default {
     parseConf(field, i) {
       const conf = typeof field === "string" ? { value: field } : field;
       conf.value = conf.value || "";
-      conf.value = this.multilang ? conf.value.replace(new RegExp(`^translations\.(${this.langs.join("|")})\.?`), "") : conf.value;
+      conf.value = this.translatable ? conf.value.replace(new RegExp(`^translations\.(${this.langs.join("|")})\.?`), "") : conf.value;
       conf.slotName = `fields.${conf.value || i}`;
-      if (this.multilang && this.currentLang && !field.synci18n) {
+      if (this.translatable && this.currentLang && !field.synci18n) {
         const base = `translations.${this.currentLang}`;
         conf.value = (conf.value && `${base}.${conf.value}`) || base;
       }
@@ -291,7 +291,7 @@ export default {
       return conf;
     },
     mapConf(fields) {
-      fields = this.multilang ? JSON.parse(JSON.stringify(fields)) : fields; // this hack fixes rendering loop on multilang scenario. :/
+      fields = this.translatable ? JSON.parse(JSON.stringify(fields)) : fields; // this hack fixes rendering loop on translatable repeater. :/
       const icon = "mdi-cube-outline";
       const parseGroup = (group) => typeof group === "string" ? { name: group, icon } : { ...group, icon: group.icon !== undefined ? group.icon : icon };
       return fields.map((f, i) =>

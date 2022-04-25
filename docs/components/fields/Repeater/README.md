@@ -14,7 +14,10 @@ This component is made to manage a list of object that can be added/removed/reor
 |label|Sets input label.|`String`|`false`|-|
 |readonly|Makes all the repeater items readonly.|`Boolean`|`false`|-|
 |sortable|Makes the repeater field sortable.|`Boolean`|`false`|-|
+|multilang|Make the repeater multilanguage. This means that it's going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.|`Boolean`|`false`|-|
 |sortCallback|This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list.|`Function`|`false`|() => {}|
+|langs|-|`Array`|`false`|[]|
+|currentLang|-|`String`|`false`|-|
 
 <!-- @vuese:Repeater:props:end -->
 

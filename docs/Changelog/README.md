@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.20](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.19...v1.0.0-alpha.20) (2022-04-25)
+
+
+### Features
+
+* **repeater:** added multilanguage capabilities to Repeater Field ([4736d52](https://github.com/lotrekagency/mapo/commit/4736d52c0ef78adb0ac856056b950e7cfe7bfac1))
+* **repeater:** added templates to repeater to compose rows block by block ([c2546b1](https://github.com/lotrekagency/mapo/commit/c2546b1f04f303ed4728624367de3b05010473e3))
+
+
+
+
+
+# [1.0.0-alpha.19](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.18...v1.0.0-alpha.19) (2022-04-06)
+
+
+### Bug Fixes
+
+* fix logout loop ([3177cca](https://github.com/lotrekagency/mapo/commit/3177ccaf4be6151feec379c4241f8784b79d4361))
+* fix logout redirects ([113dd6b](https://github.com/lotrekagency/mapo/commit/113dd6bb984268c75f9f25f62cca1ed200c947ad))
+* fix repeater field in production build ([7c10bcb](https://github.com/lotrekagency/mapo/commit/7c10bcb02aa5332247a6a6652a7aa834935d707e))
+
+
+
+
+
+# [1.0.0-alpha.18](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.17...v1.0.0-alpha.18) (2022-04-04)
+
+
+### Bug Fixes
+
+* fix core interceptor syntax ([c546a48](https://github.com/lotrekagency/mapo/commit/c546a48f22bf689d4b679aaab82b2b9ed62f26cc))
+
+
+### Features
+
+* Filefield opens files in popup window ([96be24a](https://github.com/lotrekagency/mapo/commit/96be24ac032005575b01f572d0b3211d03f92229))
+
+
+
+
+
 # [1.0.0-alpha.17](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.16...v1.0.0-alpha.17) (2022-04-03)
 
 
