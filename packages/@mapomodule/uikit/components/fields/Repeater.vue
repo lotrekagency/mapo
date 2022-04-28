@@ -125,6 +125,11 @@
 .repeater-action {
   display: none;
 }
+.repeater-wrapper:hover {
+  .repeater-action {
+    display: inline-flex;
+  }
+}
 .repeater-side-bar {
   min-width: 24px;
   position: relative;
@@ -132,11 +137,6 @@
   flex-direction: column;
   align-content: center;
   justify-content: center;
-  &:hover {
-    .repeater-action {
-      display: inline-flex;
-    }
-  }
   .repeater-counter {
     position: absolute;
     align-self: center;
