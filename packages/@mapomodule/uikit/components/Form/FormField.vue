@@ -1,7 +1,16 @@
 <template>
   <div>
     <span class="mapo-label" :class="`mapo-label-${conf.value}`">{{label}}</span>
-    <component :is="is" v-model="model" v-bind="fieldAttrs"></component>
+    <component :is="is" v-model="model" v-bind="fieldAttrs">
+      <template v-for="(_, slot) in $slots" :slot="slot">
+        <!-- @vuese-ignore -->
+        <slot :name="slot"></slot>
+      </template>
+      <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+        <!-- @vuese-ignore -->
+        <slot :name="slot" v-bind="props" />
+      </template>
+    </component>
   </div>
 </template>
 
@@ -12,14 +21,14 @@
 </style>
 
 <script>
-import wygEditor from "@mapomodule/uikit/components/fields/wygEditor/wygEditor.vue";
-import DateField from "@mapomodule/uikit/components/fields/DateField.vue";
-import FksField from "@mapomodule/uikit/components/fields/FksField.vue";
-import MediaM2mField from "@mapomodule/uikit/components/fields/MediaM2mField.vue";
-import MediaField from "@mapomodule/uikit/components/fields/MediaField.vue";
-import SeoPreview from "@mapomodule/uikit/components/fields/SeoPreview.vue";
-import FileField from "@mapomodule/uikit/components/fields/FileField.vue";
-import Repeater from "@mapomodule/uikit/components/fields/Repeater.vue"
+import wygEditor from "@mapomodule/uikit/components/Form/fields/wygEditor/wygEditor.vue";
+import DateField from "@mapomodule/uikit/components/Form/fields/DateField.vue";
+import FksField from "@mapomodule/uikit/components/Form/fields/FksField.vue";
+import MediaM2mField from "@mapomodule/uikit/components/Form/fields/MediaM2mField.vue";
+import MediaField from "@mapomodule/uikit/components/Form/fields/MediaField.vue";
+import SeoPreview from "@mapomodule/uikit/components/Form/fields/SeoPreview.vue";
+import FileField from "@mapomodule/uikit/components/Form/fields/FileField.vue";
+import Repeater from "@mapomodule/uikit/components/Form/fields/Repeater.vue"
 
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import defaults from "./defaults";
@@ -28,7 +37,7 @@ import defaults from "./defaults";
  * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic fields inside the main form.
  */
 export default {
-  name: "DetailField",
+  name: "FormField",
   components: {
     wygEditor,
     DateField,

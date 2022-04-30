@@ -131,6 +131,8 @@
 <script>
 import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
 import { debounce } from "@mapomodule/utils/helpers/debounce";
+import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
+
 import Sortable from "sortablejs"
 
 export default {
@@ -234,7 +236,8 @@ export default {
     }
   },
   methods: {
-    getPointed: getPointed,
+    nameSpacedSlots,
+    getPointed,
     getDataFromApi(clearSelection = true) {
       if (clearSelection) {
         this.selection = [];
@@ -382,11 +385,6 @@ export default {
           approveButton: { text: "Delete", attrs: { color: "red", text: true } },
         })
         .then((res) => (res ? callback(item) : null));
-    },
-    nameSpacedSlots(slots, scope) {
-      return Object.keys(slots)
-        .filter((name) => name.startsWith(scope))
-        .map((name) => name.replace(scope, ""));
     },
     toggleSelectAll() {
       this.selectAll = !this.selectAll;

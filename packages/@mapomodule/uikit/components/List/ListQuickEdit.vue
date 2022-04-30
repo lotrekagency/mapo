@@ -30,65 +30,23 @@
               <slot name="body.top" v-bind="slotBindings"></slot>
 
               <slot name="body" v-bind="slotBindings">
-                <v-row>
-                  <div
-                    class="col-12"
-                    :class="field.class"
-                    v-for="(field, index) in computedFields"
-                    :key="index"
-                  >
-                    <v-card v-if="field.group" class="my-2">
-                      <v-card-title>
-                        <v-icon left> {{ field.group.icon }} </v-icon>
-                        <span>{{ field.group.name }}</span>
-                      </v-card-title>
-                      <div class="container">
-                        <div class="row">
-                          <div
-                            v-for="(fields, fieldsI) in field.fields"
-                            :key="fieldsI"
-                            class="col-12"
-                            :class="fields.class"
-                          >
-                            <!-- This is a dynamic slot. You can use it to override a field component. For example use `qedit.fields.title` to override the component of the field with value `title`. -->
-                            <slot
-                              :name="fields.slotName"
-                              v-bind="{
-                                conf: fields,
-                                ...slotBindings,
-                              }"
-                            >
-                              <!-- A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
-                              <DetailField
-                                v-model="model"
-                                :langs="langs"
-                                :currentLang="currentLang"
-                                :conf="fields"
-                                :errors="errors"
-                              />
-                            </slot>
-                          </div>
-                        </div>
-                      </div>
-                    </v-card>
-                    <slot
-                      v-else
-                      :name="field.slotName"
-                      v-bind="{
-                        conf: field,
-                        ...slotBindings,
-                      }"
-                    >
-                      <DetailField
-                        v-model="model"
-                        :langs="langs"
-                        :currentLang="currentLang"
-                        :conf="field"
-                        :errors="errors"
-                      />
-                    </slot>
-                  </div>
-                </v-row>
+                <Form
+                  v-model="model"
+                  :currentLang="currentLang"
+                  :languages="langs"
+                  :errors="errors"
+                  :fields="editFields"
+                  :modeSlotBindings="slotBindings"
+                >
+                  <template v-for="(_, slot) in $slots" :slot="slot">
+                    <!-- @vuese-ignore -->
+                    <slot :name="slot"></slot>
+                  </template>
+                  <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+                    <!-- @vuese-ignore -->
+                    <slot :name="slot" v-bind="props" />
+                  </template>
+                </Form>
               </slot>
               <!-- Use this to add content under the main body. -->
               <slot name="body.bottom" v-bind="slotBindings"></slot>
@@ -175,14 +133,8 @@ export default {
         this.close();
       }
     },
-    currentLang() {
-      this.initLang();
-    },
   },
   computed: {
-    computedFields() {
-      return this.mapConf(this.editFields || []);
-    },
     langs() {
       return this.model?.lang_info?.site_languages.map((l) => l.id) || this.languages || [];
     },
@@ -211,7 +163,6 @@ export default {
       this.isNew = !item;
       this.modelBkp = await this.fetchItem(item);
       this.model = deepClone(this.modelBkp);
-      this.initLang();
       this.dialog = true;
       this.$refs.form?.resetValidation();
       return new Promise((resolve, reject) => {
@@ -230,40 +181,6 @@ export default {
       this.$refs.form?.resetValidation();
       this.resolve && this.resolve(res);
       this.dialog = false;
-    },
-    parseConf(field, i) {
-      const conf = typeof field === "string" ? { value: field } : field;
-      conf.value = conf.value || "";
-      conf.value = conf.value.replace(
-        new RegExp(`^translations\.(${this.langs.join("|")})\.?`),
-        ""
-      );
-      conf.slotName = `fields.${conf.value || i}`;
-      if (this.currentLang && !field.synci18n) {
-        const base = `translations.${this.currentLang}`;
-        conf.value = (conf.value && `${base}.${conf.value}`) || base;
-      }
-      return conf;
-    },
-    mapConf(fields) {
-      const icon = "mdi-cube-outline";
-      const parseGroup = (group) =>
-        typeof group === "string"
-          ? { name: group, icon }
-          : { ...group, icon: group.icon !== undefined ? group.icon : icon };
-      return fields.map((f, i) =>
-        f.group
-          ? { group: parseGroup(f.group), fields: this.mapConf(f.fields) }
-          : this.parseConf(f, i)
-      );
-    },
-    initLang(lang = this.currentLang) {
-      if (lang && !this.model.translations) {
-        this.model.translations = {};
-      }
-      if (lang && !this.model.translations[lang]) {
-        this.model.translations[lang] = {};
-      }
     },
     async fetchItem(item) {
       if (!this.offline && item && item[this.lookup]) {

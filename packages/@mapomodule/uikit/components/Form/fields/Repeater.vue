@@ -31,18 +31,27 @@
               v-html="getCollapsedLabel(model, index)"
             ></span>
           </div>
-          <div class="repeater-fields row ma-0">
-            <div
-              v-for="(field, i) in parseFields(model)"
-              :key="i"
-              :class="field.class || 'col-12'"
+          <div class="repeater-fields container">
+            <Form
+            v-model="items[index]"
+            :currentLang="currentLang"
+            :languages="langs"
+            :fields="getFields(model)"
+            :errors="getErrors(index)"
+          >
+            <template
+              v-for="slot in nameSpacedSlots($slots, `fields.`)"
+              :slot="`fields.${slot}`"
             >
-              <DetailField
-                v-model="items[index]"
-                :conf="field"
-                :errors="getErrors(index)"
-              />
-            </div>
+              <slot :name="`fields.${slot}`"></slot>
+            </template>
+            <template
+              v-for="slot in nameSpacedSlots($scopedSlots, `fields.`)"
+              v-slot:[`fields.${slot}`]="props"
+            >
+              <slot :name="`fields.${slot}`" v-bind="props" />
+            </template>
+          </Form>
           </div>
           <div class="repeater-side-bar grey lighten-2">
             <span
@@ -232,6 +241,7 @@
 <script>
 import draggable from "vuedraggable";
 import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
+import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 
 /**
  * This component is made to manage a list of object that can be added/removed/reordered with a simple form.
@@ -240,7 +250,7 @@ export default {
   name: "Repeater",
   components: {
     // For recursive dynamic components is better to resolve dependencies at runtime to avoid circular deps
-    DetailField: () => import("@mapomodule/uikit/components/Detail/DetailField.vue"),
+    Form: () => import("@mapomodule/uikit/components/Form/Form.vue"),
     draggable,
   },
   data() {
@@ -308,6 +318,7 @@ export default {
     },
   },
   methods: {
+    nameSpacedSlots,
     async addItem(index) {
       const element = {};
       if (this.hasTemplates) {
@@ -351,36 +362,12 @@ export default {
     getErrors(index) {
       return (this.errorMessages || [])[index] || {};
     },
-    parseConf(field, i) {
-      const conf = typeof field === "string" ? { value: field } : field;
-      conf.value = conf.value || "";
-      conf.value = this.translatable ? conf.value.replace(new RegExp(`^translations\.(${this.langs.join("|")})\.?`), "") : conf.value;
-      conf.slotName = `fields.${conf.value || i}`;
-      if (this.translatable && this.currentLang && !field.synci18n) {
-        const base = `translations.${this.currentLang}`;
-        conf.value = (conf.value && `${base}.${conf.value}`) || base;
-      }
-      if (this.readonly) {
-        conf.attrs = { ...conf.attrs, readonly: true };
-      }
-      return conf;
-    },
-    mapConf(fields) {
-      fields = this.translatable ? JSON.parse(JSON.stringify(fields)) : fields; // this hack fixes rendering loop on translatable repeater. :/
-      const icon = "mdi-cube-outline";
-      const parseGroup = (group) => typeof group === "string" ? { name: group, icon } : { ...group, icon: group.icon !== undefined ? group.icon : icon };
-      return fields.map((f, i) =>
-        f.group
-          ? { group: parseGroup(f.group), fields: this.mapConf(f.fields) }
-          : this.parseConf(f, i)
-      );
-    },
-    parseFields(model) {
+    getFields(model) {
       if (this.hasTemplates) {
         const template = this.templates.find(t => model[t.tCodeField] == t.tCode)
-        return template ? this.mapConf(template.fields) : [];
+        return template ? template.fields : [];
       }
-      return this.mapConf(this.fields);
+      return this.fields;
     },
     getCollapsedLabel(model, index) {
       const fallback = `Item ${index + 1}`;
@@ -390,7 +377,7 @@ export default {
         case "function":
           return this.collapsedLabel(model);
         default:
-          const field = this.parseFields(model).find(f => !f.type || f.type.lower() == "text");
+          const field = this.getFields(model).find(f => !f.type || f.type.lower() == "text");
           return getPointed(model, field.value, fallback);
       }
     },

@@ -40,66 +40,23 @@
           <slot name="body.top.underlang" v-bind="slotBindings"></slot>
           <!-- Use this to override the content of the main body. -->
           <slot name="body" v-bind="slotBindings">
-            <div class="row">
-              <!-- The result of the [`DetailConfiguration`](#detailconfiguration) contained in the main body. -->
-              <div
-                class="col-12"
-                :class="field.class"
-                v-for="(field, index) in mainFields"
-                :key="index"
-              >
-                <v-card v-if="field.group" class="my-2 rounded-0">
-                  <v-card-title>
-                    <v-icon left> {{ field.group.icon }} </v-icon>
-                    <span>{{ field.group.name }}</span>
-                  </v-card-title>
-                  <div class="container">
-                    <div class="row">
-                      <div
-                        v-for="(fields, fieldsI) in field.fields"
-                        :key="fieldsI"
-                        class="col-12"
-                        :class="fields.class"
-                      >
-                        <!-- This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`. -->
-                        <slot
-                          :name="fields.slotName"
-                          v-bind="{
-                            conf: fields,
-                            ...slotBindings,
-                          }"
-                        >
-                          <!-- A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration). -->
-                          <DetailField
-                            v-model="model"
-                            :langs="langs"
-                            :currentLang="currentLang"
-                            :conf="fields"
-                            :errors="errors"
-                          />
-                        </slot>
-                      </div>
-                    </div>
-                  </div>
-                </v-card>
-                <slot
-                  v-else
-                  :name="field.slotName"
-                  v-bind="{
-                    conf: field,
-                    ...slotBindings,
-                  }"
-                >
-                  <DetailField 
-                    v-model="model" 
-                    :langs="langs"
-                    :currentLang="currentLang"
-                    :conf="field"
-                    :errors="errors" 
-                  />
-                </slot>
-              </div>
-            </div>
+          <Form
+            v-model="model"
+            :currentLang="currentLang"
+            :languages="langs"
+            :errors="errors"
+            :fields="mainFields"
+            :modeSlotBindings="slotBindings"
+          >
+            <template v-for="(_, slot) in $slots" :slot="slot">
+              <!-- @vuese-ignore -->
+              <slot :name="slot"></slot>
+            </template>
+            <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+              <!-- @vuese-ignore -->
+              <slot :name="slot" v-bind="props" />
+            </template>
+          </Form>
           </slot>
           <!-- Use this to add content under the main body. -->
           <slot name="body.bottom" v-bind="slotBindings"></slot>
@@ -151,64 +108,23 @@
             </slot>
             <!-- Use this to add content on the top of the sidebar fields (or under sidebar buttons). -->
             <slot name="side.top" v-bind="slotBindings"></slot>
-            <div class="row">
-              <div
-                class="col-12"
-                :class="field.class"
-                v-for="(field, index) in sideFields"
-                :key="index"
-              >
-                <v-card v-if="field.group" class="rounded-0 mb-4">
-                  <v-card-title>
-                    <v-icon left> {{ field.group.icon }} </v-icon>
-                    <span>{{ field.group.name }}</span>
-                  </v-card-title>
-                  <div class="container">
-                    <div class="row">
-                      <div
-                        v-for="(fields, fieldsI) in field.fields"
-                        :key="fieldsI"
-                        class="col-12"
-                        :class="field.class"
-                      >
-                        <!-- @vuese-ignore -->
-                        <slot
-                          :name="fields.slotName"
-                          v-bind="{
-                            conf: fields,
-                            ...slotBindings,
-                          }"
-                        >
-                          <DetailField
-                            v-model="model"
-                            :langs="langs"
-                            :currentLang="currentLang"
-                            :conf="fields"
-                            :errors="errors"
-                          />
-                        </slot>
-                      </div>
-                    </div>
-                  </div>
-                </v-card>
-                <slot
-                  v-else
-                  :name="field.slotName"
-                  v-bind="{
-                    conf: field,
-                    ...slotBindings,
-                  }"
-                >
-                  <DetailField 
-                    v-model="model"
-                    :langs="langs"
-                    :currentLang="currentLang"
-                    :conf="field"
-                    :errors="errors"
-                  />
-                </slot>
-              </div>
-            </div>
+            <Form
+              v-model="model"
+              :currentLang="currentLang"
+              :languages="langs"
+              :errors="errors"
+              :fields="sideFields"
+              :moreSlotBindings="slotBindings"
+            >
+              <template v-for="(_, slot) in $slots" :slot="slot">
+                <!-- @vuese-ignore -->
+                <slot :name="slot"></slot>
+              </template>
+              <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+                <!-- @vuese-ignore -->
+                <slot :name="slot" v-bind="props" />
+              </template>
+            </Form>
             <!-- 	Use this to add content under the sidebar fields. -->
             <slot name="side.bottom" v-bind="slotBindings"></slot>
           </div>
@@ -238,246 +154,203 @@
  * A use case example could be "build a page that allows you to change the specifications of a product for an ecommerce".<br> <h4>Index:</h4> [[toc]]
  */
 export default {
-  name: "Detail",
-  data() {
-    return {
-      model: {},
-      modelLanguages: [],
-      currentLang: this.lang,
-      errors: null
-    };
-  },
-  props: {
-    // V-model of the object we are editing.
-    value: {
-      type: Object,
-      required: false
+    name: "Detail",
+    data() {
+        return {
+            model: {},
+            modelLanguages: [],
+            currentLang: this.lang,
+            errors: null
+        };
     },
-    // Set the current lang to value.
-    lang: {
-      type: String,
-      required: false
+    props: {
+        // V-model of the object we are editing.
+        value: {
+            type: Object,
+            required: false
+        },
+        // Set the current lang to value.
+        lang: {
+            type: String,
+            required: false
+        },
+        // The main configuration that determines the arrangement of the fields in the detail layout.
+        fields: {
+            // [`DetailConfiguration`](#detailconfiguration)
+            type: Object | Array,
+            required: true
+        },
+        // A list of languages into which the payload needs to be translated.
+        languages: {
+            type: Array,
+            default: () => []
+        },
+        // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
+        endpoint: {
+            type: String,
+            default: null
+        },
+        // The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.
+        identifier: {
+            // `String|Number`.
+            type: String | Number,
+            default: "new"
+        },
+        // The title of the detail page.
+        modelName: String,
+        // This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.
+        sticky: {
+            type: Boolean,
+            default: true
+        },
+        // Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
+        multipart: {
+            type: String,
+            default: "auto",
+            validator: function (value) {
+                // The value must match one of these strings
+                return ["auto", "force", "disable"].indexOf(value) !== -1;
+            },
+        },
     },
-    // The main configuration that determines the arrangement of the fields in the detail layout.
-    fields: {
-      // [`DetailConfiguration`](#detailconfiguration)
-      type: Object | Array,
-      required: true
-    },
-    // A list of languages into which the payload needs to be translated.
-    languages: {
-      type: Array,
-      default: () => []
-    },
-    // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
-    endpoint: {
-      type: String,
-      default: null
-    },
-    // The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.
-    identifier: {
-      // `String|Number`.
-      type: String | Number,
-      default: "new"
-    },
-    // The title of the detail page.
-    modelName: String,
-    // This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.
-    sticky: {
-      type: Boolean,
-      default: true
-    },
-    // Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
-    multipart: {
-      type: String,
-      default: "auto",
-      validator: function (value) {
-        // The value must match one of these strings
-        return ["auto", "force", "disable"].indexOf(value) !== -1;
-      },
-    },
-  },
-  methods: {
-    back() {
-      this.$nuxt.context?.from?.name == "login" ? this.$router.go(-3) : this.$router.back()
-    },
-    saveItem(back = false) {
-      this.errors = null;
-      this.$refs.form?.resetValidation();
-      this.crud
-        .updateOrCreate(this.model, {}, { multipart: this.multipart })
-        .then((resp) => { back ? this.back() : this.model = resp })
-        .catch(error => {
-          this.errors =
-            (error.response.status == 400 && error.response.data) || null;
-          this.$mapo.$snack.open({
-            message: error.response?.data?.detail || "Something whent bad, please try again later...",
-            color: "error"
-          });
-        });
-    },
-    deleteItem() {
-      this.$mapo.$confirm
-        .open({
-          title: "Delete",
-          question: "Are you sure you want to delete this item?",
-          approveButton: { text: "Delete", attrs: { color: "red", text: true } }
-        })
-        .then(res => {
-          if (res) {
+    methods: {
+        back() {
+            this.$nuxt.context?.from?.name == "login" ? this.$router.go(-3) : this.$router.back();
+        },
+        saveItem(back = false) {
+            this.errors = null;
+            this.$refs.form?.resetValidation();
             this.crud
-              .delete(this.identifier)
-              .then(() => this.back())
-              .catch(error =>
+                .updateOrCreate(this.model, {}, { multipart: this.multipart })
+                .then((resp) => { back ? this.back() : this.model = resp; })
+                .catch(error => {
+                this.errors =
+                    (error.response.status == 400 && error.response.data) || null;
                 this.$mapo.$snack.open({
-                  message: error.response?.data?.detail || "Something whent bad, please try again later...",
-                  color: "error"
-                })
-              );
-          }
-        });
+                    message: error.response?.data?.detail || "Something whent bad, please try again later...",
+                    color: "error"
+                });
+            });
+        },
+        deleteItem() {
+            this.$mapo.$confirm
+                .open({
+                title: "Delete",
+                question: "Are you sure you want to delete this item?",
+                approveButton: { text: "Delete", attrs: { color: "red", text: true } }
+            })
+                .then(res => {
+                if (res) {
+                    this.crud
+                        .delete(this.identifier)
+                        .then(() => this.back())
+                        .catch(error => this.$mapo.$snack.open({
+                        message: error.response?.data?.detail || "Something whent bad, please try again later...",
+                        color: "error"
+                    }));
+                }
+            });
+        },
     },
-    initLang(lang = this.currentLang) {
-      if (lang && !this.model.translations) {
-        this.model.translations = {};
-      }
-      if (lang && !this.model.translations[lang]) {
-        this.model.translations[lang] = {};
-      }
+    watch: {
+        currentLang(val) {
+            // Fired when the current language changes.
+            // @arg Emits the language name as a string.
+            this.$emit("update:lang", val);
+        },
+        model(val) {
+            // Fired when the v-model changes.
+            // @arg Emits the entire payload modified.
+            this.$emit("input", val);
+        },
+        lang(val) {
+            if (val && this.langs.includes(val)) {
+                this.currentLang = val;
+            }
+        },
+        value(val) {
+            if (val) {
+                this.model = val;
+            }
+        }
     },
-    parseConf(field, i) {
-      const conf = typeof field === "string" ? { value: field } : field;
-      conf.value = conf.value || "";
-      conf.value = conf.value.replace(new RegExp(`^translations\.(${this.langs.join("|")})\.?`), "");
-      conf.slotName = `fields.${conf.value || i}`;
-      if (this.currentLang && !field.synci18n) {
-        const base = `translations.${this.currentLang}`;
-        conf.value = (conf.value && `${base}.${conf.value}`) || base;
-      }
-      if (this.isReadonly){
-        conf.attrs = {...conf.attrs, readonly: true}
-      }
-      return conf;
+    computed: {
+        canGoBack() {
+            if (typeof window !== "undefined") {
+                return this.$nuxt?.context?.from?.name !== "login" && window.history.length > 1 || window.history.length > 3;
+            }
+            return true;
+        },
+        crud() {
+            return this.$mapo.$api.crud(this.endpoint);
+        },
+        isReadonly() {
+            if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
+                return !this.$mapo.$auth.user.permissions.includes(this.isNew ? "add" : "change");
+            }
+            return false;
+        },
+        canDelete() {
+            if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
+                return this.$mapo.$auth.user.permissions.includes("delete");
+            }
+            return true;
+        },
+        mainFields() {
+            return this.fields instanceof Array ? this.fields : this.fields.main || [];
+        },
+        sideFields() {
+            return (this.fields instanceof Object && this.fields.sidenav) || [];
+        },
+        isNew() {
+            return this.identifier && this.identifier == "new";
+        },
+        loading() {
+            if (this.identifier === "new") {
+                return false;
+            }
+            return !Object.keys(this.model).length;
+        },
+        langs() {
+            return this.modelLanguages || this.languages;
+        },
+        slotBindings() {
+            return {
+                model: this.model,
+                errors: this.errors,
+                currentLang: this.currentLang,
+                crud: this.crud,
+                isNew: this.isNew,
+                langs: this.langs,
+                loading: this.loading,
+                form: this.$refs.form,
+                saveItem: this.saveItem,
+                deleteItem: this.deleteItem
+            };
+        },
+        stickySide() {
+            return this.sticky
+                ? {
+                    position: "sticky",
+                    top: "60px"
+                }
+                : {};
+        }
     },
-    mapConf(fields) {
-      const icon = "mdi-cube-outline";
-      const parseGroup = group =>
-        typeof group === "string"
-          ? { name: group, icon }
-          : { ...group, icon: group.icon !== undefined ? group.icon : icon };
-      return fields.map((f, i) =>
-        f.group
-          ? { group: parseGroup(f.group), fields: this.mapConf(f.fields) }
-          : this.parseConf(f, i)
-      );
-    }
-  },
-  watch: {
-    currentLang(val) {
-      this.initLang();
-      // Fired when the current language changes.
-      // @arg Emits the language name as a string.
-      this.$emit("update:lang", val);
+    mounted() {
+        if (this.identifier && this.identifier !== "new") {
+            this.crud.detail(this.identifier).then(res => {
+                this.model = res;
+                this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id);
+            }).catch(error => {
+                this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || "Ops some error occurred.." });
+            });
+        }
+        else if (this.value) {
+            this.model = this.value;
+            this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id);
+        }
     },
-    model(val) {
-      // Fired when the v-model changes.
-      // @arg Emits the entire payload modified.
-      this.$emit("input", val);
-    },
-    lang(val) {
-      if (val && this.langs.includes(val)) {
-        this.currentLang = val;
-      }
-    },
-    value(val) {
-      if (val) {
-        this.model = val;
-        this.initLang();
-      }
-    }
-  },
-computed: {
-    canGoBack() {
-      if (typeof window !== "undefined") {
-        return this.$nuxt?.context?.from?.name !== "login" && window.history.length > 1 || window.history.length > 3
-      }
-      return true;
-    },
-    crud() {
-      return this.$mapo.$api.crud(this.endpoint);
-    },
-    isReadonly() {
-      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")){
-        return !this.$mapo.$auth.user.permissions.includes(this.isNew ? "add" : "change")
-      }
-      return false
-    },
-    canDelete() {
-      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")){
-        return this.$mapo.$auth.user.permissions.includes("delete")
-      }
-      return true
-    },
-    mainFields() {
-      return this.mapConf(
-        this.fields instanceof Array ? this.fields : this.fields.main || []
-      );
-    },
-    sideFields() {
-      return this.mapConf(
-        (this.fields instanceof Object && this.fields.sidenav) || []
-      );
-    },
-    isNew() {
-      return this.identifier && this.identifier == "new";
-    },
-    loading() {
-      if (this.identifier === "new") {
-        return false;
-      }
-      return !Object.keys(this.model).length;
-    },
-    langs() {
-      return this.modelLanguages || this.languages;
-    },
-    slotBindings() {
-      return {
-        model: this.model,
-        errors: this.errors,
-        currentLang: this.currentLang,
-        crud: this.crud,
-        isNew: this.isNew,
-        langs: this.langs,
-        loading: this.loading,
-        form: this.$refs.form,
-        saveItem: this.saveItem,
-        deleteItem: this.deleteItem
-      };
-    },
-    stickySide() {
-      return this.sticky
-        ? {
-            position: "sticky",
-            top: "60px"
-          }
-        : {};
-    }
-  },
-  mounted() {
-    if (this.identifier && this.identifier !== "new") {
-      this.crud.detail(this.identifier).then(res => {
-        this.model = res;
-        this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id)
-        this.initLang();
-      }).catch(error => {
-        this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || "Ops some error occurred.." })
-      });
-    } else if (this.value) {
-      this.model = this.value;
-      this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id)
-      this.initLang();
-    }
-  }
 };
 </script>
 
