@@ -7,7 +7,14 @@
       :fields="fields"
       :languages="['it', 'en', 'de']"
       modelName="article"
-    />
+    >
+    <!-- <template v-slot:fields.meta.contents.template.stocazzo.fields.title>
+      <h2>suca</h2>
+    </template>
+    <template v-slot:group.seo.fields.title>
+      <h2>suca2</h2>
+    </template> -->
+    </Detail>
   </v-container>
 </template>
 
