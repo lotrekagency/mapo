@@ -47,6 +47,8 @@ export default {
           type: "repeater",
           attrs: {
             sortable: true,
+            collapsable: true,
+            collapsedLabel: (item) => `<b>Linea dal titolo: ${item.tCode || item.polimorphic_c}</b>`,
             // translatable: true,
             fields: {
               group_1: [
