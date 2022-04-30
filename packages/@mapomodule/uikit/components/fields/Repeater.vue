@@ -273,7 +273,7 @@ export default {
     readonly: Boolean,
     // Makes the repeater field sortable.
     sortable: Boolean,
-    // Makes the repeater field sortable.
+    // Makes the repeater field collapsable.
     collapsable: Boolean,
     // Make the repeater multilanguage. This means that it's going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.
     translatable: Boolean,
@@ -281,6 +281,11 @@ export default {
     sortCallback: {
       type: Function,
       default: () => {},
+    },
+    // With this you can define the output of the collapsed label. You can enter the pointed path of a value in the row or a callback function to extract the label from the row.
+    collapsedLabel: {
+      type: String | Function,
+      default: null
     },
     // This is mainly an internal property. It is used by DetailField to pass the list of languages inherited from the Detail component.
     langs: {
@@ -378,8 +383,16 @@ export default {
       return this.mapConf(this.fields);
     },
     getCollapsedLabel(model, index) {
-      const field = this.parseFields(model).find(f => !f.type || f.type.lower() == "text");
-      return getPointed(model, field.value, `Item ${index + 1}`);
+      const fallback = `Item ${index + 1}`;
+      switch (typeof this.collapsedLabel) {
+        case "string":
+          return getPointed(model, this.collapsedLabel, fallback);
+        case "function":
+          return this.collapsedLabel(model);
+        default:
+          const field = this.parseFields(model).find(f => !f.type || f.type.lower() == "text");
+          return getPointed(model, field.value, fallback);
+      }
     },
     toggleExpand(event, forceValue) {
       const action = forceValue == undefined ? "toggle" : forceValue ? "add" : "remove";
