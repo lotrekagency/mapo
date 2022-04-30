@@ -43,7 +43,6 @@ The purpose of this component is to provide you with a very quick way to create 
 |body.lang|Use this to override the Language Switch panel.|[`DetailLangSwitch`](/components/detail/DetailLangSwitch/)|
 |body.top.underlang|Use this to add content under the Language Switch panel.|-|
 |body|Use this to override the content of the main body.|-|
-|fields.slotName|This is a dynamic slot. You can use it to override a field component. For example use `fields.title` to override the component of the field with value `title`.|A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration).|
 |body.bottom|Use this to add content under the main body.|-|
 |side.buttons.top|Use this to add content on the top of the sidebar button panel.|-|
 |side.buttons|Use this to override the the sidebar button panel.|Save, Save and continue, Back, and Delete buttons.|

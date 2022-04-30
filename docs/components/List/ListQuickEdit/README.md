@@ -41,7 +41,6 @@ This components renders a dialog that let the user quick edit (or add) an elemen
 |title|-|-|
 |body.top|Use this to add content on top of body.|-|
 |body|-|-|
-|fields.slotName|This is a dynamic slot. You can use it to override a field component. For example use `qedit.fields.title` to override the component of the field with value `title`.|A [`DetailField`](/components/detail/DetailField/) configured by a [`FieldConfiguration`](#fieldconfiguration).|
 |body.bottom|Use this to add content under the main body.|-|
 |actions|-|-|
 

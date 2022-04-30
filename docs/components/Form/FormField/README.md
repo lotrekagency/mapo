@@ -1,10 +1,10 @@
-# DetailField
+# FormField
 
 This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic fields inside the main form.
 
 ## Props
 
-<!-- @vuese:DetailField:props:start -->
+<!-- @vuese:FormField:props:start -->
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
@@ -14,17 +14,17 @@ This is mainly an internal component. It is used by the [`DetailComponent`](/com
 |langs|-|`Array`|`false`|[]|
 |currentLang|-|`String`|`false`|-|
 
-<!-- @vuese:DetailField:props:end -->
+<!-- @vuese:FormField:props:end -->
 
 
 ## Events
 
-<!-- @vuese:DetailField:events:start -->
+<!-- @vuese:FormField:events:start -->
 
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|Fired when the v-model changes.|Emits the entire payload modified.|
 
-<!-- @vuese:DetailField:events:end -->
+<!-- @vuese:FormField:events:end -->
 
 
