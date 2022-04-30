@@ -1,6 +1,11 @@
 <template>
-  <div class="container pa-0">
-    <span class="repeater-label">{{ label }}:</span>
+  <div ref="repeater" class="container pa-0">
+    <div class="d-flex justify-space-between">
+      <span class="repeater-label">{{ label }}:</span>
+      <v-btn v-if="collapsable" outlined tile text small @click="collapseAll"
+        >Collapse all</v-btn
+      >
+    </div>
     <v-divider />
     <draggable
       v-model="items"
@@ -9,13 +14,24 @@
       @change="sortCallback({ ...$event, items, eventType: 'move' })"
     >
       <div
-        class="repeater-wrapper"
+        class="repeater-line-wrapper"
+        :class="{ expanded: !collapsable }"
         v-for="(model, index) in items"
         :key="index"
       >
         <div class="d-flex">
           <v-divider vertical />
-          <div class="row ma-0">
+          <div v-if="collapsable" class="collapsed-preview">
+            <v-icon class="expand-icon" @click.native="toggleExpand($event)"
+              >mdi-chevron-down</v-icon
+            >
+            <span
+              class="v-label collapsed-label"
+              @click="toggleExpand($event, true)"
+              v-html="getCollapsedLabel(model, index)"
+            ></span>
+          </div>
+          <div class="repeater-fields row ma-0">
             <div
               v-for="(field, i) in parseFields(model)"
               :key="i"
@@ -67,7 +83,7 @@
               v-if="!readonly && sortable"
               color="grey darken-3"
               class="repeater-action repeater-handle-sort"
-              >mdi-drag</v-icon
+              >mdi-drag-horizontal</v-icon
             >
           </div>
         </div>
@@ -125,9 +141,53 @@
 .repeater-action {
   display: none;
 }
-.repeater-wrapper:hover {
-  .repeater-action {
-    display: inline-flex;
+.repeater-fields {
+  display: none;
+  overflow: hidden;
+}
+.expand-icon {
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.collapsed-preview {
+  flex-basis: 100%;
+  display: flex;
+  align-items: flex-start;
+}
+.collapsed-label {
+  cursor: pointer;
+  flex-basis: 100%;
+  margin: 15px;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.repeater-line-wrapper {
+  &:hover {
+    .repeater-action {
+      display: inline-flex;
+    }
+    .repeater-counter {
+      display: none;
+    }
+  }
+  &.expanded {
+    .expand-icon {
+      transform: rotate(180deg);
+    }
+    .collapsed-label {
+      display: none;
+    }
+    .repeater-fields {
+      display: flex;
+    }
+    .collapsed-preview {
+      flex-basis: 0;
+    }
   }
 }
 .repeater-side-bar {
@@ -151,7 +211,7 @@
   .repeater-handle-sort {
     position: absolute;
     align-self: center;
-    bottom: 2px;
+    bottom: -4px;
     cursor: grab;
   }
 }
@@ -171,6 +231,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
 
 /**
  * This component is made to manage a list of object that can be added/removed/reordered with a simple form.
@@ -212,6 +273,8 @@ export default {
     readonly: Boolean,
     // Makes the repeater field sortable.
     sortable: Boolean,
+    // Makes the repeater field sortable.
+    collapsable: Boolean,
     // Make the repeater multilanguage. This means that it's going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.
     translatable: Boolean,
     // This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list.
@@ -249,6 +312,10 @@ export default {
       }
       const newIndex = typeof index == "number" ? index : this.items.length;
       this.items.splice(newIndex, 0, element);
+      this.$nextTick(() => {
+        const line = this.$refs.repeater.querySelectorAll(".repeater-line-wrapper")[newIndex];
+        line && line.classList.add("expanded");
+      });
       this.sortable &&
         this.sortCallback({
           moved: { element, newIndex },
@@ -309,6 +376,18 @@ export default {
         return template ? this.mapConf(template.fields) : [];
       }
       return this.mapConf(this.fields);
+    },
+    getCollapsedLabel(model, index) {
+      const field = this.parseFields(model).find(f => !f.type || f.type.lower() == "text");
+      return getPointed(model, field.value, `Item ${index + 1}`);
+    },
+    toggleExpand(event, forceValue) {
+      const action = forceValue == undefined ? "toggle" : forceValue ? "add" : "remove";
+      const target = event.target.closest(".repeater-line-wrapper");
+      target && target.classList[action]("expanded");
+    },
+    collapseAll() {
+      this.$refs.repeater.querySelectorAll(".repeater-line-wrapper").forEach((e) => e.classList.remove("expanded"));
     },
   },
   computed: {
