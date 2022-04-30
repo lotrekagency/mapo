@@ -39,7 +39,7 @@ export default async function (moduleOptions) {
 
     // INJECT COMPONENTS
     this.nuxt.hook('components:dirs', (dirs) => {
-        const mapoComponents = ['components', 'components/fields', 'components/layout']
+        const mapoComponents = ['components', 'components/Form/fields', 'components/layout']
         mapoComponents.forEach(d => dirs.unshift({ path: path.resolve(__dirname, d)}))
     })
     this.nuxt.hook('components:extend', (components) => {
