@@ -94,6 +94,7 @@ export default {
     },
     // An object representing all the errors of all fields. This means that this component will find the error of its field following the dottedPath of the value in the error dict.
     errors: Object,
+    // Additional bindings to indrease slots capabilities
     moreSlotBindings: Object,
     // The main configuration that determines the arrangement of the fields in the detail layout.
     fields: {

@@ -97,16 +97,16 @@ Here the list of the FieldConfiguration type association.
 
  - `text` ==> [v-text-field](https://vuetifyjs.com/en/components/text-fields/),
  - `select` ==> [v-select](https://vuetifyjs.com/en/components/selects/),
- - `date` ==> [date-field](/components/fields/DateField/),
+ - `date` ==> [date-field](/components/Form/fields/DateField/),
  - `textarea` ==> [v-textarea](https://vuetifyjs.com/en/components/textareas/),
  - `switch` ==> [v-switch](https://vuetifyjs.com/en/components/switches/),
  - `slider` ==> [v-slider](https://vuetifyjs.com/en/components/sliders/),
- - `file` ==> [file-field](/components/fields/FileField/),
- - `editor` ==> [wyg-editor](/components/fields/wygEditor/wygEditor/),
- - `media` ==> [media-field](/components/fields/MediaField/),
- - `mediaList` ==> [media-m2m-field](/components/fields/MediaM2mField/)
- - `m2m` or `fks` ==> [fks-field](/components/fields/FksField/),
- - `repeater` ==> [repeater](/components/fields/Repeater/),
+ - `file` ==> [file-field](/components/Form/fields/FileField/),
+ - `editor` ==> [wyg-editor](/components/Form/fields/wygEditor/wygEditor/),
+ - `media` ==> [media-field](/components/Form/fields/MediaField/),
+ - `mediaList` ==> [media-m2m-field](/components/Form/fields/MediaM2mField/)
+ - `m2m` or `fks` ==> [fks-field](/components/Form/fields/FksField/),
+ - `repeater` ==> [repeater](/components/Form/fields/Repeater/),
 
 
 #### Example of a [`FieldConfiguration`](#fieldconfiguration):
