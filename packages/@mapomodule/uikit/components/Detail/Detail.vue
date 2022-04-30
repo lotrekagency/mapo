@@ -46,7 +46,7 @@
             :languages="langs"
             :errors="errors"
             :fields="mainFields"
-            :modeSlotBindings="slotBindings"
+            :moreSlotBindings="slotBindings"
           >
             <template v-for="(_, slot) in $slots" :slot="slot">
               <!-- @vuese-ignore -->
