@@ -4,13 +4,17 @@
     <div
       class="col-12"
       :class="field.class"
-      v-for="(field, index) in cFields"
+      v-for="(field, index) in computedFields"
       :key="index"
     >
       <v-card v-if="field.group" class="my-2 rounded-0">
         <v-card-title>
-          <v-icon left> {{ field.group.icon }} </v-icon>
-          <span>{{ field.group.name }}</span>
+          <slot :name="`group.${field.group.slug}.title.before`" v-bind="{ conf: field, ...slotBindings, }" />
+          <slot :name="`group.${field.group.slug}.title`" v-bind="{ conf: field, ...slotBindings, }">
+            <v-icon left> {{ field.group.icon }} </v-icon>
+            <span>{{ field.group.name }}</span>
+          </slot>
+          <slot :name="`group.${field.group.slug}.title.after`" v-bind="{ conf: field, ...slotBindings, }" />
         </v-card-title>
         <div class="container">
           <Form
@@ -20,28 +24,25 @@
             :moreSlotBindings="slotBindings"
           >
             <template
-              v-for="slot in nameSpacedSlots($slots, `fields.${field.group.slug}.`)"
-              :slot="`fields.${slot}`"
+              v-for="slot in nameSpacedSlots($slots, `group.${field.group.slug}.`)"
+              :slot="`${slot}`"
             >
-              <slot :name="`fields.${field.group.slug}.${slot}`"></slot>
+              <slot :name="`group.${field.group.slug}.${slot}`"></slot>
             </template>
             <template
-              v-for="slot in nameSpacedSlots($scopedSlots, `fields.${field.group.slug}.`)"
-              v-slot:[`fields.${slot}`]="props"
+              v-for="slot in nameSpacedSlots($scopedSlots, `group.${field.group.slug}.`)"
+              v-slot:[slot]="props"
             >
-              <slot :name="`fields.${field.group.slug}.${slot}`" v-bind="props" />
+              <slot :name="`group.${field.group.slug}.${slot}`" v-bind="props" />
             </template>
           </Form>
         </div>
       </v-card>
       <div v-else>
-        <slot :name="field.slotName + '.before'" v-bind="slotBindings" />
+        <slot :name="field.slotName + '.before'" v-bind="{ conf: field, ...slotBindings, }" />
         <slot
           :name="field.slotName"
-          v-bind="{
-            conf: field,
-            ...slotBindings,
-          }"
+          v-bind="{ conf: field, ...slotBindings, }"
         >
           <FormField
             v-model="model"
@@ -64,7 +65,7 @@
             </template>          
           </FormField>
         </slot>
-        <slot :name="field.slotName + '.after'" v-bind="slotBindings" />
+        <slot :name="field.slotName + '.after'" v-bind="{ conf: field, ...slotBindings, }" />
       </div>
     </div>
   </div>
@@ -163,7 +164,7 @@ export default {
         ...this.moreSlotBindings,
       };
     },
-    cFields() {
+    computedFields() {
       return this.mapConf(this.fields);
     },
   },
