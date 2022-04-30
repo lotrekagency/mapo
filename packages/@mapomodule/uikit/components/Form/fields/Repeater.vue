@@ -34,7 +34,7 @@
           <div class="repeater-fields container">
             <Form
             v-model="items[index]"
-            :currentLang="currentLang"
+            :currentLang="translatable ? currentLang : null"
             :languages="langs"
             :fields="getFields(model)"
             :errors="getErrors(index)"
