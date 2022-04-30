@@ -40,16 +40,16 @@
             :errors="getErrors(index)"
           >
             <template
-              v-for="slot in nameSpacedSlots($slots, `fields.`)"
-              :slot="`fields.${slot}`"
+              v-for="(slot, name) in templateSlots(model, $slots)"
+              :slot="slot"
             >
-              <slot :name="`fields.${slot}`"></slot>
+              <slot :name="name"></slot>
             </template>
             <template
-              v-for="slot in nameSpacedSlots($scopedSlots, `fields.`)"
-              v-slot:[`fields.${slot}`]="props"
+              v-for="(slot, name) in templateSlots(model, $scopedSlots)"
+              v-slot:[slot]="props"
             >
-              <slot :name="`fields.${slot}`" v-bind="props" />
+              <slot :name="name" v-bind="props" />
             </template>
           </Form>
           </div>
@@ -318,7 +318,6 @@ export default {
     },
   },
   methods: {
-    nameSpacedSlots,
     async addItem(index) {
       const element = {};
       if (this.hasTemplates) {
@@ -368,6 +367,13 @@ export default {
         return template ? template.fields : [];
       }
       return this.fields;
+    },
+    templateSlots(model, slots){
+      if (this.hasTemplates) {
+        const template = this.templates.find(t => model[t.tCodeField] == t.tCode)
+        return nameSpacedSlots(slots, `template.${template.tCode}.`).reduce((acc, v) => ({ [`template.${template.tCode}.${v}`]: v, ...acc }), {})
+      }
+      return Object.keys(slots).reduce((acc, v) => ({ [v]: v, ...acc }), {});
     },
     getCollapsedLabel(model, index) {
       const fallback = `Item ${index + 1}`;
