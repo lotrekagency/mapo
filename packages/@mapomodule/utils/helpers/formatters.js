@@ -23,6 +23,7 @@ function humanFileSize(bytes, si = false, dp = 1) {
 };
 
 function slugify(str) {
+    str = str || "";
     str = str.replace(/^\s+|\s+$/g, ''); // trim
     str = str.toLowerCase();
 
@@ -40,7 +41,12 @@ function slugify(str) {
     return str;
 };
 
+function titleCase(string) {
+    return (string && string[0].toUpperCase() + string.slice(1).toLowerCase()) || "";
+};
+
 module.exports = {
     humanFileSize,
     slugify,
+    titleCase,
 }

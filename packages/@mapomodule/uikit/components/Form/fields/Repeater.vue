@@ -241,6 +241,7 @@
 <script>
 import draggable from "vuedraggable";
 import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
+import { titleCase } from "@mapomodule/utils/helpers/formatters";
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 
 /**
@@ -403,7 +404,6 @@ export default {
     templates() {
       const templates = {};
       if (this.hasTemplates) {
-        const titleCase = (string) => (string && string[0].toUpperCase() + string.slice(1).toLowerCase()) || "";
         Object.keys(this.fields).forEach((tKey) => {
           const tValue = this.fields[tKey];
           const { preview, description } = tValue;

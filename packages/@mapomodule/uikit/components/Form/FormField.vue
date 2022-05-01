@@ -31,6 +31,8 @@ import FileField from "@mapomodule/uikit/components/Form/fields/FileField.vue";
 import Repeater from "@mapomodule/uikit/components/Form/fields/Repeater.vue"
 
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
+import { titleCase } from "@mapomodule/utils/helpers/formatters";
+
 import defaults from "./defaults";
 
 /**
@@ -151,9 +153,6 @@ export default {
       if (this.conf.label !== undefined) {
         return this.conf.label;
       }
-      const titleCase = (string) =>
-        (string && string[0].toUpperCase() + string.slice(1).toLowerCase()) ||
-        "";
       return titleCase(
         (this.conf.value || "")
           .replace(/^translations\.\w\w\./, "")
