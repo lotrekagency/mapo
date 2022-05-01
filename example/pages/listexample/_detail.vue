@@ -11,7 +11,7 @@
     <!-- <template v-slot:fields.meta.contents.template.stocazzo.fields.title>
       <h2>suca</h2>
     </template>
-    <template v-slot:group.seo.fields.title>
+    <template v-slot:group.tab_1-tab_2.tab.tab_1.fields.meta.key1>
       <h2>suca2</h2>
     </template> -->
     </Detail>
@@ -61,7 +61,8 @@ export default {
               group_1: [
                 { value: "title", class: "col-md-6" },
                 { value: "date", type: "date", class: "col-md-4" },
-                { value: "casual", type: "switch", class: "col-md-2" },
+                { value: "hash", class: "col-md-6", vVisible: (ctx) => ctx.model.random },
+                { value: "random", type: "switch", class: "col-md-6" },
               ],
               group_2: [
                 { value: "title", class: "col-md-6" },
@@ -82,6 +83,18 @@ export default {
               },
             },
           },
+        },
+        {
+          // group: "Tabs",
+          tabs: {
+            tab_1: [
+              { value: "meta.key1", synci18n: true,},
+              { value: "meta.key2", synci18n: true, type: "textarea" },
+            ],
+            tab_2: [
+              { value: "meta.key2", synci18n: true },
+            ],
+          }
         },
         { value: "content", type: "editor" },
         {
