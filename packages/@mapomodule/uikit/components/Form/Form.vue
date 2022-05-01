@@ -1,43 +1,52 @@
 <template>
   <div class="row">
-    <!-- The result of the [`DetailConfiguration`](#detailconfiguration) contained in the main body. -->
     <div
       class="col-12"
       :class="field.class"
       v-for="(field, index) in computedFields"
       :key="index"
     >
-      <v-card v-if="field.group" class="my-2 rounded-0">
-        <v-card-title>
-          <slot :name="`group.${field.group.slug}.title.before`" v-bind="{ conf: field, ...slotBindings, }" />
-          <slot :name="`group.${field.group.slug}.title`" v-bind="{ conf: field, ...slotBindings, }">
-            <v-icon left> {{ field.group.icon }} </v-icon>
-            <span>{{ field.group.name }}</span>
-          </slot>
-          <slot :name="`group.${field.group.slug}.title.after`" v-bind="{ conf: field, ...slotBindings, }" />
-        </v-card-title>
-        <div class="container">
-          <Form
-            v-model="model"
-            v-bind="{ currentLang, errors, languages }"
-            :fields="field.fields"
-            :moreSlotBindings="slotBindings"
-          >
-            <template
-              v-for="slot in nameSpacedSlots($slots, `group.${field.group.slug}.`)"
-              :slot="`${slot}`"
-            >
-              <slot :name="`group.${field.group.slug}.${slot}`"></slot>
-            </template>
-            <template
-              v-for="slot in nameSpacedSlots($scopedSlots, `group.${field.group.slug}.`)"
-              v-slot:[slot]="props"
-            >
-              <slot :name="`group.${field.group.slug}.${slot}`" v-bind="props" />
-            </template>
-          </Form>
-        </div>
-      </v-card>
+    <FormTabs 
+        v-if="field.tabs"
+        v-model="model"
+        v-bind="{ currentLang, errors, languages }"
+        :conf="field"
+        :moreSlotBindings="slotBindings"
+      >
+        <template
+          v-for="slot in nameSpacedSlots($slots, `group.${field.group.slug}.`)"
+          :slot="slot"
+        >
+          <slot :name="`group.${field.group.slug}.${slot}`"></slot>
+        </template>
+        <template
+          v-for="slot in nameSpacedSlots($scopedSlots, `group.${field.group.slug}.`)"
+          v-slot:[slot]="props"
+        >
+          <slot :name="`group.${field.group.slug}.${slot}`" v-bind="props" />
+        </template>    
+      </FormTabs>
+      <FormGroup
+        v-else-if="field.group"
+        v-model="model"
+        v-bind="{ currentLang, errors, languages }"
+        :conf="field"
+        :moreSlotBindings="slotBindings"
+      >
+        <template
+          v-for="slot in nameSpacedSlots($slots, `group.${field.group.slug}.`)"
+          :slot="slot"
+        >
+          <slot :name="`group.${field.group.slug}.${slot}`"></slot>
+        </template>
+        <template
+          v-for="slot in nameSpacedSlots($scopedSlots, `group.${field.group.slug}.`)"
+          v-slot:[slot]="props"
+        >
+          <slot :name="`group.${field.group.slug}.${slot}`" v-bind="props" />
+        </template>    
+      </FormGroup>
+      
       <div v-else>
         <slot :name="field.slotName + '.before'" v-bind="{ conf: field, ...slotBindings, }" />
         <slot
@@ -72,6 +81,7 @@
 </template>
 <script>
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
+import { titleCase } from "@mapomodule/utils/helpers/formatters";
 import { slugify } from "@mapomodule/utils/helpers/formatters";
 
 export default {
@@ -141,17 +151,35 @@ export default {
       }
       return conf;
     },
+    parseGroup(group, icon="mdi-cube-outline") {
+      return typeof group === "string"
+        ? { name: group, slug: slugify && slugify(group), icon }
+        : { slug: slugify && slugify(group.name), icon, ...group };
+    },
+    parseTabs(tabs) {
+      return Object.keys(tabs).map(key => {
+        const tab = tabs[key]
+        return { 
+          label: titleCase(key.replace(/_/, " ")), 
+          slug: key, 
+          ...tab.tab, 
+          fields: this.mapConf(Array.isArray(tab) && tab || tab.fields || []) 
+        }
+      })
+    },
+    parseTagsGroup(field){
+      const gType = typeof field.group
+      const slug = gType == "string" && slugify(field.group) || gType == "object" && slugify(field.group?.name) || Object.keys(field.tabs).join("-")
+      return this.parseGroup(gType == "string" ? { ...this.parseGroup(field.group, null), slug} : { slug,...field.group }, null)
+    },
     mapConf(fields) {
       fields = JSON.parse(JSON.stringify(fields)) //prevent render loop
-      const icon = "mdi-cube-outline";
-      const parseGroup = (group) => 
-         typeof group === "string"
-          ? { name: group, slug: slugify && slugify(group), icon }
-          : { slug: slugify && slugify(group.name), icon, ...group };
       return fields.map((f, i) =>
-        f.group
-          ? { group: parseGroup(f.group), fields: this.mapConf(f.fields) }
-          : this.parseConf(f, i)
+        f.tabs
+          ? { group: this.parseTagsGroup(f), tabs: this.parseTabs(f.tabs) } 
+          : f.group
+            ? { group: this.parseGroup(f.group), fields: this.mapConf(f.fields) }
+            : this.parseConf(f, i)
       );
     },
   },
