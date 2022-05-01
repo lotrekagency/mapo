@@ -5,6 +5,8 @@
       :class="field.class"
       v-for="(field, index) in computedFields"
       :key="index"
+      v-show="show(field)"
+      :style="show(field, 'visibility') ? '' : 'opacity: 0; visibility: hidden;'"
     >
     <FormTabs 
         v-if="field.tabs"
@@ -186,6 +188,19 @@ export default {
             : this.parseConf(f, i)
       );
     },
+    show(conf, type = "display"){
+      const prop = type == "visibility" ? "vVisible" : "vShow"
+      if (typeof conf[prop] == "function") {
+        return conf[prop]({ 
+          model: this.model,
+          errors: this.errors,
+          languages: this.languages,
+          currentLang: this.currentLang
+          })
+      }
+      return true
+    }
+
   },
   computed: {
     slotBindings() {
