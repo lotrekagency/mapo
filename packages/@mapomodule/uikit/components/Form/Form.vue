@@ -81,8 +81,8 @@
 </template>
 <script>
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
-import { titleCase } from "@mapomodule/utils/helpers/formatters";
-import { slugify } from "@mapomodule/utils/helpers/formatters";
+import { slugify, titleCase } from "@mapomodule/utils/helpers/formatters";
+import { findPropPaths, getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 
 export default {
   name: "Form",
@@ -173,7 +173,11 @@ export default {
       return this.parseGroup(gType == "string" ? { ...this.parseGroup(field.group, null), slug} : { slug,...field.group }, null)
     },
     mapConf(fields) {
-      fields = JSON.parse(JSON.stringify(fields)) //prevent render loop
+      ////// This is an hack to prevent render loop
+      const functions = findPropPaths(fields, ({ val }) => typeof val == "function" ).reduce((acc, key) => ({[key]: getPointed(fields, key, undefined) , ...acc}), {})
+      fields = JSON.parse(JSON.stringify(fields))
+      Object.keys(functions).forEach(key => setPointed(fields, key, functions[key]))
+      //// End of hack ====> TODO: find a better way to avoid loops
       return fields.map((f, i) =>
         f.tabs
           ? { group: this.parseTagsGroup(f), tabs: this.parseTabs(f.tabs) } 
