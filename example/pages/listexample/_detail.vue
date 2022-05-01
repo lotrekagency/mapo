@@ -61,7 +61,7 @@ export default {
               group_1: [
                 { value: "title", class: "col-md-6" },
                 { value: "date", type: "date", class: "col-md-4" },
-                { value: "hash", class: "col-md-6", vVisible: (ctx) => ctx.model.random },
+                { value: "hash", class: "col-md-6", vVisible: ({ model }) => model.random },
                 { value: "random", type: "switch", class: "col-md-6" },
               ],
               group_2: [
@@ -120,6 +120,7 @@ export default {
             { value: "trash", type: "switch", synci18n: true },
             {
               value: "status",
+              vShow: ({ model }) => !model.trash,
               type: "select",
               attrs: {
                 items: [
