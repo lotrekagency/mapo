@@ -19,6 +19,9 @@
 </template>
 
 <script>
+import { slugify } from '@mapomodule/utils/helpers/formatters';
+import { setPointed } from '@mapomodule/utils/helpers/objHelpers';
+
 export default {
   meta: { sidebarHide: true, permissions: { model: "article" } },
   middleware: ["auth", "permissions"],
@@ -100,7 +103,7 @@ export default {
         {
           group: "Seo",
           fields: [
-            { value: "title", class: "col-md-6" },
+            { value: "title", class: "col-md-6", onChange: ({ val, model, conf }) => setPointed(model, conf.value.replace("title", "permalink"), slugify(val)) },
             { value: "permalink", class: "col-md-6" },
             { value: "description", type: "textarea" },
             { type: "seoPreview" },
