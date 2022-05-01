@@ -98,6 +98,15 @@ export default {
         this.conf.value,
         this.accessor.set({ model: { ...this.value }, val })
       );
+      if (typeof this.conf.onChange == "function") 
+        this.conf.onChange({
+          val,
+          model: dump,
+          currentLang: this.currentLang,
+          languages: this.langs,
+          conf: this.conf
+        })
+
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
       this.$emit("input", dump);
