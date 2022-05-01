@@ -92,11 +92,11 @@ export default {
       }
     },
     model(val) {
-      const dump = { ...this.value };
+      const dump = { ...this.value }; // since we cannot directly edit a prop
       setPointed(
         dump,
         this.conf.value,
-        this.accessor.set({ model: { ...this.value }, val })
+        this.accessor.set({ model: dump, val })
       );
       if (typeof this.conf.onChange == "function") 
         this.conf.onChange({
