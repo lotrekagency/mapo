@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.22](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2022-05-01)
+
+
+### Features
+
+* big code refactor and improovements to fields management ([a818d8b](https://github.com/lotrekagency/mapo/commit/a818d8b891dbb4892f50267d6355c41297e2c6c6))
+
+
+
+
+
 # [1.0.0-alpha.15](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.14...v1.0.0-alpha.15) (2022-03-11)
 
 

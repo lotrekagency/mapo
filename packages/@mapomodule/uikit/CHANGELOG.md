@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.22](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2022-05-01)
+
+
+### Bug Fixes
+
+* fix detail component slot bindings ([c4367a3](https://github.com/lotrekagency/mapo/commit/c4367a38336570e550024340725bca6da2fd2a06))
+* fix form fields components discovery ([3f4fb0b](https://github.com/lotrekagency/mapo/commit/3f4fb0b3a5dc570c125f99f225bd4e2e557c453a))
+* fix language switch in repeater ([76d4b80](https://github.com/lotrekagency/mapo/commit/76d4b80ac66fd5344a4b0deb7576dfb1a16b8f89))
+* fix missing funtions in confs. this is a bit hacky. better to find a better solution ([e3117cf](https://github.com/lotrekagency/mapo/commit/e3117cf6b25bffcb87aac148d670e676869ddeda))
+* fix repeater commands showing only on sidebar hover ([82de95d](https://github.com/lotrekagency/mapo/commit/82de95d66aa2edc85860c856a8288f468d8ee014))
+
+
+### Features
+
+* added a collapsed Label prop to define it in the repeater ([ec26fcb](https://github.com/lotrekagency/mapo/commit/ec26fcbf69c43e04cc9791ca7e5c88779c70372e))
+* added a vShow callback prop to conditionally display a field ([c94a280](https://github.com/lotrekagency/mapo/commit/c94a280d16114a8b7480f5e22a81db46e8cc34d7))
+* added collapsed mode to repeaters ([e99e2cd](https://github.com/lotrekagency/mapo/commit/e99e2cdc15c3f24c5b850b3e6ea1fc53685baccb))
+* added onChange callback to fields ([f19a994](https://github.com/lotrekagency/mapo/commit/f19a9944aa7f6f5abacb70cdc3936c9db8df4176))
+* big code refactor and improovements to fields management ([a818d8b](https://github.com/lotrekagency/mapo/commit/a818d8b891dbb4892f50267d6355c41297e2c6c6))
+* Form component has now many more slots ([5db0da8](https://github.com/lotrekagency/mapo/commit/5db0da85d5adc6b19370dc1fdc06542048cc36ac))
+* move vShow check in form component and add vVisible check ([c219cec](https://github.com/lotrekagency/mapo/commit/c219cec33b00d1b605522772f7ed57eed7c37fee))
+* **form:** added tabs configuration to forms ([387e521](https://github.com/lotrekagency/mapo/commit/387e521422d0e8ac35817abdf36d927011c17798))
+* **repeater:** now repeater with templates has more precise slots ([67eb56f](https://github.com/lotrekagency/mapo/commit/67eb56f66bda6f7ba6c85c5017bc4c216263e56a))
+
+
+
+
+
 # [1.0.0-alpha.21](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.20...v1.0.0-alpha.21) (2022-04-25)
 
 **Note:** Version bump only for package @mapomodule/uikit
