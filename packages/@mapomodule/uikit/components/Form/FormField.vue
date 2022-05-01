@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="show">
     <span class="mapo-label" :class="`mapo-label-${conf.value}`">{{label}}</span>
     <component :is="is" v-model="model" v-bind="fieldAttrs">
       <template v-for="(_, slot) in $slots" :slot="slot">
@@ -168,6 +168,17 @@ export default {
         "vTextField"
       );
     },
+    show(){
+      if (typeof this.conf.vShow == "function") {
+        return this.conf.vShow({ 
+          model: this.value,
+          errors: this.errors,
+          languages: this.languages,
+          currentLang: this.currentLang
+          })
+      }
+      return true
+    }
   },
   mounted(){
     this.setModel()
