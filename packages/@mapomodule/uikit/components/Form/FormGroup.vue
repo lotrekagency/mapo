@@ -11,7 +11,7 @@
     <div class="container">
       <Form
         v-model="model"
-        v-bind="{ currentLang, errors, languages }"
+        v-bind="{ currentLang, errors, languages, readonly }"
         :fields="conf.fields"
         :moreSlotBindings="slotBindings"
       >
@@ -61,6 +61,8 @@ export default {
       type: Array,
       default: () => [],
     },
+    // Makes all the fields readonly.
+    readonly: Boolean,
   },
   watch: {
     value(val) {

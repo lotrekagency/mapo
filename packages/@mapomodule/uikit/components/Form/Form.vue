@@ -11,7 +11,7 @@
     <FormTabs 
         v-if="field.tabs"
         v-model="model"
-        v-bind="{ currentLang, errors, languages }"
+        v-bind="{ currentLang, errors, languages, readonly }"
         :conf="field"
         :moreSlotBindings="slotBindings"
       >
@@ -31,7 +31,7 @@
       <FormGroup
         v-else-if="field.group"
         v-model="model"
-        v-bind="{ currentLang, errors, languages }"
+        v-bind="{ currentLang, errors, languages, readonly }"
         :conf="field"
         :moreSlotBindings="slotBindings"
       >
@@ -57,10 +57,9 @@
         >
           <FormField
             v-model="model"
+            v-bind="{ currentLang, errors, readonly }"
             :langs="languages"
-            :currentLang="currentLang"
             :conf="field"
-            :errors="errors"
           >
             <template
               v-for="slot in nameSpacedSlots($slots, `fields.${field.value}.`)"
@@ -104,6 +103,8 @@ export default {
       type: String,
       required: false,
     },
+    // Makes all the fields readonly.
+    readonly: Boolean,
     // An object representing all the errors of all fields. This means that this component will find the error of its field following the dottedPath of the value in the error dict.
     errors: Object,
     // Additional bindings to indrease slots capabilities

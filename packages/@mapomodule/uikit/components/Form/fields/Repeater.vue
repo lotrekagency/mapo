@@ -38,6 +38,7 @@
             :languages="langs"
             :fields="getFields(model)"
             :errors="getErrors(index)"
+            :readonly="readonly"
           >
             <template
               v-for="(slot, name) in templateSlots(model, $slots)"

@@ -47,6 +47,7 @@
             :errors="errors"
             :fields="mainFields"
             :moreSlotBindings="slotBindings"
+            :readonly="isReadonly"
           >
             <template v-for="(_, slot) in $slots" :slot="slot">
               <!-- @vuese-ignore -->

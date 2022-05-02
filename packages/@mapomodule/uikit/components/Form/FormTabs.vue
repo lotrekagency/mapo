@@ -21,7 +21,7 @@
           <slot :name="`tab.${tab.slug}`" v-bind="slotBindings">
             <Form
               v-model="model"
-              v-bind="{ currentLang, errors, languages }"
+              v-bind="{ currentLang, errors, languages, readonly }"
               :fields="tab.fields"
               :moreSlotBindings="slotBindings"
             >
@@ -76,6 +76,8 @@ export default {
       type: String,
       required: false,
     },
+    // Makes all the fields readonly.
+    readonly: Boolean,
     // An object representing all the errors of all fields. This means that this component will find the error of its field following the dottedPath of the value in the error dict.
     errors: Object,
     // Additional bindings to indrease slots capabilities

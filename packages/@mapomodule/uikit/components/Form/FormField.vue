@@ -65,6 +65,8 @@ export default {
       type: Object,
       required: true,
     },
+    // Makes the field readonly.
+    readonly: Boolean,
     // An object representing all the errors of all fields. This means that this component will find the error of its field following the dottedPath of the value in the error dict.
     errors: Object,
     // The main configuration that determines the rendering of the field. See [FieldConfiguration](/components/detail/Detail/#fieldconfiguration).
@@ -153,6 +155,7 @@ export default {
         ...(this.defaultAttrs[
           this.is.replace(/-./g, (x) => x[1].toUpperCase())
         ] || {}),
+        readonly: this.readonly,
         ...this.conf.attrs,
         currentLang: this.currentLang,
         langs: this.langs,
