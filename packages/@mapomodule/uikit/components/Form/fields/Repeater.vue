@@ -6,12 +6,12 @@
         >Collapse all</v-btn
       >
     </div>
-    <v-divider />
     <draggable
       v-model="items"
       handle=".repeater-handle-sort"
       animation="150"
       @change="sortCallback({ ...$event, items, eventType: 'move' })"
+      :style="maxHeightStyle"
     >
       <div
         class="repeater-line-wrapper"
@@ -20,7 +20,6 @@
         :key="index"
       >
         <div class="d-flex">
-          <v-divider vertical />
           <div v-if="collapsable" class="collapsed-preview">
             <v-icon class="expand-icon" @click.native="toggleExpand($event)"
               >mdi-chevron-down</v-icon
@@ -97,7 +96,6 @@
             >
           </div>
         </div>
-        <v-divider />
       </div>
     </draggable>
     <div class="d-flex justify-end">
@@ -176,7 +174,11 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.theme--light.repeater-line-wrapper { border-color: rgba(0, 0, 0, 0.12); }
 .repeater-line-wrapper {
+  border: 1px solid;
+  &:not(:last-child){ border-bottom: none; }
+  border-color: rgba(255, 255, 255, 0.12);
   &:hover {
     .repeater-action {
       display: inline-flex;
@@ -307,6 +309,7 @@ export default {
     },
     // This is mainly an internal property. It is used by DetailField to pass the active language inherited from the Detail component.
     currentLang: String,
+    maxHeight: String | Number
   },
   watch: {
     value(val) {
@@ -419,6 +422,12 @@ export default {
       }
       return Object.values(templates);
     },
+    maxHeightStyle(){
+      if (this.maxHeight !== undefined){
+        const maxHeight = isNaN(this.maxHeight) ? this.maxHeight : `${this.maxHeight}px`
+        return { maxHeight, padding: '15px 0 10px 0', overflowX: 'hidden', overflowY: 'auto' }
+      }
+    }
   },
   mounted() {
     this.items = this.value;
