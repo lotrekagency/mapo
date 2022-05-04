@@ -83,13 +83,14 @@
 <script>
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 import { slugify, titleCase } from "@mapomodule/utils/helpers/formatters";
-import { findPropPaths, getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
+import { deepClone } from "@mapomodule/utils/helpers/objHelpers";
 
 export default {
   name: "Form",
   data() {
     return {
       model: {},
+      internalFields: []
     };
   },
   props: {
@@ -129,6 +130,9 @@ export default {
     model(val) {
       this.$emit("input", val);
     },
+    fields(val){
+      this.internalFields = this.cloneFields(val)
+    }
   },
   methods: {
     nameSpacedSlots,
@@ -176,11 +180,6 @@ export default {
       return this.parseGroup(gType == "string" ? { ...this.parseGroup(field.group, null), slug} : { slug,...field.group }, null)
     },
     mapConf(fields) {
-      ////// This is an hack to prevent render loop
-      const functions = findPropPaths(fields, ({ val }) => typeof val == "function" ).reduce((acc, key) => ({[key]: getPointed(fields, key, undefined) , ...acc}), {})
-      fields = JSON.parse(JSON.stringify(fields))
-      Object.keys(functions).forEach(key => setPointed(fields, key, functions[key]))
-      //// End of hack ====> TODO: find a better way to avoid loops
       return fields.map((f, i) =>
         f.tabs
           ? { group: this.parseTagsGroup(f), tabs: this.parseTabs(f.tabs) } 
@@ -200,6 +199,9 @@ export default {
           })
       }
       return true
+    },
+    cloneFields(fields){
+      return process.browser ? deepClone(fields) : fields
     }
 
   },
@@ -214,10 +216,11 @@ export default {
       };
     },
     computedFields() {
-      return this.mapConf(this.fields);
+      return this.mapConf(this.internalFields);
     },
   },
   created(){
+    this.internalFields = this.cloneFields(this.fields)
     this.model = this.value
     this.initLang();
   }
