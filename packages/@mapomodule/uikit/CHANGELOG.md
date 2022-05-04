@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.23](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-05-04)
+
+
+### Bug Fixes
+
+* **detail:** prevent rendering of fields until the model is fully loaded ([0421d79](https://github.com/lotrekagency/mapo/commit/0421d79ea1a1e15b37a5addfd7eebd0c83b23a96))
+* **repeater:** better borders and padding for repeater lines ([07faf36](https://github.com/lotrekagency/mapo/commit/07faf36ac8d46c290cf12be41948f21a693e3da7))
+* **seoPreview:** fix permalink preview to integrate the domain ([8bdd6a3](https://github.com/lotrekagency/mapo/commit/8bdd6a35ce9643206121d531ca07d083fe20c5b5))
+* fix detail component not redirecting on save and continue action ([3ba4bb6](https://github.com/lotrekagency/mapo/commit/3ba4bb6457242e583ca43f42db070bde731b6c26))
+* fix readonly fields in forms ([564a853](https://github.com/lotrekagency/mapo/commit/564a853f2c4d572cdb340d52b9801ad6d7f053d0))
+
+
+### Features
+
+* **forms:** update style of group and tabs ([a8d902b](https://github.com/lotrekagency/mapo/commit/a8d902b2b586563d765316cb5912d26df8144eae))
+* added maxHeight prop to repeater ([5adc02e](https://github.com/lotrekagency/mapo/commit/5adc02efb07d2ca61f7265ec1c4d0377cdb76837))
+
+
+### Performance Improvements
+
+* **forms:** Decrease rendering time of form component, and all Components based on form ([22a191a](https://github.com/lotrekagency/mapo/commit/22a191a2f791a8dfe93336e53aec7cfbe3baa1f5))
+
+
+
+
+
 # [1.0.0-alpha.22](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2022-05-01)
 
 

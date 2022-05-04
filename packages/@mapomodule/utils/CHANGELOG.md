@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.23](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-05-04)
+
+
+### Bug Fixes
+
+* **utils:** better File recognition for deepClone util ([72a1002](https://github.com/lotrekagency/mapo/commit/72a1002144ff0be1c016a39f46f8ea712a950825))
+
+
+
+
+
 # [1.0.0-alpha.22](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2022-05-01)
 
 
