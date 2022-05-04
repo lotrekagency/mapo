@@ -3,7 +3,7 @@
     <div class="preview">
       <span class="preview__title">{{ getTitle }}</span>
       <br />
-      <span class="preview__url">{{ getPermalink }}</span>
+      <span class="preview__url">{{domain}}{{ getPermalink }}</span>
       <br />
       <span class="preview__desc">{{ getDescription }}</span>
     </div>
@@ -58,13 +58,17 @@ export default {
     // Seo permalink
     permalink: {
       type: String,
-      default: "example.com/how_to_dive"
+      default: "how-to-dive"
     },
     // Seo description
     description: {
       type: String,
       default:
         "This is an example description that will get replaced when you start typing. Make sure to keep descriptions mobile-friendly and keyword-rich!"
+    },
+    domain: {
+      type: String,
+      default: process.browser ? `${window.location.origin}/` : ""
     }
   },
   computed: {
