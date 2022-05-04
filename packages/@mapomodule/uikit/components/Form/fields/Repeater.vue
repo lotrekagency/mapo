@@ -98,6 +98,7 @@
         </div>
       </div>
     </draggable>
+    <v-divider/>
     <div class="d-flex justify-end">
       <v-btn
         class="repeater-add-line"
@@ -174,10 +175,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.theme--light.repeater-line-wrapper { border-color: rgba(0, 0, 0, 0.12); }
+.theme--light .repeater-line-wrapper { border-color: rgba(0, 0, 0, 0.12); }
 .repeater-line-wrapper {
-  border: 1px solid;
-  &:not(:last-child){ border-bottom: none; }
+  border: 1px solid; 
+  border-bottom: none;
   border-color: rgba(255, 255, 255, 0.12);
   &:hover {
     .repeater-action {
@@ -223,7 +224,9 @@
   .repeater-handle-sort {
     position: absolute;
     align-self: center;
-    bottom: -4px;
+    bottom: 0px;
+    height: 15px;
+    overflow: hidden;
     cursor: grab;
   }
 }
@@ -425,7 +428,7 @@ export default {
     maxHeightStyle(){
       if (this.maxHeight !== undefined){
         const maxHeight = isNaN(this.maxHeight) ? this.maxHeight : `${this.maxHeight}px`
-        return { maxHeight, padding: '15px 0 10px 0', overflowX: 'hidden', overflowY: 'auto' }
+        return { maxHeight, paddingTop: '15px', overflowX: 'hidden', overflowY: 'auto' }
       }
     }
   },
