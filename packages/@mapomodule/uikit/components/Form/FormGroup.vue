@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="conf" class="my-2 rounded-0">
+  <v-card v-if="conf" class="my-2 rounded-0 elevation-0 group-card">
     <v-card-title :class="conf.group.titleClass">
       <slot name="title.before" v-bind="slotBindings" />
       <slot name="title" v-bind="slotBindings">
@@ -27,7 +27,11 @@
     </div>
   </v-card>
 </template>
-
+<style lang="scss" scoped>
+.theme--light .group-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+</style>
 <script>
 export default {
   name: "FormGroup",

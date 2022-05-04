@@ -1,5 +1,5 @@
 <template>
-  <v-card v-if="conf" class="my-2 rounded-0">
+  <v-card v-if="conf" class="tabs-card my-2 rounded-0 elevation-0">
     <v-card-title :class="conf.group.titleClass" v-if="hasTitle">
       <slot name="title.before" v-bind="slotBindings" />
       <slot name="title" v-bind="slotBindings">
@@ -51,6 +51,9 @@
 <style lang="scss" scoped>
 .tab-wrapper {
   margin: -12px 0 0 -12px;
+}
+.theme--light .tabs-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 </style>
 <script>
