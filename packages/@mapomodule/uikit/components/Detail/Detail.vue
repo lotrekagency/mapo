@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div v-show="loading">
+  <div v-if="loading">
     <v-progress-linear
       color="primary"
       indeterminate
@@ -12,7 +12,7 @@
       Fetching data..
     </span>
   </div>
-  <div v-show="!loading">
+  <div v-else>
     <!-- Use this to override the title of the detail component. -->
     <slot name="title" v-bind="slotBindings">
       <!-- `<h1> "Create | Edit" + modelName </h1>` -->
