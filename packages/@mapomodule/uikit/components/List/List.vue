@@ -84,7 +84,8 @@ export default {
       selection: [],
       allSelected: false,
       filters: [],
-      dragOrderingActive: false
+      dragOrderingActive: false,
+      selectionQuery: null,
     };
   },
   props: {
@@ -99,15 +100,13 @@ export default {
     crud() {
       return this.$mapo.$api.crud(this.endpoint);
     },
-    selectionQuery() {
-      return this.$refs?.dtable?.getHttpParams();
-    }
   },
   watch: {
     selection(val) {
       this.allSelected = val == 'all';
       // Fires when you select some row of the table.
       // @arg Emit "all" if all items are selected, else the list of the selected rows.
+      this.selectionQuery = this.$refs.dtable.getHttpParams();
       this.$emit("selectionChange", val);
     },
     filters: {
