@@ -310,6 +310,13 @@ export default {
           this.cleanActiveFilters()
         }
       }
+    },
+    filters: {
+      deep: true,
+      handler(val) {
+        this.loadFilters();
+        this.restoreFromQparams();
+      }
     }
   },
   created() {
