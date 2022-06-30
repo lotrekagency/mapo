@@ -274,11 +274,7 @@ export default {
       });
     }, 500),
     changeOrder(event){
-      if (this.offlineMode) {
-        const element = this.items[event.oldIndex]
-        this.items.splice(event.oldIndex, 1, )
-        this.items.splice(event.newIndex, 0, element);
-      } else {
+      if (!this.offlineMode) {
         this.crud.update_order(this.items[event.oldIndex][this.lookup], this.items[event.newIndex][this.lookup]).then(
           res => res.reordered && this.getDataFromApi()
         ).catch(error => {
@@ -289,6 +285,9 @@ export default {
           })
         });
       }
+      const element = this.items[event.oldIndex]
+      this.items.splice(event.oldIndex, 1, )
+      this.items.splice(event.newIndex, 0, element);
     },
     setQparams(options) {
       this.$router.push({
