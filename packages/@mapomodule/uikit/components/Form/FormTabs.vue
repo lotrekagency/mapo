@@ -10,7 +10,7 @@
     </v-card-title>
     <div class="container">
       <v-tabs v-model="tabIndex" class="tab-wrapper">
-        <v-tab v-for="(tab, index) in conf.tabs" :key="index">
+        <v-tab v-for="(tab, index) in conf.tabs" :key="index" v-show="show(tab)">
           <v-badge :value="hasErrors(tab)" color="error" dot>
             {{ tab.label }} <v-icon v-if="tab.icon">{{ tab.icon }}</v-icon>
           </v-badge>
@@ -130,6 +130,18 @@ export default {
       return findPropPaths(this.errors || {}, ({ val }) =>
         Array.isArray(val)
       ).some((k) => tab.fields.some((f) => k.startsWith(f.value)));
+    },
+    show(conf, type = "display"){
+      const prop = type == "visibility" ? "vVisible" : "vShow"
+      if (typeof conf[prop] == "function") {
+        return conf[prop]({ 
+          model: this.model,
+          errors: this.errors,
+          languages: this.languages,
+          currentLang: this.currentLang
+          })
+      }
+      return true
     },
   },
   created() {
