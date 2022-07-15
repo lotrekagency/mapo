@@ -10,7 +10,7 @@
       <span v-if="isLoggedIn">
         {{ username }}
       </span>
-      <NuxtLink v-else to="/login"> Login </NuxtLink>
+      <NuxtLink v-else to="/login">{{ $t("login") }}</NuxtLink>
     </v-list-item-title>
     <v-btn icon @click.stop="toggleMiniVariant">
       <v-icon>mdi-chevron-left</v-icon>

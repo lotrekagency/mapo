@@ -18,7 +18,7 @@
       <v-list-item-icon>
         <v-icon>mdi-logout</v-icon>
       </v-list-item-icon>
-      <v-list-item-title> Logout </v-list-item-title>
+      <v-list-item-title>{{ $t("logout") }}</v-list-item-title>
     </v-list-item>
   </div>
 </template>

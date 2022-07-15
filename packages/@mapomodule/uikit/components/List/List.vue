@@ -30,18 +30,18 @@
           <!-- Overrides counter for selected items.  -->
             <slot name="item-counter" v-bind="{ selection, canSelectAll, allSelected, toggleSelectAll }">
               <div  v-if="selection" class="caption mr-1 mb-1">
-                <b v-if="allSelected">All items selected</b>
+                <b v-if="allSelected">{{ $t("list_allSelected") }}</b>
                 <span v-else-if="selection.length">
-                {{ selection.length }} items selected
-                <v-btn
-                    v-if="selection != 'all' && canSelectAll"
-                    @click="toggleSelectAll"
-                    outlined
-                    tile
-                    x-small
-                    class="ml-1 d-inline-flex"
-                    >Select all</v-btn
-                >
+                  {{ $t("list_NSelected").replace("{0}", selection.length) }}
+                  <v-btn
+                      v-if="selection != 'all' && canSelectAll"
+                      @click="toggleSelectAll"
+                      outlined
+                      tile
+                      x-small
+                      class="ml-1 d-inline-flex"
+                      >{{ $t("list_selectAll") }}</v-btn
+                  >
                 </span>
               </div>
             </slot>

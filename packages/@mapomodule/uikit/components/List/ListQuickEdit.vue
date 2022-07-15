@@ -57,8 +57,8 @@
           <v-messages v-if="nonFieldErrors.length" v-model="nonFieldErrors" color="error"></v-messages>
           <slot name="actions" v-bind="slotBindings">
             <v-spacer></v-spacer>
-            <v-btn text @click="close()"> Cancel </v-btn>
-            <v-btn text @click="save"> Save </v-btn>
+            <v-btn text @click="close()">{{ $t("cancel") }}</v-btn>
+            <v-btn text @click="save">{{ $t("save") }}</v-btn>
           </slot>
         </v-card-actions>
       </v-card>
@@ -218,8 +218,8 @@ export default {
       this.errors = (badRequest && error.response.data) || null;
       this.$mapo.$snack.open({
         message: badRequest
-          ? "Bad input, correct wrong fields."
-          : error.response?.data?.detail || "Something whent bad, please try again later...",
+          ? this.$t("listQuickEdit_badInput")
+          : error.response?.data?.detail || this.$t("genericError"),
         color: "error",
       });
     },

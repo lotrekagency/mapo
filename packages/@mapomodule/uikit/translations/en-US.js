@@ -10,6 +10,7 @@ export default {
     delete: "Delete",
     add: "Add",
     remove: "Remove",
+    clear: "Clear",
     expand: "Expand",
     collapse: "Collapse",
     search: "Search...",
@@ -20,6 +21,8 @@ export default {
     genericError: "Something whent bad, please try again later...",
     confirmDelete: "Are you sure you want to delete this item?",
     fetchingData: "Fetching data...",
+    login: "Login",
+    logout: "Logout",
     // Elements
     name: "Name",
     description: "Description",
@@ -58,6 +61,25 @@ export default {
         "It was the best of times, it was the blurst of times, it was the ...",
     seoPreview_description:
         "This is an example description that will get replaced when you start typing. Make sure to keep descriptions mobile-friendly and keyword-rich!",
+
+    // List/List.vue
+    list_allSelected: "All items selected",
+    list_NSelected: "{0} items selected",
+    list_selectAll: "Select all",
+    // List/ListActions.vue
+    listActions_groupActions: "Group actions",
+    listActions_permanentDelete: "Permanent delete",
+    listActions_selectionRequired: "You need to select at least one item.",
+    // List/ListFilters.vue
+    listFilters_filter: "Filter",
+    // List/ListHead.vue
+    listFilters_addNew: "Add new",
+    // List/ListQuickEdit.vue
+    listQuickEdit_badInput: "Bad input, correct wrong fields.",
+    // List/ListTable.vue
+    listTable_quickAdd: "Quick Add",
+    listTable_toggleOrder: "Toggle reordering",
+    listTable_errorOrder: "Reorder failed",
 
     // MediaManager/MediaEditor.vue
     mediaEditor_changeFile: "Change File",

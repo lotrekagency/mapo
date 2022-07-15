@@ -1,7 +1,7 @@
 <template>
   <div class="login__wrapper">
     <div class="login__inner">
-      <h2 class="login__inner__title">Login</h2>
+      <h2 class="login__inner__title">{{ $t("login") }}</h2>
 
       <div class="login__form__outer">
         <v-form
@@ -35,7 +35,7 @@
           ></v-text-field>
           <div class="text-center">
             <v-btn type="submit" class="rounded-0" elevation="0" dark>
-              Log In
+              {{ $t("login") }}
             </v-btn>
             <v-messages
               v-model="errors.non_field_errors"

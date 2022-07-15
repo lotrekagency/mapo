@@ -10,6 +10,7 @@ export default {
     delete: "Elimina",
     add: "Aggiungi",
     remove: "Rimuovi",
+    clear: "Rimuovi",
     expand: "Espandi",
     collapse: "Comprimi",
     search: "Cerca...",
@@ -20,6 +21,8 @@ export default {
     genericError: "Qualcosa è andato storto, riprova più tardi...",
     confirmDelete: "Vuoi veramente eliminare questo elemento?",
     fetchingData: "Sto recuperando i dati...",
+    login: "Login",
+    logout: "Esci",
     // Elements
     name: "Nome",
     description: "Descrizione",
@@ -40,7 +43,7 @@ export default {
     confirmDialog_areYouSure: "Sei sicuro di ciò che vuoi fare?",
     // DropArea.vue
     dropArea_dropOrClick:
-        "Trascina i tuoi file qui, o clicca per selezionarne uno",
+        "Trascina qui i tuoi file, o clicca per selezionarne uno",
     dropArea_onlyOneFile: "È possibile caricare un solo file alla volta...",
     // Login.vue
     login_loginError:
@@ -60,6 +63,25 @@ export default {
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
     seoPreview_description:
         "Questa è una descrizione di esempio che verrà sostituita non appena inizierai a compilare i campi. Assicurati che le descrizioni siano mobile-friendly e keyword-rich!",
+
+    // List/List.vue
+    list_allSelected: "Tutti gli elementi selezionati",
+    list_NSelected: "{0} elementi selezionati",
+    list_selectAll: "Seleziona tutti",
+    // List/ListActions.vue
+    listActions_groupActions: "Azioni di gruppo",
+    listActions_permanentDelete: "Eliminazione permanente",
+    listActions_selectionRequired: "Devi selezionare almeno un elemento",
+    // List/ListFilters.vue
+    listFilters_filter: "Filtra",
+    // List/ListHead.vue
+    listFilters_addNew: "Aggiungi nuovo",
+    // List/ListQuickEdit.vue
+    listQuickEdit_badInput: "Alcuni campi sono compilati in modo errato.",
+    // List/ListTable.vue
+    listTable_quickAdd: "Aggiunta veloce",
+    listTable_toggleOrder: "Attiva/Disattiva riordinamento elementi",
+    listTable_errorOrder: "Riordinamento fallito",
 
     // MediaManager/MediaEditor.vue
     mediaEditor_changeFile: "Cambia File",
