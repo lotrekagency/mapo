@@ -51,9 +51,7 @@ export default {
     },
     // Seo title
     title: {
-      type: String,
-      default:
-        "It was the best of times, it was the blurst of times, it was the ..."
+      type: String
     },
     // Seo permalink
     permalink: {
@@ -62,9 +60,7 @@ export default {
     },
     // Seo description
     description: {
-      type: String,
-      default:
-        "This is an example description that will get replaced when you start typing. Make sure to keep descriptions mobile-friendly and keyword-rich!"
+      type: String
     },
     domain: {
       type: String,
@@ -75,7 +71,7 @@ export default {
     getTitle(){
       if (this.value && this.value.title)
         return this.value.title
-      return this.title
+      return this.title || this.$t("seoPreview_title")
     },
     getPermalink(){
       if (this.value && this.value.permalink)
@@ -85,7 +81,7 @@ export default {
     getDescription(){
       if (this.value && this.value.description)
         return this.value.description
-      return this.description
+      return this.description || this.$t("seoPreview_description")
     }
   },
 

@@ -14,7 +14,6 @@
           v-if="mediaExists"
           :src="internalValue.is_image && internalValue.file || null"
           :lazy-src="internalValue.is_image && internalValue.thumbnail || null"
-          
           :class="{'grey lighten-2': !internalValue.is_image}"
           v-bind="{
             aspectRatio,
@@ -200,9 +199,9 @@ export default {
     confirmDelete() {
       this.$mapo.$confirm
         .open({
-          title: "Remove",
-          question: "Are you sure to want to remove this media?",
-          approveButton: { text: "Remove", attrs: { color: "red", text: true } }
+          title: this.$t("remove"),
+          question: this.$t("mediaField_confirmRemove"),
+          approveButton: { text: this.$t("remove"), attrs: { color: "red", text: true } }
         })
         .then((res) => (res ? (this.internalValue = null) : null));
     },

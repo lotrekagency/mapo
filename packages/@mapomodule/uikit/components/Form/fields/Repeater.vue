@@ -3,7 +3,7 @@
     <div class="d-flex justify-space-between">
       <span class="repeater-label">{{ label }}:</span>
       <v-btn v-if="collapsable" outlined tile text small @click="collapseAll"
-        >Collapse all</v-btn
+        >{{ $t("collapse") }}</v-btn
       >
     </div>
     <draggable
@@ -70,7 +70,7 @@
                   >mdi-plus-circle-outline</v-icon
                 >
               </template>
-              <span>Add here</span>
+              <span>{{ $t("repeater_addHere") }}</span>
             </v-tooltip>
             <v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
@@ -86,7 +86,7 @@
                   >
                 </v-hover>
               </template>
-              <span>Remove</span>
+              <span>{{ $t("remove") }}</span>
             </v-tooltip>
             <v-icon
               v-if="!readonly && sortable"
@@ -108,12 +108,12 @@
         tile
         text
       >
-        <v-icon>mdi-plus</v-icon> Add</v-btn
+        <v-icon>mdi-plus</v-icon> {{ $t("add") }}</v-btn
       >
     </div>
     <v-dialog v-if="hasTemplates" v-model="tModalOpen" width="600" scrollable>
       <v-card>
-        <v-card-title class="text-h5"> Select template </v-card-title>
+        <v-card-title class="text-h5">{{ $t("repeater_selectTemplate") }}</v-card-title>
         <v-card-text>
           <div class="row mt-4">
             <div
@@ -177,7 +177,7 @@
 }
 .theme--light .repeater-line-wrapper { border-color: rgba(0, 0, 0, 0.12); }
 .repeater-line-wrapper {
-  border: 1px solid; 
+  border: 1px solid;
   border-bottom: none;
   border-color: rgba(255, 255, 255, 0.12);
   &:hover {
@@ -384,7 +384,7 @@ export default {
       return Object.keys(slots).reduce((acc, v) => ({ [v]: v, ...acc }), {});
     },
     getCollapsedLabel(model, index) {
-      const fallback = `Item ${index + 1}`;
+      const fallback = this.$t("repeater_item").replace("{0}", index + 1);
       switch (typeof this.collapsedLabel) {
         case "string":
           return getPointed(model, this.collapsedLabel, fallback);
