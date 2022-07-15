@@ -43,12 +43,12 @@
               class="mt-4 text-center"
             />
           </div>
-      
         </v-form>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -89,13 +89,14 @@ export default {
         .catch((error) => {
           this.errors = error.response?.data || {}
           if (!Object.keys(this.errors).length){
-            this.$mapo.$snack.open({message: "Cannot login right now. Try again later.", color: "error"})
+            this.$mapo.$snack.open({message: this.$t("login_loginError"), color: "error"})
           }
         });
     },
   },
 };
 </script>
+
 <style lang="scss">
 @import "@mapomodule/uikit/assets/variables.scss";
 .login {

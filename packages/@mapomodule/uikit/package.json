@@ -9,7 +9,8 @@
   "dependencies": {
     "@mapomodule/utils": "^1.0.0-alpha.23",
     "@nuxtjs/vuetify": "^1.12.3",
-    "vuedraggable": "^2.24.3"
+    "vuedraggable": "^2.24.3",
+    "@nuxtjs/i18n": "^7.2.2"
   },
   "publishConfig": {
     "access": "public"

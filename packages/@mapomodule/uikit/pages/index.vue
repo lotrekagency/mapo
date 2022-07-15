@@ -7,7 +7,7 @@
         </h1>
         <br>
         <br>
-        <code>Congratulations!! 🥳 You succesfully installed Mapo! </code>
+        <code>{{ $t('index_welcomeMessage') }}</code>
         <br>
         <br>
         <code>

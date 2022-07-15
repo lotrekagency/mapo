@@ -19,7 +19,7 @@
         <v-icon :class="[dragover ? 'mt-2, mb-6' : 'mt-5']" size="60">
           mdi-cloud-upload
         </v-icon>
-        <p>Drop your file(s) here, or click to select them.</p>
+        <p>{{ $t("dropArea_dropOrClick") }}</p>
         <input
           type="file"
           style="display: none"
@@ -30,9 +30,7 @@
       </v-row>
       <v-virtual-scroll
         :items="uploadedFiles"
-        :height="
-          uploadedFiles.length * 64 > 256 ? 256 : uploadedFiles.length * 64
-        "
+        :height="uploadedFiles.length * 64 > 256 ? 256 : uploadedFiles.length * 64"
         item-height="64"
       >
         <template v-slot:default="{ item }">
@@ -41,10 +39,7 @@
               <v-img :src="item.info.objectURL"></v-img>
             </v-list-item-avatar>
 
-            <v-list-item-content
-              class="cursor-pointer"
-              @click.stop="editItem(item)"
-            >
+            <v-list-item-content class="cursor-pointer" @click.stop="editItem(item)">
               <v-list-item-title>
                 {{ item.info.name }}
               </v-list-item-title>
@@ -74,11 +69,7 @@
         </v-btn>
       </slot>
     </v-card-actions>
-    <v-dialog
-      v-model="editDialog"
-      v-bind="{ light, dark, elevation }"
-      max-width="500px"
-    >
+    <v-dialog v-model="editDialog" v-bind="{ light, dark, elevation }" max-width="500px">
       <v-card v-if="editedItem">
         <v-card-title>
           <!-- Slot to provide custom edit card title. Exposes `editedItem`. -->
@@ -102,7 +93,7 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="editedItem.name"
-                    label="File name"
+                    :label="$t('fileName')"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -112,8 +103,8 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="closeEdit"> Cancel </v-btn>
-          <v-btn color="primary" text @click="saveEdit"> Save </v-btn>
+          <v-btn color="primary" text @click="closeEdit">{{ $t("cancel") }}</v-btn>
+          <v-btn color="primary" text @click="saveEdit">{{ $t("save") }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -133,8 +124,8 @@ import { humanFileSize } from "@mapomodule/utils/helpers/formatters";
  * You can drag and drop over the button or click it to load the files.
  * When files are loaded into the component it will emit an event containing all the files.
  * This component will not take care of the actual file upload.
- * 
- */ 
+ *
+ */
 export default {
   name: "DropArea",
   props: {
@@ -174,9 +165,7 @@ export default {
       this.uploadedFiles = [];
     },
     removeFile(fileName) {
-      const index = this.uploadedFiles.findIndex(
-        (file) => file.info.name === fileName
-      );
+      const index = this.uploadedFiles.findIndex((file) => file.info.name === fileName);
       if (index > -1) this.uploadedFiles.splice(index, 1);
     },
     pickFile() {
@@ -193,7 +182,7 @@ export default {
       if (this.uploadedFiles.length > 0) this.uploadedFiles = [];
       if (!this.multiple && files.length > 1) {
         this.$mapo.$snack.open({
-          message: "Only one file can be uploaded at a time..",
+          message: this.$t("dropArea_onlyOneFile"),
           color: "error",
         });
       } else {
@@ -207,9 +196,7 @@ export default {
     processFile(blob) {
       return {
         info: {
-          objectURL: blob.type.startsWith("image/")
-            ? URL.createObjectURL(blob)
-            : null,
+          objectURL: blob.type.startsWith("image/") ? URL.createObjectURL(blob) : null,
           name: blob.name,
           size: humanFileSize(blob.size, true, 2),
           type: blob.type,
@@ -223,10 +210,7 @@ export default {
       this.editDialog = true;
     },
     saveEdit() {
-      this.uploadedFiles[this.editedIndex].info = Object.assign(
-        {},
-        this.editedItem
-      );
+      this.uploadedFiles[this.editedIndex].info = Object.assign({}, this.editedItem);
       this.closeEdit();
     },
     closeEdit() {
@@ -240,9 +224,9 @@ export default {
   watch: {
     uploadedFiles(val) {
       /** Fires when the list of files loaded changes
-      * @arg This emits a list of files in the format {info, blob} where the blob is a 
-      * [File](https://developer.mozilla.org/en-US/docs/Web/API/File) and info are some custom info about the file.
-      */
+       * @arg This emits a list of files in the format {info, blob} where the blob is a
+       * [File](https://developer.mozilla.org/en-US/docs/Web/API/File) and info are some custom info about the file.
+       */
       this.$emit("change", val);
     },
   },
