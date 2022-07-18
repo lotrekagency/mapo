@@ -132,7 +132,7 @@ export default {
       ).then(response => {
         if (this.mediaList && this.mediaList.length) {
           this.$mapo.$snack.open({
-            message: this.$t("mediaUploader_success").replace("{0}", response.length || this.mediaList.length)
+            message: this.$t("mediaUploader.success").replace("{0}", response.length || this.mediaList.length)
           });
           this.$emit("Upload", (response.length && response) || this.mediaList);
           this.$refs.closeButton.$el.click();

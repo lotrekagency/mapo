@@ -3,8 +3,8 @@
     <v-card-title class="d-flex flex-wrap pa-0">
       <div>
         <v-tabs v-model="tab" right background-color="transparent">
-          <v-tab>{{ $t("mediaManager_gallery") }}</v-tab>
-          <v-tab>{{ $t("mediaManager_uploader") }}</v-tab>
+          <v-tab>{{ $t("mediaManager.gallery") }}</v-tab>
+          <v-tab>{{ $t("mediaManager.uploader") }}</v-tab>
         </v-tabs>
       </div>
       <v-btn v-show="$vuetify.breakpoint.xs" class="ma-2 ml-auto" @click="getRoot" icon>
@@ -205,7 +205,7 @@ export default {
       }
       this.editMedia = res
       this.$mapo.$snack.open({
-        message: this.$t("mediaManager_fileInfo")
+        message: this.$t("mediaManager.fileInfo")
       })
       return res
     },

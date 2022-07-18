@@ -5,7 +5,7 @@
         <v-menu offset-y min-width="250px" max-width="400px" nudge-top="-5px" tile :close-on-content-click="false" v-bind="{ ...$attrs, value: null }" >
           <template v-slot:activator="{ on }">
             <v-btn v-bind="$attrs" v-on="on" text>
-              {{ $t("listFilters_filter") }} <v-icon>mdi-filter-variant</v-icon>
+              {{ $t("listFilters.filter") }} <v-icon>mdi-filter-variant</v-icon>
             </v-btn>
           </template>
 

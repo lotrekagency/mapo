@@ -25,7 +25,7 @@
       justify="center"
     >
       <v-icon size="60"> mdi-alert-circle-outline </v-icon>
-      <p>{{ $t("mediaGallery_noMediaFound") }}</p>
+      <p>{{ $t("mediaGallery.noMediaFound") }}</p>
     </v-row>
     <v-row v-if="medias.length">
       <v-col

@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="flex-grow-1 text-center" v-if="!folders.length">
-        {{ $t("mediaFolders_noFolders") }}
+        {{ $t("mediaFolders.noFolders") }}
       </div>
       <div class="ma-auto mr-2 mb-2">
         <v-tooltip left>
@@ -67,7 +67,7 @@
               mdi-plus
             </v-icon>
           </template>
-          <span>{{ $t("mediaFolders_newFolder") }}</span>
+          <span>{{ $t("mediaFolders.newFolder") }}</span>
         </v-tooltip>
         <v-tooltip v-if="folders.length" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -94,7 +94,7 @@
     <v-dialog v-model="dialog" max-width="300px">
       <v-card>
         <v-card-title>
-          {{ folderEdit.id ? $t("mediaFolders_editFolder") : $t("mediaFolders_newFolder") }}
+          {{ folderEdit.id ? $t("mediaFolders.editFolder") : $t("mediaFolders.newFolder") }}
         </v-card-title>
 
         <v-card-text>
@@ -103,7 +103,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="folderEdit.title"
-                  :label="$t('mediaFolders_folderName')"
+                  :label="$t('mediaFolders.folderName')"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -203,7 +203,7 @@ export default {
       this.$mapo.$confirm
         .open({
           title: this.$t("delete"),
-          question: this.$t("mediaFolders_confirmDelete"),
+          question: this.$t("mediaFolders.confirmDelete"),
           approveButton: { text: this.$t("delete"), attrs: { color: "red", text: true } }
         })
         .then(res => res && this.$emit("deleteFolder", folder));

@@ -101,7 +101,7 @@
                         <v-file-input
                           v-model="newFile"
                           :accept="accept"
-                          :label="$t('mediaEditor_changeFile')"
+                          :label="$t('mediaEditor.changeFile')"
                           show-size
                           dense
                           prepend-icon
@@ -109,7 +109,7 @@
                         <v-checkbox
                           v-if="newFile"
                           v-model="sameUrl"
-                          :label="$t('mediaEditor_maintainOldUrl')"
+                          :label="$t('mediaEditor.maintainOldUrl')"
                           class="ma-0"
                           hide-details
                           dense
@@ -297,7 +297,7 @@ export default {
       this.$mapo.$confirm
         .open({
           title: this.$t("delete"),
-          question: this.$t("mediaEditor_confirmDelete"),
+          question: this.$t("mediaEditor.confirmDelete"),
           approveButton: { text: this.$t("delete"), attrs: { color: "red", text: true } },
         })
         .then((res) => res && this.$emit("deleteMedia", this.media));

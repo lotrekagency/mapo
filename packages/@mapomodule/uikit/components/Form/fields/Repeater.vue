@@ -70,7 +70,7 @@
                   >mdi-plus-circle-outline</v-icon
                 >
               </template>
-              <span>{{ $t("repeater_addHere") }}</span>
+              <span>{{ $t("repeater.addHere") }}</span>
             </v-tooltip>
             <v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
@@ -113,7 +113,7 @@
     </div>
     <v-dialog v-if="hasTemplates" v-model="tModalOpen" width="600" scrollable>
       <v-card>
-        <v-card-title class="text-h5">{{ $t("repeater_selectTemplate") }}</v-card-title>
+        <v-card-title class="text-h5">{{ $t("repeater.selectTemplate") }}</v-card-title>
         <v-card-text>
           <div class="row mt-4">
             <div
@@ -384,7 +384,7 @@ export default {
       return Object.keys(slots).reduce((acc, v) => ({ [v]: v, ...acc }), {});
     },
     getCollapsedLabel(model, index) {
-      const fallback = this.$t("repeater_item").replace("{0}", index + 1);
+      const fallback = this.$t("repeater.item").replace("{0}", index + 1);
       switch (typeof this.collapsedLabel) {
         case "string":
           return getPointed(model, this.collapsedLabel, fallback);

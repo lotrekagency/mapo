@@ -218,7 +218,7 @@ export default {
       this.errors = (badRequest && error.response.data) || null;
       this.$mapo.$snack.open({
         message: badRequest
-          ? this.$t("listQuickEdit_badInput")
+          ? this.$t("listQuickEdit.badInput")
           : error.response?.data?.detail || this.$t("genericError"),
         color: "error",
       });

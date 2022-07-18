@@ -40,7 +40,7 @@
           <v-spacer></v-spacer>
           <v-btn text v-if="quickModeEnabled && userCan('add')" class="ml-2" @click="quickAction()">
             <v-icon small left class="d-none d-sm-block mr-2"> mdi-plus </v-icon>
-            <span class="d-none d-sm-block">{{ $t("listTable_quickAdd") }}</span>
+            <span class="d-none d-sm-block">{{ $t("listTable.quickAdd") }}</span>
           </v-btn>
           <v-btn v-if="serverPaginationEnabled" class=" mx-sm-2 ma-2 mx-0" @click="getDataFromApi(false)" icon>
             <v-icon>mdi-update</v-icon>
@@ -54,7 +54,7 @@
             <v-btn v-bind="attrs" v-on="on" style="margin-left: 2px;" :class="{'primary--text': dragOrderingActive}" @click="dragOrderingActive = !dragOrderingActive" icon>
             <v-icon>mdi-order-bool-ascending</v-icon></v-btn>
           </template>
-          <span>{{ $t("listTable_toggleOrder") }}</span>
+          <span>{{ $t("listTable.toggleOrder") }}</span>
         </v-tooltip>
       </template>
       <template v-if="navigable" v-slot:[`item.${firstColName}`]="{ item }">
@@ -284,7 +284,7 @@ export default {
         ).catch(error => {
           this.getDataFromApi()
           this.$mapo.$snack.open({
-            message: error.response?.data?.detail || this.$t("listTable_errorOrder"),
+            message: error.response?.data?.detail || this.$t("listTable.errorOrder"),
             color: "error",
           })
         });

@@ -19,7 +19,7 @@
         <v-icon :class="[dragover ? 'mt-2, mb-6' : 'mt-5']" size="60">
           mdi-cloud-upload
         </v-icon>
-        <p>{{ $t("dropArea_dropOrClick") }}</p>
+        <p>{{ $t("dropArea.dropOrClick") }}</p>
         <input
           type="file"
           style="display: none"
@@ -182,7 +182,7 @@ export default {
       if (this.uploadedFiles.length > 0) this.uploadedFiles = [];
       if (!this.multiple && files.length > 1) {
         this.$mapo.$snack.open({
-          message: this.$t("dropArea_onlyOneFile"),
+          message: this.$t("dropArea.onlyOneFile"),
           color: "error",
         });
       } else {

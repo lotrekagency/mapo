@@ -33,7 +33,7 @@ export default {
       optionsBk: null,
       options: {
         title: this.title || this.$t("confirm"),
-        question: this.question || this.$t("confirmDialog_areYouSure"),
+        question: this.question || this.$t("confirmDialog.areYouSure"),
         dismissButton: this.dismissButton || { text: this.$t("cancel"), attrs: { text: true } },
         approveButton: this.approveButton || { text: this.$t("ok"), attrs: { color: "primary", text: true } },
         attrs: { ...this.$attrs }

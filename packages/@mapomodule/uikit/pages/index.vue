@@ -7,7 +7,7 @@
         </h1>
         <br>
         <br>
-        <code>{{ $t('index_welcomeMessage') }}</code>
+        <code>{{ $t('index.welcomeMessage') }}</code>
         <br>
         <br>
         <code>

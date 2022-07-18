@@ -1,12 +1,12 @@
 <template>
-  <div class="login__wrapper">
-    <div class="login__inner">
-      <h2 class="login__inner__title">{{ $t("login") }}</h2>
+  <div class="login._wrapper">
+    <div class="login._inner">
+      <h2 class="login._inner__title">{{ $t("login") }}</h2>
 
-      <div class="login__form__outer">
+      <div class="login._form__outer">
         <v-form
           @submit.prevent="handleLogin(username, password)"
-          class="login__form"
+          class="login._form"
         >
           <v-text-field
             class="rounded-0"
@@ -89,7 +89,7 @@ export default {
         .catch((error) => {
           this.errors = error.response?.data || {}
           if (!Object.keys(this.errors).length){
-            this.$mapo.$snack.open({message: this.$t("login_loginError"), color: "error"})
+            this.$mapo.$snack.open({message: this.$t("login.loginError"), color: "error"})
           }
         });
     },

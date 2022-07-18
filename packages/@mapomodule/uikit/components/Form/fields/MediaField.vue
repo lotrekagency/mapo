@@ -200,7 +200,7 @@ export default {
       this.$mapo.$confirm
         .open({
           title: this.$t("remove"),
-          question: this.$t("mediaField_confirmRemove"),
+          question: this.$t("mediaField.confirmRemove"),
           approveButton: { text: this.$t("remove"), attrs: { color: "red", text: true } }
         })
         .then((res) => (res ? (this.internalValue = null) : null));
