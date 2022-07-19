@@ -22,6 +22,8 @@ export default {
     confirmDelete: "Vuoi veramente eliminare questo elemento?",
     fetchingData: "Caricamento in corso...",
     login: "Login",
+    loginError:
+        "Impossibile effettuare il login in questo momento. Riprova più tardi.",
     logout: "Esci",
     // Elements
     name: "Nome",
@@ -49,11 +51,6 @@ export default {
     dropArea: {
         dropOrClick: "Trascina qui i tuoi file, o clicca per selezionarne uno",
         onlyOneFile: "È possibile caricare un solo file alla volta...",
-    },
-    // Login.vue
-    login: {
-        loginError:
-            "Impossibile effettuare il login in questo momento. Riprova più tardi.",
     },
 
     // Form/fields/MediaField.vue

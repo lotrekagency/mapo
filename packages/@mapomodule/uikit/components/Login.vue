@@ -89,7 +89,7 @@ export default {
         .catch((error) => {
           this.errors = error.response?.data || {}
           if (!Object.keys(this.errors).length){
-            this.$mapo.$snack.open({message: this.$t("login.loginError"), color: "error"})
+            this.$mapo.$snack.open({message: this.$t("loginError"), color: "error"})
           }
         });
     },

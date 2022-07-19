@@ -22,6 +22,7 @@ export default {
     confirmDelete: "Are you sure you want to delete this item?",
     fetchingData: "Fetching data...",
     login: "Login",
+    loginError: "Cannot login right now. Try again later.",
     logout: "Logout",
     // Elements
     name: "Name",
@@ -49,8 +50,6 @@ export default {
         dropOrClick: "Drop your file(s) here, or click to select them.",
         onlyOneFile: "Only one file can be uploaded at a time...",
     },
-    // Login.vue
-    login: { loginError: "Cannot login right now. Try again later." },
 
     // Form/fields/MediaField.vue
     mediaField: { confirmRemove: "Are you sure to want to remove this media?" },
