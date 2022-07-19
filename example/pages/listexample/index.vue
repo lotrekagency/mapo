@@ -19,52 +19,84 @@
   </v-container>
 </template>
 
+<i18n lang="yaml">
+en:
+  title: "Title"
+  description: "Description"
+  identifier: "Identifier"
+  actions: "Actions"
+  content: "Content"
+  status:
+    draft: "Draft"
+    published: "Published"
+    trash: "Trash"
+  date: "Date"
+it:
+  title: "Titolo"
+  description: "Descrizione"
+  identifier: "Identificatore"
+  actions: "Azioni"
+  content: "Contenuto"
+  status:
+    draft: "Bozza"
+    published: "Pubblicato"
+    trash: "Cestinato"
+  date: "Data"
+</i18n>
+
 <script>
 export default {
   meta: { permissions: { model: "article" } },
   middleware: ["auth", "permissions"],
   data() {
-    return {
-      headers: [
+    return {};
+  },
+  computed: {
+    headers() {
+      return [
         {
           text: "ID",
           align: "start",
           sortable: false,
           value: "id",
         },
-        { text: "Title", value: "title" },
-        { text: "Identifier", value: "identifier" },
-        { text: "Actions", value: "actions", sortable: false },
-      ],
-      editFields: [
-        { value: "identifier", synci18n: true },
-        { value: "content", type: "editor" },
+        { text: this.$t("title"), value: "title" },
+        { text: this.$t("identifier"), value: "identifier" },
+        { text: this.$t("actions"), value: "actions", sortable: false },
+      ];
+    },
+    editFields() {
+      return [
+        { label: this.$t("identifier"), value: "identifier", synci18n: true },
+        { label: this.$t("content"), value: "content", type: "editor" },
         {
           group: "Seo",
           fields: [
-            { value: "title", class: "col-md-6" },
+            { label: this.$t("title"), value: "title", class: "col-md-6" },
             { value: "permalink", class: "col-md-6" },
-            { value: "description", type: "textarea" },
+            { label: this.$t("description"), value: "description", type: "textarea" },
           ],
         },
-      ],
-      availableFilters: [
+      ];
+    },
+    availableFilters() {
+      return [
         {
           text: "Status",
           value: "status",
           choices: [
-            { text: "Draft", value: "DRF" },
-            { text: "Published", value: "PUB" },
-            { text: "Trash", value: "TRS" },
+            { text: this.$t("status.draft"), value: "DRF" },
+            { text: this.$t("status.published"), value: "PUB" },
+            { text: this.$t("status.trash"), value: "TRS" },
           ],
         },
         {
-          text: "Date",
+          text: this.$t("date"),
           value: "date",
           datepicker: true,
         },
-      ],
-    };
+      ];
+    },
   },
 };
 </script>
