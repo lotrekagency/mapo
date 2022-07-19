@@ -19,7 +19,7 @@ it:
 </style>
 <script>
 export default {
-  meta: { sidebarFooter: true, label: "Impostazioni", icon: "mdi-cog" },
+  meta: { sidebarFooter: true, label: {translate: "settings"}, icon: "mdi-cog" },
   data() {
     return {
       fakeMedia: {

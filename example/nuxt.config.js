@@ -1,5 +1,8 @@
 export default {
     modules: ["mapomodule"],
+    build: {
+        transpile: ["mapomodule"],
+    },
     mapo: {
         integrations: {
             camomilla: {

@@ -1,5 +1,5 @@
 <template>
-<v-container fluid>
+  <v-container fluid>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="12">
         <List
@@ -16,43 +16,35 @@
           drag-reorder
         >
         </List>
-        <br>
-        <h3> Two way binding test </h3>
+        <br />
+        <h3>Two way binding test</h3>
         <pre>{{ desserts }}</pre>
       </v-col>
     </v-row>
-</v-container>
+  </v-container>
 </template>
+
+<i18n lang="yaml">
+en:
+  dessert: "Dessert (100g serving)"
+  protein: "Protein (g)"
+  glutenFree: "Gluten Free"
+  actions: "Actions"
+  nameRequired: "Name is required"
+  name: "Name"
+it:
+  dessert: "Dessert (100g)"
+  protein: "Proteine (g)"
+  glutenFree: "Senza glutine"
+  actions: "Azioni"
+  nameRequired: "Il nome è obbligatorio"
+  name: "Nome"
+</i18n>
 
 <script>
 export default {
   data() {
     return {
-      headers: [
-        {
-          text: "Dessert (100g serving)",
-          align: "start",
-          sortable: false,
-          value: "name",
-        },
-        { text: "Protein (g)", value: "protein" },
-        { text: "Gluten-Free", value: "glutenfree" },
-        { text: "Actions", value: "actions", sortable: false },
-      ],
-      editFields: [
-        { attrs: { rules: [(v) => !!v || "Name is required"] }, value: "name" },
-        { value: "protein" }
-      ],
-      availableFilters: [
-        {
-          text: "Gluten Free",
-          value: "glutenfree",
-          choices: [
-            { text: "Yes", value: true },
-            { text: "No", value: false },
-          ],
-        },
-      ],
       desserts: [
         {
           name: "Frozen Yogurt",
@@ -91,6 +83,43 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    headers() {
+      return [
+        {
+          text: this.$t("dessert"),
+          align: "start",
+          sortable: false,
+          value: "name",
+        },
+        { text: this.$t("protein"), value: "protein" },
+        { text: this.$t("glutenFree"), value: "glutenfree" },
+        { text: this.$t("actions"), value: "actions", sortable: false },
+      ];
+    },
+    editFields() {
+      return [
+        {
+          label: this.$t("name"),
+          attrs: { rules: [(v) => !!v || this.$t("nameRequired")] },
+          value: "name",
+        },
+        { label: this.$t("protein"), value: "protein" },
+      ];
+    },
+    availableFilters() {
+      return [
+        {
+          text: this.$t("glutenFree"),
+          value: "glutenfree",
+          choices: [
+            { text: "Yes", value: true },
+            { text: "No", value: false },
+          ],
+        },
+      ]
+    },
   },
 };
 </script>

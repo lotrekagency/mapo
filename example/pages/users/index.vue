@@ -17,9 +17,31 @@
   </v-container>
 </template>
 
+<i18n lang="yaml">
+en:
+  actions: "Actions"
+  firstName: "First name"
+  lastName: "Last name"
+  superUser: "Superuser"
+  y: "Yes"
+  n: "No"
+it:
+  actions: "Azioni"
+  firstName: "Nome"
+  lastName: "Cognome"
+  superUser: "Superutente"
+  y: "Sì"
+  n: "No"
+</i18n>
+
 <script>
 export default {
-  meta: { sidebarFooter: true, label: "Utenti", icon: "mdi-account-group", permissions: { model: "user" } },
+  meta: {
+    sidebarFooter: true,
+    label: { translate: "users" },
+    icon: "mdi-account-group",
+    permissions: { model: "user" },
+  },
   middleware: ["auth", "permissions"],
   data() {
     return {
@@ -33,22 +55,22 @@ export default {
         { text: "Username", value: "username" },
         { text: "Email", value: "email" },
         { text: "Superuser", value: "is_superuser" },
-        { text: "Actions", value: "actions", sortable: false },
+        { text: this.$t("actions"), value: "actions", sortable: false },
       ],
       editFields: [
         { value: "username", synci18n: true },
         { value: "email", synci18n: true },
-        { value: "first_name", synci18n: true },
-        { value: "last_name", synci18n: true },
-        { value: "password", synci18n: true, attrs: {type: "password"} },
+        { label: this.$t("firstName"), value: "first_name", synci18n: true },
+        { label: this.$t("lastName"), value: "last_name", synci18n: true },
+        { value: "password", synci18n: true, attrs: { type: "password" } },
       ],
       availableFilters: [
         {
-          text: "Superuser",
+          text: this.$t("superUser"),
           value: "is_superuser",
           choices: [
-            { text: "Yes", value: true },
-            { text: "No", value: false },
+            { text: this.$t("y"), value: true },
+            { text: this.$t("n"), value: false },
           ],
         },
       ],
