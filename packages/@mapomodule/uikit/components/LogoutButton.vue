@@ -1,7 +1,7 @@
 <template>
   <v-btn @click.native="logout" class="logout__btn">
     <v-icon class="logout__icon">mdi-logout</v-icon>
-    <span class="logout__text">{{ $t("logout") }}</span>
+    <span class="logout__text">{{ $t("mapo.logout") }}</span>
   </v-btn>
 </template>
 

@@ -7,7 +7,7 @@
         class="rounded-0 elevation-0"
         color="primary"
         :to="{ path: `${$route.path}/new` }"
-        >{{ $t("listHead.addNew") }} &emsp; <v-icon>mdi-plus</v-icon></v-btn
+        >{{ $t("mapo.listHead.addNew") }} &emsp; <v-icon>mdi-plus</v-icon></v-btn
       >
     </div>
   </div>

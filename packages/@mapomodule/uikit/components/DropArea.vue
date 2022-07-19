@@ -19,7 +19,7 @@
         <v-icon :class="[dragover ? 'mt-2, mb-6' : 'mt-5']" size="60">
           mdi-cloud-upload
         </v-icon>
-        <p>{{ $t("dropArea.dropOrClick") }}</p>
+        <p>{{ $t("mapo.dropArea.dropOrClick") }}</p>
         <input
           type="file"
           style="display: none"
@@ -93,7 +93,7 @@
                 <v-col cols="12">
                   <v-text-field
                     v-model="editedItem.name"
-                    :label="$t('fileName')"
+                    :label="$t('mapo.fileName')"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -103,8 +103,8 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="closeEdit">{{ $t("cancel") }}</v-btn>
-          <v-btn color="primary" text @click="saveEdit">{{ $t("save") }}</v-btn>
+          <v-btn color="primary" text @click="closeEdit">{{ $t("mapo.cancel") }}</v-btn>
+          <v-btn color="primary" text @click="saveEdit">{{ $t("mapo.save") }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -182,7 +182,7 @@ export default {
       if (this.uploadedFiles.length > 0) this.uploadedFiles = [];
       if (!this.multiple && files.length > 1) {
         this.$mapo.$snack.open({
-          message: this.$t("dropArea.onlyOneFile"),
+          message: this.$t("mapo.dropArea.onlyOneFile"),
           color: "error",
         });
       } else {

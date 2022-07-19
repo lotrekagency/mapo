@@ -5,7 +5,7 @@
         <v-menu offset-y min-width="250px" max-width="400px" nudge-top="-5px" tile :close-on-content-click="false" v-bind="{ ...$attrs, value: null }" >
           <template v-slot:activator="{ on }">
             <v-btn v-bind="$attrs" v-on="on" text>
-              {{ $t("listFilters.filter") }} <v-icon>mdi-filter-variant</v-icon>
+              {{ $t("mapo.listFilters.filter") }} <v-icon>mdi-filter-variant</v-icon>
             </v-btn>
           </template>
 
@@ -65,7 +65,7 @@
                         @click="removeFilter(filter)"
                         small
                         tile
-                        >{{ $t("clear") }}</v-btn
+                        >{{ $t("mapo.clear") }}</v-btn
                       >
                     </div>
                     <v-list v-else class="overflow-y-auto pa-0" max-height="200" dense>

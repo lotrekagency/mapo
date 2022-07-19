@@ -1,7 +1,7 @@
 <template>
   <div v-if="isActive" class="d-flex flex-row align-center fill-height">
     <v-select
-      :label="$t('listActions.groupActions')"
+      :label="$t('mapo.listActions.groupActions')"
       v-bind="$attrs"
       v-model="action"
       :items="filteredActions"
@@ -21,7 +21,7 @@
       color="primary"
       :disabled="!action"
       @click="handleAction"
-      >{{ $t("apply") }}</v-btn
+      >{{ $t("mapo.apply") }}</v-btn
     >
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
       default() {
         return [
           {
-            label: this.$t("listActions.permanentDelete"),
+            label: this.$t("mapo.listActions.permanentDelete"),
             handler: function ({ selection, lookup, crud }) {
               return Promise.all(selection.map((i) => crud && crud.delete(i[lookup])));
             },
@@ -108,7 +108,7 @@ export default {
     handleAction() {
       if (!this.selectAll && !this.selection.length) {
         return this.$mapo.$snack.open({
-          message: this.$t("listActions.selectionRequired"),
+          message: this.$t("mapo.listActions.selectionRequired"),
           color: "error",
         });
       }

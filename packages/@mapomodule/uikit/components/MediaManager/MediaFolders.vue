@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="flex-grow-1 text-center" v-if="!folders.length">
-        {{ $t("mediaFolders.noFolders") }}
+        {{ $t("mapo.mediaFolders.noFolders") }}
       </div>
       <div class="ma-auto mr-2 mb-2">
         <v-tooltip left>
@@ -67,7 +67,7 @@
               mdi-plus
             </v-icon>
           </template>
-          <span>{{ $t("mediaFolders.newFolder") }}</span>
+          <span>{{ $t("mapo.mediaFolders.newFolder") }}</span>
         </v-tooltip>
         <v-tooltip v-if="folders.length" bottom>
           <template v-slot:activator="{ on, attrs }">
@@ -80,7 +80,7 @@
               mdi-chevron-down
             </v-icon>
           </template>
-          <span>{{ expanded ? $t("collapse") : $t("expand") }}</span>
+          <span>{{ expanded ? $t("mapo.collapse") : $t("mapo.expand") }}</span>
         </v-tooltip>
       </div>
     </v-card-actions>
@@ -94,7 +94,7 @@
     <v-dialog v-model="dialog" max-width="300px">
       <v-card>
         <v-card-title>
-          {{ folderEdit.id ? $t("mediaFolders.editFolder") : $t("mediaFolders.newFolder") }}
+          {{ folderEdit.id ? $t("mapo.mediaFolders.editFolder") : $t("mapo.mediaFolders.newFolder") }}
         </v-card-title>
 
         <v-card-text>
@@ -103,7 +103,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="folderEdit.title"
-                  :label="$t('mediaFolders.folderName')"
+                  :label="$t('mapo.mediaFolders.folderName')"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -112,8 +112,8 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="closeEdit">{{ $t('cancel') }}</v-btn>
-          <v-btn color="primary" text @click="saveFolder">{{ $t('create') }}</v-btn>
+          <v-btn color="primary" text @click="closeEdit">{{ $t('mapo.cancel') }}</v-btn>
+          <v-btn color="primary" text @click="saveFolder">{{ $t('mapo.create') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -202,9 +202,9 @@ export default {
     deleteFolder(folder) {
       this.$mapo.$confirm
         .open({
-          title: this.$t("delete"),
-          question: this.$t("mediaFolders.confirmDelete"),
-          approveButton: { text: this.$t("delete"), attrs: { color: "red", text: true } }
+          title: this.$t("mapo.delete"),
+          question: this.$t("mapo.mediaFolders.confirmDelete"),
+          approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } }
         })
         .then(res => res && this.$emit("deleteFolder", folder));
     },

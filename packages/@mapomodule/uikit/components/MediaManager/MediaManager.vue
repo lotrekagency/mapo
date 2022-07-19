@@ -3,8 +3,8 @@
     <v-card-title class="d-flex flex-wrap pa-0">
       <div>
         <v-tabs v-model="tab" right background-color="transparent">
-          <v-tab>{{ $t("mediaManager.gallery") }}</v-tab>
-          <v-tab>{{ $t("mediaManager.uploader") }}</v-tab>
+          <v-tab>{{ $t("mapo.mediaManager.gallery") }}</v-tab>
+          <v-tab>{{ $t("mapo.mediaManager.uploader") }}</v-tab>
         </v-tabs>
       </div>
       <v-btn v-show="$vuetify.breakpoint.xs" class="ma-2 ml-auto" @click="getRoot" icon>
@@ -19,7 +19,7 @@
           search();
         "
         prepend-inner-icon="mdi-magnify"
-        :label="$t('search')"
+        :label="$t('mapo.search')"
         single-line
         hide-details
         outlined
@@ -205,7 +205,7 @@ export default {
       }
       this.editMedia = res
       this.$mapo.$snack.open({
-        message: this.$t("mediaManager.fileInfo")
+        message: this.$t("mapo.mediaManager.fileInfo")
       })
       return res
     },

@@ -1,7 +1,7 @@
 <template>
   <div class="login._wrapper">
     <div class="login._inner">
-      <h2 class="login._inner__title">{{ $t("login") }}</h2>
+      <h2 class="login._inner__title">{{ $t("mapo.login") }}</h2>
 
       <div class="login._form__outer">
         <v-form
@@ -35,7 +35,7 @@
           ></v-text-field>
           <div class="text-center">
             <v-btn type="submit" class="rounded-0" elevation="0" dark>
-              {{ $t("login") }}
+              {{ $t("mapo.login") }}
             </v-btn>
             <v-messages
               v-model="errors.non_field_errors"
@@ -89,7 +89,7 @@ export default {
         .catch((error) => {
           this.errors = error.response?.data || {}
           if (!Object.keys(this.errors).length){
-            this.$mapo.$snack.open({message: this.$t("loginError"), color: "error"})
+            this.$mapo.$snack.open({message: this.$t("mapo.loginError"), color: "error"})
           }
         });
     },

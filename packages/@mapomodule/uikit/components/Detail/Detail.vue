@@ -9,7 +9,7 @@
     ></v-progress-linear>
     <span class="detail-component-loading ">
       <v-icon size="30">mdi-timer-sand</v-icon>
-      {{ $t('fetchingData') }}
+      {{ $t('mapo.fetchingData') }}
     </span>
   </div>
   <div v-else>
@@ -17,7 +17,7 @@
     <slot name="title" v-bind="slotBindings">
       <!-- `<h1> "Create | Edit" + modelName </h1>` -->
       <v-row class="mb-5">
-        <v-col col="12"><h1 class="display-1">{{ isNew ? $t("create") : $t("edit") }} {{ modelName }}</h1></v-col>
+        <v-col col="12"><h1 class="display-1">{{ isNew ? $t("mapo.create") : $t("mapo.edit") }} {{ modelName }}</h1></v-col>
       </v-row>
     </slot>
     <v-form ref="form">
@@ -74,21 +74,21 @@
                 <slot name="button.save" v-bind="slotBindings">
                   <!-- The Save button. -->
                   <v-btn v-show="canGoBack" :disabled="isReadonly" class="mb-2" tile block @click="saveItem(true)">{{
-                    isNew ? $t("create") : $t("save")
+                    isNew ? $t("mapo.create") : $t("mapo.save")
                   }}</v-btn>
                 </slot>
                 <!-- Use this to override the Save and continue button. -->
                 <slot name="button.savecontinue" v-bind="slotBindings">
                   <!-- The Save and continue button. -->
                   <v-btn :disabled="isReadonly" class="mb-2" tile block @click="saveItem(false)"
-                    >{{ isNew ? $t("createContinue") : $t("saveContinue") }}</v-btn
+                    >{{ isNew ? $t("mapo.createContinue") : $t("mapo.saveContinue") }}</v-btn
                   >
                 </slot>
                 <!-- Use this to override the Back button. -->
                 <slot name="button.back" v-bind="slotBindings">
                   <!-- The Back button. -->
                   <v-btn v-show="canGoBack" class="mb-2" tile block @click="back"
-                    >{{ $t("back") }}</v-btn
+                    >{{ $t("mapo.back") }}</v-btn
                   >
                 </slot>
                 <!-- Use this to override the Delete button. -->
@@ -102,7 +102,7 @@
                     block
                     :disabled="!canDelete"
                     @click="deleteItem"
-                    >{{ $t("delete") }}</v-btn
+                    >{{ $t("mapo.delete") }}</v-btn
                   >
                 </slot>
               </div>
@@ -235,7 +235,7 @@ export default {
                 this.errors =
                     (error.response.status == 400 && error.response.data) || null;
                 this.$mapo.$snack.open({
-                    message: error.response?.data?.detail || this.$t("genericError"),
+                    message: error.response?.data?.detail || this.$t("mapo.genericError"),
                     color: "error"
                 });
             });
@@ -244,8 +244,8 @@ export default {
             this.$mapo.$confirm
                 .open({
                 title: "Delete",
-                question: this.$t("confirmDelete"),
-                approveButton: { text: this.$t("delete"), attrs: { color: "red", text: true } }
+                question: this.$t("mapo.confirmDelete"),
+                approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } }
             })
                 .then(res => {
                 if (res) {
@@ -253,7 +253,7 @@ export default {
                         .delete(this.identifier)
                         .then(() => this.back())
                         .catch(error => this.$mapo.$snack.open({
-                        message: error.response?.data?.detail || this.$t("genericError"),
+                        message: error.response?.data?.detail || this.$t("mapo.genericError"),
                         color: "error"
                     }));
                 }
@@ -351,7 +351,7 @@ export default {
                 this.model = res;
                 this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id);
             }).catch(error => {
-                this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || this.$t("genericError") });
+                this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || this.$t("mapo.genericError") });
             });
         }
         else if (this.value) {

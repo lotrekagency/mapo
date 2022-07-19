@@ -21,7 +21,7 @@
           <v-icon v-else>mdi-login</v-icon>
         </v-list-item-icon>
         <v-list-item-title>{{
-          $mapo.$auth.user.isLoggedIn ? $t("logout") : $t("login")
+          $mapo.$auth.user.isLoggedIn ? $t("mapo.logout") : $t("mapo.login")
         }}</v-list-item-title>
       </v-list-item>
       <v-list-item

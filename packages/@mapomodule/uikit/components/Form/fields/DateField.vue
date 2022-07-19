@@ -21,8 +21,8 @@
         ></v-text-field>
       </template>
       <v-date-picker v-model="model" :range="range" no-title>
-        <v-btn text color="primary" @click="menu = false">{{ $t("cancel") }}</v-btn>
-        <v-btn text color="primary" @click="$refs.menu.save(model)">{{ $t("ok") }}</v-btn>
+        <v-btn text color="primary" @click="menu = false">{{ $t("mapo.cancel") }}</v-btn>
+        <v-btn text color="primary" @click="$refs.menu.save(model)">{{ $t("mapo.ok") }}</v-btn>
       </v-date-picker>
     </v-menu>
   </div>

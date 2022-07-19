@@ -199,9 +199,9 @@ export default {
     confirmDelete() {
       this.$mapo.$confirm
         .open({
-          title: this.$t("remove"),
-          question: this.$t("mediaField.confirmRemove"),
-          approveButton: { text: this.$t("remove"), attrs: { color: "red", text: true } }
+          title: this.$t("mapo.remove"),
+          question: this.$t("mapo.mediaField.confirmRemove"),
+          approveButton: { text: this.$t("mapo.remove"), attrs: { color: "red", text: true } }
         })
         .then((res) => (res ? (this.internalValue = null) : null));
     },

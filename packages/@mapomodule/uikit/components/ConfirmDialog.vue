@@ -32,10 +32,10 @@ export default {
       dialog: false,
       optionsBk: null,
       options: {
-        title: this.title || this.$t("confirm"),
-        question: this.question || this.$t("confirmDialog.areYouSure"),
-        dismissButton: this.dismissButton || { text: this.$t("cancel"), attrs: { text: true } },
-        approveButton: this.approveButton || { text: this.$t("ok"), attrs: { color: "primary", text: true } },
+        title: this.title || this.$t("mapo.confirm"),
+        question: this.question || this.$t("mapo.confirmDialog.areYouSure"),
+        dismissButton: this.dismissButton || { text: this.$t("mapo.cancel"), attrs: { text: true } },
+        approveButton: this.approveButton || { text: this.$t("mapo.ok"), attrs: { color: "primary", text: true } },
         attrs: { ...this.$attrs }
       },
       on: {
@@ -74,13 +74,13 @@ export default {
   },
   computed: {
     approveTxt() {
-      return this.options.approveButton?.text || this.$t("ok");
+      return this.options.approveButton?.text || this.$t("mapo.ok");
     },
     approveAttrs() {
       return this.options.approveButton?.attrs || {};
     },
     dismissTxt() {
-      return this.options.dismissButton?.text || this.$t("cancel");
+      return this.options.dismissButton?.text || this.$t("mapo.cancel");
     },
     dismissAttrs() {
       return this.options.dismissButton?.attrs || {};

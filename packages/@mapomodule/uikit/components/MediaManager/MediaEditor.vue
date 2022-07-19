@@ -33,19 +33,19 @@
                 <v-col md="6" cols="12" class="info-media">
                   <table class="text-caption fill-height pb-md-10">
                     <tr>
-                      <td class="pr-3"><b>{{ $t("fileName") }}:</b></td>
+                      <td class="pr-3"><b>{{ $t("mapo.fileName") }}:</b></td>
                       <td>{{ fileName }}</td>
                     </tr>
                     <tr>
-                      <td class="pr-3"><b>{{ $t("mime") }}:</b></td>
+                      <td class="pr-3"><b>{{ $t("mapo.mime") }}:</b></td>
                       <td>{{ media.mime_type }}</td>
                     </tr>
                     <tr>
-                      <td class="pr-3"><b>{{ $t("created") }}:</b></td>
+                      <td class="pr-3"><b>{{ $t("mapo.created") }}:</b></td>
                       <td>{{ dateCreated }}</td>
                     </tr>
                     <tr>
-                      <td class="pr-3"><b>{{ $t("size") }}:</b></td>
+                      <td class="pr-3"><b>{{ $t("mapo.size") }}:</b></td>
                       <td>{{ fileSize }}</td>
                     </tr>
                     <tr>
@@ -55,7 +55,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="pr-3"><b>{{ $t("linkedModels") }}:</b></td>
+                      <td class="pr-3"><b>{{ $t("mapo.linkedModels") }}:</b></td>
                       <td>
                         <ul>
                           <li v-for="link in media.links" :key="link.id">
@@ -72,28 +72,28 @@
                       <v-text-field
                         dense
                         v-model="media.name"
-                        :label="$t('name')"
+                        :label="$t('mapo.name')"
                       ></v-text-field>
                     </v-col>
                     <v-col sm="6" md="12" cols="12">
                       <v-text-field
                         dense
                         v-model="media.title"
-                        :label="$t('titleTag')"
+                        :label="$t('mapo.titleTag')"
                       ></v-text-field>
                     </v-col>
                     <v-col sm="6" md="12" cols="12">
                       <v-text-field
                         dense
                         v-model="media.description"
-                        :label="$t('description')"
+                        :label="$t('mapo.description')"
                       ></v-text-field>
                     </v-col>
                     <v-col sm="6" md="12" cols="12">
                       <v-text-field
                         dense
                         v-model="media.alt_text"
-                        :label="$t('altTag')"
+                        :label="$t('mapo.altTag')"
                       ></v-text-field>
                     </v-col>
                     <v-col sm="6" md="12" cols="12" class="d-flex align-center">
@@ -101,7 +101,7 @@
                         <v-file-input
                           v-model="newFile"
                           :accept="accept"
-                          :label="$t('mediaEditor.changeFile')"
+                          :label="$t('mapo.mediaEditor.changeFile')"
                           show-size
                           dense
                           prepend-icon
@@ -109,7 +109,7 @@
                         <v-checkbox
                           v-if="newFile"
                           v-model="sameUrl"
-                          :label="$t('mediaEditor.maintainOldUrl')"
+                          :label="$t('mapo.mediaEditor.maintainOldUrl')"
                           class="ma-0"
                           hide-details
                           dense
@@ -149,11 +149,11 @@
             :class="{ 'pr-0': editing }"
             @click="editing = !editing"
           >
-            <span>{{ $t("edit") }}</span>
+            <span>{{ $t("mapo.edit") }}</span>
             <v-icon :style="rotate">mdi-chevron-up</v-icon>
             <div class="edit_spacer" :class="{ 'flex-grow-1': editing }"></div>
             <v-btn v-if="editing" text tile color="primary" @click="saveMedia">
-              {{ $t("save") }}
+              {{ $t("mapo.save") }}
             </v-btn>
             <v-btn
               v-if="editing"
@@ -162,7 +162,7 @@
               color="error"
               @click.stop="deleteMedia"
             >
-              {{ $t("delete") }}
+              {{ $t("mapo.delete") }}
             </v-btn>
           </v-btn>
         </div>
@@ -296,9 +296,9 @@ export default {
     deleteMedia() {
       this.$mapo.$confirm
         .open({
-          title: this.$t("delete"),
-          question: this.$t("mediaEditor.confirmDelete"),
-          approveButton: { text: this.$t("delete"), attrs: { color: "red", text: true } },
+          title: this.$t("mapo.delete"),
+          question: this.$t("mapo.mediaEditor.confirmDelete"),
+          approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } },
         })
         .then((res) => res && this.$emit("deleteMedia", this.media));
     },

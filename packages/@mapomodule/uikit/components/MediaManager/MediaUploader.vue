@@ -18,13 +18,13 @@
               <v-select
                 v-model="editedItem.folder"
                 :items="folderOptions"
-                :label="$t('folder')"
+                :label="$t('mapo.folder')"
               ></v-select>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="editedItem.name"
-                :label="$t('name')"
+                :label="$t('mapo.name')"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -36,13 +36,13 @@
             <v-col cols="12">
               <v-text-field
                 v-model="editedItem.description"
-                :label="$t('description')"
+                :label="$t('mapo.description')"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="editedItem.alt_text"
-                :label="$t('altTag')"
+                :label="$t('mapo.altTag')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -132,7 +132,7 @@ export default {
       ).then(response => {
         if (this.mediaList && this.mediaList.length) {
           this.$mapo.$snack.open({
-            message: this.$t("mediaUploader.success").replace("{0}", response.length || this.mediaList.length)
+            message: this.$t("mapo.mediaUploader.success").replace("{0}", response.length || this.mediaList.length)
           });
           this.$emit("Upload", (response.length && response) || this.mediaList);
           this.$refs.closeButton.$el.click();

@@ -12,7 +12,7 @@
       >
         <template v-slot:actions>
           <v-spacer></v-spacer>
-          <v-btn v-if="select == 'multi'" color="primary" text @click="done">{{ $t("apply") }}</v-btn>
+          <v-btn v-if="select == 'multi'" color="primary" text @click="done">{{ $t("mapo.apply") }}</v-btn>
         </template>
       </media-manager>
     </v-dialog>

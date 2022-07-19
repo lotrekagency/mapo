@@ -71,7 +71,7 @@ export default {
     getTitle(){
       if (this.value && this.value.title)
         return this.value.title
-      return this.title || this.$t("seoPreview.title")
+      return this.title || this.$t("mapo.seoPreview.title")
     },
     getPermalink(){
       if (this.value && this.value.permalink)
@@ -81,7 +81,7 @@ export default {
     getDescription(){
       if (this.value && this.value.description)
         return this.value.description
-      return this.description || this.$t("seoPreview.description")
+      return this.description || this.$t("mapo.seoPreview.description")
     }
   },
 

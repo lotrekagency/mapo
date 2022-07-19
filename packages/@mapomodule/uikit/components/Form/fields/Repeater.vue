@@ -3,7 +3,7 @@
     <div class="d-flex justify-space-between">
       <span class="repeater-label">{{ label }}:</span>
       <v-btn v-if="collapsable" outlined tile text small @click="collapseAll"
-        >{{ $t("collapse") }}</v-btn
+        >{{ $t("mapo.collapse") }}</v-btn
       >
     </div>
     <draggable
@@ -70,7 +70,7 @@
                   >mdi-plus-circle-outline</v-icon
                 >
               </template>
-              <span>{{ $t("repeater.addHere") }}</span>
+              <span>{{ $t("mapo.repeater.addHere") }}</span>
             </v-tooltip>
             <v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
@@ -86,7 +86,7 @@
                   >
                 </v-hover>
               </template>
-              <span>{{ $t("remove") }}</span>
+              <span>{{ $t("mapo.remove") }}</span>
             </v-tooltip>
             <v-icon
               v-if="!readonly && sortable"
@@ -108,12 +108,12 @@
         tile
         text
       >
-        <v-icon>mdi-plus</v-icon> {{ $t("add") }}</v-btn
+        <v-icon>mdi-plus</v-icon> {{ $t("mapo.add") }}</v-btn
       >
     </div>
     <v-dialog v-if="hasTemplates" v-model="tModalOpen" width="600" scrollable>
       <v-card>
-        <v-card-title class="text-h5">{{ $t("repeater.selectTemplate") }}</v-card-title>
+        <v-card-title class="text-h5">{{ $t("mapo.repeater.selectTemplate") }}</v-card-title>
         <v-card-text>
           <div class="row mt-4">
             <div
@@ -384,7 +384,7 @@ export default {
       return Object.keys(slots).reduce((acc, v) => ({ [v]: v, ...acc }), {});
     },
     getCollapsedLabel(model, index) {
-      const fallback = this.$t("repeater.item").replace("{0}", index + 1);
+      const fallback = this.$t("mapo.repeater.item").replace("{0}", index + 1);
       switch (typeof this.collapsedLabel) {
         case "string":
           return getPointed(model, this.collapsedLabel, fallback);

@@ -7,7 +7,7 @@
         </h1>
         <br>
         <br>
-        <code>{{ $t('index.welcomeMessage') }}</code>
+        <code>{{ $t('mapo.index.welcomeMessage') }}</code>
         <br>
         <br>
         <code>
