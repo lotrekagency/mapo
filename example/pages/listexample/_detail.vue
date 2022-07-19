@@ -6,7 +6,7 @@
       :identifier="$route.params.detail"
       :fields="fields"
       :languages="['it', 'en', 'de']"
-      modelName="article"
+      :modelName="$t('article')"
     >
       <!-- <template v-slot:fields.meta.contents.template.stocazzo.fields.title>
       <h2>suca</h2>
