@@ -6,7 +6,7 @@
       <media-manager-dialog v-model="dialog" select="multi">
         <template v-slot:activator="{ on, attrs }">
           <v-btn color="red lighten-2 mb-4" v-bind="attrs" v-on="on">
-            Open media dialog
+            {{ $t("openDialog") }}
           </v-btn>
         </template>
       </media-manager-dialog>
@@ -14,6 +14,12 @@
   </div>
 </template>
 
+<i18n lang="yaml">
+en:
+  openDialog: "Open media dialog"
+it:
+  openDialog: "Apri modale media"
+</i18n>
 
 <script>
 export default {
