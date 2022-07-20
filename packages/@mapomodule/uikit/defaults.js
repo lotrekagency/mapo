@@ -68,7 +68,7 @@ export default {
             if (isInitialSetup) {
                 context.app.vuetify.preset.rtl = isRTL;
             }
-            context.app.vuetify.framework.lang.current = locale.code;
+            context.app.vuetify.framework.lang.current = locale.iso ? locale.iso.split("-")[0] : locale.code;
             context.app.vuetify.framework.rtl = isRTL;
         },
     },
