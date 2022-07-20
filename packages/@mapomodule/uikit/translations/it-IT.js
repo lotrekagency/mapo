@@ -66,7 +66,7 @@ export default {
         repeater: {
             addHere: "Aggiungi qui",
             selectTemplate: "Seleziona template",
-            item: "Elemento n.{0}",
+            item: "Elemento n.{numberItem}",
         },
         // Form/fields/SeoPreview.vue
         seoPreview: {
@@ -78,7 +78,7 @@ export default {
         // List/List.vue
         list: {
             allSelected: "Tutti gli elementi selezionati",
-            NSelected: "{0} elementi selezionati",
+            NSelected: "{numberItems} elementi selezionati",
             selectAll: "Seleziona tutti",
         },
         // List/ListActions.vue
@@ -126,6 +126,6 @@ export default {
             fileInfo: "File info succesfully updated",
         },
         // MediaManager/MediaUploader.vue
-        mediaUploader: { success: "Caricati {0} file" },
+        mediaUploader: { success: "{numberFiles} file caricati" },
     },
 };

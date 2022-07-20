@@ -12,6 +12,7 @@
       multi-sort
       can-select-all
       searchable
+      :title="$t('users')"
     >
     </List>
   </v-container>

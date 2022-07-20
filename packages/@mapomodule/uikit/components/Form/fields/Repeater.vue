@@ -384,7 +384,7 @@ export default {
       return Object.keys(slots).reduce((acc, v) => ({ [v]: v, ...acc }), {});
     },
     getCollapsedLabel(model, index) {
-      const fallback = this.$t("mapo.repeater.item").replace("{0}", index + 1);
+      const fallback = this.$t("mapo.repeater.item", {numberItem: index + 1});
       switch (typeof this.collapsedLabel) {
         case "string":
           return getPointed(model, this.collapsedLabel, fallback);

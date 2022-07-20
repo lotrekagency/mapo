@@ -32,7 +32,7 @@
               <div  v-if="selection" class="caption mr-1 mb-1">
                 <b v-if="allSelected">{{ $t("mapo.list.allSelected") }}</b>
                 <span v-else-if="selection.length">
-                  {{ $t("mapo.list.NSelected").replace("{0}", selection.length) }}
+                  {{ $t("mapo.list.NSelected", {numberItems: selection.length}) }}
                   <v-btn
                       v-if="selection != 'all' && canSelectAll"
                       @click="toggleSelectAll"
