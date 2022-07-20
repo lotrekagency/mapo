@@ -1,12 +1,12 @@
 <template>
-  <div class="login._wrapper">
-    <div class="login._inner">
-      <h2 class="login._inner__title">{{ $t("mapo.login") }}</h2>
+  <div class="login__wrapper">
+    <div class="login__inner">
+      <h2 class="login__inner__title">{{ $t("mapo.login") }}</h2>
 
-      <div class="login._form__outer">
+      <div class="login__form__outer">
         <v-form
           @submit.prevent="handleLogin(username, password)"
-          class="login._form"
+          class="login__form"
         >
           <v-text-field
             class="rounded-0"
