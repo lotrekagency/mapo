@@ -104,9 +104,9 @@ export default {
   watch: {
     selection(val) {
       this.allSelected = val == 'all';
+      this.selectionQuery = this.$refs.dtable.getHttpParams();
       // Fires when you select some row of the table.
       // @arg Emit "all" if all items are selected, else the list of the selected rows.
-      this.selectionQuery = this.$refs.dtable.getHttpParams();
       this.$emit("selectionChange", val);
     },
     filters: {
