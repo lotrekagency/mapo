@@ -288,6 +288,7 @@ export default {
         alt_text: this.media.alt_text,
         file: this.newFile || undefined,
         same_url: (this.newFile && this.sameUrl) || undefined,
+        language_code: this.$i18n.locale
       };
       this.newFile = null;
       this.sameUrl = false;

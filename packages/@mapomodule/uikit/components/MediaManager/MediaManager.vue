@@ -118,6 +118,12 @@ export default {
       required: false,
     },
   },
+  watch: {
+    '$i18n.locale': async function(locale) {
+      if (this.editMedia)
+        this.editMedia = await this.detailMedia(this.editMedia.id);
+    }
+  },
   computed: {
     mediaFolderCrud() {
       this._mediaFolderCrud =
@@ -125,8 +131,7 @@ export default {
       return this._mediaFolderCrud;
     },
     mediaFileCrud() {
-      this._mediaFileCrud =
-        this._mediaFileCrud || this.$mapo.$api.crud("api/media");
+      this._mediaFileCrud = this._mediaFileCrud || this.$mapo.$api.crud("api/media");
       return this._mediaFileCrud;
     },
     parentFolder: {
@@ -168,7 +173,7 @@ export default {
           ? await this.mediaFolderCrud.detail(id, { params })
           : await this.mediaFolderCrud.list({ params });
       } catch (error) {
-        console.error({ code: error.response.status, response: error.response.data})
+        console.error({ code: error.response.status, response: error.response.data });
       }
 
       this.processResponse(response);
@@ -191,23 +196,25 @@ export default {
     },
 
     detailMedia(media_id) {
-      return this.mediaFileCrud.detail(media_id);
+      return this.mediaFileCrud.detail(media_id, {
+        params: { language_code: this.$i18n.locale },
+      });
     },
 
     async updateMedia(media) {
       const files = ["file", "objectURL", "thumbnail"];
       const payload = this.$mapo.$api.multipart(media, files);
       const conf = { headers: { "Content-Type": "multipart/form-data" } };
-      const res = await this.mediaFileCrud.partialUpdate(media.id, payload, conf)
-      if (media.file){
-        this.medias = []
-        await this.getRoot()
+      const res = await this.mediaFileCrud.partialUpdate(media.id, payload, conf);
+      if (media.file) {
+        this.medias = [];
+        await this.getRoot();
       }
-      this.editMedia = res
+      this.editMedia = res;
       this.$mapo.$snack.open({
-        message: this.$t("mapo.mediaManager.fileInfo")
-      })
-      return res
+        message: this.$t("mapo.mediaManager.fileInfo"),
+      });
+      return res;
     },
     processResponse(resp) {
       this.medias = resp?.media?.items || [];
