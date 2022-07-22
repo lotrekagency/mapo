@@ -40,7 +40,7 @@ export default {
         chips: this.$attrs.multiple === false ? false : true,
         multiple: true,
         loading: this.loading,
-        noDataText: this.loading ? "Fetching data.." : undefined,
+        noDataText: this.loading ? this.$t("mapo.fetchingData") : undefined,
         ...this.$attrs,
       };
     },

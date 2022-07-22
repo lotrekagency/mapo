@@ -1,7 +1,7 @@
 <template>
   <div v-if="isActive" class="d-flex flex-row align-center fill-height">
     <v-select
-      label="Group Actions"
+      :label="$t('mapo.listActions.groupActions')"
       v-bind="$attrs"
       v-model="action"
       :items="filteredActions"
@@ -21,7 +21,7 @@
       color="primary"
       :disabled="!action"
       @click="handleAction"
-      >Apply</v-btn
+      >{{ $t("mapo.apply") }}</v-btn
     >
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
       default() {
         return [
           {
-            label: "Permanent delete",
+            label: this.$t("mapo.listActions.permanentDelete"),
             handler: function ({ selection, lookup, crud }) {
               return Promise.all(selection.map((i) => crud && crud.delete(i[lookup])));
             },
@@ -92,7 +92,7 @@ export default {
     }
   },
   methods: {
-    isDisabled(action){ 
+    isDisabled(action){
       const p = typeof action.permissions == "string" ? [action.permissions] : action.permissions || []
       if (p.length){
         return !p.every(a => this.userCan(a))
@@ -108,7 +108,7 @@ export default {
     handleAction() {
       if (!this.selectAll && !this.selection.length) {
         return this.$mapo.$snack.open({
-          message: "You need to select at least one item.",
+          message: this.$t("mapo.listActions.selectionRequired"),
           color: "error",
         });
       }

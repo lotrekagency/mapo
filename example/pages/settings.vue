@@ -2,17 +2,24 @@
   <v-container fluid>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="12">
-        <h1>This is the setting page</h1>
+        <h1>{{ $t("title") }}</h1>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
+<i18n lang="yaml">
+en:
+  title: "This is the setting page"
+it:
+  title: "Questa è la pagina delle impostazioni"
+</i18n>
+
 <style scoped>
 </style>
 <script>
 export default {
-  meta: { sidebarFooter: true, label: "Impostazioni", icon: "mdi-cog" },
+  meta: { sidebarFooter: true, label: {translate: "settings"}, icon: "mdi-cog" },
   data() {
     return {
       fakeMedia: {
@@ -28,9 +35,9 @@ export default {
 
       ids: [4],
       options: [
-        {codice: 4, testo: 'ciao'},        
-        {codice: 10, testo: 'prova'},        
-        {codice: 20, testo: 'test'},        
+        {codice: 4, testo: 'ciao'},
+        {codice: 10, testo: 'prova'},
+        {codice: 20, testo: 'test'},
       ]
     };
 

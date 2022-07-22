@@ -12,7 +12,7 @@
         <v-icon>{{ icon }}</v-icon>
       </v-list-item-icon>
       <v-list-item-title>
-        {{ label }}
+        {{ label.translate ? $t(label.translate) : label }}
       </v-list-item-title>
       <v-icon
         class="expand-icon"
@@ -149,7 +149,7 @@ export default {
   },
   props: {
     link: String,
-    label: String,
+    label: String | Object,
     icon: String,
     childrens: Array,
     meta: Object,

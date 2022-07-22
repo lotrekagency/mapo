@@ -1,7 +1,7 @@
 <template>
   <div class="login__wrapper">
     <div class="login__inner">
-      <h2 class="login__inner__title">Login</h2>
+      <h2 class="login__inner__title">{{ $t("mapo.login") }}</h2>
 
       <div class="login__form__outer">
         <v-form
@@ -35,7 +35,7 @@
           ></v-text-field>
           <div class="text-center">
             <v-btn type="submit" class="rounded-0" elevation="0" dark>
-              Log In
+              {{ $t("mapo.login") }}
             </v-btn>
             <v-messages
               v-model="errors.non_field_errors"
@@ -43,12 +43,12 @@
               class="mt-4 text-center"
             />
           </div>
-      
         </v-form>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -89,13 +89,14 @@ export default {
         .catch((error) => {
           this.errors = error.response?.data || {}
           if (!Object.keys(this.errors).length){
-            this.$mapo.$snack.open({message: "Cannot login right now. Try again later.", color: "error"})
+            this.$mapo.$snack.open({message: this.$t("mapo.loginError"), color: "error"})
           }
         });
     },
   },
 };
 </script>
+
 <style lang="scss">
 @import "@mapomodule/uikit/assets/variables.scss";
 .login {

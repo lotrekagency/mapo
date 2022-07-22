@@ -4,17 +4,15 @@
       <Logo />
       <hr />
       <div class="user-info">
-        <h3>
-          Congrats <strong>{{ this.$mapo.$auth.user.username }}</strong
-          >, you have authenticated sucesfully!
+        <h3 v-html="$t('title').replace('{0}', this.$mapo.$auth.user.username)">
         </h3>
-        <p>Here some info about the user</p>
+        <p>{{ $t("description") }}</p>
          <ul>
           <li>
-            <strong>Name:</strong> {{ this.$mapo.$auth.user.info.first_name }}
+            <strong>{{ $t("name") }}:</strong> {{ this.$mapo.$auth.user.info.first_name }}
           </li>
           <li>
-            <strong>Surname:</strong> {{ this.$mapo.$auth.user.info.last_name }}
+            <strong>{{ $t("surname") }}:</strong> {{ this.$mapo.$auth.user.info.last_name }}
           </li>
           <li>
             <strong>Superuser:</strong>
@@ -24,12 +22,12 @@
             <strong>Email:</strong> {{ this.$mapo.$auth.user.info.email }}
           </li>
            <li>
-            <strong>Role:</strong> {{ this.$mapo.$auth.user.role }}
+            <strong>{{ $t("role") }}:</strong> {{ this.$mapo.$auth.user.role }}
           </li>
           <li><strong>Token:</strong> {{ this.$mapo.$auth.user.token }}</li>
         </ul>
         <p></p>
-        <p>Your user has the following permissions on this page:</p>
+        <p>{{ $t("perms") }}:</p>
         <ul>
           <li v-for="item in this.$mapo.$auth.user.permissions" :key="item">
             {{ item }}
@@ -39,6 +37,23 @@
     </v-col>
   </v-row>
 </template>
+
+<i18n lang="yaml">
+en:
+  title: "Congrats <b>{0}</b>, you have authenticated successfully!"
+  description: "Here some info about the user"
+  name: "Name"
+  surname: "Surname"
+  role: "Role"
+  perms: "Your user has the following permissions on this page"
+it:
+  title: "Complimenti <b>{0}</b>, ti sei autenticato correttamente"
+  description: "Alcune informazioni sull'utente"
+  name: "Nome"
+  surname: "Cognome"
+  role: "Ruolo"
+  perms: "Permessi dell'utente in questa pagina"
+</i18n>
 
 <style scoped>
 .user-info {

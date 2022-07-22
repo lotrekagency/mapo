@@ -30,18 +30,18 @@
           <!-- Overrides counter for selected items.  -->
             <slot name="item-counter" v-bind="{ selection, canSelectAll, allSelected, toggleSelectAll }">
               <div  v-if="selection" class="caption mr-1 mb-1">
-                <b v-if="allSelected">All items selected</b>
+                <b v-if="allSelected">{{ $t("mapo.list.allSelected") }}</b>
                 <span v-else-if="selection.length">
-                {{ selection.length }} items selected
-                <v-btn
-                    v-if="selection != 'all' && canSelectAll"
-                    @click="toggleSelectAll"
-                    outlined
-                    tile
-                    x-small
-                    class="ml-1 d-inline-flex"
-                    >Select all</v-btn
-                >
+                  {{ $t("mapo.list.NSelected", {numberItems: selection.length}) }}
+                  <v-btn
+                      v-if="selection != 'all' && canSelectAll"
+                      @click="toggleSelectAll"
+                      outlined
+                      tile
+                      x-small
+                      class="ml-1 d-inline-flex"
+                      >{{ $t("mapo.list.selectAll") }}</v-btn
+                  >
                 </span>
               </div>
             </slot>
@@ -104,9 +104,9 @@ export default {
   watch: {
     selection(val) {
       this.allSelected = val == 'all';
+      this.selectionQuery = this.$refs.dtable.getHttpParams();
       // Fires when you select some row of the table.
       // @arg Emit "all" if all items are selected, else the list of the selected rows.
-      this.selectionQuery = this.$refs.dtable.getHttpParams();
       this.$emit("selectionChange", val);
     },
     filters: {

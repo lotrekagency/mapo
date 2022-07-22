@@ -3,7 +3,7 @@
     {{ message }}
     <template v-slot:action="{ attrs }">
       <v-btn :color="color" text v-bind="attrs" @click="closeSnack">
-        Close
+        {{ $t("mapo.close") }}
       </v-btn>
     </template>
   </v-snackbar>
@@ -55,7 +55,6 @@ export default {
   },
 };
 </script>
-
 
 <docs>
 ### Example usage:

@@ -58,18 +58,18 @@
         </div>
       </div>
       <div class="flex-grow-1 text-center" v-if="!folders.length">
-        No folders there.. Create a new one!
+        {{ $t("mapo.mediaFolders.noFolders") }}
       </div>
       <div class="ma-auto mr-2 mb-2">
-        <v-tooltip disabled left>
+        <v-tooltip left>
           <template v-slot:activator="{ on, attrs }">
             <v-icon v-bind="attrs" v-on="on" @click.stop="createFolder">
               mdi-plus
             </v-icon>
           </template>
-          <span>Add folder</span>
+          <span>{{ $t("mapo.mediaFolders.newFolder") }}</span>
         </v-tooltip>
-        <v-tooltip v-if="folders.length" disabled bottom>
+        <v-tooltip v-if="folders.length" bottom>
           <template v-slot:activator="{ on, attrs }">
             <v-icon
               v-bind="attrs"
@@ -80,7 +80,7 @@
               mdi-chevron-down
             </v-icon>
           </template>
-          <span>{{ expanded ? "Collapse" : "Expand" }} view</span>
+          <span>{{ expanded ? $t("mapo.collapse") : $t("mapo.expand") }}</span>
         </v-tooltip>
       </div>
     </v-card-actions>
@@ -94,7 +94,7 @@
     <v-dialog v-model="dialog" max-width="300px">
       <v-card>
         <v-card-title>
-          {{ folderEdit.id ? "Edit Folder" : "New Folder" }}
+          {{ folderEdit.id ? $t("mapo.mediaFolders.editFolder") : $t("mapo.mediaFolders.newFolder") }}
         </v-card-title>
 
         <v-card-text>
@@ -103,7 +103,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="folderEdit.title"
-                  label="Folder name"
+                  :label="$t('mapo.mediaFolders.folderName')"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -112,13 +112,14 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="closeEdit"> Cancel </v-btn>
-          <v-btn color="primary" text @click="saveFolder"> Save </v-btn>
+          <v-btn color="primary" text @click="closeEdit">{{ $t('mapo.cancel') }}</v-btn>
+          <v-btn color="primary" text @click="saveFolder">{{ $t('mapo.create') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
 </template>
+
 <style lang="scss" scoped>
 .media-folders-wrapper{
   width: 100%;
@@ -173,13 +174,7 @@ export default {
     return {
       expanded: false,
       dialog: false,
-      folderEdit: {},
-      actions: [
-        {
-          label: "Create folder",
-          action: this.createFolder
-        }
-      ]
+      folderEdit: {}
     };
   },
   props: {
@@ -207,9 +202,9 @@ export default {
     deleteFolder(folder) {
       this.$mapo.$confirm
         .open({
-          title: "Delete",
-          question: "Are you sure to delelete this folder and all its content?",
-          approveButton: { text: "Delete", attrs: { color: "red", text: true } }
+          title: this.$t("mapo.delete"),
+          question: this.$t("mapo.mediaFolders.confirmDelete"),
+          approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } }
         })
         .then(res => res && this.$emit("deleteFolder", folder));
     },

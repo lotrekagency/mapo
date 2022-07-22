@@ -13,7 +13,7 @@
         light: !dark,
       }"
     >
-      <v-card-title v-if="!pages">Media Carousel</v-card-title>
+      <v-card-title v-if="!pages">{{ $t("mapo.mediaM2MField.mediaCarousel") }}</v-card-title>
       <v-card-actions>
         <v-row justify="center" class="ma-1" no-gutters>
           <v-col>
@@ -23,7 +23,7 @@
               outlined
               :min-height="pages ? undefined : minHeight"
             >
-              <div v-if="pages">New Selection</div>
+              <div v-if="pages">{{ $t("mapo.mediaM2MField.newSelection") }}</div>
               <v-icon v-else size="80"> mdi-plus-circle-outline </v-icon>
             </v-btn>
           </v-col>

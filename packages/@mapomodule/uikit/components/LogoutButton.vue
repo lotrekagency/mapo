@@ -1,39 +1,54 @@
 <template>
-  <v-btn @click.native="logout" class="logout__btn">
-    <v-icon class="logout__icon">mdi-logout</v-icon>
-    <span class="logout__text">Logout</span>
-  </v-btn>
+  <div class="d-flex">
+    <v-list-item dense class="darker__item" link @click.native="login">
+      <v-list-item-icon>
+        <v-icon v-if="$mapo.$auth.user.isLoggedIn">mdi-logout</v-icon>
+        <v-icon v-else>mdi-login</v-icon>
+      </v-list-item-icon>
+      <v-list-item-title>{{
+        $mapo.$auth.user.isLoggedIn ? $t("mapo.logout") : $t("mapo.login")
+      }}</v-list-item-title>
+    </v-list-item>
+    <v-list-item
+      dense
+      link
+      v-if="$i18n.locales.length > 1"
+      class="lang__selector darker__item"
+    >
+      <LangSwitcher></LangSwitcher>
+    </v-list-item>
+  </div>
 </template>
+
+<style lang="scss" scoped>
+.darker__item {
+  &.theme--light {
+    background: #ffffffd6;
+    filter: invert(1);
+  }
+  &.theme--dark {
+    background: #121212;
+  }
+}
+.lang__selector {
+  max-width: 70px;
+  overflow: hidden;
+  padding: 0;
+  v-select {
+    border-radius: 0px;
+  }
+}
+</style>
 
 <script>
 export default {
   name: "LogoutButton",
   methods: {
-    logout() {
-      this.$store.dispatch("mapo/user/logout");
+    login() {
+      this.$mapo.$auth.user.isLoggedIn
+        ? this.$store.dispatch("mapo/user/logout")
+        : this.$router.push("/login");
     },
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.logout {
-  &__btn {
-    padding: 0.5rem 1rem!important;
-    height: auto!important;
-  }
-  &__icon {
-    margin-right: 0.5rem;
-    font-size: 1rem;
-  }
-  &__text {
-    text-align: left;
-    display: block;
-    width: 100%;
-    font-size: 1rem;
-    text-transform: capitalize;
-    font-weight: 400;
-    letter-spacing: initial;
-  }
-}
-</style>

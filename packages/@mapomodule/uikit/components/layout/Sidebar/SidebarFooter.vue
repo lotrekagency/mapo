@@ -14,26 +14,10 @@
       />
     </v-list>
     <v-divider></v-divider>
-    <v-list-item v-if="$mapo.$auth.user.isLoggedIn" dense class="logout__button" link @click.native="logout">
-      <v-list-item-icon>
-        <v-icon>mdi-logout</v-icon>
-      </v-list-item-icon>
-      <v-list-item-title> Logout </v-list-item-title>
-    </v-list-item>
+    <LogoutButton></LogoutButton>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.logout__button{
-  &.theme--light{
-    background: #ffffffd6;
-    filter: invert(1);
-  }
-  &.theme--dark{
-      background: #121212;
-  }
-}
-</style>
 <script>
 import { buildRoutes } from "../routebuilder";
 
@@ -43,19 +27,19 @@ export default {
   props: {
     forceCollapse: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
       defaultIcon: ({ label }) => `mdi-alpha-${label[0]}-box`.toLowerCase(),
-      routes: this.routes
+      routes: this.routes,
     };
   },
   mounted() {
     this.routes = this.buildRoutes(
       this.$router.options.routes.filter(
-        route => route.meta && route.meta.sidebarFooter === true
+        (route) => route.meta && route.meta.sidebarFooter === true
       )
     );
   },
@@ -63,9 +47,6 @@ export default {
     buildRoutes(routes) {
       return buildRoutes(routes, this.defaultIcon);
     },
-    logout() {
-      this.$store.dispatch("mapo/user/logout");
-    }
-  }
+  },
 };
 </script>

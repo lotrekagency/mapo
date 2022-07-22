@@ -20,7 +20,15 @@ export default async function (moduleOptions) {
     const userModuleOptions = Object.keys(moduleOptions).length === 0 ? (this.options['mapo'] || {}) : moduleOptions
 
     // INJECT VUETIFY MODULE
-    this.requireModule(['@nuxtjs/vuetify', (this.options && this.options.vuetify) || userModuleOptions.vuetify || mapoDefaults.vuetify || {}])
+    this.requireModule(['@nuxtjs/vuetify', {
+        ...((this.options && this.options.vuetify) || userModuleOptions.vuetify || mapoDefaults.vuetify || {}),
+        lang: userModuleOptions.vuetify?.lang || mapoDefaults.vuetify.lang
+    }]);
+    // INJECT I18N MODULE
+    this.requireModule(['@nuxtjs/i18n', {
+        ...((this.options && this.options.i18n) || userModuleOptions.i18n || mapoDefaults.i18n || {}),
+        onBeforeLanguageSwitch: userModuleOptions.i18n?.onBeforeLanguageSwitch || mapoDefaults.i18n.onBeforeLanguageSwitch
+    }]);
 
     // INJECT ALL LAYOUTS
     const layouts = (await resolver.resolveRelative(__dirname, 'layouts')).map(({ src }) => src)
@@ -44,7 +52,7 @@ export default async function (moduleOptions) {
     })
     this.nuxt.hook('components:extend', (components) => {
         const clearName = (name) => name.replace(/^Mapoverride/, '').replace(/^mapoverride-/, '')
-        const componentsOverride = Object.values(components.reduce((map, comp) => (       
+        const componentsOverride = Object.values(components.reduce((map, comp) => (
             { ...map, [clearName(comp.pascalName)]: {...comp, pascalName:clearName(comp.pascalName), kebabName:clearName(comp.kebabName)} }
         ), {}))
         components.length = 0
@@ -72,7 +80,7 @@ export default async function (moduleOptions) {
             loader: require.resolve(path.resolve(__dirname, '../utils/loaders/dummy-loader.js'))
         })
     })
- 
+
 }
 
 module.exports.meta = require('./package.json')

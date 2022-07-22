@@ -1,4 +1,4 @@
-import vuetify from '@mapomodule/uikit/defaults'
+import { vuetify } from '@mapomodule/uikit/defaults'
 
 export default {
   store: true,

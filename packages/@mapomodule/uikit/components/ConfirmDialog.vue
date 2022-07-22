@@ -15,15 +15,15 @@
     </v-dialog>
   </div>
 </template>
-<script>
 
+<script>
 /**
- * This component is embedded in the default layout. 
+ * This component is embedded in the default layout.
  * It's a dynamic dialog which is used to ask the user for confirmation before performing an operation.<br>
  * For example: `Do you really want to delete the content 'abcd'?` <br><br>
  * It can be globally accessed with [this.$mapo.$confirm](/core/#confirm)
- * 
- */ 
+ *
+ */
 export default {
   name: "ConfirmDialog",
   data() {
@@ -32,10 +32,10 @@ export default {
       dialog: false,
       optionsBk: null,
       options: {
-        title: this.title,
-        question: this.question,
-        dismissButton: this.dismissButton,
-        approveButton: this.approveButton,
+        title: this.title || this.$t("mapo.confirm"),
+        question: this.question || this.$t("mapo.confirmDialog.areYouSure"),
+        dismissButton: this.dismissButton || { text: this.$t("mapo.cancel"), attrs: { text: true } },
+        approveButton: this.approveButton || { text: this.$t("mapo.ok"), attrs: { color: "primary", text: true } },
         attrs: { ...this.$attrs }
       },
       on: {
@@ -56,35 +56,31 @@ export default {
     // The text in the body of the dialog.
     question: {
       type: String,
-      default: "Are you sure of what you are doing?"
     },
     // The title of the dialog.
     title: {
       type: String,
-      default: "Confirm"
     },
     // The text plus props passed to the dismiss Button.
     dismissButton: {
       // `{ text: String, attrs: Object }`
       type: Object,
-      default: () => ({ text: "Cancel", attrs: { text: true } })
     },
     // The text plus props passed to the approve Button.
     approveButton: {
       // `{ text: String, attrs: Object }`
       type: Object,
-      default: () => ({ text: "Ok", attrs: { color: "primary", text: true } })
     }
   },
   computed: {
     approveTxt() {
-      return this.options.approveButton?.text || "Ok";
+      return this.options.approveButton?.text || this.$t("mapo.ok");
     },
     approveAttrs() {
       return this.options.approveButton?.attrs || {};
     },
     dismissTxt() {
-      return this.options.dismissButton?.text || "Cancel";
+      return this.options.dismissButton?.text || this.$t("mapo.cancel");
     },
     dismissAttrs() {
       return this.options.dismissButton?.attrs || {};

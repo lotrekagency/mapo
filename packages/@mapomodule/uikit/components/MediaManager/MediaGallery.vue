@@ -25,7 +25,7 @@
       justify="center"
     >
       <v-icon size="60"> mdi-alert-circle-outline </v-icon>
-      <p>No media fund...</p>
+      <p>{{ $t("mapo.mediaGallery.noMediaFound") }}</p>
     </v-row>
     <v-row v-if="medias.length">
       <v-col

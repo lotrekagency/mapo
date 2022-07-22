@@ -3,13 +3,22 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="12">
         <v-btn dark class="mb-2" @click.native="readonly = !readonly">
-          {{ readonly ? "Enable" : "Disable" }} editor
+          {{ readonly ? $t("enable") : $t("disable") }}
         </v-btn>
         <wygEditor v-model="tinyInput" :readonly="readonly" />
       </v-col>
     </v-row>
   </v-container>
 </template>
+
+<i18n lang="yaml">
+en:
+  enable: "Enable editor"
+  disable: "Disable editor"
+it:
+  enable: "Abilita editor"
+  disable: "Disabilita editor"
+</i18n>
 
 <script>
 export default {

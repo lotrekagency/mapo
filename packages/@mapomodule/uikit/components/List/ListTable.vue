@@ -26,7 +26,7 @@
               search();
             "
             prepend-inner-icon="mdi-magnify"
-            label="Search"
+            :label="$t('mapo.search')"
             single-line
             hide-details
             outlined
@@ -40,7 +40,7 @@
           <v-spacer></v-spacer>
           <v-btn text v-if="quickModeEnabled && userCan('add')" class="ml-2" @click="quickAction()">
             <v-icon small left class="d-none d-sm-block mr-2"> mdi-plus </v-icon>
-            <span class="d-none d-sm-block">Quick</span> add
+            <span class="d-none d-sm-block">{{ $t("mapo.listTable.quickAdd") }}</span>
           </v-btn>
           <v-btn v-if="serverPaginationEnabled" class=" mx-sm-2 ma-2 mx-0" @click="getDataFromApi(false)" icon>
             <v-icon>mdi-update</v-icon>
@@ -54,7 +54,7 @@
             <v-btn v-bind="attrs" v-on="on" style="margin-left: 2px;" :class="{'primary--text': dragOrderingActive}" @click="dragOrderingActive = !dragOrderingActive" icon>
             <v-icon>mdi-order-bool-ascending</v-icon></v-btn>
           </template>
-          <span>Toggle reordering</span>
+          <span>{{ $t("mapo.listTable.toggleOrder") }}</span>
         </v-tooltip>
       </template>
       <template v-if="navigable" v-slot:[`item.${firstColName}`]="{ item }">
@@ -280,7 +280,7 @@ export default {
         ).catch(error => {
           this.getDataFromApi()
           this.$mapo.$snack.open({
-            message: error.response?.data?.detail || "Reorder failed",
+            message: error.response?.data?.detail || this.$t("mapo.listTable.errorOrder"),
             color: "error",
           })
         });
@@ -379,9 +379,9 @@ export default {
 
       this.$mapo.$confirm
         .open({
-          title: "Delete",
-          question: "Are you sure you want to delete this item?",
-          approveButton: { text: "Delete", attrs: { color: "red", text: true } },
+          title: this.$t("mapo.delete"),
+          question: this.$t("mapo.confirmDelete"),
+          approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } },
         })
         .then((res) => (res ? callback(item) : null));
     },
