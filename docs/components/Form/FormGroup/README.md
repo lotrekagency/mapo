@@ -12,6 +12,7 @@
 |moreSlotBindings|Additional bindings to indrease slots capabilities|`Object`|`false`|-|
 |conf|The main configuration that determines the arrangement of the fields in the detail layout.|`Object`|`true`|-|
 |languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
+|readonly|Makes all the fields readonly.|`Boolean`|`false`|-|
 
 <!-- @vuese:FormGroup:props:end -->
 

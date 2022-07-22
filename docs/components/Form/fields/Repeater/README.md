@@ -20,6 +20,7 @@ This component is made to manage a list of object that can be added/removed/reor
 |collapsedLabel|With this you can define the output of the collapsed label. You can enter the pointed path of a value in the row or a callback function to extract the label from the row.|—|`false`|null|
 |langs|This is mainly an internal property. It is used by DetailField to pass the list of languages inherited from the Detail component.|`Array<String>`|`false`|[]|
 |currentLang|This is mainly an internal property. It is used by DetailField to pass the active language inherited from the Detail component.|`String`|`false`|-|
+|maxHeight|-|—|`false`|-|
 
 <!-- @vuese:Repeater:props:end -->
 

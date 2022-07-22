@@ -9,10 +9,10 @@ This component is embedded in the default layout. It's a dynamic dialog which is
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|v-model boolean that controll the status of the dialog (opened/closed)|`Boolean`|`false`|false|
-|question|The text in the body of the dialog.|`String`|`false`|Are you sure of what you are doing?|
-|title|The title of the dialog.|`String`|`false`|Confirm|
-|dismissButton|The text plus props passed to the dismiss Button.|`{ text: String, attrs: Object }`|`false`|{"text":"Cancel","attrs":{"text":true}}|
-|approveButton|The text plus props passed to the approve Button.|`{ text: String, attrs: Object }`|`false`|{"text":"Ok","attrs":{"color":"primary","text":true}}|
+|question|The text in the body of the dialog.|`String`|`false`|-|
+|title|The title of the dialog.|`String`|`false`|-|
+|dismissButton|The text plus props passed to the dismiss Button.|`{ text: String, attrs: Object }`|`false`|-|
+|approveButton|The text plus props passed to the approve Button.|`{ text: String, attrs: Object }`|`false`|-|
 
 <!-- @vuese:ConfirmDialog:props:end -->
 

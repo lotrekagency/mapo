@@ -7,7 +7,7 @@
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |link|-|`String`|`false`|-|
-|label|-|`String`|`false`|-|
+|label|-|—|`false`|-|
 |icon|-|`String`|`false`|-|
 |childrens|-|`Array`|`false`|-|
 |meta|-|`Object`|`false`|-|

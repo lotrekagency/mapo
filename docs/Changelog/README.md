@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.24](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2022-07-22)
+
+
+### Bug Fixes
+
+* **i18n:** use iso code for vuetify language code ([0683c78](https://github.com/lotrekagency/mapo/commit/0683c78ecf3f3e196b0fb6e7c8d007e20f12bf62))
+* fixed login screen ([f925672](https://github.com/lotrekagency/mapo/commit/f92567288c07ae6162bfc14f2ac220aff193ad5f))
+* **list:** pass selectionQuery to list actions ([7385daa](https://github.com/lotrekagency/mapo/commit/7385daaf6ef727123c966dec3747c1c18c54f73a))
+* **listfilters:** added watch on list filters ([753f40e](https://github.com/lotrekagency/mapo/commit/753f40e7776935bc0f3e499c573868d5e7e0502d))
+
+
+### Features
+
+* **i18:** handle i18n on images' alt title tags ([3fb3f62](https://github.com/lotrekagency/mapo/commit/3fb3f62ae045b6610c881f90e31f0b5a242ce46b))
+* **i18n:** handle translations on meta router ([2e20afe](https://github.com/lotrekagency/mapo/commit/2e20afedd34b42adb7d9cc53235a7e469ae67e9d))
+* added language switcher ([6995542](https://github.com/lotrekagency/mapo/commit/6995542228acc8c603d28b29edf1abee02f23404))
+* refactored translations, added vuetify translations ([bd37682](https://github.com/lotrekagency/mapo/commit/bd376820ad05a00f49088b9585b7bb26371e09f8))
+* **form:** added vShow on tabs and groups ([631e43f](https://github.com/lotrekagency/mapo/commit/631e43f10c7614e87a393a688fa1339092ef0cb7))
+* **i18n:** i18n for detail and form fields ([74760b1](https://github.com/lotrekagency/mapo/commit/74760b1c72314df34f3bb7e5dbaf95037d9c40fe))
+* **i18n:** i18n on sidebar and list components ([64fb9a1](https://github.com/lotrekagency/mapo/commit/64fb9a152836b5620f52b1a448dc00ecafcd9ea3))
+* **i18n:** setup on generic and media components ([f38588f](https://github.com/lotrekagency/mapo/commit/f38588f56aedbf9466af5c40296e35bf2765d036))
+
+
+
+
+
+# [1.0.0-alpha.23](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-05-04)
+
+
+### Bug Fixes
+
+* **detail:** prevent rendering of fields until the model is fully loaded ([0421d79](https://github.com/lotrekagency/mapo/commit/0421d79ea1a1e15b37a5addfd7eebd0c83b23a96))
+* **repeater:** better borders and padding for repeater lines ([07faf36](https://github.com/lotrekagency/mapo/commit/07faf36ac8d46c290cf12be41948f21a693e3da7))
+* **seoPreview:** fix permalink preview to integrate the domain ([8bdd6a3](https://github.com/lotrekagency/mapo/commit/8bdd6a35ce9643206121d531ca07d083fe20c5b5))
+* **utils:** better File recognition for deepClone util ([72a1002](https://github.com/lotrekagency/mapo/commit/72a1002144ff0be1c016a39f46f8ea712a950825))
+* fix detail component not redirecting on save and continue action ([3ba4bb6](https://github.com/lotrekagency/mapo/commit/3ba4bb6457242e583ca43f42db070bde731b6c26))
+* fix readonly fields in forms ([564a853](https://github.com/lotrekagency/mapo/commit/564a853f2c4d572cdb340d52b9801ad6d7f053d0))
+
+
+### Features
+
+* **forms:** update style of group and tabs ([a8d902b](https://github.com/lotrekagency/mapo/commit/a8d902b2b586563d765316cb5912d26df8144eae))
+* added maxHeight prop to repeater ([5adc02e](https://github.com/lotrekagency/mapo/commit/5adc02efb07d2ca61f7265ec1c4d0377cdb76837))
+
+
+### Performance Improvements
+
+* **forms:** Decrease rendering time of form component, and all Components based on form ([22a191a](https://github.com/lotrekagency/mapo/commit/22a191a2f791a8dfe93336e53aec7cfbe3baa1f5))
+
+
+
+
+
 # [1.0.0-alpha.22](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.21...v1.0.0-alpha.22) (2022-05-01)
 
 

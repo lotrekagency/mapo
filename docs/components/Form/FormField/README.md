@@ -9,6 +9,7 @@ This is mainly an internal component. It is used by the [`DetailComponent`](/com
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|V-model of the payload needed to edit the field value in realtime.|`Object`|`true`|-|
+|readonly|Makes the field readonly.|`Boolean`|`false`|-|
 |errors|An object representing all the errors of all fields. This means that this component will find the error of its field following the dottedPath of the value in the error dict.|`Object`|`false`|-|
 |conf|The main configuration that determines the rendering of the field. See [FieldConfiguration](/components/detail/Detail/#fieldconfiguration).|[`FieldConfiguration`](/components/detail/Detail/#fieldconfiguration)|`true`|-|
 |langs|-|`Array`|`false`|[]|
