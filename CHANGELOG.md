@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.24](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2022-07-22)
+
+
+### Bug Fixes
+
+* **i18n:** use iso code for vuetify language code ([0683c78](https://github.com/lotrekagency/mapo/commit/0683c78ecf3f3e196b0fb6e7c8d007e20f12bf62))
+* fixed login screen ([f925672](https://github.com/lotrekagency/mapo/commit/f92567288c07ae6162bfc14f2ac220aff193ad5f))
+* **list:** pass selectionQuery to list actions ([7385daa](https://github.com/lotrekagency/mapo/commit/7385daaf6ef727123c966dec3747c1c18c54f73a))
+* **listfilters:** added watch on list filters ([753f40e](https://github.com/lotrekagency/mapo/commit/753f40e7776935bc0f3e499c573868d5e7e0502d))
+
+
+### Features
+
+* **i18:** handle i18n on images' alt title tags ([3fb3f62](https://github.com/lotrekagency/mapo/commit/3fb3f62ae045b6610c881f90e31f0b5a242ce46b))
+* **i18n:** handle translations on meta router ([2e20afe](https://github.com/lotrekagency/mapo/commit/2e20afedd34b42adb7d9cc53235a7e469ae67e9d))
+* added language switcher ([6995542](https://github.com/lotrekagency/mapo/commit/6995542228acc8c603d28b29edf1abee02f23404))
+* refactored translations, added vuetify translations ([bd37682](https://github.com/lotrekagency/mapo/commit/bd376820ad05a00f49088b9585b7bb26371e09f8))
+* **form:** added vShow on tabs and groups ([631e43f](https://github.com/lotrekagency/mapo/commit/631e43f10c7614e87a393a688fa1339092ef0cb7))
+* **i18n:** i18n for detail and form fields ([74760b1](https://github.com/lotrekagency/mapo/commit/74760b1c72314df34f3bb7e5dbaf95037d9c40fe))
+* **i18n:** i18n on sidebar and list components ([64fb9a1](https://github.com/lotrekagency/mapo/commit/64fb9a152836b5620f52b1a448dc00ecafcd9ea3))
+* **i18n:** setup on generic and media components ([f38588f](https://github.com/lotrekagency/mapo/commit/f38588f56aedbf9466af5c40296e35bf2765d036))
+
+
+
+
+
 # [1.0.0-alpha.23](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-05-04)
 
 

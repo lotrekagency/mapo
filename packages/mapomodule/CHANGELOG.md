@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.24](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2022-07-22)
+
+
+### Features
+
+* refactored translations, added vuetify translations ([bd37682](https://github.com/lotrekagency/mapo/commit/bd376820ad05a00f49088b9585b7bb26371e09f8))
+
+
+
+
+
 # [1.0.0-alpha.23](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-05-04)
 
 **Note:** Version bump only for package mapomodule
