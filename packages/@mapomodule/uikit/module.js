@@ -1,7 +1,6 @@
 import { createRoutes } from '@nuxt/utils'
 import serveStatic from 'serve-static'
 import path from 'path'
-import mapoDefaults from './defaults'
 import Glob from 'glob'
 import pify from 'pify'
 const glob = pify(Glob)
@@ -20,15 +19,10 @@ export default async function (moduleOptions) {
     const userModuleOptions = Object.keys(moduleOptions).length === 0 ? (this.options['mapo'] || {}) : moduleOptions
 
     // INJECT VUETIFY MODULE
-    this.requireModule(['@nuxtjs/vuetify', {
-        ...((this.options && this.options.vuetify) || userModuleOptions.vuetify || mapoDefaults.vuetify || {}),
-        lang: userModuleOptions.vuetify?.lang || mapoDefaults.vuetify.lang
-    }]);
+    this.requireModule(['@nuxtjs/vuetify', (this.options && this.options.vuetify) || userModuleOptions.vuetify || {}]);
+    
     // INJECT I18N MODULE
-    this.requireModule(['@nuxtjs/i18n', {
-        ...((this.options && this.options.i18n) || userModuleOptions.i18n || mapoDefaults.i18n || {}),
-        onBeforeLanguageSwitch: userModuleOptions.i18n?.onBeforeLanguageSwitch || mapoDefaults.i18n.onBeforeLanguageSwitch
-    }]);
+    this.requireModule(['@nuxtjs/i18n', (this.options && this.options.i18n) || userModuleOptions.i18n || {},]);
 
     // INJECT ALL LAYOUTS
     const layouts = (await resolver.resolveRelative(__dirname, 'layouts')).map(({ src }) => src)

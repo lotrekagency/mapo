@@ -2,7 +2,7 @@
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import injectMapo from '../../packages/@mapomodule/core/index'
-import { vuetify } from '../../packages/@mapomodule/uikit/defaults'
+import vuetify from '../../packages/@mapomodule/uikit/defaults/vuetify'
 import VueI18n from 'vue-i18n'
 import enUsTrans from "../../packages/@mapomodule/uikit/translations/en-US"
 

@@ -1,10 +1,14 @@
-import { vuetify } from '@mapomodule/uikit/defaults'
+import vuetify from '@mapomodule/uikit/defaults/vuetify'
+import i18n from '@mapomodule/uikit/defaults/i18n'
 
 export default {
   store: true,
   components: true,
   router: {
     base: process.env.PANEL_URL || '/',
+  },
+  build: {
+    transpile: ["mapomodule"],
   },
   head: {
     titleTemplate: '%s - mapo',
@@ -18,6 +22,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
+  i18n,
   vuetify,
   axios: {
     withCredentials: true,

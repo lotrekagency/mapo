@@ -1,8 +1,5 @@
 export default {
     modules: ["mapomodule"],
-    build: {
-        transpile: ["mapomodule"],
-    },
     mapo: {
         integrations: {
             camomilla: {
@@ -20,29 +17,7 @@ export default {
         },
     },
     i18n: {
-        detectBrowserLanguage: {
-            useCookie: true,
-            cookieKey: "i18n_redirected",
-            redirectOn: "root",
-        },
-        locales: [
-            {
-                code: "en",
-                name: "English",
-                file: "en-US.js",
-                iso: "en-US",
-            },
-            {
-                code: "it",
-                name: "Italiano",
-                file: "it-IT.js",
-                iso: "it-IT",
-            },
-        ],
-        vueI18nLoader: true,
-        lazy: true,
         langDir: __dirname + "/translations/",
-        defaultLocale: "en",
-        strategy: "no_prefix",
+        vueI18nLoader: true,
     },
 };

@@ -9,6 +9,9 @@ function customMerger(objValue, srcValue, key) {
     if (key == 'extendPlugins' && isFunction(objValue) && isFunction(srcValue)) {
         return plugins => objValue(srcValue(plugins))
     }
+    if (key == 'onBeforeLanguageSwitch' && isFunction(objValue) && isFunction(srcValue)) {
+        return async (...args) => {await objValue(...args); await srcValue(...args);}
+    }
     if (typeof objValue !== 'object') {
         return objValue
     }
