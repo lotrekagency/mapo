@@ -29,6 +29,7 @@ module.exports = {
     config.merge({ module: { rules: [{ resourceQuery: /blockType=docs/, loader: require('@mapomodule/utils/loaders/dummy-loader.js') }] } });
   },
   plugins: [
+    require('./global-const-plugin.js'),
     [
       'demo-code', {
         showText: '🧐 show more code..',
