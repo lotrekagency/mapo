@@ -12,9 +12,11 @@
       <div style="position: relative">
         <v-img
           v-if="mediaExists"
-          :src="internalValue.is_image && internalValue.file || null"
-          :lazy-src="internalValue.is_image && internalValue.thumbnail || null"
-          :class="{'grey lighten-2': !internalValue.is_image}"
+          :src="(internalValue.is_image && internalValue.file) || null"
+          :lazy-src="
+            (internalValue.is_image && internalValue.thumbnail) || null
+          "
+          :class="{ 'grey lighten-2': !internalValue.is_image }"
           v-bind="{
             aspectRatio,
             contain,
@@ -38,10 +40,24 @@
                 indeterminate
                 color="grey"
               ></v-progress-circular>
-              <div class="d-flex flex-column align-center justify-space-between fill-height" style="width: 100%" v-else>
-              <div></div>
-              <v-icon size="70px" color="grey">mdi-file</v-icon>
-              <span class="grey--text text--darken-3 text-truncate pl-1 pr-8" style="width: 100%">{{fileName}}</span>
+              <div
+                class="
+                  d-flex
+                  flex-column
+                  align-center
+                  justify-space-between
+                  fill-height
+                "
+                style="width: 100%"
+                v-else
+              >
+                <div></div>
+                <v-icon size="70px" color="grey">mdi-file</v-icon>
+                <span
+                  class="grey--text text--darken-3 text-truncate pl-1 pr-8"
+                  style="width: 100%"
+                  >{{ fileName }}</span
+                >
               </div>
             </v-row>
           </template>
@@ -64,7 +80,13 @@
           <v-card-title>{{ label }}</v-card-title>
 
           <v-card-actions>
-            <v-btn tile :disabled="readonly" @click="editing = true" block :min-height="minHeight">
+            <v-btn
+              tile
+              :disabled="readonly"
+              @click="editing = true"
+              block
+              :min-height="minHeight"
+            >
               <v-icon size="80"> mdi-plus-circle-outline </v-icon>
             </v-btn>
           </v-card-actions>
@@ -79,13 +101,23 @@
           </v-row>
           <v-row>
             <v-col cols="6">
-              <v-btn :disabled="readonly" @click="editing = true" fab v-bind="$attrs">
+              <v-btn
+                :disabled="readonly"
+                @click="editing = true"
+                fab
+                v-bind="$attrs"
+              >
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
             </v-col>
 
             <v-col cols="6">
-              <v-btn :disabled="readonly" @click="confirmDelete" fab v-bind="$attrs">
+              <v-btn
+                :disabled="readonly"
+                @click="confirmDelete"
+                fab
+                v-bind="$attrs"
+              >
                 <v-icon>mdi-delete</v-icon>
               </v-btn>
             </v-col>
@@ -100,14 +132,9 @@
           v-bind="$attrs"
         >
         </media-manager-dialog>
-
       </div>
     </v-hover>
-    <v-messages
-      v-model="errorMessages"
-      color="error"
-      class="mt-2"
-    />
+    <v-messages v-model="errorMessages" color="error" class="mt-2" />
   </div>
 </template>
 
@@ -115,16 +142,17 @@
 </style>
 
 <script>
+import { thisExpression } from "@babel/types";
+
 export default {
   name: "MediaField",
   data() {
     return {
-      internalValue: null,
+      internalValue: "",
       editing: false,
       isHovered: false,
     };
   },
-
   props: {
     value: Object,
     label: String,
@@ -134,7 +162,7 @@ export default {
     },
     errorMessages: {
       type: String | Array,
-      default: () => []
+      default: () => [],
     },
     rmAddBtn: {
       type: Boolean,
@@ -188,10 +216,13 @@ export default {
       return this.isHovered && this.mediaExists;
     },
     fileName() {
-      return this.internalValue && this.internalValue.file && this.internalValue.file.split("/").pop();
+      return (
+        this.internalValue &&
+        this.internalValue.file &&
+        this.internalValue.file.split("/").pop()
+      );
     },
   },
-
   methods: {
     update(val) {
       this.internalValue = val;
@@ -201,9 +232,17 @@ export default {
         .open({
           title: this.$t("mapo.remove"),
           question: this.$t("mapo.mediaField.confirmRemove"),
-          approveButton: { text: this.$t("mapo.remove"), attrs: { color: "red", text: true } }
+          approveButton: {
+            text: this.$t("mapo.remove"),
+            attrs: { color: "red", text: true },
+          },
         })
         .then((res) => (res ? (this.internalValue = null) : null));
+    },
+    isImage(val) {
+      if (!val?.is_image && val?.mime_type.includes("image")) {
+        Object.assign(val, { is_image: true });
+      }
     },
   },
 
@@ -214,11 +253,12 @@ export default {
       }
     },
     internalValue(val) {
+      this.isImage(val);
       this.$emit("input", val);
     },
   },
-  mounted(){
-    this.internalValue = this.val
-  }
+  mounted() {
+    this.internalValue = this.value;
+  },
 };
 </script>
