@@ -205,6 +205,11 @@ export default {
         })
         .then((res) => (res ? (this.internalValue = null) : null));
     },
+    isImage(val) {
+      if (!val?.is_image && val?.mime_type.includes("image")) {
+        Object.assign(val, { is_image: true });
+      }
+    },
   },
 
   watch: {
@@ -214,6 +219,7 @@ export default {
       }
     },
     internalValue(val) {
+      this.isImage(val)
       this.$emit("input", val);
     },
   },
