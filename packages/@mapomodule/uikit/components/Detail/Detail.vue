@@ -320,7 +320,7 @@ export default {
             return !Object.keys(this.model).length;
         },
         langs() {
-            return this.modelLanguages.length ? this.modelLanguages : this.languages;
+            return (this.modelLanguages || []).length ? this.modelLanguages : this.languages;
         },
         slotBindings() {
             return {
