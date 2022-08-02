@@ -218,7 +218,8 @@ export default {
                 synci18n: true,
               },
               {
-                value: this.$t("pubblicationDate"),
+                value: "pubblication_date",
+                label: this.$t("pubblicationDate"),
                 accessor: {
                   set: ({ val }) => val && new Date(val).toISOString(),
                 },
@@ -227,7 +228,7 @@ export default {
               },
             ],
           },
-          { value: this.$t("highlightImage"), type: "media", synci18n: true },
+          { value: "highlight_image", label: this.$t("highlightImage"), type: "media", synci18n: true },
         ],
       };
     },
