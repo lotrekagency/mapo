@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.25](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2022-08-02)
+
+
+### Bug Fixes
+
+* fix detail field language list ([1d290e6](https://github.com/lotrekagency/mapo/commit/1d290e69c180fe31c97dfb45e2c1afcdcb569f1d))
+* fix mediauploader typo ([67e7e4e](https://github.com/lotrekagency/mapo/commit/67e7e4e8e2214580c99331d7c21eef551edf08cc))
+* fixed bug on preview image ([f2878ee](https://github.com/lotrekagency/mapo/commit/f2878ee5d60bc74cab49ee0c055ace22f7d37076))
+* removed some accidental trash from previous commit ([4a85da4](https://github.com/lotrekagency/mapo/commit/4a85da419bddaadfe6a08afa5f71fe5e76e346f7))
+
+
+### Features
+
+* **i18n:** move i18n config to mapo defaults to enable mixed merges of user and mapo options. ([2190aa9](https://github.com/lotrekagency/mapo/commit/2190aa9ebf106d811a64e27502d3a45b75a3e9af))
+
+
+
+
+
 # [1.0.0-alpha.24](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.23...v1.0.0-alpha.24) (2022-07-22)
 
 
