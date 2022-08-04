@@ -8,6 +8,7 @@ const mapping = {
     file: "FileField",
     editor: "wygEditor",
     media: "MediaField",
+    enhancedMedia: "EnhancedMediaField",
     fks: "FksField",
     m2m: "FksField",
     mediaList: "MediaM2mField",
@@ -21,6 +22,9 @@ const props = {
         itemValue: "value"
     },
     MediaField: {
+        outlined: false
+    },
+    EnhancedMediaField: {
         outlined: false
     },
     vSwitch: {

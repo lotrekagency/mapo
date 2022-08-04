@@ -26,6 +26,8 @@ import DateField from "@mapomodule/uikit/components/Form/fields/DateField.vue";
 import FksField from "@mapomodule/uikit/components/Form/fields/FksField.vue";
 import MediaM2mField from "@mapomodule/uikit/components/Form/fields/MediaM2mField.vue";
 import MediaField from "@mapomodule/uikit/components/Form/fields/MediaField.vue";
+import EnhancedMediaField from "@mapomodule/uikit/components/Form/fields/EnhancedMediaField.vue";
+
 import SeoPreview from "@mapomodule/uikit/components/Form/fields/SeoPreview.vue";
 import FileField from "@mapomodule/uikit/components/Form/fields/FileField.vue";
 import Repeater from "@mapomodule/uikit/components/Form/fields/Repeater.vue"
@@ -46,6 +48,7 @@ export default {
     FksField,
     MediaM2mField,
     MediaField,
+    EnhancedMediaField,
     SeoPreview,
     FileField,
     Repeater,

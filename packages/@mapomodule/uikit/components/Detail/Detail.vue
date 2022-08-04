@@ -410,6 +410,7 @@ Here the list of the FieldConfiguration type association.
  - `file` ==> [file-field](/components/Form/fields/FileField/),
  - `editor` ==> [wyg-editor](/components/Form/fields/wygEditor/wygEditor/),
  - `media` ==> [media-field](/components/Form/fields/MediaField/),
+ - `enhancedMedia` ==> [enhanced-media-field](/components/Form/fields/EnhancedMediaField/),
  - `mediaList` ==> [media-m2m-field](/components/Form/fields/MediaM2mField/)
  - `m2m` or `fks` ==> [fks-field](/components/Form/fields/FksField/),
  - `repeater` ==> [repeater](/components/Form/fields/Repeater/),
