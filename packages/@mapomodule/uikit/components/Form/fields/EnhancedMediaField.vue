@@ -38,7 +38,7 @@
         {{ fileInfo.created }}
       </v-card-text>
       <v-card-actions>
-        <template v-if="!internalValue">
+        <template v-if="!internalValue && !rmAddBtn">
           <v-btn
             tile
             :disabled="readonly"
@@ -50,7 +50,7 @@
           </v-btn>
         </template>
         <template v-else>
-          <v-row>
+          <v-row >
             <v-col align="center">
               <v-btn
                 :disabled="readonly"
