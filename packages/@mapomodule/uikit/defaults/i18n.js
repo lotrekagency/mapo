@@ -19,7 +19,7 @@ export default {
         },
     ],
     lazy: true,
-    langDir: __dirname + "/translations/",
+    langDir: __dirname + "/../translations/",
     defaultLocale: "en",
     strategy: "no_prefix",
     onBeforeLanguageSwitch: (oldLocale, newLocale, isInitialSetup, context) => {
