@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.26](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2022-08-11)
+
+
+### Bug Fixes
+
+* correct langDir path on i18n defaults ([100239f](https://github.com/lotrekagency/mapo/commit/100239fb11b268baa67e6549a0a68e98348e8301))
+
+
+
+
+
 # [1.0.0-alpha.25](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.24...v1.0.0-alpha.25) (2022-08-02)
 
 
