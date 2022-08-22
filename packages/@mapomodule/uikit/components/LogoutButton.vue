@@ -24,7 +24,6 @@
 .darker__item {
   &.theme--light {
     background: #ffffffd6;
-    filter: invert(1);
   }
   &.theme--dark {
     background: #121212;
