@@ -186,6 +186,11 @@ export default {
             type: Array,
             default: () => []
         },
+        // Forces use of languages passed as prop, instead of those loaded with model
+        forceLanguages: {
+            type: Boolean,
+            default: false
+        },
         // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
         endpoint: {
             type: String,
@@ -320,7 +325,7 @@ export default {
             return !Object.keys(this.model).length;
         },
         langs() {
-            return (this.modelLanguages || []).length ? this.modelLanguages : this.languages;
+            return (!this.forceLanguages && (this.modelLanguages || []).length) ? this.modelLanguages : this.languages;
         },
         slotBindings() {
             return {

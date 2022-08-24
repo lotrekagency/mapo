@@ -16,7 +16,7 @@ export default {
   data() {
     return {
       model: null,
-      options: [],
+      options: this.items || [],
       loading: false,
     };
   },
