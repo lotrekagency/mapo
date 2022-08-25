@@ -163,7 +163,7 @@ export default {
             },
           },
           { label: this.$t("content"), value: "content", type: "editor" },
-          { label: "Color", value: "color", type: "color" },
+          { label: "Color", value: "meta.color", synci18n: true, type: "color" },
           {
             group: "Seo",
             fields: [
