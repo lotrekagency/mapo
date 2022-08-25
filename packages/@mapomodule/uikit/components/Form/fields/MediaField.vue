@@ -224,7 +224,7 @@ export default {
     },
   },
   mounted(){
-    this.internalValue = this.val
+    this.internalValue = this.value
   }
 };
 </script>
