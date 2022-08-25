@@ -1,0 +1,20 @@
+name: Test and Coverage
+
+on:
+  push:
+    branches: [ master, release ]
+  pull_request:
+    branches: [ master, release ]
+
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    container: cypress/browsers:node16.14.2-slim-chrome103-ff102
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          start: yarn dev
+          browser: chrome
