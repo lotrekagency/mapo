@@ -141,6 +141,7 @@ export default {
         this.resolve(this.response);
       }
       this.dialog = false;
+      this.response = false;
       this.options = { ...this.optionsBk };
     }
   }
