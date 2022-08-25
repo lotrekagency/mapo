@@ -23,13 +23,6 @@ export default async function (moduleOptions) {
         fileName: path.join(namespace, 'mapo.js')
     })
 
-    // INJECT MAPO OPTIONS
-    this.addTemplate({
-        src: path.resolve(__dirname, './options.js'),
-        fileName: path.join(namespace, 'options.js'),
-        options: { axios: (this.options && this.options.axios), ...moduleOptions }
-    })
-
     // INJECT ALL MIDDLEWARES
     const middlewares = (await resolver.resolveRelative(__dirname, 'middleware')).map(({ src }) => src)
 

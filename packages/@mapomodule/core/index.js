@@ -1,7 +1,6 @@
 import createRepository from '@mapomodule/core/api/crud'
 import transformRequestInMultipart from '@mapomodule/core/api/multipart'
 import initInterceptors from '@mapomodule/core/interceptor'
-import options from './options'
 
 function getRouteMiddlewares(route) {
     const meta = Array.isArray(route?.meta) ? route.meta[0] : route.meta
@@ -9,7 +8,6 @@ function getRouteMiddlewares(route) {
     return (typeof middleware === "string" ? [middleware] : middleware) || []
 }
 
-const { axios, ...conf } = options;
 
 export default (ctx, inject) => {
 
@@ -22,9 +20,7 @@ export default (ctx, inject) => {
         $api: {
             crud: createRepository(ctx.$axios),
             multipart: transformRequestInMultipart,
-            conf: axios
         },
-        $options: conf,
         /**
          * From here you can reach some utilities that simplify the interaction with the user authentication flow.
          */
