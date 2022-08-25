@@ -25,6 +25,8 @@
           v-model="model"
           mode="hexa"
           hide-mode-switch
+          v-bind="$attrs"
+          v-on="$listeners"
         ></v-color-picker>
       </v-card>
     </v-menu>
@@ -47,7 +49,7 @@ export default {
   name: "ColorField",
   data() {
     return {
-      model: null,
+      model: this.value || "",
       menu: null,
     };
   },
@@ -64,14 +66,11 @@ export default {
   },
   watch: {
     value(val) {
-      this.model = val;
+      this.model = val || "";
     },
     model(val) {
       this.$emit("input", val);
     },
-  },
-  mounted() {
-    this.model = this.value || null
   },
 };
 </script>
