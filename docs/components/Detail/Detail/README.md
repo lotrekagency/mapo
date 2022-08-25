@@ -12,6 +12,7 @@ The purpose of this component is to provide you with a very quick way to create 
 |lang|Set the current lang to value.|`String`|`false`|-|
 |fields|The main configuration that determines the arrangement of the fields in the detail layout.|[`DetailConfiguration`](#detailconfiguration)|`true`|-|
 |languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
+|forceLanguages|Forces use of languages passed as prop, instead of those loaded with model|`Boolean`|`false`|false|
 |endpoint|The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.|`String`|`false`|null|
 |identifier|The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.|`String|Number`.|`false`|new|
 |modelName|The title of the detail page.|`String`|`false`|-|
@@ -104,6 +105,7 @@ Here the list of the FieldConfiguration type association.
  - `file` ==> [file-field](/components/Form/fields/FileField/),
  - `editor` ==> [wyg-editor](/components/Form/fields/wygEditor/wygEditor/),
  - `media` ==> [media-field](/components/Form/fields/MediaField/),
+ - `enhancedMedia` ==> [enhanced-media-field](/components/Form/fields/EnhancedMediaField/),
  - `mediaList` ==> [media-m2m-field](/components/Form/fields/MediaM2mField/)
  - `m2m` or `fks` ==> [fks-field](/components/Form/fields/FksField/),
  - `repeater` ==> [repeater](/components/Form/fields/Repeater/),
