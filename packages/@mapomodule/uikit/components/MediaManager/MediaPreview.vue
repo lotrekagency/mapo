@@ -11,6 +11,7 @@
     }"
     v-bind="$attrs"
     v-on="videoListeners"
+    :title="media.title || media.name"
   >
     <template v-slot:placeholder>
       <v-row class="fill-height ma-0" align="center" justify="center">
