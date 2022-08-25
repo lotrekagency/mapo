@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.27](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2022-08-25)
+
+
+### Bug Fixes
+
+* remove unused options plugin ([45004bb](https://github.com/lotrekagency/mapo/commit/45004bb158267c7e2f7795c1d12cf568f9d7ded2))
+* **colorfield:** return string in colorfield ([3acbd5c](https://github.com/lotrekagency/mapo/commit/3acbd5caa6555835c168718303f1ca555e8efc75))
+* **detail:** added force option to languages ([8ed4b69](https://github.com/lotrekagency/mapo/commit/8ed4b69f746b136755cbda17cdab176632869cdf))
+
+
+### Features
+
+* **fields:** added color field ([ead7448](https://github.com/lotrekagency/mapo/commit/ead744861be2c9c24ea2911e68c8b4d1259cab15))
+* **mediapreview:** added title tag to medias ([d063162](https://github.com/lotrekagency/mapo/commit/d063162036a4294fbd3c5ed347dfde78061a1f33))
+* implemented enhanced media compomentent ([fe336e1](https://github.com/lotrekagency/mapo/commit/fe336e170d42a67562c8e4abfa387b806e7c7a6a))
+* implemented media preview through MediaPreview component ([575c285](https://github.com/lotrekagency/mapo/commit/575c2853eb774ca4c635ce099302a429cc479be5))
+
+
+
+
+
 # [1.0.0-alpha.26](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.25...v1.0.0-alpha.26) (2022-08-11)
 
 
