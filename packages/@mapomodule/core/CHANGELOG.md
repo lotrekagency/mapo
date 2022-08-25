@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.27](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2022-08-25)
+
+
+### Bug Fixes
+
+* remove unused options plugin ([45004bb](https://github.com/lotrekagency/mapo/commit/45004bb158267c7e2f7795c1d12cf568f9d7ded2))
+
+
+
+
+
 # [1.0.0-alpha.23](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-05-04)
 
 **Note:** Version bump only for package @mapomodule/core
