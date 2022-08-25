@@ -14,6 +14,7 @@ const mapping = {
     mediaList: "MediaM2mField",
     seoPreview: "SeoPreview",
     repeater: "Repeater",
+    color: "ColorField"
 }
 
 const props = {
