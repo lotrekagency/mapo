@@ -2,9 +2,9 @@ name: Test and Coverage
 
 on:
   push:
-    branches: [ master, release ]
+    branches: [ master ]
   pull_request:
-    branches: [ master, release ]
+    branches: [ master ]
 
 jobs:
   cypress-run:
@@ -22,7 +22,6 @@ jobs:
           start: yarn start:example
           wait-on: "http://localhost:3000"
           browser: chrome
-          headless: true
         env:
           CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
       - name: Cypress save screenshots
