@@ -9,12 +9,27 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    container: cypress/browsers:node16.14.2-slim-chrome103-ff102
+    container: cypress/included:10.6.0
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
+          install-command: yarn install && yarn bootstrap
           start: yarn dev
+          wait-on: "http://localhost:3000"
           browser: chrome
+          headless: true
+      - name: Cypress save screenshots
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+      - name: Cypress save videos
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
