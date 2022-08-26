@@ -22,6 +22,8 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "dev": "nuxt example",
+    "build:example": "nuxt build example",
+    "start:example": "nuxt start example",
     "pub": "lerna publish --conventional-commits",
     "docs:gen": "yarn docs:js && vuese gen && ./docs/.vuepress/moveREADME.sh",
     "docs:dev": "vuepress dev docs",
