@@ -41,6 +41,7 @@ en:
     trash: "Trash"
   pubblicationDate: "Pubblication Date"
   highlightImage: "Highlight Image"
+  testTab: "Test tab en"
 it:
   article: "Articolo"
   identifier: "Identificatore"
@@ -63,6 +64,7 @@ it:
     trash: "Cestinato"
   pubblicationDate: "Data di pubblicazione"
   highlightImage: "Immagine in evidenza"
+  testTab: "Test tab it"
 </i18n>
 
 <script>
@@ -155,12 +157,32 @@ export default {
           {
             // group: "Tabs",
             tabs: {
-              tab_1: [
-                { value: "meta.key1", synci18n: true },
-                { value: "meta.key2", synci18n: true, type: "textarea" },
-              ],
+              tab_1: {
+                tab: { label: this.$t("testTab") },
+                fields: [
+                  { value: "meta.key1", synci18n: true },
+                  { value: "meta.key2", synci18n: true, type: "textarea" },
+                  {
+                    tabs: {
+                      in_tab1: [{ value: "meta.key3", synci18n: true }],
+                      in_tab2: {
+                        tab: { label: "Tab inside tab"},
+                        fields: [{ value: "meta.key4", synci18n: true }],
+                      },
+                    },
+                  },
+                ],
+              },
               tab_2: [{ value: "meta.key2", synci18n: true }],
             },
+          },
+          {
+            // group: "Tabs",
+            group: "Group inside group",
+            fields: [{
+              group: "Group inside group",
+              fields: [{ value: "meta.group_inside_group" }]
+            }]
           },
           { label: this.$t("content"), value: "content", type: "editor" },
           { label: "Color", value: "meta.color", synci18n: true, type: "color" },

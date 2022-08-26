@@ -12,13 +12,13 @@
       <v-tabs v-model="tabIndex" class="tab-wrapper">
         <v-tab v-for="(tab, index) in conf.tabs" :key="index" v-show="show(tab)">
           <v-badge :value="hasErrors(tab)" color="error" dot>
-            {{ tab.label }} <v-icon v-if="tab.icon">{{ tab.icon }}</v-icon>
+            {{ tab.tab.label }} <v-icon v-if="tab.tab.icon">{{ tab.tab.icon }}</v-icon>
           </v-badge>
         </v-tab>
       </v-tabs>
       <v-tabs-items v-model="tabIndex">
         <v-tab-item v-for="(tab, index) in conf.tabs" :key="index" class="pt-8">
-          <slot :name="`tab.${tab.slug}`" v-bind="slotBindings">
+          <slot :name="`tab.${tab.tab.slug}`" v-bind="slotBindings">
             <Form
               v-model="model"
               v-bind="{ currentLang, errors, languages, readonly }"
@@ -26,19 +26,19 @@
               :moreSlotBindings="slotBindings"
             >
               <template
-                v-for="slot in nameSpacedSlots($slots, `tab.${tab.slug}.`)"
+                v-for="slot in nameSpacedSlots($slots, `tab.${tab.tab.slug}.`)"
                 :slot="slot"
               >
-                <slot :name="`tab.${tab.slug}.${slot}`"></slot>
+                <slot :name="`tab.${tab.tab.slug}.${slot}`"></slot>
               </template>
               <template
                 v-for="slot in nameSpacedSlots(
                   $scopedSlots,
-                  `tab.${tab.slug}.`
+                  `tab.${tab.tab.slug}.`
                 )"
                 v-slot:[slot]="props"
               >
-                <slot :name="`tab.${tab.slug}.${slot}`" v-bind="props" />
+                <slot :name="`tab.${tab.tab.slug}.${slot}`" v-bind="props" />
               </template>
             </Form>
           </slot>
@@ -134,7 +134,7 @@ export default {
     show(conf, type = "display"){
       const prop = type == "visibility" ? "vVisible" : "vShow"
       if (typeof conf[prop] == "function") {
-        return conf[prop]({ 
+        return conf[prop]({
           model: this.model,
           errors: this.errors,
           languages: this.languages,
