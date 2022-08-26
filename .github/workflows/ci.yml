@@ -20,6 +20,8 @@ jobs:
           wait-on: "http://localhost:3000"
           browser: chrome
           headless: true
+        env:
+          CYPRESS_CACHE_FOLDER: '${GITHUB_WORKSPACE}/.cypress-cache'
       - name: Cypress save screenshots
         uses: actions/upload-artifact@v1
         if: failure()
