@@ -8,7 +8,7 @@
       v-show="show(field)"
       :style="show(field, 'visibility') ? '' : 'opacity: 0; visibility: hidden;'"
     >
-    <FormTabs 
+    <FormTabs
         v-if="field.tabs"
         v-model="model"
         v-bind="{ currentLang, errors, languages, readonly }"
@@ -26,7 +26,7 @@
           v-slot:[slot]="props"
         >
           <slot :name="`group.${field.group.slug}.${slot}`" v-bind="props" />
-        </template>    
+        </template>
       </FormTabs>
       <FormGroup
         v-else-if="field.group"
@@ -46,9 +46,9 @@
           v-slot:[slot]="props"
         >
           <slot :name="`group.${field.group.slug}.${slot}`" v-bind="props" />
-        </template>    
+        </template>
       </FormGroup>
-      
+
       <div v-else>
         <slot :name="field.slotName + '.before'" v-bind="{ conf: field, ...slotBindings, }" />
         <slot
@@ -72,7 +72,7 @@
               v-slot:[slot]="props"
             >
               <slot :name="`fields.${field.value}.${slot}`" v-bind="props" />
-            </template>          
+            </template>
           </FormField>
         </slot>
         <slot :name="field.slotName + '.after'" v-bind="{ conf: field, ...slotBindings, }" />
@@ -166,11 +166,9 @@ export default {
     parseTabs(tabs) {
       return Object.keys(tabs).map(key => {
         const tab = tabs[key]
-        return { 
-          label: titleCase(key.replace(/_/, " ")), 
-          slug: key, 
-          ...tab.tab, 
-          fields: this.mapConf(Array.isArray(tab) && tab || tab.fields || []) 
+        return {
+          tab: {label: titleCase(key.replace(/_/, " ")), slug: key, ...tab.tab},
+          fields: this.mapConf(Array.isArray(tab) && tab || tab.fields || [])
         }
       })
     },
@@ -182,7 +180,7 @@ export default {
     mapConf(fields) {
       return fields.map((f, i) =>
         f.tabs
-          ? { group: this.parseTagsGroup(f), tabs: this.parseTabs(f.tabs) } 
+          ? { group: this.parseTagsGroup(f), tabs: this.parseTabs(f.tabs) }
           : f.group
             ? { group: this.parseGroup(f.group), fields: this.mapConf(f.fields) }
             : this.parseConf(f, i)
@@ -191,7 +189,7 @@ export default {
     show(conf, type = "display"){
       const prop = type == "visibility" ? "vVisible" : "vShow"
       if (typeof conf[prop] == "function") {
-        return conf[prop]({ 
+        return conf[prop]({
           model: this.model,
           errors: this.errors,
           languages: this.languages,
