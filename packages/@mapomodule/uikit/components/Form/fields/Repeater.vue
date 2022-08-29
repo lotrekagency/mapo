@@ -189,16 +189,16 @@
     }
   }
   &.expanded {
-    .expand-icon {
+    > div > div >.expand-icon {
       transform: rotate(180deg);
     }
-    .collapsed-label {
+    > div > div > .collapsed-label {
       display: none;
     }
-    .repeater-fields {
+    > div > .repeater-fields {
       display: flex;
     }
-    .collapsed-preview {
+    > div > .collapsed-preview {
       flex-basis: 0;
     }
   }

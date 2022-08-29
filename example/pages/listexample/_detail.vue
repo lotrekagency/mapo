@@ -205,6 +205,118 @@ export default {
               { type: "seoPreview" },
             ],
           },
+          {
+          group: {
+            name: this.$t("overviewBlock"),
+          },
+          fields: [
+            {
+              value: "meta.overview.elements",
+              label: this.$t("elements"),
+              type: "repeater",
+              attrs: {
+                sortable: true,
+                collapsable: true,
+                collapsedLabel: (item) =>
+                  this.$t(item.type) + ": " + (item.label || this.$t("labelNotCompiled")),
+                fields: {
+                  fullText: {
+                    name: this.$t("fullTextBlock"),
+                    preview:
+                      "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
+                    tCode: "fullTextBlock",
+                    tCodeField: "type",
+                    fields: [
+                      {
+                        value: "label",
+                        class: "col-md-6",
+                        attrs: { hideDetails: true, dense: true },
+                      },
+                      {
+                        value: "title",
+                        label: this.$t("title"),
+                        class: "col-md-6",
+                        attrs: { hideDetails: true, dense: true },
+                      },
+                      {
+                        value: "content",
+                        label: this.$t("content"),
+                        type: "editor",
+                        attrs: { hideDetails: true },
+                      },
+                      {
+                        value: "details",
+                        label: this.$t("details"),
+                        type: "repeater",
+                        attrs: {
+                          sortable: true,
+                          collapsable: true,
+                          collapsedLabel: (item) =>
+                            item.label || this.$t("labelNotCompiled"),
+                          fields: [
+                            {
+                              value: "title",
+                              label: this.$t("title"),
+                              class: "col-md-6",
+                            },
+                            {
+                              value: "content",
+                              label: this.$t("content"),
+                              type: "editor",
+                              attrs: { hideDetails: true },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  halfText: {
+                    name: this.$t("halfTextBlock"),
+                    preview:
+                      "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
+                    tCode: "halfTextBlock",
+                    tCodeField: "type",
+                    fields: [
+                      {
+                        value: "label",
+                        class: "col-md-6",
+                        attrs: { hideDetails: true, dense: true },
+                      },
+                      {
+                        value: "title",
+                        label: this.$t("title"),
+                        class: "col-md-6",
+                        attrs: { hideDetails: true, dense: true },
+                      },
+                      { value: "content", label: this.$t("content"), type: "editor" },
+                    ],
+                  },
+                  smallText: {
+                    name: this.$t("smallTextBlock"),
+                    preview:
+                      "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
+                    tCode: "smallTextBlock",
+                    tCodeField: "type",
+                    fields: [
+                      {
+                        value: "label",
+                        class: "col-md-6",
+                        attrs: { hideDetails: true, dense: true },
+                      },
+                      {
+                        value: "title",
+                        label: this.$t("title"),
+                        class: "col-md-6",
+                        attrs: { hideDetails: true, dense: true },
+                      },
+                      { value: "content", label: this.$t("content"), type: "editor" },
+                    ],
+                  },
+                },
+              },
+            },
+          ],
+        },
         ],
         sidenav: [
           {
