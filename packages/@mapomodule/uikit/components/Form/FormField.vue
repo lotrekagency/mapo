@@ -36,6 +36,7 @@ import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import { titleCase } from "@mapomodule/utils/helpers/formatters";
 
 import defaults from "./defaults";
+import { debounce } from "@mapomodule/utils/helpers/debounce";
 
 /**
  * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic fields inside the main form.
@@ -114,10 +115,13 @@ export default {
 
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
-      this.$emit("input", dump);
+      this.dEmit("input", dump);
     },
   },
   methods: {
+    dEmit: debounce(function (...args) {
+      this.$emit(...args);
+    }, 300),
     setModel(val = this.value) {
       var model = this.accessor.get({
         model: { ...val },

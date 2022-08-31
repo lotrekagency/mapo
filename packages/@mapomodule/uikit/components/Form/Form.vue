@@ -84,6 +84,7 @@
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 import { slugify, titleCase } from "@mapomodule/utils/helpers/formatters";
 import { deepClone } from "@mapomodule/utils/helpers/objHelpers";
+import { debounce } from "@mapomodule/utils/helpers/debounce";
 
 export default {
   name: "Form",
@@ -128,13 +129,16 @@ export default {
       this.initLang();
     },
     model(val) {
-      this.$emit("input", val);
+      this.dEmit("input", val);
     },
     fields(val){
       this.internalFields = this.cloneFields(val)
     }
   },
   methods: {
+    dEmit: debounce(function (...args) {
+      this.$emit(...args);
+    }, 300),
     nameSpacedSlots,
     initLang(lang = this.currentLang) {
       if (lang && !this.model.translations) {

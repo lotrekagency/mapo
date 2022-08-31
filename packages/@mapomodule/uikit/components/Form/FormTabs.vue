@@ -59,6 +59,7 @@
 <script>
 import { findPropPaths } from "@mapomodule/utils/helpers/objHelpers";
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
+import { debounce } from "@mapomodule/utils/helpers/debounce";
 
 export default {
   name: "FormTabs",
@@ -101,7 +102,7 @@ export default {
       this.model = val;
     },
     model(val) {
-      this.$emit("input", val);
+      this.dEmit("input", val);
     },
   },
   computed: {
@@ -125,6 +126,9 @@ export default {
     },
   },
   methods: {
+    dEmit: debounce(function (...args) {
+      this.$emit(...args);
+    }, 300),
     nameSpacedSlots,
     hasErrors(tab) {
       return findPropPaths(this.errors || {}, ({ val }) =>

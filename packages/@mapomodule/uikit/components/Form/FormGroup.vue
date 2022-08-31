@@ -33,6 +33,8 @@
 }
 </style>
 <script>
+import { debounce } from "@mapomodule/utils/helpers/debounce";
+
 export default {
   name: "FormGroup",
   data() {
@@ -73,7 +75,7 @@ export default {
       this.model = val;
     },
     model(val) {
-      this.$emit("input", val);
+      this.dEmit("input", val);
     },
   },
   computed: {
@@ -88,6 +90,9 @@ export default {
     },
   },
   methods: {
+    dEmit: debounce(function (...args) {
+      this.$emit(...args);
+    }, 300),
     show(conf, type = "display"){
       const prop = type == "visibility" ? "vVisible" : "vShow"
       if (typeof conf[prop] == "function") {
