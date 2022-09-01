@@ -115,11 +115,11 @@ export default {
 
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
-      this.dEmit("input", dump);
+      this.debouncedEmit("input", dump);
     },
   },
   methods: {
-    dEmit: debounce(function (...args) {
+    debouncedEmit: debounce(function (...args) {
       this.$emit(...args);
     }, 300),
     setModel(val = this.value) {

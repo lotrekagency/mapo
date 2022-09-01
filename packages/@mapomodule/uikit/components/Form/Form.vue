@@ -129,14 +129,14 @@ export default {
       this.initLang();
     },
     model(val) {
-      this.dEmit("input", val);
+      this.debouncedEmit("input", val);
     },
     fields(val){
       this.internalFields = this.cloneFields(val)
     }
   },
   methods: {
-    dEmit: debounce(function (...args) {
+    debouncedEmit: debounce(function (...args) {
       this.$emit(...args);
     }, 300),
     nameSpacedSlots,

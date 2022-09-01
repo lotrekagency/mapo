@@ -75,7 +75,7 @@ export default {
       this.model = val;
     },
     model(val) {
-      this.dEmit("input", val);
+      this.debouncedEmit("input", val);
     },
   },
   computed: {
@@ -90,7 +90,7 @@ export default {
     },
   },
   methods: {
-    dEmit: debounce(function (...args) {
+    debouncedEmit: debounce(function (...args) {
       this.$emit(...args);
     }, 300),
     show(conf, type = "display"){
