@@ -1,5 +1,5 @@
 <template>
-  <div ref="repeater" class="container pa-0">
+  <div class="container pa-0">
     <div class="d-flex justify-space-between">
       <span class="repeater-label">{{ label }}:</span>
       <v-btn v-if="collapsable" outlined tile text small @click="collapseAll"
@@ -10,27 +10,27 @@
       v-model="items"
       handle=".repeater-handle-sort"
       animation="150"
-      @change="sortCallback({ ...$event, items, eventType: 'move' })"
+      @change="draggableReorder($event)"
       :style="maxHeightStyle"
     >
       <div
         class="repeater-line-wrapper"
-        :class="{ expanded: !collapsable }"
+        :class="{ expanded: !collapsable || isExpanded(index) }"
         v-for="(model, index) in items"
         :key="index"
       >
         <div class="d-flex">
           <div v-if="collapsable" class="collapsed-preview">
-            <v-icon class="expand-icon" @click.native="toggleExpand($event)"
+            <v-icon class="expand-icon" @click.native="toggleExpand(index)"
               >mdi-chevron-down</v-icon
             >
             <span
               class="v-label collapsed-label"
-              @click="toggleExpand($event, true)"
+              @click="toggleExpand(index, true)"
               v-html="getCollapsedLabel(model, index)"
             ></span>
           </div>
-          <div class="repeater-fields container">
+          <div v-if="isExpanded(index)" class="repeater-fields container">
             <Form
             v-model="items[index]"
             :currentLang="translatable ? currentLang : null"
@@ -265,6 +265,7 @@ export default {
       items: null,
       tModalOpen: false,
       tModalCallback: () => {},
+      collapsedStack: (this.value || []).map(() => !!this.collapsable)
     };
   },
   props: {
@@ -326,6 +327,9 @@ export default {
     },
   },
   methods: {
+    isExpanded(index){
+      return !this.collapsedStack[index];
+    },
     async addItem(index) {
       const element = {};
       if (this.hasTemplates) {
@@ -335,10 +339,7 @@ export default {
       }
       const newIndex = typeof index == "number" ? index : this.items.length;
       this.items.splice(newIndex, 0, element);
-      this.$nextTick(() => {
-        const line = this.$refs.repeater.querySelectorAll(".repeater-line-wrapper")[newIndex];
-        line && line.classList.add("expanded");
-      });
+      this.collapsedStack.splice(newIndex, 0, false)
       this.sortable &&
         this.sortCallback({
           moved: { element, newIndex },
@@ -349,6 +350,7 @@ export default {
     removeItem(index) {
       const element = this.items[index];
       this.items.splice(index, 1);
+      this.collapsedStack.splice(index, 1);
       this.sortable &&
         this.sortCallback({
           moved: { element, oldIndex: index },
@@ -395,13 +397,19 @@ export default {
           return getPointed(model, field.value, fallback);
       }
     },
-    toggleExpand(event, forceValue) {
-      const action = forceValue == undefined ? "toggle" : forceValue ? "add" : "remove";
-      const target = event.target.closest(".repeater-line-wrapper");
-      target && target.classList[action]("expanded");
+    draggableReorder(event) {
+      const { newIndex, oldIndex } = event.moved;
+      const stackItem = this.collapsedStack[oldIndex];
+      this.collapsedStack.splice(oldIndex, 1);
+      this.collapsedStack.splice(newIndex, 0, stackItem);
+      this.sortCallback({ ...event, items: this.items, eventType: 'move' })
+    },
+    toggleExpand(index, forceValue) {
+      this.collapsedStack[index] = forceValue == undefined ? !this.collapsedStack[index] : forceValue;
+      this.collapsedStack = [...this.collapsedStack]
     },
     collapseAll() {
-      this.$refs.repeater.querySelectorAll(".repeater-line-wrapper").forEach((e) => e.classList.remove("expanded"));
+      this.collapsedStack = this.collapsedStack.map(() => true)
     },
   },
   computed: {
