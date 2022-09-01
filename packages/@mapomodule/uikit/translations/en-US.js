@@ -20,6 +20,8 @@ export default {
         saveContinue: "Save and continue",
         back: "Back",
         genericError: "Something whent bad, please try again later...",
+        saveSuccess: "Item saved succesfully!",
+        createSuccess: "Item succesfully created!",
         confirmDelete: "Are you sure you want to delete this item?",
         fetchingData: "Fetching data...",
         login: "Login",

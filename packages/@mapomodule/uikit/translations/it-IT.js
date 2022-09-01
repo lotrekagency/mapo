@@ -20,6 +20,8 @@ export default {
         saveContinue: "Salva e continua",
         back: "Indietro",
         genericError: "Qualcosa è andato storto, riprova più tardi...",
+        saveSuccess: "Elemento salvato con successo!",
+        createSuccess: "Elemento creato con successo!",
         confirmDelete: "Vuoi veramente eliminare questo elemento?",
         fetchingData: "Caricamento in corso...",
         login: "Login",
