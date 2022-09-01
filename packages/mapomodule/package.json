@@ -1,6 +1,6 @@
 {
   "name": "mapomodule",
-  "version": "1.0.0-alpha.27",
+  "version": "1.0.0-alpha.28",
   "description": "Mapo is a nuxt module that helps in the creation of Administration Panels.",
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
   "keywords": [
@@ -17,7 +17,7 @@
     "@mapomodule/integrations": "^1.0.0-alpha.16",
     "@mapomodule/routemeta": "^1.0.0-alpha.8",
     "@mapomodule/store": "^1.0.0-alpha.23",
-    "@mapomodule/uikit": "^1.0.0-alpha.27",
+    "@mapomodule/uikit": "^1.0.0-alpha.28",
     "@nuxtjs/axios": "^5.13.6",
     "lodash.mergewith": "^4.6.2"
   },

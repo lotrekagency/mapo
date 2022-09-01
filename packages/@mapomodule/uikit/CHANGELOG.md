@@ -3,6 +3,31 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.28](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2022-09-01)
+
+
+### Bug Fixes
+
+* **form debounce:** fix form debounce not correctly updating model ([04b392d](https://github.com/lotrekagency/mapo/commit/04b392df7021534c4f30cee6ab3593946dd29414))
+* fixed repeater remaining close on model fetch ([3a30136](https://github.com/lotrekagency/mapo/commit/3a301364ffe26107d890a9100c939a3c32cfc7c2))
+* **repeater:** fix row expansion in nested repeater ([4ed22cd](https://github.com/lotrekagency/mapo/commit/4ed22cd3b0fe8593d1c87e43cbf92bbba8198ae2))
+* **tabs:** show correct label in nested tabs ([30f50b2](https://github.com/lotrekagency/mapo/commit/30f50b277596304b99018e7132a8403c4c2c5639))
+
+
+### Features
+
+* **detail:** give feedback for all http actions in detail components and prevent interaction during the request ([ceec206](https://github.com/lotrekagency/mapo/commit/ceec206fe50b23e784f9528fe41c02ec11c91e66))
+
+
+### Performance Improvements
+
+* **repeater:** prevent collapsed repeater from rendering hidden forms ([1ae7d18](https://github.com/lotrekagency/mapo/commit/1ae7d1836f8ff8625f21a2be5fbaf5acef6ef404))
+* increase form performances debouncing the emit events ([5e0bb30](https://github.com/lotrekagency/mapo/commit/5e0bb30f1e660d5b81319f213730c217eb6752a5))
+
+
+
+
+
 # [1.0.0-alpha.27](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.26...v1.0.0-alpha.27) (2022-08-25)
 
 
