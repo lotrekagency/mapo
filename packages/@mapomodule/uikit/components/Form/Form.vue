@@ -129,7 +129,8 @@ export default {
       this.initLang();
     },
     model(val) {
-      this.debouncedEmit("input", val);
+      if (this.value !== val)
+        this.debouncedEmit("input", val);
     },
     fields(val){
       this.internalFields = this.cloneFields(val)
