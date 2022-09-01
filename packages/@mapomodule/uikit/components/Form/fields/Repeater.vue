@@ -318,6 +318,8 @@ export default {
   watch: {
     value(val) {
       this.items = val;
+      if (val.length != this.collapsedStack.length)
+        this.collapsedStack = (val || []).map(() => !!this.collapsable)
     },
     items(val) {
       this.$emit("input", val);
@@ -405,8 +407,8 @@ export default {
       this.sortCallback({ ...event, items: this.items, eventType: 'move' })
     },
     toggleExpand(index, forceValue) {
-      this.collapsedStack[index] = forceValue == undefined ? !this.collapsedStack[index] : forceValue;
-      this.collapsedStack = [...this.collapsedStack]
+      this.collapsedStack[index] = forceValue == undefined ? !this.collapsedStack[index] : !forceValue;
+      this.collapsedStack = [...this.collapsedStack];
     },
     collapseAll() {
       this.collapsedStack = this.collapsedStack.map(() => true)
