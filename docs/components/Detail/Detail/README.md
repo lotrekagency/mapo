@@ -28,7 +28,7 @@ The purpose of this component is to provide you with a very quick way to create 
 
 |Event Name|Description|Parameters|
 |---|---|---|
-|input|Fired when the v-model changes.|Emits the entire payload modified.|
+|input|-|-|
 
 <!-- @vuese:Detail:events:end -->
 

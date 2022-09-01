@@ -37,9 +37,9 @@
 |title.before|-|-|
 |title|-|-|
 |title.after|-|-|
-|`tab.${tab.slug}`|-|-|
-|`tab.${tab.slug}.${slot}`|-|-|
-|`tab.${tab.slug}.${slot}`|-|-|
+|`tab.${tab.tab.slug}`|-|-|
+|`tab.${tab.tab.slug}.${slot}`|-|-|
+|`tab.${tab.tab.slug}.${slot}`|-|-|
 
 <!-- @vuese:FormTabs:slots:end -->
 

@@ -17,17 +17,6 @@
 <!-- @vuese:Form:props:end -->
 
 
-## Events
-
-<!-- @vuese:Form:events:start -->
-
-|Event Name|Description|Parameters|
-|---|---|---|
-|input|-|-|
-
-<!-- @vuese:Form:events:end -->
-
-
 ## Slots
 
 <!-- @vuese:Form:slots:start -->
