@@ -73,7 +73,8 @@ export default {
       this.model = val;
     },
     model(val) {
-      this.$emit("input", val);
+      if (this.value !== val)
+        this.$emit("input", val);
     },
   },
   computed: {

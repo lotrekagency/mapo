@@ -73,14 +73,14 @@
                 <!-- Use this to override the Save button. -->
                 <slot name="button.save" v-bind="slotBindings">
                   <!-- The Save button. -->
-                  <v-btn v-show="canGoBack" :disabled="isReadonly" class="mb-2" tile block @click="saveItem(true)">{{
+                  <v-btn v-show="canGoBack" :loading="buttonClicked == 'saveAndBackBtn'" :disabled="isReadonly" class="mb-2" tile block @click="saveItem(true)">{{
                     isNew ? $t("mapo.create") : $t("mapo.save")
                   }}</v-btn>
                 </slot>
                 <!-- Use this to override the Save and continue button. -->
                 <slot name="button.savecontinue" v-bind="slotBindings">
                   <!-- The Save and continue button. -->
-                  <v-btn :disabled="isReadonly" class="mb-2" tile block @click="saveItem(false)"
+                  <v-btn :loading="buttonClicked == 'saveBtn'" :disabled="isReadonly" class="mb-2" tile block @click="saveItem(false)"
                     >{{ isNew ? $t("mapo.createContinue") : $t("mapo.saveContinue") }}</v-btn
                   >
                 </slot>
@@ -92,7 +92,7 @@
                   >
                 </slot>
                 <!-- Use this to override the Delete button. -->
-                <slot name="button.delete" v-bind="slotBindings">
+                <slot name="button.delete" :loading="buttonClicked == 'deleteBtn'" v-bind="slotBindings">
                   <!-- The Delete button. -->
                   <v-btn
                     v-if="!isNew"
@@ -161,7 +161,8 @@ export default {
             model: {},
             modelLanguages: [],
             currentLang: this.lang,
-            errors: null
+            errors: null,
+            buttonClicked: null
         };
     },
     props: {
@@ -224,6 +225,7 @@ export default {
             this.$nuxt.context?.from?.name == "login" ? this.$router.go(-3) : this.$router.back();
         },
         saveItem(back = false) {
+            this.buttonClicked = back ? "saveAndBackBtn" : "saveBtn";
             this.errors = null;
             this.$refs.form?.resetValidation();
             this.crud
@@ -233,6 +235,7 @@ export default {
                     this.back()
                   } else {
                     this.model = resp;
+                    this.$mapo.$snack.open({ message: this.isNew ? this.$t("mapo.createSuccess") : this.$t("mapo.saveSuccess"), color: "success" })
                     this.isNew && this.$router.replace({ params: { detail: resp.id } })
                   }
                 })
@@ -242,8 +245,8 @@ export default {
                 this.$mapo.$snack.open({
                     message: error.response?.data?.detail || this.$t("mapo.genericError"),
                     color: "error"
-                });
-            });
+                })
+            }).finally(() => {this.buttonClicked = null;});;
         },
         deleteItem() {
             this.$mapo.$confirm
@@ -254,13 +257,14 @@ export default {
             })
                 .then(res => {
                 if (res) {
+                    this.buttonClicked = "deleteBtn";
                     this.crud
                         .delete(this.identifier)
                         .then(() => this.back())
                         .catch(error => this.$mapo.$snack.open({
                         message: error.response?.data?.detail || this.$t("mapo.genericError"),
                         color: "error"
-                    }));
+                    })).finally(()=> {this.buttonClicked = null;});
                 }
             });
         },
@@ -274,6 +278,7 @@ export default {
         model(val) {
             // Fired when the v-model changes.
             // @arg Emits the entire payload modified.
+            console.log(val, "model")
             this.$emit("input", val);
         },
         lang(val) {
@@ -282,6 +287,7 @@ export default {
             }
         },
         value(val) {
+            console.log(val, "value")
             if (val) {
                 this.model = val;
             }
@@ -301,7 +307,7 @@ export default {
             if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
                 return !this.$mapo.$auth.user.permissions.includes(this.isNew ? "add" : "change");
             }
-            return false;
+            return !!this.buttonClicked;
         },
         canDelete() {
             if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
