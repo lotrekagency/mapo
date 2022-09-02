@@ -98,6 +98,14 @@ export default {
       }
     },
     model(val) {
+      this.debouncedSetValue(val);
+    },
+  },
+  methods: {
+    debouncedSetValue: debounce(function (...args) {
+      this.setValue(...args);
+    }, 300),
+    setValue(val){
       const dump = { ...this.value }; // since we cannot directly edit a prop
       setPointed(
         dump,
@@ -115,13 +123,8 @@ export default {
 
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
-      this.debouncedEmit("input", dump);
+      this.$emit("input", dump);
     },
-  },
-  methods: {
-    debouncedEmit: debounce(function (...args) {
-      this.$emit(...args);
-    }, 300),
     setModel(val = this.value) {
       var model = this.accessor.get({
         model: { ...val },
