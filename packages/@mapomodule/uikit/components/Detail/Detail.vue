@@ -278,7 +278,6 @@ export default {
         model(val) {
             // Fired when the v-model changes.
             // @arg Emits the entire payload modified.
-            console.log(val, "model")
             this.$emit("input", val);
         },
         lang(val) {
@@ -287,7 +286,6 @@ export default {
             }
         },
         value(val) {
-            console.log(val, "value")
             if (val) {
                 this.model = val;
             }
