@@ -1,4 +1,4 @@
-# mapomodule [![npm](https://img.shields.io/npm/v/mapomodule?style=flat-square)](https://www.npmjs.com/package/mapomodule) [![GitHub](https://img.shields.io/badge/license-MIT-green?style=flat-square)](./LICENSE.md)
+# mapomodule [![npm](https://img.shields.io/npm/v/mapomodule?style=flat-square)](https://www.npmjs.com/package/mapomodule) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/lotrekagency/mapo/Test%20and%20Coverage?label=e2e-tests&style=flat-square) [![GitHub](https://img.shields.io/badge/license-MIT-green?style=flat-square)](./LICENSE.md)
 
 ## Setup
 Add `mapomodule` dependency to your project
@@ -30,6 +30,13 @@ Add mapomodule to the modules section of nuxt.config.js
   }
 }
 ```
+## Integrations
+This module was created to simplify the creation of administration panels.
+
+Mapo was born as a frontend companion of the Camomilla project, but it was created with the aim of being agnostic about the backend. This is why we have enclosed the logic linked to the Camomilla project (camomilla-integrations) in a compatibility layer.
+
+If you want to try the project with Camomilla as a backend, just follow the instructions you will find here. Otherwise you can write your backend with the framework and language you prefer. You can also write new integrations to connect Mapo to other existing api backends.
+
 ## Features
 
 - Exposes [`$mapo`](https://lotrekagency.github.io/mapo/core/) core sevices to provide set of utilities.
@@ -61,4 +68,8 @@ Our documentation is generated directly from code thanks to [@Vuepress](https://
 
 1. Generate doc `yarn doc:gen`
 2. Preview vuepress doc `yarn doc:dev`
+
+### Testing
+
+The project comes with a pre-installed cypress suite. The number of e2e/unit tests present for now is low. So we invite contributors to write tests as well as new features.
 

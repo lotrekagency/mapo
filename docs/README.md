@@ -30,6 +30,13 @@ Add mapomodule to the modules section of nuxt.config.js
   }
 }
 ```
+## Integrations
+This module was created to simplify the creation of administration panels.
+
+Mapo was born as a frontend companion of the Camomilla project, but it was created with the aim of being agnostic about the backend. This is why we have enclosed the logic linked to the Camomilla project (camomilla-integrations) in a compatibility layer.
+
+If you want to try the project with Camomilla as a backend, just follow the instructions you will find here. Otherwise you can write your backend with the framework and language you prefer. You can also write new integrations to connect Mapo to other existing api backends.
+
 ## Features
 
 - Exposes [`$mapo`](https://lotrekagency.github.io/mapo/core/) core sevices to provide set of utilities.
