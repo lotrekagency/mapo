@@ -24,6 +24,7 @@
               v-bind="{ currentLang, errors, languages, readonly }"
               :fields="tab.fields"
               :moreSlotBindings="slotBindings"
+              immediate
             >
               <template
                 v-for="slot in nameSpacedSlots($slots, `tab.${tab.tab.slug}.`)"

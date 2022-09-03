@@ -14,6 +14,7 @@
         v-bind="{ currentLang, errors, languages, readonly }"
         :fields="conf.fields"
         :moreSlotBindings="slotBindings"
+        immediate
       >
         <template v-for="(_, slot) in $slots" :slot="slot">
           <!-- @vuese-ignore -->

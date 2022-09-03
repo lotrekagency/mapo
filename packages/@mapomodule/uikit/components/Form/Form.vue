@@ -83,6 +83,7 @@
 <script>
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 import { slugify, titleCase } from "@mapomodule/utils/helpers/formatters";
+import { debounce } from "@mapomodule/utils/helpers/debounce";
 
 export default {
   name: "Form",
@@ -119,18 +120,25 @@ export default {
       type: Array,
       default: () => [],
     },
+    // Removes debounce from the emitter.
+    immediate: Boolean
   },
   watch: {
     value(val) {
-      this.model = val;
-      this.initLang();
+      if (JSON.stringify(this.model) !== JSON.stringify(val)){
+        this.model = val;
+        this.initLang();
+      }
     },
     model(val) {
-      if (this.value !== val)
-        this.$emit("input", val);
+      if (JSON.stringify(this.value) !== JSON.stringify(val))
+        this.immediate ? this.$emit("input", val) : this.debouncedEmit("input", val);
     },
   },
   methods: {
+    debouncedEmit: debounce(function (...args) {
+      this.$emit(...args);
+    }, 300),
     nameSpacedSlots,
     initLang(lang = this.currentLang) {
       if (lang && !this.model.translations) {
