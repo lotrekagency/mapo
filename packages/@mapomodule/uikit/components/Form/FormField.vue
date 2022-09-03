@@ -92,13 +92,15 @@ export default {
         this.setModel(val);
       },
     },
-    "conf.value"(newValue, oldValue) {
+    kpointed(newValue, oldValue) {
       if (newValue !== oldValue) {
         this.setModel();
       }
     },
     model(val) {
-      this.debouncedSetValue(val);
+      var model = this.extractValue(val);
+      if (JSON.stringify(val) !== JSON.stringify(model))
+        this.debouncedSetValue(val);
     },
   },
   methods: {
@@ -109,7 +111,7 @@ export default {
       const dump = { ...this.value }; // since we cannot directly edit a prop
       setPointed(
         dump,
-        this.conf.value,
+        this.kpointed,
         this.accessor.set({ model: dump, val })
       );
       if (typeof this.conf.onChange == "function") 
@@ -118,23 +120,35 @@ export default {
           model: dump,
           currentLang: this.currentLang,
           languages: this.langs,
-          conf: this.conf
+          conf: this.conf,
+          kpointed: this.kpointed
         })
 
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
       this.$emit("input", dump);
     },
-    setModel(val = this.value) {
-      var model = this.accessor.get({
+    extractValue(val = this.value){
+      return this.accessor.get({
         model: { ...val },
-        val: getPointed({ ...val }, this.conf.value),
+        val: getPointed({ ...val }, this.kpointed),
       });
+    },
+    setModel(val = this.value) {
+      var model = this.extractValue(val)
       if (val && JSON.stringify(this.model) !== JSON.stringify(model))
         this.model = model;
     },
   },
   computed: {
+    kpointed(){
+      let kpointed = this.conf.value
+      if (this.currentLang && !this.conf.synci18n) {
+        const base = `translations.${this.currentLang}`;
+        kpointed = kpointed ? `${base}.${kpointed}` : base;
+      }
+      return kpointed;
+    },
     accessor() {
       let func = function ({ val }) {
         return val;
@@ -149,7 +163,7 @@ export default {
     fieldAttrs() {
       return {
         label: this.label,
-        errorMessages: this.conf.value
+        errorMessages: this.kpointed
           .split(".")
           .map((_, i, a) => a.slice(0, i + 1).join("."))
           .reduce((acc, next) => {

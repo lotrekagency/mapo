@@ -83,14 +83,12 @@
 <script>
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 import { slugify, titleCase } from "@mapomodule/utils/helpers/formatters";
-import { deepClone } from "@mapomodule/utils/helpers/objHelpers";
 
 export default {
   name: "Form",
   data() {
     return {
-      model: {},
-      internalFields: []
+      model: this.value,
     };
   },
   props: {
@@ -131,9 +129,6 @@ export default {
       if (this.value !== val)
         this.$emit("input", val);
     },
-    fields(val){
-      this.internalFields = this.cloneFields(val)
-    }
   },
   methods: {
     nameSpacedSlots,
@@ -146,14 +141,9 @@ export default {
       }
     },
     parseConf(field, i) {
-      const conf = typeof field === "string" ? { value: field } : field;
+      const conf = typeof field === "string" ? { value: field } : { ...field };
       conf.value = conf.value || "";
-      conf.value = conf.value.replace(new RegExp(`^translations\.(${this.languages.join("|")})\.?`), "");
       conf.slotName = `fields.${conf.value || i}`;
-      if (this.currentLang && !field.synci18n) {
-        const base = `translations.${this.currentLang}`;
-        conf.value = (conf.value && `${base}.${conf.value}`) || base;
-      }
       if (this.isReadonly) {
         conf.attrs = { ...conf.attrs, readonly: true };
       }
@@ -199,10 +189,6 @@ export default {
       }
       return true
     },
-    cloneFields(fields){
-      return process.browser ? deepClone(fields) : fields
-    }
-
   },
   computed: {
     slotBindings() {
@@ -215,12 +201,10 @@ export default {
       };
     },
     computedFields() {
-      return this.mapConf(this.internalFields);
+      return this.mapConf(this.fields);
     },
   },
   created(){
-    this.internalFields = this.cloneFields(this.fields)
-    this.model = this.value
     this.initLang();
   }
 };
