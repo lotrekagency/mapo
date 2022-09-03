@@ -13,8 +13,20 @@
 |moreSlotBindings|Additional bindings to indrease slots capabilities|`Object`|`false`|-|
 |fields|The main configuration that determines the arrangement of the fields in the detail layout.|[`DetailConfiguration`](#detailconfiguration)|`true`|-|
 |languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
+|immediate|Removes debounce from the emitter.|`Boolean`|`false`|-|
 
 <!-- @vuese:Form:props:end -->
+
+
+## Events
+
+<!-- @vuese:Form:events:start -->
+
+|Event Name|Description|Parameters|
+|---|---|---|
+|input|-|-|
+
+<!-- @vuese:Form:events:end -->
 
 
 ## Slots

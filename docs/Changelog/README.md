@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.29](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2022-09-03)
+
+
+### Bug Fixes
+
+* **form-field:** debounce the entire setter not only emitter to preserve the most fresh data from parents components ([31449e2](https://github.com/lotrekagency/mapo/commit/31449e2f759de23e993ef7679c8c5bf515dd347f))
+
+
+### Performance Improvements
+
+* **detail:** remove unused console logs ([3bef461](https://github.com/lotrekagency/mapo/commit/3bef461828ef1c6e076929776b1e4e76c224a67e))
+* **form:** move translations logic to from field to prevent field config manipulations and reduce rendering cycles ([06038ef](https://github.com/lotrekagency/mapo/commit/06038ef00654e85b43aa628891d4662f2b18c1c3))
+* **form:** prevent inputs if value has no changes and defer inputs if not immediate flag on form ([e3da2d8](https://github.com/lotrekagency/mapo/commit/e3da2d8265d275cfe63bbdaa382f2ab4fed1f91f))
+
+
+
+
+
 # [1.0.0-alpha.28](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.27...v1.0.0-alpha.28) (2022-09-01)
 
 
