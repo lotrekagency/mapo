@@ -1,15 +1,18 @@
 <template>
   <div class="row">
     <div
+      ref="nodes"
       class="col-12"
       :class="field.class"
       v-for="(field, index) in computedFields"
+      :data-id="index"
       :key="index"
       v-show="show(field)"
-      :style="show(field, 'visibility') ? '' : 'opacity: 0; visibility: hidden;'"
+      :style="(show(field, 'visibility') ? '' : 'opacity: 0; visibility: hidden;') + (inViewEl(index).style || '')"
     >
+    <div v-if="inViewEl(index).isHidden" class="render-placeholder"></div>
     <FormTabs
-        v-if="field.tabs"
+        v-else-if="field.tabs"
         v-model="model"
         v-bind="{ currentLang, errors, languages, readonly }"
         :conf="field"
@@ -90,7 +93,11 @@ export default {
   data() {
     return {
       model: {},
-      internalFields: []
+      internalFields: [],
+      // ** Experimental: intersection observer conditional rendering **
+      observer: null,
+      inViewMap: {},
+      // ** End of Experimental **
     };
   },
   props: {
@@ -201,8 +208,44 @@ export default {
     },
     cloneFields(fields){
       return process.browser ? deepClone(fields) : fields
-    }
-
+    },
+    // ** Experimental: intersection observer conditional rendering **
+    inViewEl(index){
+      if (this.inViewMap[index]?.boundingClientRect){
+        const { height } = this.inViewMap[index].boundingClientRect
+        this.inViewMap[index].style = `min-height: ${height}px;`
+      }
+      return this.inViewMap[index] || {}
+    },
+    initObserver(){
+      let observer = new IntersectionObserver(this.handleIntersection);
+      for (let node of this.$refs.nodes) {
+        observer.observe(node);
+      }
+      this.observer = observer;
+    },
+    updateObserver(){
+      if (this.observer){
+        for (let node of this.$refs.nodes) {
+            this.observer.unobserve(node);
+            this.observer.observe(node);
+        }
+      }
+    },
+    handleIntersection(entries, observer) {
+      const dump = {...this.inViewMap}
+      for (let entry of entries) {
+        let { id } = entry.target.dataset;
+        if (entry.isIntersecting) {
+          let { isIntersecting, boundingClientRect } = entry;
+          dump[id] = { isHidden: !isIntersecting, boundingClientRect }
+        } else if (dump[id]) {
+          dump[id].isHidden = true;
+        }
+      }
+      this.inViewMap = dump;
+    },
+    // ** End of Experimental **
   },
   computed: {
     slotBindings() {
@@ -218,6 +261,11 @@ export default {
       return this.mapConf(this.internalFields);
     },
   },
+  // ** Experimental: intersection observer conditional rendering **
+  beforeDestroy() { this.observer.disconnect() },
+  // updated(){ this.updateObserver() },
+  mounted(){ this.initObserver() },
+  // ** End of Experimental **
   created(){
     this.internalFields = this.cloneFields(this.fields)
     this.model = this.value
