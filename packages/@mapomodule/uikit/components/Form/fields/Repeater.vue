@@ -318,7 +318,7 @@ export default {
   },
   watch: {
     value(val) {
-      this.items = val;
+      this.items = val || [];
       if (val.length != this.collapsedStack.length)
         this.collapsedStack = (val || []).map(() => !!this.collapsable);
     },
@@ -451,7 +451,7 @@ export default {
     },
   },
   mounted() {
-    this.items = this.value;
+    this.items = this.value || [];
   },
 };
 </script>
