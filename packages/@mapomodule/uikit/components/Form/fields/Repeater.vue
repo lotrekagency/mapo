@@ -2,9 +2,9 @@
   <div class="container pa-0">
     <div class="d-flex justify-space-between">
       <span class="repeater-label">{{ label }}:</span>
-      <v-btn v-if="collapsable" outlined tile text small @click="collapseAll"
-        >{{ $t("mapo.collapse") }}</v-btn
-      >
+      <v-btn v-if="collapsable" outlined tile text small @click="collapseAll">{{
+        $t("mapo.collapse")
+      }}</v-btn>
     </div>
     <draggable
       v-model="items"
@@ -30,34 +30,35 @@
               v-html="getCollapsedLabel(model, index)"
             ></span>
           </div>
-          <div v-if="isExpanded(index)" class="repeater-fields container">
-            <Form
-            v-model="items[index]"
-            :currentLang="translatable ? currentLang : null"
-            :languages="langs"
-            :fields="getFields(model)"
-            :errors="getErrors(index)"
-            :readonly="readonly"
-          >
-            <template
-              v-for="(slot, name) in templateSlots(model, $slots)"
-              :slot="slot"
-            >
-              <slot :name="name"></slot>
-            </template>
-            <template
-              v-for="(slot, name) in templateSlots(model, $scopedSlots)"
-              v-slot:[slot]="props"
-            >
-              <slot :name="name" v-bind="props" />
-            </template>
-          </Form>
+          <div v-if="isExpanded(index)" class="repeater-fields">
+            <v-container>
+              <Form
+                v-model="items[index]"
+                :currentLang="translatable ? currentLang : null"
+                :languages="langs"
+                :fields="getFields(model)"
+                :errors="getErrors(index)"
+                :readonly="readonly"
+              >
+                <template
+                  v-for="(slot, name) in templateSlots(model, $slots)"
+                  :slot="slot"
+                >
+                  <slot :name="name"></slot>
+                </template>
+                <template
+                  v-for="(slot, name) in templateSlots(model, $scopedSlots)"
+                  v-slot:[slot]="props"
+                >
+                  <slot :name="name" v-bind="props" />
+                </template>
+              </Form>
+            </v-container>
           </div>
           <div class="repeater-side-bar grey lighten-2">
-            <span
-              class="repeater-counter grey--text text--darken-2 text-truncate"
-              >{{ index + 1 }}</span
-            >
+            <span class="repeater-counter grey--text text--darken-2 text-truncate">{{
+              index + 1
+            }}</span>
             <v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
@@ -98,7 +99,7 @@
         </div>
       </div>
     </draggable>
-    <v-divider/>
+    <v-divider />
     <div class="d-flex justify-end">
       <v-btn
         class="repeater-add-line"
@@ -113,14 +114,12 @@
     </div>
     <v-dialog v-if="hasTemplates" v-model="tModalOpen" width="600" scrollable>
       <v-card>
-        <v-card-title class="text-h5">{{ $t("mapo.repeater.selectTemplate") }}</v-card-title>
+        <v-card-title class="text-h5">{{
+          $t("mapo.repeater.selectTemplate")
+        }}</v-card-title>
         <v-card-text>
           <div class="row mt-4">
-            <div
-              v-for="(template, i) in templates"
-              :key="i"
-              class="col-12 col-md-6 pa-0"
-            >
+            <div v-for="(template, i) in templates" :key="i" class="col-12 col-md-6 pa-0">
               <div @click="tModalCallback(template)" class="template-button">
                 <span class="text-h5">{{ template.name }}</span
                 ><br />
@@ -175,7 +174,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.theme--light .repeater-line-wrapper { border-color: rgba(0, 0, 0, 0.12); }
+.theme--light .repeater-line-wrapper {
+  border-color: rgba(0, 0, 0, 0.12);
+}
 .repeater-line-wrapper {
   border: 1px solid;
   border-bottom: none;
@@ -189,7 +190,7 @@
     }
   }
   &.expanded {
-    > div > div >.expand-icon {
+    > div > div > .expand-icon {
       transform: rotate(180deg);
     }
     > div > div > .collapsed-label {
@@ -265,7 +266,7 @@ export default {
       items: null,
       tModalOpen: false,
       tModalCallback: () => {},
-      collapsedStack: (this.value || []).map(() => !!this.collapsable)
+      collapsedStack: (this.value || []).map(() => !!this.collapsable),
     };
   },
   props: {
@@ -303,7 +304,7 @@ export default {
     // With this you can define the output of the collapsed label. You can enter the pointed path of a value in the row or a callback function to extract the label from the row.
     collapsedLabel: {
       type: String | Function,
-      default: null
+      default: null,
     },
     // This is mainly an internal property. It is used by DetailField to pass the list of languages inherited from the Detail component.
     langs: {
@@ -313,13 +314,13 @@ export default {
     },
     // This is mainly an internal property. It is used by DetailField to pass the active language inherited from the Detail component.
     currentLang: String,
-    maxHeight: String | Number
+    maxHeight: String | Number,
   },
   watch: {
     value(val) {
       this.items = val;
       if (val.length != this.collapsedStack.length)
-        this.collapsedStack = (val || []).map(() => !!this.collapsable)
+        this.collapsedStack = (val || []).map(() => !!this.collapsable);
     },
     items(val) {
       this.$emit("input", val);
@@ -329,7 +330,7 @@ export default {
     },
   },
   methods: {
-    isExpanded(index){
+    isExpanded(index) {
       return !this.collapsedStack[index];
     },
     async addItem(index) {
@@ -341,7 +342,7 @@ export default {
       }
       const newIndex = typeof index == "number" ? index : this.items.length;
       this.items.splice(newIndex, 0, element);
-      this.collapsedStack.splice(newIndex, 0, false)
+      this.collapsedStack.splice(newIndex, 0, false);
       this.sortable &&
         this.sortCallback({
           moved: { element, newIndex },
@@ -375,27 +376,32 @@ export default {
     },
     getFields(model) {
       if (this.hasTemplates) {
-        const template = this.templates.find(t => model[t.tCodeField] == t.tCode)
+        const template = this.templates.find((t) => model[t.tCodeField] == t.tCode);
         return template ? template.fields : [];
       }
       return this.fields;
     },
-    templateSlots(model, slots){
+    templateSlots(model, slots) {
       if (this.hasTemplates) {
-        const template = this.templates.find(t => model[t.tCodeField] == t.tCode)
-        return nameSpacedSlots(slots, `template.${template.tCode}.`).reduce((acc, v) => ({ [`template.${template.tCode}.${v}`]: v, ...acc }), {})
+        const template = this.templates.find((t) => model[t.tCodeField] == t.tCode);
+        return nameSpacedSlots(slots, `template.${template.tCode}.`).reduce(
+          (acc, v) => ({ [`template.${template.tCode}.${v}`]: v, ...acc }),
+          {}
+        );
       }
       return Object.keys(slots).reduce((acc, v) => ({ [v]: v, ...acc }), {});
     },
     getCollapsedLabel(model, index) {
-      const fallback = this.$t("mapo.repeater.item", {numberItem: index + 1});
+      const fallback = this.$t("mapo.repeater.item", { numberItem: index + 1 });
       switch (typeof this.collapsedLabel) {
         case "string":
           return getPointed(model, this.collapsedLabel, fallback);
         case "function":
           return this.collapsedLabel(model);
         default:
-          const field = this.getFields(model).find(f => !f.type || f.type.lower() == "text");
+          const field = this.getFields(model).find(
+            (f) => !f.type || f.type.lower() == "text"
+          );
           return getPointed(model, field.value, fallback);
       }
     },
@@ -404,14 +410,15 @@ export default {
       const stackItem = this.collapsedStack[oldIndex];
       this.collapsedStack.splice(oldIndex, 1);
       this.collapsedStack.splice(newIndex, 0, stackItem);
-      this.sortCallback({ ...event, items: this.items, eventType: 'move' })
+      this.sortCallback({ ...event, items: this.items, eventType: "move" });
     },
     toggleExpand(index, forceValue) {
-      this.collapsedStack[index] = forceValue == undefined ? !this.collapsedStack[index] : !forceValue;
+      this.collapsedStack[index] =
+        forceValue == undefined ? !this.collapsedStack[index] : !forceValue;
       this.collapsedStack = [...this.collapsedStack];
     },
     collapseAll() {
-      this.collapsedStack = this.collapsedStack.map(() => true)
+      this.collapsedStack = this.collapsedStack.map(() => true);
     },
   },
   computed: {
@@ -429,25 +436,25 @@ export default {
             name: tValue.name || titleCase(tKey.replace(/_/, " ")),
             tCode: tValue.tCode || tKey,
             tCodeField: tValue.tCodeField || "tCode",
-            preview, description,
+            preview,
+            description,
           };
         });
       }
       return Object.values(templates);
     },
-    maxHeightStyle(){
-      if (this.maxHeight !== undefined){
-        const maxHeight = isNaN(this.maxHeight) ? this.maxHeight : `${this.maxHeight}px`
-        return { maxHeight, paddingTop: '15px', overflowX: 'hidden', overflowY: 'auto' }
+    maxHeightStyle() {
+      if (this.maxHeight !== undefined) {
+        const maxHeight = isNaN(this.maxHeight) ? this.maxHeight : `${this.maxHeight}px`;
+        return { maxHeight, paddingTop: "15px", overflowX: "hidden", overflowY: "auto" };
       }
-    }
+    },
   },
   mounted() {
     this.items = this.value;
   },
 };
 </script>
-
 
 <docs>
 

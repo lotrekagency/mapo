@@ -100,6 +100,7 @@ export default {
               fields: [
                 { value: "sku", class: "col-md-6" },
                 { label: this.$t("name"), value: "name", class: "col-md-6" },
+                { label: "media", value: "media", type: "media" },
               ],
             },
           },
