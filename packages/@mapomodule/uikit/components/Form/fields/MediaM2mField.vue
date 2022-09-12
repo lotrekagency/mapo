@@ -45,7 +45,7 @@
               justify="center"
             >
               <v-col v-for="col in cols" :key="col">
-                <MediaElement
+                <MediaField
                   v-if="pageMedias[getIndexFromGrid(row, col)]"
                   v-model="pageMedias[getIndexFromGrid(row, col)]"
                   :aspect-ratio="1"
@@ -112,132 +112,123 @@
 </style>
 
 <script>
+import MediaField from './MediaField.vue';
 export default {
-  name: "MediaM2mField",
-  transition: "tasks-transition",
-  data() {
-    return {
-      child_medias: [],
-
-      page: 0,
-      mmdialog: false,
-    };
-  },
-
-  props: {
-    medias: {
-      type: Array,
-      default: () => [],
+    name: "MediaM2mField",
+    transition: "tasks-transition",
+    data() {
+        return {
+            child_medias: [],
+            page: 0,
+            mmdialog: false,
+        };
     },
-    cols: {
-      type: Number,
-      default: 2,
+    props: {
+        medias: {
+            type: Array,
+            default: () => [],
+        },
+        cols: {
+            type: Number,
+            default: 2,
+        },
+        rows: {
+            type: Number,
+            default: 2,
+        },
+        //reflections
+        minWidth: {
+            type: Number | String,
+            default: 300,
+        },
+        minHeight: {
+            type: Number | String,
+            default: 300,
+        },
+        height: {
+            type: Number | String,
+        },
+        width: {
+            type: Number | String,
+        },
+        maxHeight: {
+            type: Number | String,
+        },
+        maxWidth: {
+            type: Number | String,
+        },
+        elevation: {
+            type: Number | String,
+            default: undefined,
+        },
+        flat: {
+            type: Boolean,
+            default: false,
+        },
+        dark: {
+            type: Boolean,
+            default: false,
+        },
+        // This set the component status to readonly, stopping the user interaction.
+        readonly: {
+            type: Boolean,
+            default: false,
+        },
     },
-    rows: {
-      type: Number,
-      default: 2,
+    model: {
+        prop: "medias",
+        event: "changed-selection",
     },
-
-    //reflections
-    minWidth: {
-      type: Number | String,
-      default: 300,
+    mounted() {
+        if (this.medias)
+            this.child_medias = this.medias;
     },
-    minHeight: {
-      type: Number | String,
-      default: 300,
+    computed: {
+        mediasPerPage() {
+            return this.cols * this.rows;
+        },
+        pages() {
+            return Math.ceil(this.child_medias.length / this.mediasPerPage);
+        },
+        paginatedMedias() {
+            var array = new Array(this.pages);
+            for (let i = 0; i < array.length; i++) {
+                array[i] = this.child_medias.slice(i * this.mediasPerPage, (i + 1) * this.mediasPerPage);
+            }
+            return array;
+        },
     },
-    height: {
-      type: Number | String,
+    methods: {
+        getIndexFromGrid(row, col) {
+            return (row - 1) * this.cols + col - 1;
+        },
+        update(selection) {
+            this.child_medias = [...selection];
+            this.$emit("changed-selection", [...selection]);
+        },
+        checkMediaEdit(event, page, row, col) {
+            //if event is not empty, then exit
+            let index = this.mediasPerPage * page + this.getIndexFromGrid(row, col);
+            if (event) {
+                this.child_medias[index] = event;
+            }
+            else {
+                this.child_medias.splice(index, 1);
+            }
+            this.update(this.child_medias);
+        },
+        next() {
+            this.page = this.page + 1 === this.length ? 0 : this.page + 1;
+        },
+        prev() {
+            this.page = this.page - 1 < 0 ? this.length - 1 : this.page - 1;
+        },
     },
-    width: {
-      type: Number | String,
+    watch: {
+        medias(val) {
+            this.child_medias = val;
+        },
     },
-    maxHeight: {
-      type: Number | String,
-    },
-    maxWidth: {
-      type: Number | String,
-    },
-
-    elevation: {
-      type: Number | String,
-      default: undefined,
-    },
-    flat: {
-      type: Boolean,
-      default: false,
-    },
-
-    dark: {
-      type: Boolean,
-      default: false,
-    },
-    // This set the component status to readonly, stopping the user interaction.
-    readonly: {
-      type: Boolean,
-      default: false,
-    },
-  },
-
-  model: {
-    prop: "medias",
-    event: "changed-selection",
-  },
-
-  mounted() {
-    if (this.medias) this.child_medias = this.medias;
-  },
-
-  computed: {
-    mediasPerPage() {
-      return this.cols * this.rows;
-    },
-    pages() {
-      return Math.ceil(this.child_medias.length / this.mediasPerPage);
-    },
-    paginatedMedias() {
-      var array = new Array(this.pages);
-      for (let i = 0; i < array.length; i++) {
-        array[i] = this.child_medias.slice(
-          i * this.mediasPerPage,
-          (i + 1) * this.mediasPerPage
-        );
-      }
-      return array;
-    },
-  },
-
-  methods: {
-    getIndexFromGrid(row, col) {
-      return (row - 1) * this.cols + col - 1;
-    },
-    update(selection) {
-      this.child_medias = [...selection];
-      this.$emit("changed-selection", [...selection]);
-    },
-    checkMediaEdit(event, page, row, col) {
-      //if event is not empty, then exit
-      let index = this.mediasPerPage * page + this.getIndexFromGrid(row, col);
-      if (event) {
-        this.child_medias[index] = event;
-      } else {
-        this.child_medias.splice(index, 1);
-      }
-      this.update(this.child_medias);
-    },
-    next() {
-      this.page = this.page + 1 === this.length ? 0 : this.page + 1;
-    },
-    prev() {
-      this.page = this.page - 1 < 0 ? this.length - 1 : this.page - 1;
-    },
-  },
-
-  watch: {
-    medias(val) {
-      this.child_medias = val;
-    },
-  },
+    components: { MediaField }
 };
 </script>
