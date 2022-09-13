@@ -45,7 +45,7 @@
               justify="center"
             >
               <v-col v-for="col in cols" :key="col">
-                <MediaElement
+                <MediaField
                   v-if="pageMedias[getIndexFromGrid(row, col)]"
                   v-model="pageMedias[getIndexFromGrid(row, col)]"
                   :aspect-ratio="1"
