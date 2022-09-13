@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.30](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2022-09-13)
+
+
+### Bug Fixes
+
+* **auth:** removed js set cookie helpers since mapo login is http-only cookie based now ([6328c13](https://github.com/lotrekagency/mapo/commit/6328c13bec39d8e312f9dd4c33c53182fd64e6ed))
+
+
+
+
+
 # [1.0.0-alpha.23](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.22...v1.0.0-alpha.23) (2022-05-04)
 
 **Note:** Version bump only for package @mapomodule/store

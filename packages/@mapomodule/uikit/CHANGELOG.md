@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.30](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2022-09-13)
+
+
+### Bug Fixes
+
+* **repeater:** added v-container to form repeater to prevent field size expansion ([82af78e](https://github.com/lotrekagency/mapo/commit/82af78e7f74a7bc197ebae9ad7e72b1bb126729f))
+* **repeater:** handle null values ([6cea5c4](https://github.com/lotrekagency/mapo/commit/6cea5c43de6af8647714b06bcd34325acb61f466))
+* **wygEditor:** handle null values ([18477da](https://github.com/lotrekagency/mapo/commit/18477da45803697eabe5d8167f446e2c21ef64f8))
+
+
+
+
+
 # [1.0.0-alpha.29](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.28...v1.0.0-alpha.29) (2022-09-03)
 
 
