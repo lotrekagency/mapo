@@ -1930,12 +1930,12 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@mapomodule/mapo-integrations-camomilla@^1.0.0-alpha.3":
-  version "1.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/@mapomodule/mapo-integrations-camomilla/-/mapo-integrations-camomilla-1.0.0-alpha.3.tgz#0e09bf5cc1622f2ccd9f780215d6a1901aa24626"
-  integrity sha512-QAisr+uzlENltEF4KlWmxAnHm2/y/X8sPR7YN1EnvdWCRbo2YLxlzD1zViIjoGqW+xw535wFoQ/u2SZrBuzwJw==
+"@mapomodule/mapo-integrations-camomilla@^1.0.0-alpha.9":
+  version "1.0.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/@mapomodule/mapo-integrations-camomilla/-/mapo-integrations-camomilla-1.0.0-alpha.9.tgz#3371b05651ef8c4687b99da115c6117fcdc6fe17"
+  integrity sha512-nDazqLd7cc9Pzdr0LHVrxU9yH2Uovgo9il+YtxAeBqn9c1xCjvrul1p9TJpjTs8AoUP1YmH5SoEEXw14nEINJQ==
   dependencies:
-    "@mapomodule/integrations" "1.0.0-alpha.16"
+    "@mapomodule/integrations" "^1.0.0-alpha.16"
     cookie "^0.4.2"
     cookie-parser "^1.4.6"
     express "^4.17.3"

@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "nuxt": "^2.15.8",
-    "@mapomodule/mapo-integrations-camomilla": "^1.0.0-alpha.3",
+    "@mapomodule/mapo-integrations-camomilla": "^1.0.0-alpha.9",
     "@vuese/cli": "https://github.com/bnznamco/vuese/releases/download/%40vuese%2Fcli%402.14.3.mod2/cli.tar.gz",
     "cypress": "^10.6.0",
     "eslint": "^7.24.0",
