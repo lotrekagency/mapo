@@ -1,7 +1,6 @@
-import { getToken, setToken, removeToken } from '@mapomodule/utils/helpers/auth'
 
 const state = () => ({
-  token: getToken(),
+  token: null,
   isLoggedIn: false,
   info: {},
   page_permissions: {}
@@ -18,7 +17,7 @@ const mutations = {
     state.info = info
   },
   CLEAN_DATA: (state) => {
-    state.token = getToken()
+    state.token = null
     state.isLoggedIn = false
     state.info = {}
     state.page_permissions = {}
@@ -39,7 +38,6 @@ const actions = {
       this.$axios.post(url, { username: (username || "").trim(), password: (password || "").trim() }).then(response => {
         const { token } = response.data
         commit('SET_TOKEN', token)
-        setToken(token)
         commit('SET_LOGGEDIN', true)
         dispatch('getInfo').then(() => resolve())
       }).catch(error => {
@@ -52,7 +50,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       const url = process.env.AUTH_LOGIN_URL || '/api/auth/logout'
       this.$axios.get(url).then(_ => {
-        removeToken()
         commit('CLEAN_DATA')
         typeof location !== "undefined" && location.reload()
         resolve()
