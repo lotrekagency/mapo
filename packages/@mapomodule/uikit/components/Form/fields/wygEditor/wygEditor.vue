@@ -20,7 +20,7 @@ import defaults from "./defaults.js";
 import validEvents from "./utils/events.js";
 
 /**
- * This component wraps a [wygEditor](https://www.tiny.cloud/) instance. With the use of the v-model you can use this component to edit any content you like. 
+ * This component wraps a [wygEditor](https://www.tiny.cloud/) instance. With the use of the v-model you can use this component to edit any content you like.
  */
 
 export default {
@@ -144,7 +144,7 @@ export default {
     value(val) {
       if (this.editor && this.editor.initialized && val !== this.editorContent) {
         this.editorContent = val
-        this.editor.setContent(val);
+        this.editor.setContent(val || "");
       }
     },
     readonly(val) {
