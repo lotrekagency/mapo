@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.31](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2022-09-14)
+
+
+### Bug Fixes
+
+* **interceptor:** remove token injection for axios requests ([59b2f5c](https://github.com/lotrekagency/mapo/commit/59b2f5cb3dfd0becd78df02f30bc32967643e276))
+* **middleware:** fix auth middleware to correclty redirect based on router base ([1d49cd7](https://github.com/lotrekagency/mapo/commit/1d49cd72e141888ef7aae91ac0ddb13f8d0fce7a))
+
+
+
+
+
 # [1.0.0-alpha.30](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2022-09-13)
 
 
