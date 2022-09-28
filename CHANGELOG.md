@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.32](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2022-09-28)
+
+
+### Bug Fixes
+
+* fix emits of form inputs in heavly nested conditions ([2b143fd](https://github.com/lotrekagency/mapo/commit/2b143fdbee7c8797143c54b3a474e3462aff7321))
+
+
+
+
+
 # [1.0.0-alpha.31](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2022-09-14)
 
 
