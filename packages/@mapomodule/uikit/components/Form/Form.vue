@@ -131,8 +131,7 @@ export default {
       }
     },
     model(val) {
-      if (JSON.stringify(this.value) !== JSON.stringify(val))
-        this.immediate ? this.$emit("input", val) : this.debouncedEmit("input", val);
+      this.immediate ? this.$emit("input", val) : this.debouncedEmit("input", val);
     },
   },
   methods: {
