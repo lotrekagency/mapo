@@ -8,7 +8,7 @@
       :languages="['it', 'en', 'de']"
       :modelName="$t('article')"
     >
-      <!-- <template v-slot:fields.meta.contents.template.stocazzo.fields.title>
+      <!-- <template v-slot:fields.meta.contents.template.tempname.fields.title>
       <h2>suca</h2>
     </template>
     <template v-slot:group.tab_1-tab_2.tab.tab_1.fields.meta.key1>
@@ -144,7 +144,7 @@ export default {
                   preview:
                     "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif",
                   description: this.$t("group3Description"),
-                  tCode: "stocazzo",
+                  tCode: "tempname",
                   tCodeField: "polimorphic_c",
                   fields: [
                     { label: this.$t("title"), value: "title", class: "col-md-6" },
