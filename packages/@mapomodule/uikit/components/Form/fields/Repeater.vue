@@ -247,7 +247,7 @@
 
 <script>
 import draggable from "vuedraggable";
-import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
+import { getPointed, deepClone } from "@mapomodule/utils/helpers/objHelpers";
 import { titleCase } from "@mapomodule/utils/helpers/formatters";
 import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 
@@ -318,12 +318,13 @@ export default {
   },
   watch: {
     value(val) {
-      this.items = val || [];
+      if (JSON.stringify(val) === JSON.stringify(this.items)) return;
+      this.items = (val && deepClone(val)) || [];
       if (val.length != this.collapsedStack.length)
         this.collapsedStack = (val || []).map(() => !!this.collapsable);
     },
     items(val) {
-      this.$emit("input", val);
+      this.$emit("input", deepClone(val));
     },
     tModalOpen(val) {
       !val && this.tModalCallback();
@@ -451,7 +452,7 @@ export default {
     },
   },
   mounted() {
-    this.items = this.value || [];
+    this.items = (this.value && deepClone(this.value)) || [];
   },
 };
 </script>
