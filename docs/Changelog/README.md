@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.33](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2022-10-14)
+
+
+### Bug Fixes
+
+* **repeater:** keep cloned array in repeater ([2d9254c](https://github.com/lotrekagency/mapo/commit/2d9254cef9a9ac17b488d3bac440dbde9bfc60cf))
+
+
+
+
+
 # [1.0.0-alpha.32](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.31...v1.0.0-alpha.32) (2022-09-28)
 
 
