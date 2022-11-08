@@ -9,6 +9,7 @@
         v-bind="{ select, noFolders, mime }"
         elevation="0"
         ref="mediaManager"
+        fill-backgroud
       >
         <template v-slot:actions>
           <v-spacer></v-spacer>

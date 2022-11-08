@@ -37,7 +37,7 @@
         md="2"
       >
         <v-btn
-          @click.stop="editMedia(media)"
+          @click.stop="openEditor(media)"
           icon
           small
           :ripple="false"
@@ -119,6 +119,8 @@
 </style>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
+
 export default {
   name: "MediaGallery",
   data() {
@@ -127,19 +129,6 @@ export default {
     };
   },
   props: {
-    medias: {
-      type: Array,
-      required: true,
-      default: () => ({}),
-    },
-    page: {
-      type: Number,
-      default: 1,
-    },
-    pages: {
-      type: Number,
-      default: 1,
-    },
     select: {
       defaut: "none",
       type: String,
@@ -158,16 +147,18 @@ export default {
     },
   },
   computed: {
+    ...mapGetters("mapo/media", ["page", "pages", "medias"]),
     currentPage: {
       get() {
         return this.page;
       },
       set(val) {
-        this.$emit("pageChange", val);
+        this.getRoot({ page: val })
       },
     },
   },
   methods: {
+    ...mapActions("mapo/media", ["getRoot", "openEditor"]),
     isSelected(media) {
       return this.internalSelection.findIndex((m) => m.id === media.id) !== -1;
     },
@@ -188,12 +179,9 @@ export default {
           this.$emit("update:selection", this.internalSelection);
           break;
         default:
-          this.editMedia(media);
+          this.openEditor(media);
           break;
       }
-    },
-    editMedia(media) {
-      this.$emit("editMedia", media);
     },
     fileName(media) {
       return media && media.file && media.file.split("/").pop();

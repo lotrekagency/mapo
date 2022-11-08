@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
+
 export default {
   name: "MediaUploader",
   data() {
@@ -67,16 +69,8 @@ export default {
       _mediaFileCrud: null
     };
   },
-  props: {
-    parentFolder: {
-      type: Object
-    },
-    folders: {
-      type: Array,
-      default: () => []
-    }
-  },
   computed: {
+    ...mapGetters("mapo/media", ["parentFolder", "folders"]),
     mediaFileCrud() {
       this._mediaFileCrud =
         this._mediaFileCrud ||

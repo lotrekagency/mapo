@@ -2,7 +2,7 @@
   <div v-if="media">
     <v-container class="px-md-6">
       <div class="img_overlay">
-        <v-btn class="img_overlay__button img_overlay__button--back" small icon @click="close">
+        <v-btn class="img_overlay__button img_overlay__button--back" small icon @click="closeEditor">
           <v-icon>mdi-arrow-left</v-icon>
         </v-btn>
         <v-btn class="img_overlay__button img_overlay__button--href" small icon :href="media.file" target="_blank" >
@@ -160,7 +160,7 @@
               text
               tile
               color="error"
-              @click.stop="deleteMedia"
+              @click.stop="confirmDelete"
             >
               {{ $t("mapo.delete") }}
             </v-btn>
@@ -213,6 +213,7 @@ table tr td:nth-child(2) {
 </style>
 <script>
 import { humanFileSize } from "@mapomodule/utils/helpers/formatters";
+import { mapGetters, mapActions } from "vuex"
 
 export default {
   name: "MediaEditor",
@@ -224,13 +225,8 @@ export default {
       sameUrl: false,
     };
   },
-  props: {
-    value: {
-      type: Object,
-      default: () => null,
-    },
-  },
   computed: {
+    ...mapGetters("mapo/media", ["editMedia"]),
     fileSize() {
       return this.media && humanFileSize(this.media.size);
     },
@@ -271,7 +267,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    editMedia(val) {
       this.media = val;
       this.editing = false;
       this.newFile = null;
@@ -279,8 +275,9 @@ export default {
     },
   },
   methods: {
+    ...mapActions("mapo/media", ["closeEditor", "deleteMedia", "updateMedia"]),
     saveMedia() {
-      const media = {
+      this.updateMedia({
         id: this.media.id,
         name: this.media.name,
         title: this.media.title,
@@ -289,23 +286,20 @@ export default {
         file: this.newFile || undefined,
         same_url: (this.newFile && this.sameUrl) || undefined,
         language_code: this.$i18n.locale
-      };
-      this.newFile = null;
-      this.sameUrl = false;
-      this.$emit("updateMedia", media);
+      }).then(() => {
+        this.newFile = null;
+        this.sameUrl = false;
+      });
     },
-    deleteMedia() {
+    confirmDelete() {
       this.$mapo.$confirm
         .open({
           title: this.$t("mapo.delete"),
           question: this.$t("mapo.mediaEditor.confirmDelete"),
           approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } },
         })
-        .then((res) => res && this.$emit("deleteMedia", this.media));
-    },
-    close() {
-      this.$emit("input", null);
-    },
+        .then((res) => res && this.deleteMedia(this.media));
+    }
   },
 };
 </script>

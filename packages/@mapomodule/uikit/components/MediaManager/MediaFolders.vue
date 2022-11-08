@@ -1,100 +1,58 @@
 <template>
-  <div class="media-folders-wrapper">
-    <div v-if="parentFolders && parentFolders.length">
-      <span class="mx-2 mt-1 d-flex flex-wrap align-center">
-        <span class="mb-1">
-          <v-icon @click="goToFolder()" small>mdi-home</v-icon></span
-        >
-        <span class="fpath__button" v-for="(f, i) in parentFolders" :key="i"
-          >/<a @click="i !== parentFolders.length - 1 && goToFolder(f)">{{
-            f.slug
-          }}</a>
-        </span>
-      </span>
-    </div>
-    <v-card-actions class="flex-wrap px-0">
-      <div v-if="parentFolder" class="d-none d-sm-block">
-        <v-btn
-          class="px-2"
-          tile
-          block
-          text
-          depressed
-          @click="goToFolder(updirFolder)"
-        >
-          <v-icon> mdi-arrow-left </v-icon>
-        </v-btn>
-      </div>
-      <div
-        v-for="folder in folders"
-        :key="folder.id"
-        class="d-flex child-flex"
-        :class="{ 'px-1': expanded }"
-      >
-        <div class="folder_grid d-flex flex-column" :class="{ expanded }">
-          <v-icon @click.stop="goToFolder(folder)" :size="expanded ? 100 : 40">
-            mdi-folder
-          </v-icon>
+  <div class="media-navigation">
+    <div class="media-navigation--spacer"></div>
+    <v-navigation-drawer expand-on-hover permanent absolute bottom>
+      <div style="position: sticky; top: 0px">
+        <v-list nav dense>
+          <v-list-item dense @click.stop="createFolder">
+            <v-list-item-icon>
+              <v-icon>mdi-plus</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Add folder</v-list-item-title>
+          </v-list-item>
+        </v-list>
 
-          <div>
-            <div class="d-flex justify-item-center" :style="hideSlug">
-              <span class="folder_slug">
-                {{ folder.title }}
-              </span>
-              <v-icon
-                size="20"
-                class="folder_grid__editicon ma-0 ml-auto"
-                @click.stop="createFolder(folder)"
-                >mdi-pencil</v-icon
-              >
-              <v-icon
-                size="20"
-                class="folder_grid__editicon ma-0"
-                @click.stop="deleteFolder(folder)"
-                >mdi-delete</v-icon
-              >
-            </div>
-          </div>
-        </div>
+        <v-divider></v-divider>
       </div>
-      <div class="flex-grow-1 text-center" v-if="!folders.length">
-        {{ $t("mapo.mediaFolders.noFolders") }}
-      </div>
-      <div class="ma-auto mr-2 mb-2">
-        <v-tooltip left>
-          <template v-slot:activator="{ on, attrs }">
-            <v-icon v-bind="attrs" v-on="on" @click.stop="createFolder">
-              mdi-plus
-            </v-icon>
-          </template>
-          <span>{{ $t("mapo.mediaFolders.newFolder") }}</span>
-        </v-tooltip>
-        <v-tooltip v-if="folders.length" bottom>
-          <template v-slot:activator="{ on, attrs }">
+
+      <v-list nav dense>
+        <v-list-item
+          dense
+          v-for="folder in folders"
+          :key="folder.id"
+          @click.stop="getRoot({ folder })"
+        >
+          <v-list-item-icon dense>
+            <v-icon>mdi-folder</v-icon>
+          </v-list-item-icon>
+          <v-list-item-content dense>
+            <v-list-item-title v-text="folder.title"></v-list-item-title>
+          </v-list-item-content>
+          <v-list-item-action class="d-flex flex-row" dense>
             <v-icon
-              v-bind="attrs"
-              v-on="on"
-              :style="rotate"
-              @click.prevent="expanded = !expanded"
+              size="16"
+              class="folder_grid__editicon ma-0 ml-auto"
+              @click.stop="createFolder(folder)"
+              >mdi-pencil</v-icon
             >
-              mdi-chevron-down
-            </v-icon>
-          </template>
-          <span>{{ expanded ? $t("mapo.collapse") : $t("mapo.expand") }}</span>
-        </v-tooltip>
-      </div>
-    </v-card-actions>
-    <v-progress-linear
-      :active="loading"
-      indeterminate
-      height="2"
-    ></v-progress-linear>
-
-    <v-divider></v-divider>
+            <v-icon
+              size="16"
+              class="folder_grid__editicon ma-0"
+              @click.stop="confirmDelete(folder)"
+              >mdi-delete</v-icon
+            >
+          </v-list-item-action>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
     <v-dialog v-model="dialog" max-width="300px">
       <v-card>
         <v-card-title>
-          {{ folderEdit.id ? $t("mapo.mediaFolders.editFolder") : $t("mapo.mediaFolders.newFolder") }}
+          {{
+            folderEdit.id
+              ? $t("mapo.mediaFolders.editFolder")
+              : $t("mapo.mediaFolders.newFolder")
+          }}
         </v-card-title>
 
         <v-card-text>
@@ -112,86 +70,61 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="closeEdit">{{ $t('mapo.cancel') }}</v-btn>
-          <v-btn color="primary" text @click="saveFolder">{{ $t('mapo.create') }}</v-btn>
+          <v-btn color="primary" text @click="closeEdit">{{
+            $t("mapo.cancel")
+          }}</v-btn>
+          <v-btn color="primary" text @click="saveFolder">{{
+            $t("mapo.create")
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
 </template>
 
-<style lang="scss" scoped>
-.media-folders-wrapper{
-  width: 100%;
-  font-size: 1rem;
-  font-weight: 400;
-  letter-spacing: 0;
-  line-height: 1.4rem;
-}
-.folder_grid {
-  .folder_slug {
-    width: 65px;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: center;
-    line-height: 20px;
+<style lang="scss">
+.media-navigation {
+  &--spacer {
+    width: 56px;
+    height: unset;
+
   }
-  &__editicon {
-    display: none;
-  }
-  &.expanded {
-    .folder_slug {
-      text-align: left;
-      padding-left: 5px;
-    }
-    .folder_grid__editicon {
-      display: block;
+  @media (max-width: 400px) {
+    &--spacer {
+      width: 0;
+      height: 56px;
     }
   }
 }
 
-.fpath__button {
-  padding-left: 7px;
-  color: grey;
-  a {
-    margin-left: 7px;
+.v-navigation-drawer--open-on-hover {
+  .v-navigation-drawer__content {
+    overflow-y: hidden;
   }
-  &:last-child {
-    a {
-      color: unset;
-      cursor: auto;
-    }
+}
+.v-navigation-drawer--is-mouseover {
+  z-index: 100;
+  .v-navigation-drawer__content {
+    overflow-y: auto;
   }
 }
 </style>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
+
 export default {
   name: "MediaFolders",
   data() {
     return {
       expanded: false,
       dialog: false,
-      folderEdit: {}
+      folderEdit: {},
     };
   },
-  props: {
-    loading: Boolean,
-    folders: {
-      type: Array,
-      default: () => []
-    },
-    parentFolders: {
-      type: Array,
-      default: () => []
-    }
-  },
   methods: {
-    goToFolder(folder) {
-      this.$emit("goToFolder", folder);
-    },
+
+    ...mapActions("mapo/media", ["getRoot",  "deleteFolder", "updateOrCreateFolder"]),
     createFolder(folder) {
       this.folderEdit = Object.assign(
         { updir: this.parentFolder && this.parentFolder.id },
@@ -199,18 +132,21 @@ export default {
       );
       this.dialog = true;
     },
-    deleteFolder(folder) {
+    confirmDelete(folder) {
       this.$mapo.$confirm
         .open({
           title: this.$t("mapo.delete"),
           question: this.$t("mapo.mediaFolders.confirmDelete"),
-          approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } }
+          approveButton: {
+            text: this.$t("mapo.delete"),
+            attrs: { color: "red", text: true },
+          },
         })
-        .then(res => res && this.$emit("deleteFolder", folder));
+        .then((res) => res && this.deleteFolder(folder));
     },
     saveFolder() {
       this.folderEdit.slug = this.slugify(this.folderEdit.title);
-      this.$emit("updateFolder", this.folderEdit);
+      this.updateOrCreateFolder(this.folderEdit);
       this.closeEdit();
     },
     closeEdit() {
@@ -226,13 +162,14 @@ export default {
         .replace(/\-\-+/g, "-") // Replace multiple - with single -
         .replace(/^-+/, "") // Trim - from start of text
         .replace(/-+$/, ""); // Trim - from end of text
-    }
+    },
   },
   computed: {
+    ...mapGetters("mapo/media", ["folders", "parentFolders", "loading"]),
     rotate() {
       return {
         transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
-        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
+        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
       };
     },
     hideSlug() {
@@ -241,7 +178,7 @@ export default {
         maxHeight: this.expanded ? "24px" : "18px",
         opacity: this.expanded ? 0.8 : 0.8,
         transform: this.expanded ? "scale(1)" : "scale(0.7)",
-        transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)"
+        transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
       };
     },
     parentFolder() {
@@ -259,7 +196,7 @@ export default {
           this.parentFolders[this.parentFolders.length - 2]) ||
         null
       );
-    }
-  }
+    },
+  },
 };
 </script>
