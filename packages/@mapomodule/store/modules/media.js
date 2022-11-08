@@ -97,7 +97,7 @@ const actions = {
                 .then((response) => {
                     commit("SET_EDIT_MEDIA", response);
                     this.$mapo.$snack.open({
-                        message: this.$t("mapo.mediaManager.fileInfo"),
+                        message: this.$i18n.t("mapo.mediaManager.fileInfo"),
                     });
                     dispatch("getRoot")
                         .then(() => resolve(response))
