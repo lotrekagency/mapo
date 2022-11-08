@@ -2,7 +2,7 @@ module.exports = function () {
     const d = {};
     document.addEventListener("mousedown", e => {
         const closestDialog = e.target.closest(".v-dialog.v-dialog--active");
-        if (e.button === 0 && closestDialog != null && e.target.classList.contains("v-card__title")) {
+        if (e.button === 0 && closestDialog != null && closestDialog.querySelector(".v-card__title")?.contains(e.target)) {
             d.el = closestDialog;
             d.mouseStartX = e.clientX;
             d.mouseStartY = e.clientY;
