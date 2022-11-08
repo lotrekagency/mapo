@@ -1,6 +1,5 @@
 <template>
   <div v-if="media">
-    <v-container class="px-md-6">
       <div class="img_overlay">
         <v-btn class="img_overlay__button img_overlay__button--back" small icon @click="closeEditor">
           <v-icon>mdi-arrow-left</v-icon>
@@ -11,11 +10,10 @@
       </div>
       <MediaPreview
         :media="media"
-        height="400"
         contain
         filename
         media-controls
-        class="elevation-2"
+        class="media-editor--preview elevation-2"
       />
       <v-overlay
         absolute
@@ -167,7 +165,6 @@
           </v-btn>
         </div>
       </div>
-    </v-container>
   </div>
 </template>
 
@@ -188,6 +185,20 @@ table tr td:nth-child(2) {
     transition-property: max-height, padding;
     transition-duration: 0.3s;
     transition-timing-function: ease-out;
+  }
+}
+.media-editor--preview{
+  max-height: calc(100vh - 180px);
+  flex-grow: 1;
+  @media (max-width: 600px){
+    max-height: calc(100vh - 260px);
+    min-height: calc(100vh - 260px);  }
+}
+.v-dialog .media-editor--preview{
+  max-height: calc(100vh - 510px);
+  @media (max-width: 600px){
+    max-height: calc(100vh - 375px);
+    min-height: unset;
   }
 }
 .edit_spacer {

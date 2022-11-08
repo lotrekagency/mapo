@@ -1,17 +1,18 @@
 <template>
-  <div class="d-flex fill-height flex-column-reverse flex-sm-row" style="position: relative">
+  <div class="media-manager--wrapper">
     <MediaFolders v-show="!editMedia" v-if="!noFolders" />
-    <v-card elevation="0" class="flex-grow-1 d-flex flex-column rounded-0" :class="{ transparent: !fillBackgroud }">
-    <v-card-title class="d-flex flex-wrap pa-0">
-      <div>
-        <v-tabs v-model="tab" right background-color="transparent">
+    <v-card elevation="0" class="d-flex flex-column flex-grow-1 rounded-0" :class="{ transparent: !fillBackgroud }">
+    <v-card-title class="d-flex flex-wrap pa-0 pb-2">
+      <div class="d-flex flex-grow-1">
+        <v-tabs v-model="tab" background-color="transparent" :show-arrows="false">
           <v-tab>{{ $t("mapo.mediaManager.gallery") }}</v-tab>
           <v-tab>{{ $t("mapo.mediaManager.uploader") }}</v-tab>
         </v-tabs>
+        <v-spacer></v-spacer>
+        <v-btn v-show="$vuetify.breakpoint.xs" class="ma-2 ml-auto" @click="getRoot" icon>
+          <v-icon>mdi-update</v-icon>
+        </v-btn>
       </div>
-      <v-btn v-show="$vuetify.breakpoint.xs" class="ma-2 ml-auto" @click="getRoot" icon>
-        <v-icon>mdi-update</v-icon>
-      </v-btn>
       <div class="d-flex ma-auto mr-0" :style="$vuetify.breakpoint.xs ? 'width: 100%' : ''">
         <v-text-field
         v-show="!editMedia && tab == 0"
@@ -30,13 +31,13 @@
         :loading="loadingSearch"
         class="mx-2 mt-2"
       ></v-text-field>
-      <v-btn v-show="!$vuetify.breakpoint.xs" class="ma-2" @click="getRoot" icon>
+      <v-btn v-show="!$vuetify.breakpoint.xs" class="ma-2 ml-0" @click="getRoot" icon>
         <v-icon>mdi-update</v-icon>
       </v-btn>
       </div>
     </v-card-title>
     <MediaBreadcrumbs/>
-    <v-card-text class="pa-0 flex-grow-1">
+    <v-card-text class="media-manager--card-text pb-0">
       <v-tabs-items v-model="tab" class="transparent fill-height">
         <v-tab-item class="fill-height">
           <MediaGallery
@@ -58,7 +59,7 @@
         </v-tab-item>
       </v-tabs-items>
     </v-card-text>
-    <v-card-actions>
+    <v-card-actions class="py-0">
       <!-- Slot to provide custom button actions inside the media manager -->
       <slot name="actions"></slot>
     </v-card-actions>
@@ -67,6 +68,31 @@
   
 </template>
 <style lang="scss">
+.v-slide-group__next--disabled, .v-slide-group__prev--disabled{
+  display: none !important;
+}
+.media-manager--card-text{
+  max-height: calc(90vh - 20px);
+  flex-grow: 1;
+  @media (max-width: 600px){
+    max-height: calc(90vh - 130px);
+  }
+}
+.v-dialog .media-manager--card-text{
+  max-height: calc(90vh - 240px);
+}
+.media-manager{
+  &--wrapper{
+    display: flex;
+    height: inherit;
+    flex-direction: column-reverse;
+    position: relative;
+    justify-content: flex-end;
+    @media (min-width: 600px){
+      flex-direction: row;
+    }
+  }
+}
 .fpath__button {
   padding-left: 7px;
   color: grey;

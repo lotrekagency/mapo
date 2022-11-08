@@ -1,21 +1,33 @@
 <template>
   <div class="media-navigation">
-    <div class="media-navigation--spacer"></div>
-    <v-navigation-drawer expand-on-hover permanent absolute bottom>
-      <div style="position: sticky; top: 0px">
-        <v-list nav dense>
-          <v-list-item dense @click.stop="createFolder">
+    <div class="media-navigation--spacer">
+      <v-btn
+        class="open-button"
+        v-if="isMobile"
+        tile block
+        @click="mobileOpened = !mobileOpened"
+        ><v-icon>mdi-chevron-up-circle-outline</v-icon></v-btn
+      >
+    </div>
+    <v-navigation-drawer
+      v-model="mobileOpened"
+      v-bind="drawnerProps"
+      absolute
+      bottom
+    >
+      <template v-slot:[`prepend`]>
+          <v-list-item class="py-1" dense @click.stop="createFolder">
             <v-list-item-icon>
               <v-icon>mdi-plus</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Add folder</v-list-item-title>
+            <v-list-item-title>{{
+              $t("mapo.mediaFolders.newFolder")
+            }}</v-list-item-title>
           </v-list-item>
-        </v-list>
+          <v-divider></v-divider>
+      </template>
 
-        <v-divider></v-divider>
-      </div>
-
-      <v-list nav dense>
+      <v-list nav shaped dense>
         <v-list-item
           dense
           v-for="folder in folders"
@@ -84,19 +96,18 @@
 
 <style lang="scss">
 .media-navigation {
+  z-index: 2;
   &--spacer {
     width: 56px;
-    height: unset;
-
   }
-  @media (max-width: 400px) {
+  @media (max-width: 600px) {
     &--spacer {
-      width: 0;
-      height: 56px;
+      width: 100%;
     }
   }
 }
 
+.v-navigation-drawer--close { display: none;}
 .v-navigation-drawer--open-on-hover {
   .v-navigation-drawer__content {
     overflow-y: hidden;
@@ -111,20 +122,24 @@
 </style>
 
 <script>
-import { mapGetters, mapActions } from "vuex"
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "MediaFolders",
   data() {
     return {
+      mobileOpened: false,
       expanded: false,
       dialog: false,
       folderEdit: {},
     };
   },
   methods: {
-
-    ...mapActions("mapo/media", ["getRoot",  "deleteFolder", "updateOrCreateFolder"]),
+    ...mapActions("mapo/media", [
+      "getRoot",
+      "deleteFolder",
+      "updateOrCreateFolder",
+    ]),
     createFolder(folder) {
       this.folderEdit = Object.assign(
         { updir: this.parentFolder && this.parentFolder.id },
@@ -166,6 +181,15 @@ export default {
   },
   computed: {
     ...mapGetters("mapo/media", ["folders", "parentFolders", "loading"]),
+    isMobile() {
+      return this.$vuetify.breakpoint.xs;
+    },
+    drawnerProps() {
+      return {
+        permanent: !this.isMobile,
+        expandOnHover: !this.isMobile,
+      };
+    },
     rotate() {
       return {
         transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",

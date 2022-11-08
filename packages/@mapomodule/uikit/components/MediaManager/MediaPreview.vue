@@ -5,7 +5,6 @@
     aspect-ratio="1"
     class="grey lighten-2"
     :class="{
-      selected,
       'media-controls': mediaControls,
       'video-preview': videoPreview,
     }"
@@ -105,10 +104,6 @@ export default {
     media: {
       type: Object,
       default: () => ({}),
-    },
-    selected: {
-      type: Boolean,
-      default: false,
     },
     filename: {
       type: Boolean,

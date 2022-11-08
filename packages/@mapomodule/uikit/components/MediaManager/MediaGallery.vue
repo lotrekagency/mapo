@@ -1,40 +1,25 @@
 <template>
-  <div class="pa-4">
-    <v-row v-if="internalSelection.length && select == 'multi'" class="selection mb-4 grey darken-2">
-      <v-col
-        v-for="media in internalSelection"
-        :key="media.file"
-        class="d-flex"
-        cols="2"
-        sm="1"
-        md="1"
-        @click.stop="selectMedia(media)"
-      >
+  <div class="media-gallery--wrapper">
+    <div v-if="internalSelection.length && select == 'multi'" class="media-gallery--selection grey darken-2">
         <MediaPreview
+          v-for="media in internalSelection"
+          :key="media.file"
+          @click.native.stop="selectMedia(media)"
           :media="media"
           icon-size="20px"
-          class="elevation-4 cursor-pointer selection__item"
+          class="elevation-4 media-gallery--selection-item"
         />
-      </v-col>
-    </v-row>
-    <v-row
-      v-if="!medias.length"
-      class="d-flex flex-column"
-      dense
-      align="center"
-      justify="center"
-    >
+    </div>
+
+    <div class="media-gallery--empty" v-if="!medias.length" dense>
       <v-icon size="60"> mdi-alert-circle-outline </v-icon>
       <p>{{ $t("mapo.mediaGallery.noMediaFound") }}</p>
-    </v-row>
-    <v-row v-if="medias.length">
-      <v-col
+    </div>
+    <div class="media-gallery--masonry" v-if="medias.length">
+      <div
         v-for="media in medias"
         :key="media.file"
         class="img-container"
-        cols="6"
-        sm="3"
-        md="2"
       >
         <v-btn
           @click.stop="openEditor(media)"
@@ -50,26 +35,23 @@
         <MediaPreview
           class="elevation-4 cursor-pointer"
           :media="media"
-          :selected="isSelected(media)"
+          :class="{ selected: isSelected(media)}"
           @click.native="selectMedia(media)"
           filename
           video-preview
         />
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12">
-        <v-pagination
-          v-if="pages > 1"
-          v-model="currentPage"
-          :length="pages"
-        ></v-pagination>
-      </v-col>
-    </v-row>
+      </div>
+    </div>
+    <v-pagination
+      class="mt-2"
+      v-if="pages > 1"
+      v-model="currentPage"
+      :length="pages"
+    ></v-pagination>
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .cursor-pointer{
   cursor: pointer;
 }
@@ -79,33 +61,84 @@
   &__btn {
     position: absolute;
     z-index: 1;
-    right: 12px;
-    bottom: 12px;
+    right: 0;
+    bottom: 0;
     background: #1e1e1ea1;
     border-radius: 50% 0 0;
   }
 }
-.selection {
-  margin: -16px;
-  &__confirm {
-    margin: auto 0 auto auto;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    height: 100%;
+
+.media-gallery--wrapper{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+$wcol: calc(100% / 6 - 12px);
+
+
+.media-gallery--masonry {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: $wcol $wcol $wcol $wcol $wcol $wcol;
+  grid-template-rows: auto auto auto ;
+  column-gap: 12px;
+  row-gap: 12px;
+}
+
+@media (max-width: 960px) {
+  $wcol: calc(100% / 4 - 12px);
+  .media-gallery--masonry{
+    grid-template-columns: $wcol $wcol $wcol $wcol;
   }
-  &__item:hover::before {
-    content: "\F0156";
-    font: normal normal normal 30px/1 "Material Design Icons";
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    background: #00000082;
-    border: solid #ffffff6e 2px;
-    color: white;
+}
+
+@media (max-width: 600px) {
+  $wcol: calc(100% / 2 - 6px);
+  .media-gallery--masonry{
+    grid-template-columns: $wcol $wcol;
   }
+} 
+
+.media-gallery--empty{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.media-gallery--selection {
+  min-height: 60px;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  margin-bottom: 10px;
+  &-item{
+    width: 50px;
+    height: 50px;
+    flex-grow: 0;
+    margin: 5px;
+    cursor: pointer;
+    &:hover::before {
+      content: "\F0156";
+      font: normal normal normal 30px/1 "Material Design Icons";
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      background: #00000082;
+      border: solid #ffffff6e 2px;
+      color: white;
+    }
+  }
+  
 }
 .selected {
   &::after {
