@@ -1,7 +1,9 @@
 import app from './modules/app.js'
 import user from './modules/user.js'
+import media from './modules/media.js'
 
-const storeModules = { app, user }
+
+const storeModules = { app, user, media }
 
 const cookieparser = process.server ? require('cookieparser') : undefined
 
