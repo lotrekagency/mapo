@@ -1,7 +1,7 @@
 <template>
   <div class="media-manager--wrapper">
     <MediaFolders v-show="!editMedia" v-if="!noFolders" />
-    <v-card elevation="0" class="d-flex flex-column flex-grow-1 rounded-0" :class="{ transparent: !fillBackgroud }">
+    <v-card elevation="0" class="media-manager--v-card" :class="{ transparent: !fillBackgroud }">
     <v-card-title class="d-flex flex-wrap pa-0 pb-2">
       <div class="d-flex flex-grow-1">
         <v-tabs v-model="tab" background-color="transparent" :show-arrows="false">
@@ -68,6 +68,16 @@
   
 </template>
 <style lang="scss">
+.v-card.media-manager--v-card{
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  border-radius: 0px;
+  max-width: calc(100% - 56px);
+  @media (max-width: 600px){
+    max-width: 100%;
+  }
+}
 .v-slide-group__next--disabled, .v-slide-group__prev--disabled{
   display: none !important;
 }
@@ -133,7 +143,7 @@ export default {
   },
   computed: mapGetters("mapo/media", ["parentFolder", "medias", "folders", "parentFolders", "page", "pages", "loading", "editMedia" ]),
   methods: {
-    ...mapActions("mapo/media", ["getRoot", "openEditor", "updateMedia", "updateOrCreateFolder", "deleteFolder", "deleteMedia"]),
+    ...mapActions("mapo/media", ["getRoot", "openEditor", "updateMedia", "updateOrCreateFolder", "deleteFolder", "deleteMedia", "reset"]),
     selectionChange(event) {
       this.$emit("selectionChange", event);
     },
@@ -144,5 +154,8 @@ export default {
   async fetch() {
     await this.getRoot();
   },
+  destroyed(){
+    this.reset();
+  }
 };
 </script>

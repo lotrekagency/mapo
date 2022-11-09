@@ -10,6 +10,9 @@ const state = () => ({
 });
 
 const mutations = {
+    RESET_STATE: (old) => {
+        Object.assign(old, state());
+    },
     SET_LOADING: (state, status) => {
         state.loading = status;
     },
@@ -47,7 +50,8 @@ const actions = {
             let crud = this.$mapo.$api.crud("api/media-folders");
             commit("SET_LOADING", true);
             let { page, folder, search, mime } = context || {};
-            let { id } = (folder === undefined ? getters.parentFolder : folder) || {};
+            let { id } =
+                (folder === undefined ? getters.parentFolder : folder) || {};
             page = page || getters.page;
             let params = {
                 page,
@@ -128,6 +132,12 @@ const actions = {
                 commit("SET_EDIT_MEDIA", null);
                 await dispatch("getRoot");
             });
+    },
+    reset({ commit, dispatch }) {
+        return new Promise((resolve, reject) => {
+            commit("RESET_STATE");
+            dispatch("getRoot").then(resolve).catch(reject);
+        });
     },
 };
 
