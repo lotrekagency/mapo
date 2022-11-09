@@ -13,7 +13,9 @@
         light: !dark,
       }"
     >
-      <v-card-title v-if="!pages">{{ $t("mapo.mediaM2MField.mediaCarousel") }}</v-card-title>
+      <v-card-title v-if="!pages">
+        {{ $t("mapo.mediaM2MField.mediaCarousel") }}
+      </v-card-title>
       <v-card-actions>
         <v-row justify="center" class="ma-1" no-gutters>
           <v-col>
@@ -31,11 +33,7 @@
       </v-card-actions>
 
       <v-window v-model="page">
-        <v-window-item
-          class="page"
-          v-for="(pageMedias, i) in paginatedMedias"
-          :key="i"
-        >
+        <v-window-item class="page" v-for="(pageMedias, i) in paginatedMedias" :key="i">
           <v-container class="pa-0">
             <v-row
               v-for="row in rows"
@@ -51,9 +49,9 @@
                   :aspect-ratio="1"
                   :dark="dark"
                   rm-add-btn
-                  @changed-media="checkMediaEdit($event, i, row, col)"
+                  @input="checkMediaEdit($event, row, col)"
                 />
-                <div v-else class="placeholder"></div>
+                <!--<div v-else class="placeholder"></div>-->
               </v-col>
             </v-row>
           </v-container>
@@ -66,11 +64,7 @@
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-item-group v-model="page" class="text-center mx-1" mandatory>
-            <v-item
-              v-for="n in pages"
-              :key="`btn-${n}`"
-              v-slot="{ active, toggle }"
-            >
+            <v-item v-for="n in pages" :key="`btn-${n}`" v-slot="{ active, toggle }">
               <v-btn :disabled="readonly" :input-value="active" icon @click="toggle">
                 <v-icon>mdi-record</v-icon>
               </v-btn>
@@ -216,9 +210,9 @@ export default {
       this.child_medias = [...selection];
       this.$emit("changed-selection", [...selection]);
     },
-    checkMediaEdit(event, page, row, col) {
+    checkMediaEdit(event, row, col) {
       //if event is not empty, then exit
-      let index = this.mediasPerPage * page + this.getIndexFromGrid(row, col);
+      let index = this.mediasPerPage * this.page + this.getIndexFromGrid(row, col);
       if (event) {
         this.child_medias[index] = event;
       } else {
