@@ -38,7 +38,7 @@
     </v-card-title>
     <MediaBreadcrumbs/>
     <v-card-text class="media-manager--card-text pb-0">
-      <v-tabs-items v-model="tab" class="transparent fill-height">
+      <v-tabs-items touchless v-model="tab" class="transparent fill-height">
         <v-tab-item class="fill-height">
           <MediaGallery
             v-show="!editMedia"
@@ -81,30 +81,14 @@
 .v-dialog .media-manager--card-text{
   max-height: calc(90vh - 240px);
 }
-.media-manager{
-  &--wrapper{
-    display: flex;
-    height: inherit;
-    flex-direction: column-reverse;
-    position: relative;
-    justify-content: flex-end;
-    @media (min-width: 600px){
-      flex-direction: row;
-    }
-  }
-}
-.fpath__button {
-  padding-left: 7px;
-  color: grey;
-  a {
-    margin-left: 7px;
-  }
-  &:last-child {
-    a {
-      color: unset;
-      cursor: auto;
-      pointer-events: none;
-    }
+.media-manager--wrapper{
+  display: flex;
+  height: inherit;
+  flex-direction: column-reverse;
+  position: relative;
+  justify-content: flex-end;
+  @media (min-width: 600px){
+    flex-direction: row;
   }
 }
 </style>
@@ -113,15 +97,16 @@
 import { debounce } from "@mapomodule/utils/helpers/debounce";
 import { mapGetters, mapActions } from "vuex"
 
-const initialData = () => ({
-  tab: 0,
-  searchValue: "",
-  loadingSearch: false,
-});
 
 export default {
   name: "MediaManager",
-  data: initialData,
+  data(){
+    return {
+      tab: 0,
+      searchValue: "",
+      loadingSearch: false,
+    }
+  },
   props: {
     select: {
       type: String,
@@ -155,10 +140,6 @@ export default {
     search: debounce(function () {
       this.getRoot({search: this.searchValue}).then(() => (this.loadingSearch = false));
     }, 500),
-    reset() {
-      Object.assign(this.$data, initialData());
-      this.getRoot();
-    },
   },
   async fetch() {
     await this.getRoot();

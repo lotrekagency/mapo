@@ -4,7 +4,8 @@
       <v-btn
         class="open-button"
         v-if="isMobile"
-        tile block
+        tile
+        block
         @click="mobileOpened = !mobileOpened"
         ><v-icon>mdi-chevron-up-circle-outline</v-icon></v-btn
       >
@@ -15,27 +16,41 @@
       absolute
       bottom
     >
-      <template v-slot:[`prepend`]>
-          <v-list-item class="py-1" dense @click.stop="createFolder">
-            <v-list-item-icon>
-              <v-icon>mdi-plus</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>{{
-              $t("mapo.mediaFolders.newFolder")
-            }}</v-list-item-title>
-          </v-list-item>
-          <v-divider></v-divider>
+      <template v-slot:prepend>
+        <v-list-item class="py-1" dense @click.stop="createFolder">
+          <v-list-item-icon>
+            <v-icon>mdi-folder-plus</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>{{
+            $t("mapo.mediaFolders.newFolder")
+          }}</v-list-item-title>
+        </v-list-item>
+        <v-divider></v-divider>
+      </template>
+      <template v-if="parentFolder" v-slot:append>
+        <v-divider></v-divider>
+        <v-list-item
+          class="py-1"
+          dense
+          @click.stop="getRoot({ folder: parentParentFolder })"
+        >
+          <v-list-item-icon>
+            <v-icon>mdi-chevron-double-left</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>
+            {{ $t("mapo.mediaFolders.goBack") }}
+          </v-list-item-title>
+        </v-list-item>
       </template>
 
-      <v-list nav shaped dense>
+      <v-list class="py-0" v-if="folders && folders.length" dense>
         <v-list-item
-          dense
           v-for="folder in folders"
           :key="folder.id"
           @click.stop="getRoot({ folder })"
         >
           <v-list-item-icon dense>
-            <v-icon>mdi-folder</v-icon>
+            <v-icon>mdi-folder-image</v-icon>
           </v-list-item-icon>
           <v-list-item-content dense>
             <v-list-item-title v-text="folder.title"></v-list-item-title>
@@ -56,6 +71,10 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
+      <div v-else class="media-folders--empty">
+        <v-icon size="60"> mdi-alert-circle-outline </v-icon>
+        <p>{{ $t("mapo.mediaFolders.noFolders") }}</p>
+      </div>
     </v-navigation-drawer>
     <v-dialog v-model="dialog" max-width="300px">
       <v-card>
@@ -107,16 +126,34 @@
   }
 }
 
-.v-navigation-drawer--close { display: none;}
+.media-folders--empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.v-navigation-drawer--close {
+  display: none;
+}
 .v-navigation-drawer--open-on-hover {
   .v-navigation-drawer__content {
     overflow-y: hidden;
+  }
+  .media-folders--empty {
+    opacity: 0;
   }
 }
 .v-navigation-drawer--is-mouseover {
   z-index: 100;
   .v-navigation-drawer__content {
     overflow-y: auto;
+  }
+  .media-folders--empty {
+    opacity: 1;
   }
 }
 </style>
@@ -180,9 +217,17 @@ export default {
     },
   },
   computed: {
-    ...mapGetters("mapo/media", ["folders", "parentFolders", "loading"]),
+    ...mapGetters("mapo/media", [
+      "folders",
+      "parentFolders",
+      "loading",
+      "parentFolder",
+    ]),
     isMobile() {
       return this.$vuetify.breakpoint.xs;
+    },
+    parentParentFolder() {
+      return this.parentFolders[this.parentFolders.length - 2] || { path: "/" };
     },
     drawnerProps() {
       return {

@@ -110,6 +110,7 @@ export default {
         },
         // MediaManager/MediaFolders.vue
         mediaFolders: {
+            goBack: "Go back", 
             noFolders: "No folders here... Create a new one!",
             newFolder: "Add new folder",
             editFolder: "Edit folder",

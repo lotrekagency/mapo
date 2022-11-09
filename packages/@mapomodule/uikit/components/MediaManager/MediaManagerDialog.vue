@@ -3,12 +3,12 @@
     <slot v-bind="{ on, attrs }" name="activator"></slot>
     <v-dialog v-model="dialog" max-width="100%" width="800" scrollable>
       <media-manager
+        v-if="dialog"
         @selectionChange="selectionChange($event)"
         :selection="$attrs.selection"
         @update:selection="$emit('update:selection', $event)"
         v-bind="{ select, noFolders, mime }"
         elevation="0"
-        ref="mediaManager"
         fill-backgroud
       >
         <template v-slot:actions>
@@ -68,8 +68,6 @@ export default {
       if (!val && this.reject) {
         this.reject();
       }
-      if (val && this.reset) this.$refs.mediaManager.reset();
-      this.reset = !val;
     },
   },
   methods: {

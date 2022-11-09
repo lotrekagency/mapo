@@ -11,7 +11,7 @@
         />
     </div>
 
-    <div class="media-gallery--empty" v-if="!medias.length" dense>
+    <div class="media-gallery--empty" v-if="!medias.length">
       <v-icon size="60"> mdi-alert-circle-outline </v-icon>
       <p>{{ $t("mapo.mediaGallery.noMediaFound") }}</p>
     </div>
@@ -19,7 +19,7 @@
       <div
         v-for="media in medias"
         :key="media.file"
-        class="img-container"
+        class="media-gallery--card"
       >
         <v-btn
           @click.stop="openEditor(media)"
@@ -27,7 +27,7 @@
           small
           :ripple="false"
           color="white"
-          class="img-container__btn"
+          class="media-gallery--card-btn"
           :class="{'d-none': select == 'none'}"
         >
           <v-icon>mdi-circle-edit-outline</v-icon>
@@ -35,7 +35,7 @@
         <MediaPreview
           class="elevation-4 cursor-pointer"
           :media="media"
-          :class="{ selected: isSelected(media)}"
+          :class="{ 'media-gallery--selected': isSelected(media)}"
           @click.native="selectMedia(media)"
           filename
           video-preview
@@ -55,10 +55,10 @@
 .cursor-pointer{
   cursor: pointer;
 }
-.img-container {
+.media-gallery--card {
   display: flex;
   position: relative;
-  &__btn {
+  &-btn {
     position: absolute;
     z-index: 1;
     right: 0;
@@ -140,7 +140,7 @@ $wcol: calc(100% / 6 - 12px);
   }
   
 }
-.selected {
+.media-gallery--selected {
   &::after {
     content: "";
     background: #56be5057;
