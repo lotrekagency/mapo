@@ -1,7 +1,7 @@
 <template>
   <div class="media-manager--wrapper">
     <MediaFolders v-show="!editMedia" v-if="!noFolders" />
-    <v-card elevation="0" class="media-manager--v-card" :class="{ transparent: !fillBackgroud }">
+    <v-card elevation="0" class="media-manager--v-card" :class="{ transparent: !fillBackgroud, editing:editMedia }">
     <v-card-title class="d-flex flex-wrap pa-0 pb-2">
       <div class="d-flex flex-grow-1">
         <v-tabs v-model="tab" background-color="transparent" :show-arrows="false">
@@ -74,6 +74,9 @@
   flex-grow: 1;
   border-radius: 0px;
   max-width: calc(100% - 56px);
+  &.editing{
+    max-width: 100%;
+  }
   @media (max-width: 600px){
     max-width: 100%;
   }
