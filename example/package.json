@@ -10,7 +10,7 @@
     "test": "echo \"No test defined\""
   },
   "dependencies": {
-    "@mapomodule/mapo-integrations-camomilla": "1.0.0-alpha.9",
+    "@mapomodule/mapo-integrations-camomilla": "1.0.0-alpha.11",
     "mapomodule": "latest",
     "nuxt": "^2.15.8"
   }
