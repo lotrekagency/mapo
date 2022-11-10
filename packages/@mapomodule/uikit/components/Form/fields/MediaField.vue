@@ -41,6 +41,7 @@
             "
             class="media-field--info-btn"
             tile
+            small
             icon
             ><v-icon>mdi-close</v-icon></v-btn
           >

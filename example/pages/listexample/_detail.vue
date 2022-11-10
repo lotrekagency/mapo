@@ -42,6 +42,7 @@ en:
   pubblicationDate: "Pubblication Date"
   highlightImage: "Highlight Image"
   testTab: "Test tab en"
+  image: "Backgorud Image"
 it:
   article: "Articolo"
   identifier: "Identificatore"
@@ -65,6 +66,7 @@ it:
   pubblicationDate: "Data di pubblicazione"
   highlightImage: "Immagine in evidenza"
   testTab: "Test tab it"
+  image: "Immagine di sfondo"
 </i18n>
 
 <script>
@@ -103,6 +105,12 @@ export default {
                 { label: "media", value: "media", type: "media" },
               ],
             },
+          },
+          {
+            value: "meta.image",
+            label: this.$t("image"),
+            synci18n: true,
+            type: "media",
           },
           {
             value: "meta.contents",
