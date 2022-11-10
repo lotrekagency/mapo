@@ -2,7 +2,7 @@
   <div class="media-manager--wrapper">
     <MediaFolders v-show="!editMedia" v-if="!noFolders" />
     <v-card elevation="0" class="media-manager--v-card" :class="{ transparent: !fillBackgroud, editing:editMedia }">
-    <v-card-title class="d-flex flex-wrap pa-0 pb-2">
+    <v-card-title class="d-flex flex-wrap pa-0">
       <div class="d-flex flex-grow-1">
         <v-tabs v-model="tab" background-color="transparent" :show-arrows="false">
           <v-tab>{{ $t("mapo.mediaManager.gallery") }}</v-tab>
@@ -13,7 +13,7 @@
           <v-icon>mdi-update</v-icon>
         </v-btn>
       </div>
-      <div class="d-flex ma-auto mr-0" :style="$vuetify.breakpoint.xs ? 'width: 100%' : ''">
+      <div class="d-flex ma-auto mr-0 pb-2 pb-sm-0" :style="$vuetify.breakpoint.xs ? 'width: 100%' : ''">
         <v-text-field
         v-show="!editMedia && tab == 0"
         v-model="searchValue"
@@ -37,7 +37,7 @@
       </div>
     </v-card-title>
     <MediaBreadcrumbs/>
-    <v-card-text class="media-manager--card-text pb-0">
+    <v-card-text class="media-manager--card-text pa-0">
       <v-tabs-items touchless v-model="tab" class="transparent fill-height">
         <v-tab-item class="fill-height">
           <MediaGallery
@@ -59,7 +59,7 @@
         </v-tab-item>
       </v-tabs-items>
     </v-card-text>
-    <v-card-actions class="py-0">
+    <v-card-actions class="pa-0">
       <!-- Slot to provide custom button actions inside the media manager -->
       <slot name="actions"></slot>
     </v-card-actions>
@@ -85,14 +85,15 @@
   display: none !important;
 }
 .media-manager--card-text{
-  max-height: calc(90vh - 20px);
+  max-height: calc(100vh - 100px);
+  min-height: 400px;
   flex-grow: 1;
   @media (max-width: 600px){
-    max-height: calc(90vh - 130px);
+    max-height: calc(100vh - 195px);
   }
 }
 .v-dialog .media-manager--card-text{
-  max-height: calc(90vh - 240px);
+  max-height: calc(100vh - 300px);
 }
 .media-manager--wrapper{
   display: flex;

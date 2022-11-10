@@ -71,8 +71,8 @@
           </v-list-item-action>
         </v-list-item>
       </v-list>
-      <div v-else class="media-folders--empty">
-        <v-icon size="60"> mdi-alert-circle-outline </v-icon>
+      <div v-else class="media-folders--empty text--secondary body-2">
+        <v-icon size="60"> mdi-folder-information-outline</v-icon>
         <p>{{ $t("mapo.mediaFolders.noFolders") }}</p>
       </div>
     </v-navigation-drawer>

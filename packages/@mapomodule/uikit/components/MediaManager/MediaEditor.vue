@@ -1,5 +1,5 @@
 <template>
-  <div v-if="media">
+  <div v-if="media" class="media-editor--wrapper">
       <div class="img_overlay">
         <v-btn class="img_overlay__button img_overlay__button--back" small icon @click="closeEditor">
           <v-icon>mdi-arrow-left</v-icon>
@@ -169,6 +169,14 @@
 </template>
 
 <style lang="scss" scoped>
+
+.media-editor--wrapper{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 table tr td:nth-child(2) {
   overflow-wrap: anywhere;
 }
@@ -212,7 +220,7 @@ table tr td:nth-child(2) {
     z-index: 1;
     color: #333333 !important;
     background: #e0e0e096;
-    top: 10px;
+    top: 30px;
     &--back {
       left: 10px;
     }

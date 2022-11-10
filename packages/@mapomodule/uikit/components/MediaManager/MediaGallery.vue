@@ -12,7 +12,7 @@
     </div>
 
     <div class="media-gallery--empty" v-if="!medias.length">
-      <v-icon size="60"> mdi-alert-circle-outline </v-icon>
+      <v-icon size="60"> mdi-image-off-outline </v-icon>
       <p>{{ $t("mapo.mediaGallery.noMediaFound") }}</p>
     </div>
     <div class="media-gallery--masonry" v-if="medias.length">
@@ -80,6 +80,7 @@ $wcol: calc(100% / 6 - 12px);
 
 .media-gallery--masonry {
   width: 100%;
+  padding: 10px;
   overflow-y: auto;
   overflow-x: hidden;
   display: grid;
@@ -90,9 +91,9 @@ $wcol: calc(100% / 6 - 12px);
 }
 
 @media (max-width: 960px) {
-  $wcol: calc(100% / 4 - 12px);
+  $wcol: calc(100% / 3 - 12px);
   .media-gallery--masonry{
-    grid-template-columns: $wcol $wcol $wcol $wcol;
+    grid-template-columns: $wcol $wcol $wcol;
   }
 }
 
