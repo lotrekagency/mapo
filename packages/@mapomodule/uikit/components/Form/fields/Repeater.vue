@@ -152,6 +152,7 @@
 .repeater-fields {
   display: none;
   overflow: hidden;
+  width: 100%;
 }
 .expand-icon {
   cursor: pointer;
