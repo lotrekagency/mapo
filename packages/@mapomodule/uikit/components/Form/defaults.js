@@ -22,9 +22,6 @@ const props = {
         itemText: "text",
         itemValue: "value"
     },
-    MediaField: {
-        outlined: false
-    },
     EnhancedMediaField: {
         outlined: false
     },

@@ -1,177 +1,128 @@
 <template>
-  <div>
-    <v-text-field
-      v-if="title"
-      v-model="title"
-      class="mb-n8 pb-0"
-      solo
-      readonly
-      v-bind="$attrs"
-    ></v-text-field>
-    <v-hover v-model="isHovered">
-      <div style="position: relative">
-        <v-img
-          v-if="mediaExists"
-          :src="internalValue.is_image && internalValue.file || null"
-          :lazy-src="internalValue.is_image && internalValue.thumbnail || null"
-          :class="{'grey lighten-2': !internalValue.is_image}"
-          v-bind="{
-            aspectRatio,
-            contain,
-            height,
-            width,
-            maxWidth,
-            maxHeight,
-            minWidth,
-            minHeight,
-          }"
-        >
-          <template v-slot:placeholder>
-            <v-row
-              v-if="internalValue"
-              class="fill-height ma-0"
-              align="center"
-              justify="center"
-            >
-              <v-progress-circular
-                v-if="internalValue.is_image"
-                indeterminate
-                color="grey"
-              ></v-progress-circular>
-              <div class="d-flex flex-column align-center justify-space-between fill-height" style="width: 100%" v-else>
-              <div></div>
-              <v-icon size="70px" color="grey">mdi-file</v-icon>
-              <span class="grey--text text--darken-3 text-truncate pl-1 pr-8" style="width: 100%">{{fileName}}</span>
-              </div>
-            </v-row>
-          </template>
-        </v-img>
-
-        <!-- If the media is not avaible, it shows a btn to add new media -->
-        <v-card
-          v-else-if="!rmAddBtn"
-          class="rounded-0"
-          v-bind="{
-            height,
-            width,
-            maxWidth,
-            maxHeight,
-            minWidth,
-            minHeight,
-            ...$attrs,
-          }"
-        >
-          <v-card-title>{{ label }}</v-card-title>
-
-          <v-card-actions>
-            <v-btn tile :disabled="readonly" @click="editing = true" block :min-height="minHeight">
-              <v-icon size="80"> mdi-plus-circle-outline </v-icon>
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-
-        <!-- Shows darkening overlay on image with buttons on top while hovered -->
-        <v-overlay opacity="0.3" absolute :value="overlay">
-          <v-row>
-            <v-col cols="12">
-              <h3>{{ label }}</h3>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="6">
-              <v-btn :disabled="readonly" @click="editing = true" fab v-bind="$attrs">
-                <v-icon>mdi-pencil</v-icon>
-              </v-btn>
-            </v-col>
-
-            <v-col cols="6">
-              <v-btn :disabled="readonly" @click="confirmDelete" fab v-bind="$attrs">
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-overlay>
-
-        <!-- Select media dialog -->
-        <media-manager-dialog
-          v-model="editing"
-          select="single"
-          v-on:selectionChange="update"
-          v-bind="$attrs"
-        >
-        </media-manager-dialog>
-
-      </div>
-    </v-hover>
-    <v-messages
-      v-model="errorMessages"
-      color="error"
-      class="mt-2"
-    />
-  </div>
+  <media-manager-dialog
+    select="single"
+    v-on:selectionChange="model = $event"
+    v-bind="$attrs"
+  >
+    <template v-slot:activator="{ on, attrs }">
+      <v-text-field
+        readonly
+        v-bind="{ ...$attrs, ...attrs }"
+        v-on="readonly ? undefined : on"
+        class="media-field--card rounded-0"
+        :class="{ 'media-field--selected': !!model }"
+        :value="model ? ' ' : ''"
+      >
+        <template v-if="model" v-slot:append>
+          <MediaPreview
+            v-if="model"
+            :media="model"
+            :video-preview="!model.is_image"
+            class="media-field--preview"
+          />
+          <div class="media-field--info caption text--secondary">
+            <p>
+              <b>{{ $t("mapo.fileName") }}:</b> {{ fileName }}
+            </p>
+            <p>
+              <b>{{ $t("mapo.size") }}:</b> {{ fileSize }}
+            </p>
+            <p>
+              <b>{{ $t("mapo.mime") }}:</b> {{ model.mime_type }}
+            </p>
+            <p>
+              <b>{{ $t("mapo.altTag") }}:</b> {{ model.alt_text }}
+            </p>
+          </div>
+          <v-btn
+            @click.native="
+              $event.stopPropagation();
+              model = null;
+            "
+            class="media-field--info-btn"
+            tile
+            icon
+            ><v-icon>mdi-close</v-icon></v-btn
+          >
+        </template>
+      </v-text-field>
+    </template>
+  </media-manager-dialog>
 </template>
+<style lang="scss">
+.media-field--card.v-text-field > .v-input__control > .v-input__slot {
+  input {
+    cursor: pointer;
+  }
+}
+.media-field--selected {
+  .v-text-field__slot {
+    position: absolute !important;
+    width: 100%;
+    height: 100%;
+  }
+  .v-input__append-inner {
+    margin-left: 0 !important;
+    width: 100%;
+  }
+  &.media-field--card.v-text-field > .v-input__control > .v-input__slot {
+    cursor: pointer;
+    input {
+      position: absolute;
+      cursor: pointer;
+      width: 100%;
+      min-height: 100%;
+    }
+  }
+}
 
-<style scoped>
+.media-field--preview {
+  width: 100px;
+  height: 100px;
+  border: 1px solid;
+  border-color: inherit;
+  margin-bottom: 10px;
+  margin-right: 12px;
+}
+.media-field--info {
+  width: 100%;
+  max-width: calc(100% - 112px);
+  p {
+    margin-bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  &-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+.media-field--add {
+  width: 100px;
+  margin-bottom: 10px;
+}
 </style>
 
 <script>
+import { humanFileSize } from "@mapomodule/utils/helpers/formatters";
+
+/**
+ * This component is made to manage media fields for single selection.
+ */
 export default {
-  name: "MediaField",
+  name: "MultimediaField",
   data() {
     return {
-      internalValue: null,
-      editing: false,
-      isHovered: false,
+      model: this.value,
+      menu: null,
     };
   },
-
   props: {
-    value: Object,
-    label: String,
-    title: {
-      type: String,
-      default: () => "",
-    },
-    errorMessages: {
-      type: String | Array,
-      default: () => []
-    },
-    rmAddBtn: {
-      type: Boolean,
-      default: false,
-    },
-    //image reflections
-    aspectRatio: {
-      type: String | Number,
-      default: undefined,
-    },
-    contain: {
-      type: Boolean,
-      default: false,
-    },
-    height: {
-      type: String | Number,
-      default: "100%",
-    },
-    width: {
-      type: String | Number,
-      default: "100%",
-    },
-    maxWidth: {
-      type: String | Number,
-      default: undefined,
-    },
-    maxHeight: {
-      type: String | Number,
-      default: undefined,
-    },
-    minWidth: {
-      type: String | Number,
-      default: undefined,
-    },
-    minHeight: {
-      type: String | Number,
-      default: 300,
+    // V-model property. Color must be hex codified.
+    value: {
+      type: Object,
     },
     // This set the component status to readonly, stopping the user interaction.
     readonly: {
@@ -179,52 +130,24 @@ export default {
       default: false,
     },
   },
-
   computed: {
-    mediaExists() {
-      return !!this.internalValue?.file;
-    },
-    overlay() {
-      return this.isHovered && this.mediaExists;
-    },
     fileName() {
-      return this.internalValue && this.internalValue.file && this.internalValue.file.split("/").pop();
+      return this.model && this.model.file && this.model.file.split("/").pop();
+    },
+    dateCreated() {
+      return this.model && new Date(this.model.created).toLocaleString();
+    },
+    fileSize() {
+      return this.model && humanFileSize(this.model.size);
     },
   },
-
-  methods: {
-    update(val) {
-      this.internalValue = val;
-    },
-    confirmDelete() {
-      this.$mapo.$confirm
-        .open({
-          title: this.$t("mapo.remove"),
-          question: this.$t("mapo.mediaField.confirmRemove"),
-          approveButton: { text: this.$t("mapo.remove"), attrs: { color: "red", text: true } }
-        })
-        .then((res) => (res ? (this.internalValue = null) : null));
-    },
-    isImage(val) {
-      if (!val?.is_image && val?.mime_type.includes("image")) {
-        Object.assign(val, { is_image: true });
-      }
-    },
-  },
-
   watch: {
     value(val) {
-      if (val !== this.internalValue) {
-        this.internalValue = val;
-      }
+      this.model = val;
     },
-    internalValue(val) {
-      this.isImage(val)
+    model(val) {
       this.$emit("input", val);
     },
   },
-  mounted(){
-    this.internalValue = this.value
-  }
 };
 </script>
