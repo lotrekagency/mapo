@@ -126,7 +126,6 @@ export default {
     removeItem(media) {
       this.model = this.model.filter(({ id }) => id != media.id);
     },
-    editItem(media) {},
   },
   watch: {
     value(val) {

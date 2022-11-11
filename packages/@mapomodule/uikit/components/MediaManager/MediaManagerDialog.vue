@@ -4,7 +4,7 @@
     <v-dialog v-model="dialog" max-width="100%" width="800" scrollable>
       <media-manager
         v-if="dialog"
-        v-bind="{ noFolders }"
+        v-bind="{ noFolders, mime }"
         elevation="0"
         fill-backgroud
       >

@@ -140,6 +140,7 @@ export default {
     }, 500),
   },
   async fetch() {
+    this.$store.commit("mapo/media/SET_MIME_TYPE", this.mime || null);
     await this.getRoot();
   },
   destroyed(){

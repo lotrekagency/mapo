@@ -4,6 +4,7 @@ const state = () => ({
     parentFolders: [],
     page: 1,
     pages: 1,
+    mimeType: null,
     loading: false,
     editMedia: null,
     selection: [],
@@ -49,6 +50,9 @@ const mutations = {
     SET_SELECTION_MODE: (state, mode) => {
         state.selectMode = mode;
     },
+    SET_MIME_TYPE: (state, mime) => {
+        state.mimeType = mime;
+    },
 };
 
 const actions = {
@@ -60,6 +64,7 @@ const actions = {
             let { id } =
                 (folder === undefined ? getters.parentFolder : folder) || {};
             page = page || getters.page;
+            mime = mime || getters.mimeType;
             let params = {
                 page,
                 search,
@@ -140,10 +145,10 @@ const actions = {
                 await dispatch("getRoot");
             });
     },
-    reset({ commit, dispatch }) {
-        return new Promise((resolve, reject) => {
+    reset({ commit }) {
+        return new Promise((resolve) => {
             commit("RESET_STATE");
-            dispatch("getRoot").then(resolve).catch(reject);
+            resolve();
         });
     },
     setSelectionMode({ commit }, mode) {
@@ -227,6 +232,7 @@ const getters = {
     parentFolders: (state) => state.parentFolders,
     page: (state) => state.page,
     pages: (state) => state.pages,
+    mimeType: (state) => state.mimeType,
     loading: (state) => state.loading,
     editMedia: (state) => state.editMedia,
     selection: (state) => state.selection,

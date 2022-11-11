@@ -10,12 +10,18 @@
           class="elevation-4 media-gallery--selection-item"
         />
     </div>
-
-    <div class="media-gallery--empty" v-if="!medias.length">
+    <div class="media-gallery--loading" v-if="loading">
+      <v-progress-circular
+        size="60"
+        color="primary"
+        indeterminate
+      ></v-progress-circular>
+    </div>
+    <div class="media-gallery--empty" v-else-if="!medias.length">
       <v-icon size="60"> mdi-image-off-outline </v-icon>
       <p>{{ $t("mapo.mediaGallery.noMediaFound") }}</p>
     </div>
-    <div class="media-gallery--masonry" v-if="medias.length">
+    <div class="media-gallery--masonry" v-else>
       <div
         v-for="media in medias"
         :key="media.file"
@@ -112,6 +118,14 @@ $wcol: calc(100% / 6 - 12px);
   justify-content: center;
   text-align: center;
 }
+.media-gallery--loading{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
 .media-gallery--selection {
   min-height: 60px;
@@ -158,7 +172,7 @@ import { mapGetters, mapActions } from "vuex"
 export default {
   name: "MediaGallery",
   computed: {
-    ...mapGetters("mapo/media", ["page", "pages", "medias", "selection", "selectMode"]),
+    ...mapGetters("mapo/media", ["page", "pages", "medias", "selection", "selectMode", "loading"]),
     currentPage: {
       get() {
         return this.page;
