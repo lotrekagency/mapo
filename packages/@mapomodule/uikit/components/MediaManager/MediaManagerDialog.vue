@@ -1,13 +1,10 @@
 <template>
   <div>
-    <slot v-bind="{ on, attrs }" name="activator"></slot>
+    <slot v-bind="{ on, $attrs }" name="activator"></slot>
     <v-dialog v-model="dialog" max-width="100%" width="800" scrollable>
       <media-manager
         v-if="dialog"
-        @selectionChange="selectionChange($event)"
-        :selection="$attrs.selection"
-        @update:selection="$emit('update:selection', $event)"
-        v-bind="{ select, noFolders, mime }"
+        v-bind="{ noFolders }"
         elevation="0"
         fill-backgroud
       >
@@ -21,14 +18,13 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex"
+
 export default {
   name: "MediaManagerDialog",
   data() {
     return {
-      selection: [],
       dialog: false,
-      attrs: { ...this.$attrs },
-      reset: false,
       on: {
         click: (event) => {
           event.preventDefault();
@@ -53,6 +49,9 @@ export default {
         return ["none", "single", "multi"].indexOf(val) !== -1;
       },
     },
+    selected: {
+      type: Object | Array | null,
+    },
     mime: {
       type: String,
       required: false
@@ -62,7 +61,18 @@ export default {
     value(val) {
       this.dialog = val;
     },
+    selected(val){
+      this.dialog && this.setSelection(val);
+    },
+    selection(val){
+      if (this.dialog && !(val?.id == this.selected?.id)){
+        this.done()
+      }
+    },
     dialog(val) {
+      if(val){
+        this.setSelectionMode(this.select).then(() => this.setSelection(this.selected));
+      }
       this.$emit("input", val);
       this.$emit(val ? "open" : "close");
       if (!val && this.reject) {
@@ -70,7 +80,11 @@ export default {
       }
     },
   },
+  computed:{
+    ...mapGetters("mapo/media", ["selection", "selectMode"])
+  },
   methods: {
+    ...mapActions("mapo/media", ["setSelection", "setSelectionMode"]),
     open() {
       this.dialog = true;
       return new Promise((resolve, reject) => {
@@ -78,18 +92,12 @@ export default {
         this.reject = reject;
       });
     },
-    selectionChange(event) {
-      this.selection = event;
-      if (this.select == "single") {
-        this.done();
-      }
-    },
     done() {
       if (this.resolve) {
         this.resolve(this.selection);
       }
       this.dialog = false;
-      this.$emit("selectionChange", this.selection);
+      this.$emit("update:selected", this.selection);
     },
   },
 };

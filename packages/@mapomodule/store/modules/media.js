@@ -6,7 +6,8 @@ const state = () => ({
     pages: 1,
     loading: false,
     editMedia: null,
-    selected: [],
+    selection: [],
+    selectMode: "none",
 });
 
 const mutations = {
@@ -41,6 +42,12 @@ const mutations = {
     },
     SET_EDIT_MEDIA: (state, media) => {
         state.editMedia = media;
+    },
+    SET_SELECTION: (state, selection) => {
+        state.selection = selection || [];
+    },
+    SET_SELECTION_MODE: (state, mode) => {
+        state.selectMode = mode;
     },
 };
 
@@ -139,6 +146,75 @@ const actions = {
             dispatch("getRoot").then(resolve).catch(reject);
         });
     },
+    setSelectionMode({ commit }, mode) {
+        return new Promise((resolve, reject) => {
+            const validModes = ["none", "single", "multi"];
+            if (validModes.includes(mode)) {
+                commit("SET_SELECTION_MODE", mode);
+                resolve(mode);
+            } else {
+                reject(`Mode must be one of '${validModes}'`);
+            }
+        });
+    },
+    setSelection({ commit, state }, selection) {
+        return new Promise((resolve, reject) => {
+            let rejectMessage = null;
+            switch (state.selectMode) {
+                case "multi":
+                    selection = selection || [];
+                    if (!Array.isArray(selection))
+                        rejectMessage =
+                            "You must set an array as selection with select-mode 'multi'";
+                    break;
+                case "single":
+                    selection = selection || null;
+                    if (
+                        typeof selection !== "object" ||
+                        Array.isArray(selection)
+                    )
+                        rejectMessage =
+                            "You must set an object as selection with select-mode 'single'";
+                    break;
+                default:
+                    rejectMessage =
+                        "You cannot set a selection with select-mode 'none'";
+                    break;
+            }
+            if (rejectMessage !== null) {
+                reject(rejectMessage);
+            } else {
+                commit("SET_SELECTION", selection);
+                resolve(selection);
+            }
+        });
+    },
+    select({ commit, dispatch, state }, media) {
+        return new Promise((resolve) => {
+            const mode = state.selectMode;
+            switch (mode) {
+                case "single":
+                    commit("SET_SELECTION", media);
+                    resolve({ mode, selection: media });
+                    break;
+                case "multi":
+                    const tmp = Array.isArray(state.selection)
+                        ? state.selection.slice()
+                        : [];
+                    const index = (tmp || []).findIndex(
+                        (m) => m.id === media.id
+                    );
+                    index == -1 ? tmp.push(media) : tmp.splice(index, 1);
+                    commit("SET_SELECTION", tmp);
+                    resolve({ mode, selection: tmp });
+                    break;
+                default:
+                    dispatch("openEditor", media);
+                    resolve({ mode, selection: media });
+                    break;
+            }
+        });
+    },
 };
 
 const getters = {
@@ -153,6 +229,8 @@ const getters = {
     pages: (state) => state.pages,
     loading: (state) => state.loading,
     editMedia: (state) => state.editMedia,
+    selection: (state) => state.selection,
+    selectMode: (state) => state.selectMode,
 };
 
 export default {

@@ -62,7 +62,7 @@ export default {
         // Form/fields/MediaM2mField.vue
         mediaM2MField: {
             mediaCarousel: "Media Carousel",
-            newSelection: "New Selection",
+            editSelection: "Edit selection",
         },
         // Form/fields/Repeater.vue
         repeater: {

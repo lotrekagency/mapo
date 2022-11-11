@@ -1,7 +1,7 @@
 <template>
   <div class="container pa-0">
     <div class="d-flex justify-space-between">
-      <span class="repeater-label">{{ label }}:</span>
+      <span class="repeater-label text--secondary">{{ label }}:</span>
       <v-btn v-if="collapsable" outlined tile text small @click="collapseAll">{{
         $t("mapo.collapse")
       }}</v-btn>

@@ -1,7 +1,7 @@
 <template>
   <media-manager-dialog
     select="single"
-    v-on:selectionChange="model = $event"
+    :selected.sync="model"
     v-bind="$attrs"
   >
     <template v-slot:activator="{ on, attrs }">
@@ -35,10 +35,7 @@
             </p>
           </div>
           <v-btn
-            @click.native="
-              $event.stopPropagation();
-              model = null;
-            "
+            @click.native="clear"
             class="media-field--info-btn"
             tile
             small
@@ -117,13 +114,12 @@ export default {
   data() {
     return {
       model: this.value,
-      menu: null,
     };
   },
   props: {
     // V-model property. Color must be hex codified.
     value: {
-      type: Object,
+      type: Object | null,
     },
     // This set the component status to readonly, stopping the user interaction.
     readonly: {
@@ -141,6 +137,12 @@ export default {
     fileSize() {
       return this.model && humanFileSize(this.model.size);
     },
+  },
+  methods:{
+    clear(event){
+      event.stopPropagation();
+      this.model = null;
+    }
   },
   watch: {
     value(val) {

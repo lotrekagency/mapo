@@ -40,13 +40,7 @@
     <v-card-text class="media-manager--card-text pa-0">
       <v-tabs-items touchless v-model="tab" class="transparent fill-height">
         <v-tab-item class="fill-height">
-          <MediaGallery
-            v-show="!editMedia"
-            v-bind="{ select }"
-            :selection="$attrs.selection"
-            @update:selection="$emit('update:selection', $event)"
-            @selectionChange="selectionChange($event)"
-          />
+          <MediaGallery v-show="!editMedia"/>
           <MediaEditor/>
         </v-tab-item>
         <v-tab-item class="fill-height">
@@ -122,13 +116,6 @@ export default {
     }
   },
   props: {
-    select: {
-      type: String,
-      default: "none",
-      validator(val) {
-        return ["none", "single", "multi"].indexOf(val) !== -1;
-      },
-    },
     noFolders: {
       type: Boolean,
       default: false,
@@ -148,9 +135,6 @@ export default {
   computed: mapGetters("mapo/media", ["parentFolder", "medias", "folders", "parentFolders", "page", "pages", "loading", "editMedia" ]),
   methods: {
     ...mapActions("mapo/media", ["getRoot", "openEditor", "updateMedia", "updateOrCreateFolder", "deleteFolder", "deleteMedia", "reset"]),
-    selectionChange(event) {
-      this.$emit("selectionChange", event);
-    },
     search: debounce(function () {
       this.getRoot({search: this.searchValue}).then(() => (this.loadingSearch = false));
     }, 500),

@@ -1,10 +1,10 @@
 <template>
   <div class="media-gallery--wrapper">
-    <div v-if="internalSelection.length && select == 'multi'" class="media-gallery--selection grey darken-2">
+    <div v-if="selection && selection.length && selectMode == 'multi'" class="media-gallery--selection grey darken-2">
         <MediaPreview
-          v-for="media in internalSelection"
+          v-for="media in selection"
           :key="media.file"
-          @click.native.stop="selectMedia(media)"
+          @click.native.stop="select(media)"
           :media="media"
           icon-size="20px"
           class="elevation-4 media-gallery--selection-item"
@@ -28,7 +28,7 @@
           :ripple="false"
           color="white"
           class="media-gallery--card-btn"
-          :class="{'d-none': select == 'none'}"
+          :class="{'d-none': selectMode == 'none'}"
         >
           <v-icon>mdi-circle-edit-outline</v-icon>
         </v-btn>
@@ -36,7 +36,7 @@
           class="elevation-4 cursor-pointer"
           :media="media"
           :class="{ 'media-gallery--selected': isSelected(media)}"
-          @click.native="selectMedia(media)"
+          @click.native="select(media)"
           filename
           video-preview
         />
@@ -157,31 +157,8 @@ import { mapGetters, mapActions } from "vuex"
 
 export default {
   name: "MediaGallery",
-  data() {
-    return {
-      internalSelection: [],
-    };
-  },
-  props: {
-    select: {
-      defaut: "none",
-      type: String,
-      validator(value) {
-        return ["none", "single", "multi"].indexOf(value) !== -1;
-      },
-    },
-    selection: {
-      type: Array,
-      required: false
-    },
-  },
-  watch: {
-    selection(value) {
-      if (value !== undefined) this.internalSelection = value;
-    },
-  },
   computed: {
-    ...mapGetters("mapo/media", ["page", "pages", "medias"]),
+    ...mapGetters("mapo/media", ["page", "pages", "medias", "selection", "selectMode"]),
     currentPage: {
       get() {
         return this.page;
@@ -192,37 +169,20 @@ export default {
     },
   },
   methods: {
-    ...mapActions("mapo/media", ["getRoot", "openEditor"]),
+    ...mapActions("mapo/media", ["getRoot", "openEditor", "select"]),
     isSelected(media) {
-      return this.internalSelection.findIndex((m) => m.id === media.id) !== -1;
-    },
-    selectMedia(media) {
-      switch (this.select) {
-        case "single":
-          this.$emit("selectionChange", media);
-          this.internalSelection = [media];
-          this.$emit("update:selection", this.internalSelection);
-          break;
+      switch (this.selectMode) {
         case "multi":
-          const index = this.internalSelection.findIndex(m => m.id === media.id);
-          index == -1
-            ? this.internalSelection.push(media)
-            : this.internalSelection.splice(index, 1);
-          this.internalSelection = this.internalSelection.slice();
-          this.$emit("selectionChange", this.internalSelection);
-          this.$emit("update:selection", this.internalSelection);
-          break;
+          return this.selection.findIndex((m) => m.id === media.id) !== -1;
+        case "single":
+          return this.selection?.id === media.id;
         default:
-          this.openEditor(media);
-          break;
+          return false;
       }
     },
     fileName(media) {
       return media && media.file && media.file.split("/").pop();
     },
-  },
-  mounted() {
-    if (this.selection !== undefined) this.internalSelection = this.selection;
   },
 };
 </script>
