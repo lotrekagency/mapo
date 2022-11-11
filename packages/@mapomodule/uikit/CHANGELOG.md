@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.34](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2022-11-11)
+
+
+### Bug Fixes
+
+* fix media dialog reset and selected visualization ([d04e6f2](https://github.com/lotrekagency/mapo/commit/d04e6f2269c059f083a84920befec35e52087857))
+* fix repeater width ([f210aff](https://github.com/lotrekagency/mapo/commit/f210aff38bdd576eb1c7dfa07a1c6a8d0efc5a0d))
+* fix some graphic issues in new media dialogue ([6895dab](https://github.com/lotrekagency/mapo/commit/6895dab303466cbf419a4500dd9fb432997e4c4b))
+* fixed some interface glitch in media manager ([317f550](https://github.com/lotrekagency/mapo/commit/317f55087a741aada769304025294f46cc2a7044))
+* little media manager graphic fixs ([9f9df7e](https://github.com/lotrekagency/mapo/commit/9f9df7e18429ba7905b3d64cfa2ea4dca9827680))
+
+
+### Features
+
+* completely rewritten mediaField ([4b17d18](https://github.com/lotrekagency/mapo/commit/4b17d18c836608eb5f07ed0b42f45bb18cf8b30d))
+* new m2m media field and moved media selection logic to store ([8094375](https://github.com/lotrekagency/mapo/commit/8094375712b7ad7bc10caeec71d8d5e5bca43edc))
+* rewreitten media grids ([3818ca1](https://github.com/lotrekagency/mapo/commit/3818ca17dead56367e21edcf01f6910cb80cee25))
+* rewritten media manager ([de18547](https://github.com/lotrekagency/mapo/commit/de185479bada77ee41786f9925681cdc5630e7fa))
+
+
+
+
+
 # [1.0.0-alpha.33](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.32...v1.0.0-alpha.33) (2022-10-14)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.34](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2022-11-11)
+
+
+### Features
+
+* default upload in multipart autodiscover ([b153307](https://github.com/lotrekagency/mapo/commit/b15330725a64a0931d2de49929a01e3a7319b382))
+
+
+
+
+
 # [1.0.0-alpha.31](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.30...v1.0.0-alpha.31) (2022-09-14)
 
 

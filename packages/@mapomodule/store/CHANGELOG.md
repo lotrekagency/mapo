@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.34](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2022-11-11)
+
+
+### Bug Fixes
+
+* fix media dialog reset and selected visualization ([d04e6f2](https://github.com/lotrekagency/mapo/commit/d04e6f2269c059f083a84920befec35e52087857))
+* fix media store i18n ([ec5d8a3](https://github.com/lotrekagency/mapo/commit/ec5d8a37c54c7fd4eff50ec1ad6541a210abe48e))
+
+
+### Features
+
+* added media store ([e515f34](https://github.com/lotrekagency/mapo/commit/e515f34caafcd95e8c64fb3c8079ded8f39650d9))
+* new m2m media field and moved media selection logic to store ([8094375](https://github.com/lotrekagency/mapo/commit/8094375712b7ad7bc10caeec71d8d5e5bca43edc))
+
+
+
+
+
 # [1.0.0-alpha.30](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.29...v1.0.0-alpha.30) (2022-09-13)
 
 
