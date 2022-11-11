@@ -9,6 +9,7 @@
 |value|-|`Boolean`|`false`|-|
 |noFolders|-|`Boolean`|`false`|false|
 |select|-|`String`|`false`|single|
+|selected|-|—|`false`|-|
 |mime|-|`String`|`false`|-|
 
 <!-- @vuese:MediaManagerDialog:props:end -->
@@ -21,7 +22,6 @@
 |Event Name|Description|Parameters|
 |---|---|---|
 |input|-|-|
-|selectionChange|-|-|
 
 <!-- @vuese:MediaManagerDialog:events:end -->
 

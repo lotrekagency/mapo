@@ -1,24 +1,14 @@
 # MediaM2mField
 
+This component is made to simplify ManyToMany and ForeignKeys associations. With this component you can modify an array selecting items from a list of checkboxes or a signle item selecting from a checkbox.
+
 ## Props
 
 <!-- @vuese:MediaM2mField:props:start -->
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|medias|-|`Array`|`false`|[]|
-|cols|-|`Number`|`false`|2|
-|rows|-|`Number`|`false`|2|
-|minWidth|reflections|—|`false`|300|
-|minHeight|-|—|`false`|300|
-|height|-|—|`false`|-|
-|width|-|—|`false`|-|
-|maxHeight|-|—|`false`|-|
-|maxWidth|-|—|`false`|-|
-|elevation|-|—|`false`|undefined|
-|flat|-|`Boolean`|`false`|false|
-|dark|-|`Boolean`|`false`|false|
-|readonly|This set the component status to readonly, stopping the user interaction.|`Boolean`|`false`|false|
+|value|V-model property. It is the attribute to be modified.|—|`true`|-|
 
 <!-- @vuese:MediaM2mField:props:end -->
 
@@ -29,7 +19,7 @@
 
 |Event Name|Description|Parameters|
 |---|---|---|
-|changed-selection|-|-|
+|input|-|-|
 
 <!-- @vuese:MediaM2mField:events:end -->
 
