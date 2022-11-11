@@ -43,6 +43,7 @@ en:
   highlightImage: "Highlight Image"
   testTab: "Test tab en"
   image: "Backgorud Image"
+  carousel: "Images gallery"
 it:
   article: "Articolo"
   identifier: "Identificatore"
@@ -67,6 +68,7 @@ it:
   highlightImage: "Immagine in evidenza"
   testTab: "Test tab it"
   image: "Immagine di sfondo"
+  carousel: "Galleria immagini"
 </i18n>
 
 <script>
@@ -111,6 +113,12 @@ export default {
             label: this.$t("image"),
             synci18n: true,
             type: "media",
+          },
+          {
+            value: "meta.carousel",
+            label: this.$t("carousel"),
+            synci18n: true,
+            type: "mediaList",
           },
           {
             value: "meta.contents",
