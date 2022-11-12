@@ -1,7 +1,7 @@
 <template>
   <v-img
-    :src="(media.is_image && media.file) || null"
-    :lazy-src="(media.is_image && media.thumbnail) || null"
+    :src="(isImage && media.file) || null"
+    :lazy-src="(isImage && media.thumbnail) || null"
     aspect-ratio="1"
     class="grey lighten-2"
     :class="{
@@ -15,7 +15,7 @@
     <template v-slot:placeholder>
       <v-row class="fill-height ma-0" align="center" justify="center">
         <v-progress-circular
-          v-if="media.is_image"
+          v-if="isImage"
           indeterminate
           color="grey lighten-5"
         ></v-progress-circular>
@@ -93,6 +93,13 @@
 </style>
 
 <script>
+
+const extensions = {
+  image: ["png", "jpg", "jpeg", "avif", "webp"],
+  audio: ["mp3", "ogg", "flac"],
+  video: ["mp4", "webm", "avi", "mov", "wmv"]
+}
+
 export default {
   data() {
     return {
@@ -135,11 +142,20 @@ export default {
         "70px"
       );
     },
-    isVideo() {
-      return this.media.mime_type && this.media.mime_type.startsWith("video/");
+    isImage() {
+      if (this.media?.mime_type)
+        return this.media.mime_type.startsWith("image/");
+      return extensions.image.includes(this.media?.file?.split(".").pop()?.toLowerCase())
     },
+    isVideo() {
+      if (this.media?.mime_type)
+        return this.media.mime_type.startsWith("video/");
+      return extensions.video.includes(this.media?.file?.split(".").pop()?.toLowerCase())
+    },   
     isAudio() {
-      return this.media.mime_type && this.media.mime_type.startsWith("audio/");
+      if (this.media?.mime_type)
+        return this.media.mime_type.startsWith("audio/");
+      return extensions.audio.includes(this.media?.file?.split(".").pop()?.toLowerCase())
     },
     videoListeners() {
       if (this.isVideo && this.videoPreview) {
