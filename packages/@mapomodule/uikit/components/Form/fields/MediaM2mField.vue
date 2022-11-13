@@ -26,6 +26,7 @@
                   :media="item"
                   :video-preview="!item.is_image"
                   class="media-m2m--preview"
+                  icon-size="30"
                 />
               </v-list-item-avatar>
 
