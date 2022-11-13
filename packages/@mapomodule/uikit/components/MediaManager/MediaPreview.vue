@@ -162,11 +162,22 @@ export default {
         return {
           mouseenter: this.startVideoPreview,
           mouseleave: this.stopVideoPreview,
+          touchstart: this.handleTouch
         };
       }
     },
   },
   methods: {
+    handleTouch(event){
+      const video = this.$refs.video;
+      if (video && !this.playing) {
+        this.startVideoPreview()
+        event.preventDefault()
+        event.stopPropagation()
+      } else {
+        this.stopVideoPreview()
+      }
+    },
     startVideoPreview() {
       const video = this.$refs.video;
       if (video && !this.playing) {
