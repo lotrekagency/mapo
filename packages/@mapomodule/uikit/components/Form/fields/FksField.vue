@@ -15,7 +15,7 @@ export default {
   name: "FksField",
   data() {
     return {
-      model: null,
+      model: this.value,
       options: this.items || [],
       loading: false,
     };

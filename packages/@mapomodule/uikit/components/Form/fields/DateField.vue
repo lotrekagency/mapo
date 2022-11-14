@@ -36,7 +36,7 @@ export default {
   name: "DateField",
   data() {
     return {
-      model: null,
+      model: this.value,
       menu: null,
     };
   },
@@ -66,9 +66,6 @@ export default {
       //@arg Emits the date or the date range edited.
       this.$emit("input", val);
     },
-  },
-  mounted() {
-    this.model = this.value;
-  },
+  }
 };
 </script>

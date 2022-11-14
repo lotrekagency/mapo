@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       editorInstance: null,
-      editorContent: "",
+      editorContent: this.value,
     };
   },
 
