@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.37](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2022-11-14)
+
+
+### Bug Fixes
+
+* better icon sizing for media m2m ([2c241f8](https://github.com/lotrekagency/mapo/commit/2c241f85ab5c0ccee772dd28beb4d917fbed9c97))
+* fix gallery ui interface ([6570535](https://github.com/lotrekagency/mapo/commit/6570535dcd8a515c798eff5026ec781c52e06b7a))
+* fix index layout ([7b15fcc](https://github.com/lotrekagency/mapo/commit/7b15fcc846b829555d7a0aa7b1f309f57107fd66))
+* fixed fields init values ([23f1658](https://github.com/lotrekagency/mapo/commit/23f1658928dd5742125b01e997af6444d713144d))
+* fixed media m2m readonly ([5fa3f80](https://github.com/lotrekagency/mapo/commit/5fa3f805a99f6b77910b35b46c688ff3b1292545))
+
+
+### Features
+
+* better handle videow preview in mobile mode ([e3120f3](https://github.com/lotrekagency/mapo/commit/e3120f3652e5a53adf6b6b99059ce828fb8f9f03))
+
+
+
+
+
 # [1.0.0-alpha.36](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.35...v1.0.0-alpha.36) (2022-11-12)
 
 
