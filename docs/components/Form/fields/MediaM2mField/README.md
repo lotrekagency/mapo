@@ -1,6 +1,6 @@
 # MediaM2mField
 
-This component is made to simplify ManyToMany and ForeignKeys associations. With this component you can modify an array selecting items from a list of checkboxes or a signle item selecting from a checkbox.
+This component is made to manage media fields for multiple selection.
 
 ## Props
 
