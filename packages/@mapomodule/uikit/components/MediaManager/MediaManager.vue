@@ -29,13 +29,14 @@
         dense
         clearable
         :loading="loadingSearch"
-        class="mx-2 mt-2"
+        class="mx-2 mt-2 rounded-0"
       ></v-text-field>
       <v-btn v-show="!$vuetify.breakpoint.xs" class="ma-2 ml-0" @click="getRoot" icon>
         <v-icon>mdi-update</v-icon>
       </v-btn>
       </div>
     </v-card-title>
+    <v-progress-linear v-if="loading" indeterminate></v-progress-linear>
     <MediaBreadcrumbs/>
     <v-card-text class="media-manager--card-text pa-0">
       <v-tabs-items touchless v-model="tab" class="transparent fill-height">

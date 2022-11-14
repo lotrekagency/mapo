@@ -10,18 +10,7 @@
           class="elevation-4 media-gallery--selection-item"
         />
     </div>
-    <div class="media-gallery--loading" v-if="loading">
-      <v-progress-circular
-        size="60"
-        color="primary"
-        indeterminate
-      ></v-progress-circular>
-    </div>
-    <div class="media-gallery--empty" v-else-if="!medias.length">
-      <v-icon size="60"> mdi-image-off-outline </v-icon>
-      <p>{{ $t("mapo.mediaGallery.noMediaFound") }}</p>
-    </div>
-    <div class="media-gallery--masonry" v-else>
+    <div ref="masonry" class="media-gallery--masonry" v-if="medias.length">
       <div
         v-for="media in medias"
         :key="media.file"
@@ -47,6 +36,14 @@
           video-preview
         />
       </div>
+    </div>
+    <div class="media-gallery--loading" v-else-if="loading">
+      <v-icon size="30">mdi-timer-sand</v-icon>
+      {{ $t('mapo.fetchingData') }}
+    </div>
+    <div class="media-gallery--empty" v-else>
+      <v-icon size="60"> mdi-image-off-outline </v-icon>
+      <p>{{ $t("mapo.mediaGallery.noMediaFound") }}</p>
     </div>
     <v-pagination
       class="mt-2"
@@ -178,7 +175,9 @@ export default {
         return this.page;
       },
       set(val) {
-        this.getRoot({ page: val })
+        this.getRoot({ page: val }).then(() => {
+          this.$refs.masonry?.scrollTo({ top: 0, behavior: "smooth" })
+        })
       },
     },
   },
