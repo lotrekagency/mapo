@@ -3,13 +3,13 @@
     <v-text-field
       readonly
       v-bind="$attrs"
-      @click="dialog = hasSelection ? dialog : true"
+      @click="hasSelection || editSelection()"
       class="media-m2m--card rounded-0"
       :class="{ 'media-m2m--selected': !!hasSelection }"
       :value="hasSelection ? ' ' : ''"
     >
       <template v-slot:append>
-        <v-btn v-if="hasSelection" @click="dialog = true" tile small>{{
+        <v-btn v-if="hasSelection" @click="editSelection" tile small>{{
           $t("mapo.mediaM2MField.editSelection")
         }}</v-btn>
         <v-virtual-scroll
@@ -96,7 +96,7 @@
 import { humanFileSize } from "@mapomodule/utils/helpers/formatters";
 
 /**
- * This component is made to simplify ManyToMany and ForeignKeys associations. With this component you can modify an array selecting items from a list of checkboxes or a signle item selecting from a checkbox.
+ * This component is made to manage media fields for multiple selection.
  */
 
 export default {
@@ -127,6 +127,10 @@ export default {
     removeItem(media) {
       this.model = this.model.filter(({ id }) => id != media.id);
     },
+    editSelection(){
+      if (!this.readonly)
+        this.dialog = true;
+    }
   },
   watch: {
     value(val) {
