@@ -161,20 +161,22 @@ export default {
       };
     },
     fieldAttrs() {
+      const errorMessages = this.kpointed
+        .split(".")
+        .map((_, i, a) => a.slice(0, i + 1).join("."))
+        .reduce((acc, next) => {
+          const error = getPointed(this.errors || {}, next, []);
+          if (Array.isArray(error)) {
+            acc = [...acc, ...error];
+          } else if (typeof error == "string") {
+            acc = [...acc, error];
+          }
+          return acc;
+        }, [])
       return {
         label: this.label,
-        errorMessages: this.kpointed
-          .split(".")
-          .map((_, i, a) => a.slice(0, i + 1).join("."))
-          .reduce((acc, next) => {
-            const error = getPointed(this.errors || {}, next, []);
-            if (Array.isArray(error)) {
-              acc = [...acc, ...error];
-            } else if (typeof error == "string") {
-              acc = [...acc, error];
-            }
-            return acc;
-          }, []),
+        errorMessages,
+        hideDetails: !errorMessages.length,
         ...this.defaultAttrs.All,
         ...(this.defaultAttrs[
           this.is.replace(/-./g, (x) => x[1].toUpperCase())
