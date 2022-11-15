@@ -56,7 +56,7 @@
 .media-field--selected {
   .v-text-field__slot {
     position: absolute !important;
-    width: 100%;
+    width: calc(100% - 24px);
     height: 100%;
   }
   .v-input__append-inner {
