@@ -1,6 +1,4 @@
-var useDarkMode = false;
-
-export default {
+export default (darkMode=true) => ({
     plugins: 'mapomedia preview paste importcss searchreplace autolink directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor insertdatetime advlist lists wordcount textpattern noneditable help charmap quickbars emoticons',
     // imagetools_cors_hosts: ['picsum.photos'],
     menubar: 'file edit view insert format tools table help',
@@ -51,7 +49,6 @@ export default {
     noneditable_noneditable_class: 'mceNonEditable',
     toolbar_mode: 'sliding',
     contextmenu: 'link mapomedia table',
-    skin: useDarkMode ? 'oxide-dark' : 'oxide',
-    content_css: useDarkMode ? 'dark' : 'default',
+    skin_url: darkMode ? '/tinymce-skins/mapo-dark' : '/tinymce-skins/mapo-light',
     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-}
+})

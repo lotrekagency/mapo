@@ -4,6 +4,7 @@ import { it, en } from "vuetify/lib/locale";
 export default {
     customVariables: ["@mapomodule/uikit/assets/variables.scss"],
     theme: {
+        options: { customProperties: true },
         dark: true,
         themes: {
             dark: {

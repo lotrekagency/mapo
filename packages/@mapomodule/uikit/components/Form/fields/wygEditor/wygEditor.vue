@@ -1,7 +1,7 @@
 <template>
   <div>
     <media-manager-dialog ref="mediaManager"></media-manager-dialog>
-    <span v-if="label" class="v-label" :class="{'error--text': errorMessages && errorMessages.length}">{{ label }}:</span>
+    <span v-if="label" class="v-label" :class="{'error--text': hasErrors, 'text--secondary': !hasErrors}">{{ label }}:</span>
     <div ref="editorNode">
       <v-skeleton-loader
         type="table-heading, list-item-two-line, list-item-avatar-two-line, list-item-three-lineimage, table-tfoot"
@@ -60,6 +60,7 @@ export default {
   },
 
   computed: {
+    hasErrors () { return this.errorMessages && this.errorMessages.length },
     editor: {
       cache: false,
       get() {
@@ -76,7 +77,7 @@ export default {
     initEditor() {
       initMapoMedia(this.insertMediaCallback);
       window.tinymce.init(
-        Object.assign(defaults, this.conf, {
+        Object.assign(defaults(this.$vuetify.theme.isDark), this.conf, {
           target: this.$refs.editorNode,
           readonly: this.readonly,
           setup: (ctx) => this.setupEditor(ctx),
@@ -86,8 +87,10 @@ export default {
     setupEditor(editor) {
       this.editorInstance = editor;
       editor.on("init", () => {
-        editor.setContent(this.value || "");
-        this.emitContent(editor);
+        if (this.value){
+          editor.setContent(this.value);
+          this.emitContent(editor);
+        }
         editor.on("change input undo redo keyup", () =>
           this.emitContent(editor)
         );
@@ -136,9 +139,14 @@ export default {
           .catch((error) => reject(error));
       });
     },
+    destroyEditor(){ return window && window.tinymce && window.tinymce.remove(this.editor); },
+    reloadEditor(){
+      this.destroyEditor();
+      this.initEditor();
+    }
   },
   beforeDestroy() {
-    window && window.tinymce && window.tinymce.remove(this.editor);
+    this.destroyEditor();
   },
   watch: {
     value(val) {
@@ -152,6 +160,7 @@ export default {
         this.editor.setMode(val ? "readonly" : "design");
       }
     },
+    '$vuetify.theme.isDark'(){ this.reloadEditor(); }
   },
 };
 </script>
