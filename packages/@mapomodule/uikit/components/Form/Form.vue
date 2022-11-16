@@ -49,7 +49,7 @@
         </template>
       </FormGroup>
 
-      <div v-else>
+      <template v-else>
         <slot :name="field.slotName + '.before'" v-bind="{ conf: field, ...slotBindings, }" />
         <slot
           :name="field.slotName"
@@ -76,7 +76,7 @@
           </FormField>
         </slot>
         <slot :name="field.slotName + '.after'" v-bind="{ conf: field, ...slotBindings, }" />
-      </div>
+      </template>
     </div>
   </div>
 </template>

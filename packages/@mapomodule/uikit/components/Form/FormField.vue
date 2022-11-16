@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mapo-field" :class="`mapo-field-${conf.value}`">
     <span class="mapo-label" :class="`mapo-label-${conf.value}`">{{label}}</span>
     <component :is="is" v-model="model" v-bind="fieldAttrs">
       <template v-for="(_, slot) in $slots" :slot="slot">
