@@ -91,6 +91,8 @@ export default {
         if (this.value){
           editor.setContent(this.value);
           this.emitContent(editor);
+        } else {
+          editor.setContent("");
         }
         editor.on("change input undo redo keyup", () =>
           this.emitContent(editor)
