@@ -15,7 +15,7 @@
           v-on="readonly ? undefined : on"
           class="rounded-0"
         >
-          <template v-slot:prepend-inner>
+          <template v-if="model" v-slot:append>
             <div class="color-picker-inner-icon" :style="`background-color: ${model}`"></div>
           </template>
         </v-text-field>
