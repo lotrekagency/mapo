@@ -83,6 +83,7 @@ export default {
           setup: (ctx) => this.setupEditor(ctx),
         })
       );
+      window.document.addEventListener('click', this.closeModal);
     },
     setupEditor(editor) {
       this.editorInstance = editor;
@@ -110,6 +111,10 @@ export default {
           editor.on(eventName, (event) => this.$emit(eventName, event));
         });
       }
+    },
+    closeModal(event){
+      if (event.target.classList.contains("tox-dialog-wrap__backdrop"))
+        this.editor.windowManager.close();
     },
     insertMediaCallback: async function () {
       return new Promise((resolve, reject) => {
@@ -139,7 +144,10 @@ export default {
           .catch((error) => reject(error));
       });
     },
-    destroyEditor(){ return window && window.tinymce && window.tinymce.remove(this.editor); },
+    destroyEditor(){
+      window?.document?.removeEventListener('click', this.closeModal);
+      window?.tinymce?.remove(this.editor);
+    },
     reloadEditor(){
       this.destroyEditor();
       this.initEditor();
