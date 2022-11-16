@@ -160,6 +160,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { slugify } from "@mapomodule/utils/helpers/formatters";
 
 export default {
   name: "MediaFolders",
@@ -205,16 +206,7 @@ export default {
       this.dialog = false;
       this.folderEdit = {};
     },
-    slugify(text) {
-      return text
-        .toString()
-        .toLowerCase()
-        .replace(/\s+/g, "-") // Replace spaces with -
-        .replace(/[^\w\-]+/g, "") // Remove all non-word chars
-        .replace(/\-\-+/g, "-") // Replace multiple - with single -
-        .replace(/^-+/, "") // Trim - from start of text
-        .replace(/-+$/, ""); // Trim - from end of text
-    },
+    slugify,
   },
   computed: {
     ...mapGetters("mapo/media", [
@@ -234,37 +226,6 @@ export default {
         permanent: !this.isMobile,
         expandOnHover: !this.isMobile,
       };
-    },
-    rotate() {
-      return {
-        transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
-        transition: "transform .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
-      };
-    },
-    hideSlug() {
-      return {
-        maxWidth: this.expanded ? "105px" : "50px",
-        maxHeight: this.expanded ? "24px" : "18px",
-        opacity: this.expanded ? 0.8 : 0.8,
-        transform: this.expanded ? "scale(1)" : "scale(0.7)",
-        transition: "all .3s cubic-bezier(0.25, 0.8, 0.5, 1)",
-      };
-    },
-    parentFolder() {
-      return (
-        (this.parentFolders &&
-          this.parentFolders.length > 0 &&
-          this.parentFolders[this.parentFolders.length - 1]) ||
-        null
-      );
-    },
-    updirFolder() {
-      return (
-        (this.parentFolders &&
-          this.parentFolders.length > 1 &&
-          this.parentFolders[this.parentFolders.length - 2]) ||
-        null
-      );
     },
   },
 };
