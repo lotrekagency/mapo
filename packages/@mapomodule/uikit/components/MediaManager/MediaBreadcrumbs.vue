@@ -38,7 +38,8 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
-  computed: mapGetters("mapo/media", ["parentFolders"]),
-  methods: mapActions("mapo/media", ["getRoot"]),
+  name: "MediaBreadcrumbs",
+  computed: {...mapGetters("mapo/media", ["parentFolders"])},
+  methods: {...mapActions("mapo/media", ["getRoot"])},
 };
 </script>
