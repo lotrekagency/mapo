@@ -67,6 +67,11 @@ export default {
         return this.editorInstance;
       },
     },
+    defaultConfiguration(){
+      const { base } = this.$router.options;
+      const { isDark } = this.$vuetify.theme;
+      return defaults({ base, isDark })
+    }
   },
 
   mounted() {
@@ -77,7 +82,7 @@ export default {
     initEditor() {
       initMapoMedia(this.insertMediaCallback);
       window.tinymce.init(
-        Object.assign(defaults(this.$vuetify.theme.isDark), this.conf, {
+        Object.assign(this.defaultConfiguration, this.conf, {
           target: this.$refs.editorNode,
           readonly: this.readonly,
           setup: (ctx) => this.setupEditor(ctx),
