@@ -33,14 +33,14 @@
   },
   "devDependencies": {
     "nuxt": "^2.15.8",
-    "@mapomodule/mapo-integrations-camomilla": "^1.0.0-alpha.9",
+    "@mapomodule/mapo-integrations-camomilla": "^1.0.0-alpha.11",
     "@vuese/cli": "https://github.com/bnznamco/vuese/releases/download/%40vuese%2Fcli%402.14.3.mod2/cli.tar.gz",
-    "cypress": "^10.6.0",
-    "eslint": "^7.24.0",
-    "eslint-plugin-vue": "^7.9.0",
-    "jsdoc-to-markdown": "^7.0.1",
-    "lerna": "^3.22.1",
-    "vuepress": "^1.8.2",
-    "vuepress-plugin-demo-code": "^0.6.0"
+    "cypress": "^11.1.0",
+    "eslint": "^8.27.0",
+    "eslint-plugin-vue": "^9.7.0",
+    "jsdoc-to-markdown": "^7.1.1",
+    "lerna": "^6.0.3",
+    "vuepress": "^1.9.7",
+    "vuepress-plugin-demo-code": "^1.0.0"
   }
 }
