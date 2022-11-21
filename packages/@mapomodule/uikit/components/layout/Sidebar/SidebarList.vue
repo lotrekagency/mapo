@@ -21,19 +21,17 @@ import { buildRoutes } from "../routebuilder";
 export default {
   name: "SidebarList",
   props: {
-    forceCollapse: {
-      type: Boolean,
-      default: false
-    }
+    footer: Boolean,
+    forceCollapse: Boolean
   },
   data() {
     return {
-      defaultIcon: ({label}) => `mdi-alpha-${label[0]}-box-outline`.toLowerCase(),
+      defaultIcon: ({label}) => `mdi-alpha-${label[0]}-box-${ this.footer ? '' : 'outline'}`.toLowerCase(),
       routes: this.routes,
     };
   },
   mounted() {
-    this.routes = this.buildRoutes(this.$router.options.routes.filter(route => !route.meta || !route.meta.sidebarFooter));
+    this.routes = this.buildRoutes(this.$router.options.routes.filter(({ meta }) => !!meta?.sidebarFooter == this.footer));
   },
   methods: {
     buildRoutes(routes) {

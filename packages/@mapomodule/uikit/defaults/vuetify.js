@@ -10,7 +10,7 @@ export default {
             dark: {
                 primary: "#51beaa",
                 accent: colors.grey.darken3,
-                secondary: colors.amber.darken3,
+                secondary: colors.indigo.darken2,
                 info: colors.teal.lighten1,
                 warning: colors.amber.base,
                 error: "#FF5252",
@@ -19,7 +19,7 @@ export default {
             light: {
                 primary: "#51beaa",
                 accent: colors.indigo.accent1,
-                secondary: colors.amber.accent2,
+                secondary: colors.indigo.darken2,
                 info: colors.teal.lighten1,
                 warning: colors.amber.base,
                 error: "#FF5252",

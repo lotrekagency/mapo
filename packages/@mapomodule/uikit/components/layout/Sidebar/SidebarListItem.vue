@@ -44,6 +44,17 @@
 <style lang="scss" scoped>
 @import "@mapomodule/uikit/assets/variables.scss";
 
+.v-list-item::after{
+  content: '';
+  position: absolute;
+  background: rgba(0, 0, 0, 0.2);
+  height: 100%;
+  width: 4px;
+  left: 0;
+}
+.v-list-item.v-list-item--active::after{
+  background: var(--v-primary-base);
+}
 .expand-icon {
   margin: 0 0 0 auto;
   cursor: pointer;
