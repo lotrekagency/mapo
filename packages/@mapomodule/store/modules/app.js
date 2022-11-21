@@ -1,5 +1,4 @@
 import Cookies from 'js-cookie'
-import Vue from 'vue';
 
 const state = () => ({
   sidebar: {
