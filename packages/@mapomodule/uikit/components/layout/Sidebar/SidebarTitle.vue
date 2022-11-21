@@ -1,7 +1,9 @@
 <template>
   <v-list-item class="sidebar-title--container">
     <v-list-item-icon>
-      <v-icon color="secondary">mdi-artstation</v-icon>
+      <v-hover v-slot="{ hover }">
+        <NuxtLink to="/settings"><v-icon v-text="hover ? 'mdi-cog' : 'mdi-artstation'" color="secondary"/></NuxtLink>
+      </v-hover>
     </v-list-item-icon>
     <v-list-item-title>
         <b>BACKOFFICE</b>

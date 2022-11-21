@@ -46,6 +46,15 @@ export default {
                 "Congratulazioni!! 🥳 Mapo è stato installato correttamente!",
         },
 
+        // pages/settings.vue
+        settings: {
+            title: "Impostazioni",
+            themeMode: "Cambia tema",
+            primaryColor: "Cambia colore primario",
+            secondaryColor: "Cambia colore secondario",
+
+        },
+
         // ConfirmDialog.vue
         confirmDialog: {
             areYouSure: "Sei sicuro di ciò che vuoi fare?",

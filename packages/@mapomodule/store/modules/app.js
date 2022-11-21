@@ -1,10 +1,18 @@
 import Cookies from 'js-cookie'
+import Vue from 'vue';
 
 const state = () => ({
   sidebar: {
     clipped: Cookies.get('sidebar_clipped') ? !!+Cookies.get('sidebar_clipped') : false,
     drawer: Cookies.get('sidebar_drawer') ? !!+Cookies.get('sidebar_drawer') : false,
     minivariant: Cookies.get('sidebar_minivariant') ? !!+Cookies.get('sidebar_minivariant') : false
+  },
+  theme: {
+    mode: Cookies.get('theme_mode') || null,
+    colors: {
+      primary: Cookies.get('theme_primary') || null,
+      secondary: Cookies.get('theme_secondary') || null,
+    }
   },
   snackbar: null
 })
@@ -39,6 +47,12 @@ const mutations = {
   SET_MINIVARIANT(state, value) {
     state.sidebar.minivariant = !!+value;
     Cookies.set('sidebar_minivariant', +!!value)
+  },
+  SET_THEME_MODE(state, mode) {
+    state.theme.mode = mode;
+  },
+  SET_THEME_COLOR(state, { key, color }){
+    state.theme.colors[key] = color;
   },
 }
 
@@ -92,6 +106,12 @@ const actions = {
         reject(error)
       }
     })
+  },
+  setThemeMode({ commit }, mode){
+    return new Promise((resolve)=>{
+      commit('SET_THEME_MODE', mode);
+      resolve(mode);
+    })
   }
 }
 
@@ -100,6 +120,10 @@ const getters = {
   clipped: state => state.sidebar.clipped,
   minivariant: state => state.sidebar.minivariant,
   snackbar: state => state.snackbar,
+  themeMode: state => state.theme.mode,
+  themeColors: state => state.theme.colors,
+  themePrimary: state => state.theme.colors.primary,
+  themeSecondary: state => state.theme.colors.secondary,
 }
 
 export default {

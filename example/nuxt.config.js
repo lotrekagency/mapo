@@ -16,12 +16,12 @@ export default {
             },
         },
     },
-    router: {
-        base: "/mapo-panel/",
-    },
-    axios: {
-        baseUrl: "/mapo-panel/",
-    },
+    // router: {
+    //     base: "/mapo-panel/",
+    // },
+    // axios: {
+    //     baseUrl: "/mapo-panel/",
+    // },
     i18n: {
         langDir: __dirname + "/translations/",
         vueI18nLoader: true,
