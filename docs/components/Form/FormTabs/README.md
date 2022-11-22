@@ -37,6 +37,7 @@
 |title.before|-|-|
 |title|-|-|
 |title.after|-|-|
+|expandIcon|-|-|
 |`tab.${tab.tab.slug}`|-|-|
 |`tab.${tab.tab.slug}.${slot}`|-|-|
 |`tab.${tab.tab.slug}.${slot}`|-|-|

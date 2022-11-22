@@ -6,7 +6,8 @@
 
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
-|forceCollapse|-|`Boolean`|`false`|false|
+|footer|-|`Boolean`|`false`|-|
+|forceCollapse|-|`Boolean`|`false`|-|
 
 <!-- @vuese:SidebarList:props:end -->
 

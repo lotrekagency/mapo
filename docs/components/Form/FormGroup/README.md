@@ -37,6 +37,7 @@
 |title.before|-|-|
 |title|-|-|
 |title.after|-|-|
+|expandIcon|-|-|
 
 <!-- @vuese:FormGroup:slots:end -->
 
