@@ -172,7 +172,7 @@ export default {
             },
           },
           {
-            // group: "Tabs",
+            group: "Tabs",
             tabs: {
               tab_1: {
                 tab: { label: this.$t("testTab") },
