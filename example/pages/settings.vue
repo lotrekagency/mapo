@@ -4,6 +4,9 @@
       <v-col cols="12" sm="8" md="12">
         <h1>{{ $t("title") }}</h1>
       </v-col>
+      <v-coll cols="12">
+        <ThemeToggle/>
+      </v-coll>
     </v-row>
   </v-container>
 </template>
