@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mapo-wyg-editor">
     <media-manager-dialog ref="mediaManager"></media-manager-dialog>
     <span v-if="label" class="v-label" :class="{'error--text': hasErrors, 'text--secondary': !hasErrors}">{{ label }}:</span>
     <div ref="editorNode">
@@ -12,6 +12,24 @@
     </div>
   </div>
 </template>
+
+<style lang="scss">
+.tox-notifications-container,
+.tox-statusbar__branding {
+  display: none;
+}
+.v-label.error--text{
+  animation: v-shake 0.6s cubic-bezier(0.25, 0.8, 0.5, 1);
+}
+.tox-tinymce-aux {
+    z-index: 200 !important;
+}
+.mapo-field--has-errors{
+  .tox.tox-tinymce{
+    border: solid var(--v-error-base) 2px;
+  }
+}
+</style>
 
 <script>
 import initMapoMedia from "./utils/mapomedia.plugin.js";
@@ -179,19 +197,6 @@ export default {
   },
 };
 </script>
-
-<style>
-.tox-notifications-container,
-.tox-statusbar__branding {
-  display: none;
-}
-.v-label.error--text{
-  animation: v-shake 0.6s cubic-bezier(0.25, 0.8, 0.5, 1);
-}
-.tox-tinymce-aux {
-    z-index: 200 !important;
-}
-</style>
 
 <docs>
 
