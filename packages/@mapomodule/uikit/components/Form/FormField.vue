@@ -1,24 +1,21 @@
 <template>
-  <div class="mapo-field" :class="`mapo-field-${conf.value}`">
-    <span class="mapo-label" :class="`mapo-label-${conf.value}`">{{label}}</span>
-    <component :is="is" v-model="model" v-bind="fieldAttrs">
-      <template v-for="(_, slot) in $slots" :slot="slot">
-        <!-- @vuese-ignore -->
-        <slot :name="slot"></slot>
-      </template>
-      <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
-        <!-- @vuese-ignore -->
-        <slot :name="slot" v-bind="props" />
-      </template>
-    </component>
-  </div>
+  <component
+    class="mapo-field"
+    :class="classes"
+    :is="is"
+    v-model="model"
+    v-bind="fieldAttrs"
+  >
+    <template v-for="(_, slot) in $slots" :slot="slot">
+      <!-- @vuese-ignore -->
+      <slot :name="slot"></slot>
+    </template>
+    <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+      <!-- @vuese-ignore -->
+      <slot :name="slot" v-bind="props" />
+    </template>
+  </component>
 </template>
-
-<style>
-.mapo-label {
-  display: none;
-}
-</style>
 
 <script>
 import wygEditor from "@mapomodule/uikit/components/Form/fields/wygEditor/wygEditor.vue";
@@ -30,7 +27,7 @@ import EnhancedMediaField from "@mapomodule/uikit/components/Form/fields/Enhance
 
 import SeoPreview from "@mapomodule/uikit/components/Form/fields/SeoPreview.vue";
 import FileField from "@mapomodule/uikit/components/Form/fields/FileField.vue";
-import Repeater from "@mapomodule/uikit/components/Form/fields/Repeater.vue"
+import Repeater from "@mapomodule/uikit/components/Form/fields/Repeater.vue";
 
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import { titleCase } from "@mapomodule/utils/helpers/formatters";
@@ -81,9 +78,9 @@ export default {
     },
     langs: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
-    currentLang: String
+    currentLang: String,
   },
   watch: {
     value: {
@@ -107,42 +104,54 @@ export default {
     debouncedSetValue: debounce(function (...args) {
       this.setValue(...args);
     }, 300),
-    setValue(val){
+    setValue(val) {
       const dump = { ...this.value }; // since we cannot directly edit a prop
-      setPointed(
-        dump,
-        this.kpointed,
-        this.accessor.set({ model: dump, val })
-      );
-      if (typeof this.conf.onChange == "function") 
+      setPointed(dump, this.kpointed, this.accessor.set({ model: dump, val }));
+      if (typeof this.conf.onChange == "function")
         this.conf.onChange({
           val,
           model: dump,
           currentLang: this.currentLang,
           languages: this.langs,
           conf: this.conf,
-          kpointed: this.kpointed
-        })
+          kpointed: this.kpointed,
+        });
 
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
       this.$emit("input", dump);
     },
-    extractValue(val = this.value){
+    extractValue(val = this.value) {
       return this.accessor.get({
         model: { ...val },
         val: getPointed({ ...val }, this.kpointed),
       });
     },
     setModel(val = this.value) {
-      var model = this.extractValue(val)
+      var model = this.extractValue(val);
       if (val && JSON.stringify(this.model) !== JSON.stringify(model))
         this.model = model;
     },
   },
   computed: {
-    kpointed(){
-      let kpointed = this.conf.value
+    classes() {
+      var upperClasses = this.fieldAttrs.class;
+      if (typeof upperClasses == "string") {
+        upperClasses = { [upperClasses]: true };
+      } else if (Array.isArray(upperClasses)) {
+        upperClasses = upperClasses.reduce(
+          (acc, next) => ({ ...acc, [next]: true }),
+          {}
+        );
+      }
+      return {
+        ...upperClasses,
+        [`mapo-field-${this.conf.value}`]: true,
+        "mapo-field--has-errors": this.hasErrors,
+      };
+    },
+    kpointed() {
+      let kpointed = this.conf.value;
       if (this.currentLang && !this.conf.synci18n) {
         const base = `translations.${this.currentLang}`;
         kpointed = kpointed ? `${base}.${kpointed}` : base;
@@ -160,8 +169,8 @@ export default {
         ...this.conf.accessor,
       };
     },
-    fieldAttrs() {
-      const errorMessages = this.kpointed
+    errorMessages() {
+      return this.kpointed
         .split(".")
         .map((_, i, a) => a.slice(0, i + 1).join("."))
         .reduce((acc, next) => {
@@ -172,11 +181,16 @@ export default {
             acc = [...acc, error];
           }
           return acc;
-        }, [])
+        }, []);
+    },
+    hasErrors() {
+      return !!this.errorMessages.length;
+    },
+    fieldAttrs() {
       return {
         label: this.label,
-        errorMessages,
-        hideDetails: !errorMessages.length,
+        errorMessages: this.errorMessages,
+        hideDetails: this.hasErrors,
         ...this.defaultAttrs.All,
         ...(this.defaultAttrs[
           this.is.replace(/-./g, (x) => x[1].toUpperCase())
@@ -207,8 +221,8 @@ export default {
       );
     },
   },
-  mounted(){
-    this.setModel()
-  }
+  mounted() {
+    this.setModel();
+  },
 };
 </script>
