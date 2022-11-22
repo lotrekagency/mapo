@@ -8,6 +8,11 @@
   </v-tabs>
 </template>
 
+<style lang="scss">
+.theme--light.language-tabs.v-tabs > .v-tabs-bar {
+  background: #f5f5f5;
+}
+</style>
 <script>
 import { getPointed } from "@mapomodule/utils/helpers/objHelpers";
 /**

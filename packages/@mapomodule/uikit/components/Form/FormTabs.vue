@@ -7,8 +7,11 @@
         <span>{{ conf.group.name }}</span>
       </slot>
       <slot name="title.after" v-bind="slotBindings" />
+      <slot name="expandIcon" v-bind="slotBindings">
+        <v-icon class="expand-icon" :style="rotate" @click="expanded = !expanded"> mdi-chevron-up </v-icon>
+      </slot>
     </v-card-title>
-    <div class="container">
+    <div v-if="expanded" class="container">
       <v-tabs v-model="tabIndex" class="tab-wrapper">
         <v-tab v-for="(tab, index) in conf.tabs" :key="index" v-show="show(tab)">
           <v-badge :value="hasErrors(tab)" color="error" dot>
@@ -50,12 +53,33 @@
 </template>
 
 <style lang="scss" scoped>
+.expand-icon{
+  margin: 0 0 0 auto;
+}
 .tab-wrapper {
   margin: -12px 0 0 -12px;
 }
 .theme--light .tabs-card {
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
+.tabs-card .v-card__title{
+    padding: 6px 16px;
+    background: #0000002b;
+    position: relative;
+    &::after{
+      content: '';
+      position: absolute;
+      background: var(--v-primary-base);
+      height: 100%;
+      width: 4px;
+      left: 0;
+    }
+}
+.theme--light .v-card__title{
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
 </style>
 <script>
 import { findPropPaths } from "@mapomodule/utils/helpers/objHelpers";
@@ -67,6 +91,7 @@ export default {
     return {
       model: {},
       tabIndex: 0,
+      expanded: true,
     };
   },
   props: {
@@ -124,6 +149,12 @@ export default {
         this.conf.group.name ||
         this.conf.group.icon
       );
+    },
+    rotate() {
+      return {
+        transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
+        transition: "transform 225ms cubic-bezier(0.4, 0, 0.2, 1)",
+      };
     },
   },
   methods: {

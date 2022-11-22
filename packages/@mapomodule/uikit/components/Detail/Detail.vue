@@ -31,7 +31,7 @@
             <DetailLangSwitch
               v-if="langs && langs.length"
               v-show="langs.length > 1"
-              class="mb-4"
+              class="mb-4 language-tabs"
               v-model="currentLang"
               :langs="langs"
               :errors="errors"

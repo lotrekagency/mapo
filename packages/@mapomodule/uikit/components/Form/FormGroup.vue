@@ -1,14 +1,17 @@
 <template>
   <v-card v-if="conf" v-show="show(conf.group)" class="my-2 rounded-0 elevation-0 group-card">
-    <v-card-title :class="conf.group.titleClass">
+    <v-card-title class="text--secondary" :class="conf.group.titleClass">
       <slot name="title.before" v-bind="slotBindings" />
       <slot name="title" v-bind="slotBindings">
         <v-icon left> {{ conf.group.icon }} </v-icon>
         <span>{{ conf.group.name }}</span>
       </slot>
       <slot name="title.after" v-bind="slotBindings" />
+      <slot name="expandIcon" v-bind="slotBindings">
+        <v-icon class="expand-icon" :style="rotate" @click="expanded = !expanded"> mdi-chevron-up </v-icon>
+      </slot>
     </v-card-title>
-    <div class="container">
+    <div v-if="expanded" class="container">
       <Form
         v-model="model"
         v-bind="{ currentLang, errors, languages, readonly }"
@@ -29,8 +32,28 @@
   </v-card>
 </template>
 <style lang="scss" scoped>
+.expand-icon{
+  margin: 0 0 0 auto;
+}
 .theme--light .group-card {
   border: 1px solid rgba(0, 0, 0, 0.12);
+}
+.group-card .v-card__title{
+    padding: 6px 16px;
+    background: #0000002b;
+    position: relative;
+    &::after{
+      content: '';
+      position: absolute;
+      background: var(--v-primary-base);
+      height: 100%;
+      width: 4px;
+      left: 0;
+    }
+}
+.theme--light .v-card__title{
+    background: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 </style>
 <script>
@@ -39,6 +62,7 @@ export default {
   data() {
     return {
       model: {},
+      expanded: true
     };
   },
   props: {
@@ -86,6 +110,12 @@ export default {
         currentLang: this.currentLang,
         langs: this.languages,
         ...this.moreSlotBindings,
+      };
+    },
+    rotate() {
+      return {
+        transform: this.expanded ? "rotate(180deg)" : "rotate(0deg)",
+        transition: "transform 225ms cubic-bezier(0.4, 0, 0.2, 1)",
       };
     },
   },
