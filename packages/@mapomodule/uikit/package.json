@@ -1,6 +1,6 @@
 {
   "name": "@mapomodule/uikit",
-  "version": "1.0.0-alpha.37",
+  "version": "1.0.0-alpha.38",
   "license": "MIT",
   "description": "This is part of Mapo nuxt module. Injects Mapo ui components in the nuxt component discovery system.",
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",

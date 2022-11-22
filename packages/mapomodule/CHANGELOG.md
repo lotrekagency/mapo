@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.38](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2022-11-22)
+
+
+### Bug Fixes
+
+* fix static resources base path ([ed8351d](https://github.com/lotrekagency/mapo/commit/ed8351d55f3c1cfee435faec4ebc684bb92a1e78))
+
+
+
+
+
 # [1.0.0-alpha.37](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2022-11-14)
 
 **Note:** Version bump only for package mapomodule

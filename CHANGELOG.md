@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.38](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2022-11-22)
+
+
+### Bug Fixes
+
+* append color icon in color field ([7d17806](https://github.com/lotrekagency/mapo/commit/7d178067ccea0304df744c53f0b6142a54667f51))
+* clear tinymce content on startup ([e8e3599](https://github.com/lotrekagency/mapo/commit/e8e35998fd56cb832493a7a2d54c941e8ecc2fe2))
+* fix layout shift of media field after media selection ([b59e0f2](https://github.com/lotrekagency/mapo/commit/b59e0f26fee3b0b670d787dcb0b423690d389885))
+* fix static resources base path ([ed8351d](https://github.com/lotrekagency/mapo/commit/ed8351d55f3c1cfee435faec4ebc684bb92a1e78))
+* fix tinymce skin mapo-light menu hover color ([c176df8](https://github.com/lotrekagency/mapo/commit/c176df88616a8554231cd8f660d63a064595be3e))
+* remove settings link ([d4be262](https://github.com/lotrekagency/mapo/commit/d4be262deb0c55fccda8de60adb7111a6136beed))
+
+
+### Features
+
+* added error state for wyg editor based on mapo field error state ([c1f2dbd](https://github.com/lotrekagency/mapo/commit/c1f2dbd2e2ed7308396a3497cfbe44cd072d6ee4))
+* added error state to mapofield and reduced div nesting ([751ffeb](https://github.com/lotrekagency/mapo/commit/751ffeb40572d4755a467cacbbd9731d761651b7))
+* added slots for sidebar and topbar ([7ac86e7](https://github.com/lotrekagency/mapo/commit/7ac86e7d71347bb0b57b7a175a887afa4c0030d7))
+* auto hideDetails on fields without error messages ([7654bf3](https://github.com/lotrekagency/mapo/commit/7654bf3854224596587bdeb461c3dd1d11a6e1a3))
+* tinymce better theming ([c1c5c88](https://github.com/lotrekagency/mapo/commit/c1c5c88d9e1b46dcc008491d55bb52ee4e7296e4))
+* tinymce enhancements and theming ([5bb1168](https://github.com/lotrekagency/mapo/commit/5bb1168bcad8dcfc735a0ccf10f891a827520391))
+* update style of form groups ([a4d9238](https://github.com/lotrekagency/mapo/commit/a4d9238625a19ba16ecf692069515c986ffcf615))
+* update vuetify color scheme ([18aff8d](https://github.com/lotrekagency/mapo/commit/18aff8dc0de8c868e62f26df048a12dd97ef2f2b))
+
+
+### Performance Improvements
+
+* decrease div nesting in forms ([537a59c](https://github.com/lotrekagency/mapo/commit/537a59c884dce7ae4d959724349956246c1fd680))
+
+
+
+
+
 # [1.0.0-alpha.37](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.36...v1.0.0-alpha.37) (2022-11-14)
 
 
