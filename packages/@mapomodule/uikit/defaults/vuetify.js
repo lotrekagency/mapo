@@ -30,5 +30,5 @@ export default {
     lang: {
         locales: { en, it },
     },
-    treeShake: false,
+    treeShake: true,
 };
