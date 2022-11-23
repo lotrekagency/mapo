@@ -18,17 +18,6 @@
 </template>
 
 <script>
-import wygEditor from "@mapomodule/uikit/components/Form/fields/wygEditor/wygEditor.vue";
-import DateField from "@mapomodule/uikit/components/Form/fields/DateField.vue";
-import FksField from "@mapomodule/uikit/components/Form/fields/FksField.vue";
-import MediaM2mField from "@mapomodule/uikit/components/Form/fields/MediaM2mField.vue";
-import MediaField from "@mapomodule/uikit/components/Form/fields/MediaField.vue";
-import EnhancedMediaField from "@mapomodule/uikit/components/Form/fields/EnhancedMediaField.vue";
-
-import SeoPreview from "@mapomodule/uikit/components/Form/fields/SeoPreview.vue";
-import FileField from "@mapomodule/uikit/components/Form/fields/FileField.vue";
-import Repeater from "@mapomodule/uikit/components/Form/fields/Repeater.vue";
-
 import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import { titleCase } from "@mapomodule/utils/helpers/formatters";
 
@@ -40,26 +29,7 @@ import { debounce } from "@mapomodule/utils/helpers/debounce";
  */
 export default {
   name: "FormField",
-  components: {
-    wygEditor,
-    DateField,
-    FksField,
-    MediaM2mField,
-    MediaField,
-    EnhancedMediaField,
-    SeoPreview,
-    FileField,
-    Repeater,
-  },
-
-  data() {
-    return {
-      model: null,
-      defaultMap: defaults.mapping,
-      defaultAttrs: defaults.props,
-      defaultAccess: defaults.accessor,
-    };
-  },
+  data() { return { model: null, }; },
   props: {
     // V-model of the payload needed to edit the field value in realtime.
     value: {
@@ -134,6 +104,19 @@ export default {
     },
   },
   computed: {
+    childInfo() {
+      const originalName = this.is?.options?.name || this.is?.name || this.is;
+      const camelName = originalName.replace(/-./g, (x) => x[1].toUpperCase());
+      const kebabName = originalName.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+      return { originalName, camelName, kebabName }
+    },
+    defaultAccess() {
+      return defaults.accessor[this.childInfo.camelName] || defaults.accessor[this.childInfo.kebabName];
+    },
+    defaultAttrs() {
+      const componentAttrs = defaults.attrs[this.childInfo.camelName] || defaults.attrs[this.childInfo.kebabName];
+      return {...componentAttrs, ...defaults.attrs.All};
+    },
     classes() {
       var upperClasses = this.fieldAttrs.class;
       if (typeof upperClasses == "string") {
@@ -165,7 +148,7 @@ export default {
       return {
         get: func,
         set: func,
-        ...(this.defaultAccess[this.is] || {}),
+        ...this.defaultAccess,
         ...this.conf.accessor,
       };
     },
@@ -191,10 +174,7 @@ export default {
         label: this.label,
         errorMessages: this.errorMessages,
         hideDetails: this.hasErrors,
-        ...this.defaultAttrs.All,
-        ...(this.defaultAttrs[
-          this.is.replace(/-./g, (x) => x[1].toUpperCase())
-        ] || {}),
+        ...this.defaultAttrs,
         readonly: this.readonly,
         ...this.conf.attrs,
         currentLang: this.currentLang,
@@ -214,10 +194,11 @@ export default {
       );
     },
     is() {
+      const dynImport = typeof this.conf.is == "string" && defaults.components[this.conf.is.replace(/-./g, (x) => x[1].toUpperCase())];
       return (
-        this.conf.is ||
-        (this.conf.type && this.defaultMap[this.conf.type]) ||
-        "vTextField"
+        dynImport || this.conf.is ||
+        (this.conf.type && defaults.mapping[this.conf.type]) ||
+        defaults.mapping.text
       );
     },
   },
