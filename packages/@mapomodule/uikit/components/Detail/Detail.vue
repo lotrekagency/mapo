@@ -1,28 +1,25 @@
 <template>
-  <div>
-  <div v-if="loading">
+  <div class="mapo-detail--wrapper">
+  <div class="mapo-detail--loader" v-if="loading">
     <v-progress-linear
       color="primary"
       indeterminate
       absolute
-      style="top: 0;"
     ></v-progress-linear>
-    <span class="detail-component-loading ">
+    <span class="detail-component-loading">
       <v-icon size="30">mdi-timer-sand</v-icon>
       {{ $t('mapo.fetchingData') }}
     </span>
   </div>
-  <div v-else>
+  <div class="mapo-detail--loaded" v-else>
     <!-- Use this to override the title of the detail component. -->
     <slot name="title" v-bind="slotBindings">
       <!-- `<h1> "Create | Edit" + modelName </h1>` -->
-      <v-row class="mb-5">
-        <v-col col="12"><h1 class="display-1">{{ isNew ? $t("mapo.create") : $t("mapo.edit") }} {{ modelName }}</h1></v-col>
-      </v-row>
+      <h1 class="mapo-detail--title">{{ isNew ? $t("mapo.create") : $t("mapo.edit") }} {{ modelName }}</h1>
     </slot>
-    <v-form ref="form">
+    <v-form class="mapo-detail--form" ref="form">
       <v-row>
-        <v-col cols="12" md="8">
+        <v-col class="mapo-detail--main" cols="12" :md="12 - sidenavCol">
           <!-- Use this to add content at the top of the central layout. -->
           <slot name="body.top" v-bind="slotBindings"></slot>
           <!-- Use this to override the Language Switch panel. -->
@@ -31,7 +28,7 @@
             <DetailLangSwitch
               v-if="langs && langs.length"
               v-show="langs.length > 1"
-              class="mb-4 language-tabs"
+              class="mapo-detail--language-tabs"
               v-model="currentLang"
               :langs="langs"
               :errors="errors"
@@ -62,32 +59,32 @@
           <!-- Use this to add content under the main body. -->
           <slot name="body.bottom" v-bind="slotBindings"></slot>
         </v-col>
-        <v-col cols="12" md="4">
-          <div class="d-flex flex-column" :style="stickySide">
+        <v-col class="mapo-detail--sidenav" cols="12" :md="sidenavCol">
+          <div class="mapo-detail--sidenav-col" :style="stickySide">
             <!-- Use this to add content on the top of the sidebar button panel. -->
             <slot name="side.buttons.top" v-bind="slotBindings"></slot>
             <!-- Use this to override the the sidebar button panel. -->
             <slot name="side.buttons" v-bind="slotBindings">
               <!-- Save, Save and continue, Back, and Delete buttons. -->
-              <div class="mt-4 mt-md-0 mb-md-4 mb-0 order-1 order-md-0">
+              <div class="mapo-detail--buttons">
                 <!-- Use this to override the Save button. -->
                 <slot name="button.save" v-bind="slotBindings">
                   <!-- The Save button. -->
-                  <v-btn v-show="canGoBack" :loading="buttonClicked == 'saveAndBackBtn'" :disabled="isReadonly" class="mb-2" tile block @click="saveItem(true)">{{
+                  <v-btn v-show="canGoBack" :loading="buttonClicked == 'saveAndBackBtn'" :disabled="isReadonly" tile block @click="saveItem(true)">{{
                     isNew ? $t("mapo.create") : $t("mapo.save")
                   }}</v-btn>
                 </slot>
                 <!-- Use this to override the Save and continue button. -->
                 <slot name="button.savecontinue" v-bind="slotBindings">
                   <!-- The Save and continue button. -->
-                  <v-btn :loading="buttonClicked == 'saveBtn'" :disabled="isReadonly" class="mb-2" tile block @click="saveItem(false)"
+                  <v-btn :loading="buttonClicked == 'saveBtn'" :disabled="isReadonly" tile block @click="saveItem(false)"
                     >{{ isNew ? $t("mapo.createContinue") : $t("mapo.saveContinue") }}</v-btn
                   >
                 </slot>
                 <!-- Use this to override the Back button. -->
                 <slot name="button.back" v-bind="slotBindings">
                   <!-- The Back button. -->
-                  <v-btn v-show="canGoBack" class="mb-2" tile block @click="back"
+                  <v-btn v-show="canGoBack" tile block @click="back"
                     >{{ $t("mapo.back") }}</v-btn
                   >
                 </slot>
@@ -96,7 +93,6 @@
                   <!-- The Delete button. -->
                   <v-btn
                     v-if="!isNew"
-                    class="mb-2"
                     color="error"
                     tile
                     block
@@ -137,15 +133,44 @@
 </template>
 
 <style lang="scss" scoped>
-  .detail-component-loading {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
+  .mapo-detail--loader {
+    .v-progress-linear {
+      top: 0;
+    }
+    span{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  .mapo-detail--title{
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
+  .mapo-detail--language-tabs {
+    margin-bottom: 20px;
+  }
+  .mapo-detail--sidenav-col {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  }
+  .mapo-detail--buttons {
+    margin-top: 16px;
+    margin-bottom: 0px;
+    order: 1;
+    @media (min-width: 960px) {
+      margin-bottom: 16px;
+      margin-top: 0px;
+      order: 0;
+    }
+    .v-btn{
+      margin-bottom: 8px;
+    }
   }
 </style>
 
@@ -196,6 +221,15 @@ export default {
         endpoint: {
             type: String,
             default: null
+        },
+        // This determines the width of the sidebar in desktop view in a 12 col grid.
+        sidenavCol: {
+          type: Number | String,
+          default: "4",
+          validator: function (value) {
+              // The value must be a number between 0 and 12
+              return [...Array(12).keys()].indexOf(+value) !== -1;
+          },
         },
         // The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.
         identifier: {

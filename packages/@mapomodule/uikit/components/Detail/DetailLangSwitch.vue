@@ -9,7 +9,7 @@
 </template>
 
 <style lang="scss">
-.theme--light.language-tabs.v-tabs > .v-tabs-bar {
+.theme--light.mapo-detail--language-tabs.v-tabs > .v-tabs-bar {
   background: #f5f5f5;
 }
 </style>
