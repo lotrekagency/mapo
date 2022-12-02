@@ -10,7 +10,8 @@
   "workspaces": [
     "packages/@mapomodule/*",
     "packages/mapomodule",
-    "example"
+    "example/nuxt2",
+    "example/nuxt3"
   ],
   "vuese": {
     "genType": "markdown",
@@ -21,9 +22,9 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "dev": "nuxt example",
-    "build:example": "nuxt build example",
-    "start:example": "nuxt start example",
+    "dev": "yarn dev:nuxt2",
+    "dev:nuxt2": "nuxt example/nuxt2",
+    "dev:nuxt3": "nuxt example/nuxt3",
     "pub": "lerna publish --conventional-commits",
     "docs:gen": "yarn docs:js && vuese gen && ./docs/.vuepress/moveREADME.sh",
     "docs:dev": "vuepress dev docs",
