@@ -9,7 +9,7 @@
         readonly
         v-bind="{ ...$attrs, ...attrs }"
         v-on="readonly ? undefined : on"
-        class="media-field--card rounded-0"
+        class="media-field--card"
         :class="{ 'media-field--selected': !!model }"
         :value="model ? ' ' : ''"
       >
@@ -100,6 +100,9 @@
 .media-field--add {
   width: 100px;
   margin-bottom: 10px;
+}
+.media-field--card{
+  border-radius: inherit;
 }
 </style>
 

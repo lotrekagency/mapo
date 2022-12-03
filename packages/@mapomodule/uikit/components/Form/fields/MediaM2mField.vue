@@ -4,7 +4,7 @@
       readonly
       v-bind="$attrs"
       @click="hasSelection || editSelection()"
-      class="media-m2m--card rounded-0"
+      class="media-m2m--card"
       :class="{ 'media-m2m--selected': !!hasSelection }"
       :value="hasSelection ? ' ' : ''"
     >
@@ -89,6 +89,9 @@
   &.media-m2m--card.v-text-field > .v-input__control > .v-input__slot input {
     display: none;
   }
+}
+.media-m2m--card {
+  border-radius: inherit;
 }
 </style>
 
