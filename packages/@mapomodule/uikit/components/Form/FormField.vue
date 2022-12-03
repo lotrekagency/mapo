@@ -23,6 +23,7 @@ import { titleCase } from "@mapomodule/utils/helpers/formatters";
 
 import defaults from "./defaults";
 import { debounce } from "@mapomodule/utils/helpers/debounce";
+const _ = require("lodash");  
 
 /**
  * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic fields inside the main form.
@@ -104,18 +105,21 @@ export default {
     },
   },
   computed: {
-    childInfo() {
+    componentInfo() {
       const originalName = this.is?.options?.name || this.is?.name || this.is;
       const camelName = originalName.replace(/-./g, (x) => x[1].toUpperCase());
       const kebabName = originalName.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
       return { originalName, camelName, kebabName }
     },
+    options(){
+      return _.merge(defaults, this.$mapo.$options?.ui?.forms?.fields);
+    },
     defaultAccess() {
-      return defaults.accessor[this.childInfo.camelName] || defaults.accessor[this.childInfo.kebabName];
+      return this.options.accessor[this.componentInfo.camelName] || this.options.accessor[this.componentInfo.kebabName];
     },
     defaultAttrs() {
-      const componentAttrs = defaults.attrs[this.childInfo.camelName] || defaults.attrs[this.childInfo.kebabName];
-      return {...componentAttrs, ...defaults.attrs.All};
+      const componentAttrs = this.options.attrs[this.componentInfo.camelName] || this.options.attrs[this.componentInfo.kebabName];
+      return {...componentAttrs, ...this.options.attrs.All};
     },
     classes() {
       var upperClasses = this.fieldAttrs.class;
@@ -194,11 +198,11 @@ export default {
       );
     },
     is() {
-      const dynImport = typeof this.conf.is == "string" && defaults.components[this.conf.is.replace(/-./g, (x) => x[1].toUpperCase())];
+      const dynImport = typeof this.conf.is == "string" && this.options.components[this.conf.is.replace(/-./g, (x) => x[1].toUpperCase())];
       return (
         dynImport || this.conf.is ||
-        (this.conf.type && defaults.mapping[this.conf.type]) ||
-        defaults.mapping.text
+        (this.conf.type && this.options.mapping[this.conf.type]) ||
+        this.options.mapping.text
       );
     },
   },

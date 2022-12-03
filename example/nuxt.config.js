@@ -15,6 +15,15 @@ export default {
                 },
             },
         },
+        ui: {
+            forms: {
+                fields: {
+                    attrs: {
+                        vSwitch: { color: "secondary" },
+                    }
+                }
+            }
+        }
     },
     i18n: {
         langDir: __dirname + "/translations/",
