@@ -2,21 +2,20 @@
   <div class="media-m2m--wrapper">
     <v-text-field
       readonly
+      hide-details
       v-bind="$attrs"
-      @click="hasSelection || editSelection()"
+      @click="!hasSelection && editSelection()"
       class="media-m2m--card"
       :class="{ 'media-m2m--selected': !!hasSelection }"
       :value="hasSelection ? ' ' : ''"
     >
       <template v-slot:append>
-        <v-btn v-if="hasSelection" @click="editSelection" tile small>{{
-          $t("mapo.mediaM2MField.editSelection")
-        }}</v-btn>
         <v-virtual-scroll
           v-if="hasSelection"
           :items="model"
           :height="model.length * 64 > 256 ? 256 : model.length * 64"
           item-height="64"
+          class="mb-4"
         >
           <template v-slot:default="{ item }">
             <v-divider></v-divider>
@@ -53,7 +52,10 @@
         </v-virtual-scroll>
       </template>
     </v-text-field>
-
+    <v-btn v-if="hasSelection" @click="editSelection" tile small block>{{
+      $t("mapo.mediaM2MField.editSelection")
+    }}</v-btn>
+    <v-messages v-if="!$attrs.hideDetails" class="mt-2" :value="$attrs.errorMessages" color="error"/>
     <media-manager-dialog
       v-model="dialog"
       select="multi"
