@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.39](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2022-12-03)
+
+
+### Features
+
+* give the option to rewrite form fields components defaults in nuxt.config.js ([c4e76b1](https://github.com/lotrekagency/mapo/commit/c4e76b153b145cc670ef988e9501e1a8fbc0005e))
+
+
+
+
+
 # [1.0.0-alpha.34](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2022-11-11)
 
 
