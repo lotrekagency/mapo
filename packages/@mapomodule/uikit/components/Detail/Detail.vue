@@ -215,7 +215,7 @@ export default {
         // Forces use of languages passed as prop, instead of those loaded with model
         forceLanguages: {
             type: Boolean,
-            default: this.$mapo.$options?.content?.forceLanguages || false
+            default() { return this.$mapo.$options?.content?.forceLanguages || false; },
         },
         // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
         endpoint: {
