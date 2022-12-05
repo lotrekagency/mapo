@@ -66,7 +66,12 @@ export default {
   data() {
     return {
       model: {},
-      expanded: true
+      expanded:
+        this.conf?.group?.expanded != undefined
+          ? this.conf?.group?.expanded
+          : this.$mapo.$options?.ui?.forms?.groups?.expanded != undefined
+          ? this.$mapo.$options?.ui?.forms?.groups?.expanded
+          : true,
     };
   },
   props: {
