@@ -65,7 +65,7 @@ export default {
   name: "FormGroup",
   data() {
     return {
-      model: {},
+      model: this.value,
       expanded:
         this.conf?.group?.expanded != undefined
           ? this.conf?.group?.expanded
@@ -141,9 +141,6 @@ export default {
       }
       return true
     },
-  },
-  created() {
-    this.model = this.value;
-  },
+  }
 };
 </script>

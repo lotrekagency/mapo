@@ -91,7 +91,7 @@ export default {
   name: "FormTabs",
   data() {
     return {
-      model: {},
+      model: this.value,
       tabIndex: 0,
       expanded:
         this.conf?.group?.expanded != undefined
@@ -126,7 +126,7 @@ export default {
     // A list of languages into which the payload needs to be translated.
     languages: {
       type: Array,
-      default: () => [],
+      default() { return this.$mapo.$options?.content?.languages || []; },
     },
   },
   watch: {
@@ -183,9 +183,6 @@ export default {
       }
       return true
     },
-  },
-  created() {
-    this.model = this.value;
-  },
+  }
 };
 </script>
