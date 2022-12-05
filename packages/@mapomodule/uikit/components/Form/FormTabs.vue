@@ -21,6 +21,7 @@
       </v-tabs>
       <v-tabs-items v-model="tabIndex">
         <v-tab-item v-for="(tab, index) in conf.tabs" :key="index" class="pt-8">
+          <slot :name="`tab.${tab.tab.slug}.before`" v-bind="slotBindings" />
           <slot :name="`tab.${tab.tab.slug}`" v-bind="slotBindings">
             <Form
               v-model="model"
@@ -46,6 +47,7 @@
               </template>
             </Form>
           </slot>
+          <slot :name="`tab.${tab.tab.slug}.after`" v-bind="slotBindings" />
         </v-tab-item>
       </v-tabs-items>
     </div>
