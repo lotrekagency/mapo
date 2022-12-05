@@ -105,7 +105,7 @@ export default {
     // A list of languages into which the payload needs to be translated.
     languages: {
       type: Array,
-      default: () => [],
+      default() { return this.$mapo.$options?.content?.languages || []; },
     },
     lookup: {
       type: String,

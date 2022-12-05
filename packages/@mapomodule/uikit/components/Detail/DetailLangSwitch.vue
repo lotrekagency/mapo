@@ -31,7 +31,7 @@ export default {
     // A list of languages into which the payload needs to be translated.
     langs: {
       type: Array,
-      default: () => [],
+      default() { return this.$mapo.$options?.content?.languages || []; }
     },
       // An object representing all the errors of all fields. This component will find errors in each language and will display a little dot in the tab if there are any errors.
     errors: Object,

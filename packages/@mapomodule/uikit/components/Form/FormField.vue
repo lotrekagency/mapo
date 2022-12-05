@@ -49,7 +49,7 @@ export default {
     },
     langs: {
       type: Array,
-      default: () => [],
+      default() { return this.$mapo.$options?.content?.languages || []; },
     },
     currentLang: String,
   },
