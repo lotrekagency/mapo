@@ -12,22 +12,26 @@
       </slot>
     </v-card-title>
     <div v-if="expanded" class="container">
-      <Form
+      <slot name="body.top" v-bind="slotBindings" />
+      <slot name="body" v-bind="slotBindings">
+        <Form
         v-model="model"
         v-bind="{ currentLang, errors, languages, readonly }"
         :fields="conf.fields"
         :moreSlotBindings="slotBindings"
         immediate
-      >
-        <template v-for="(_, slot) in $slots" :slot="slot">
-          <!-- @vuese-ignore -->
-          <slot :name="slot" />
-        </template>
-        <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
-          <!-- @vuese-ignore -->
-          <slot :name="slot" v-bind="props" />
-        </template>
-      </Form>
+        >
+          <template v-for="(_, slot) in $slots" :slot="slot">
+            <!-- @vuese-ignore -->
+            <slot :name="slot" />
+          </template>
+          <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+            <!-- @vuese-ignore -->
+            <slot :name="slot" v-bind="props" />
+          </template>
+        </Form>  
+      </slot>
+      <slot name="body.bottom" v-bind="slotBindings" />
     </div>
   </v-card>
 </template>
