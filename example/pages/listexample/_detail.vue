@@ -5,15 +5,14 @@
       endpoint="api/camomilla/articles"
       :identifier="$route.params.detail"
       :fields="fields"
-      :languages="['it', 'en', 'de']"
       :modelName="$t('article')"
     >
-      <!-- <template v-slot:fields.meta.contents.template.tempname.fields.title>
-      <h2>suca</h2>
+    <template v-slot:fields.meta.contents.template.tempname.fields.title>
+      <h2>TeSt</h2>
     </template>
-    <template v-slot:group.tab_1-tab_2.tab.tab_1.fields.meta.key1>
-      <h2>suca2</h2>
-    </template> -->
+    <template v-slot:group.group-inside-group.top>
+      <h2>TeSt2</h2>
+    </template>
     </Detail>
   </v-container>
 </template>
@@ -172,7 +171,7 @@ export default {
             },
           },
           {
-            group: "Tabs",
+            group: {name: "Tabs", expanded: false},
             tabs: {
               tab_1: {
                 tab: { label: this.$t("testTab") },

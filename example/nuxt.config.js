@@ -1,6 +1,9 @@
 export default {
     modules: ["mapomodule"],
     mapo: {
+        content: {
+            languages: ['it', 'en']
+        },
         integrations: {
             camomilla: {
                 location: "@mapomodule/mapo-integrations-camomilla",
@@ -23,6 +26,9 @@ export default {
                     attrs: {
                         vSwitch: { color: "secondary" },
                     }
+                },
+                groups: {
+                    expanded: true
                 }
             }
         }

@@ -5,7 +5,6 @@
       :headers="headers"
       :editFields="editFields"
       :filters="availableFilters"
-      :languages="['it', 'en', 'de']"
       endpoint="api/camomilla/articles"
       navigable
       addItem
