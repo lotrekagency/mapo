@@ -30,6 +30,9 @@ export default {
                 groups: {
                     expanded: true
                 }
+            },
+            sidebar: {
+                spiderMenu: true
             }
         }
     },

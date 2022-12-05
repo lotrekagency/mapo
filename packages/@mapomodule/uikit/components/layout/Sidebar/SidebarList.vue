@@ -9,7 +9,7 @@
       :childrens="item.childrens"
       :icon="item.icon"
       :force-collapse="forceCollapse"
-      spider-menu
+      :spider-menu="spiderMenu"
     />
   </v-list>
 </template>
@@ -22,7 +22,14 @@ export default {
   name: "SidebarList",
   props: {
     footer: Boolean,
-    forceCollapse: Boolean
+    forceCollapse: Boolean,
+    spiderMenu: {
+      type: Boolean,
+      default() { 
+        const { spiderMenu } = this.$mapo.$options?.ui?.sidebar || {};
+        return spiderMenu == undefined ? true : spiderMenu;
+      }
+    }
   },
   data() {
     return {
