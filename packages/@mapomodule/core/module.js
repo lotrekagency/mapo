@@ -33,7 +33,11 @@ export default async function (moduleOptions) {
         })
     }
 
-
+    this.addTemplate({
+        src: path.resolve(__dirname, './templates/options.js'),
+        fileName: path.join(namespace, 'options.js'),
+        options: moduleOptions
+    })
     
 }
 

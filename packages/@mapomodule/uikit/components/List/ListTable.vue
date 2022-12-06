@@ -59,7 +59,7 @@
       </template>
       <template v-if="navigable" v-slot:[`item.${firstColName}`]="{ item }">
         <NuxtLink :to="detailLink(item)">
-          {{ getPointed(item, firstColName, "Unknown") }}
+          {{ getPointed(item, firstColName, "") || "Unknown" }}
         </NuxtLink>
       </template>
       <template v-slot:item.data-table-select="{ isSelected, select }" v-if="selectAll">

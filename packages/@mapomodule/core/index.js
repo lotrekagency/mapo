@@ -2,6 +2,12 @@ import createRepository from '@mapomodule/core/api/crud'
 import transformRequestInMultipart from '@mapomodule/core/api/multipart'
 import initInterceptors from '@mapomodule/core/interceptor'
 
+try {
+    var options = require('./options').default;
+} catch (error) {
+    var options = {};
+}
+
 function getRouteMiddlewares(route) {
     const meta = Array.isArray(route?.meta) ? route.meta[0] : route.meta
     const { middleware } = meta || {}
@@ -13,7 +19,7 @@ export default (ctx, inject) => {
 
     initInterceptors(ctx)
 
-    inject('mapo', {
+    const mapo = {
         /**
          * From here you can reach some utilities that simplify the interaction with the backend api.
          */
@@ -102,8 +108,12 @@ export default (ctx, inject) => {
              * @function
              */
             close: null
-        }
-    })
+        },
+        $options: options
+    };
+
+    inject('mapo', mapo);
+    ctx.$mapo = mapo;
 }
 
 /**

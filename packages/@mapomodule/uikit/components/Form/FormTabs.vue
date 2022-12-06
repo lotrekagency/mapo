@@ -21,6 +21,7 @@
       </v-tabs>
       <v-tabs-items v-model="tabIndex">
         <v-tab-item v-for="(tab, index) in conf.tabs" :key="index" class="pt-8">
+          <slot :name="`tab.${tab.tab.slug}.before`" v-bind="slotBindings" />
           <slot :name="`tab.${tab.tab.slug}`" v-bind="slotBindings">
             <Form
               v-model="model"
@@ -46,6 +47,7 @@
               </template>
             </Form>
           </slot>
+          <slot :name="`tab.${tab.tab.slug}.after`" v-bind="slotBindings" />
         </v-tab-item>
       </v-tabs-items>
     </div>
@@ -89,9 +91,14 @@ export default {
   name: "FormTabs",
   data() {
     return {
-      model: {},
+      model: this.value,
       tabIndex: 0,
-      expanded: true,
+      expanded:
+        this.conf?.group?.expanded != undefined
+          ? this.conf?.group?.expanded
+          : this.$mapo.$options?.ui?.forms?.groups?.expanded != undefined
+          ? this.$mapo.$options?.ui?.forms?.groups?.expanded
+          : true,
     };
   },
   props: {
@@ -119,7 +126,7 @@ export default {
     // A list of languages into which the payload needs to be translated.
     languages: {
       type: Array,
-      default: () => [],
+      default() { return this.$mapo.$options?.content?.languages || []; },
     },
   },
   watch: {
@@ -176,9 +183,6 @@ export default {
       }
       return true
     },
-  },
-  created() {
-    this.model = this.value;
-  },
+  }
 };
 </script>

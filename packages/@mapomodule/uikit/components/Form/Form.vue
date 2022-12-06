@@ -118,7 +118,7 @@ export default {
     // A list of languages into which the payload needs to be translated.
     languages: {
       type: Array,
-      default: () => [],
+      default() { return this.$mapo.$options?.content?.languages || []; },
     },
     // Removes debounce from the emitter.
     immediate: Boolean
@@ -178,9 +178,9 @@ export default {
     mapConf(fields) {
       return fields.map((f, i) =>
         f.tabs
-          ? { group: this.parseTagsGroup(f), tabs: this.parseTabs(f.tabs) }
+          ? { ...f, group: this.parseTagsGroup(f), tabs: this.parseTabs(f.tabs) }
           : f.group
-            ? { group: this.parseGroup(f.group), fields: this.mapConf(f.fields) }
+            ? { ...f, group: this.parseGroup(f.group), fields: this.mapConf(f.fields) }
             : this.parseConf(f, i)
       );
     },

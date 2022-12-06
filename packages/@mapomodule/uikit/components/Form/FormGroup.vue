@@ -12,22 +12,26 @@
       </slot>
     </v-card-title>
     <div v-if="expanded" class="container">
-      <Form
+      <slot name="body.top" v-bind="slotBindings" />
+      <slot name="body" v-bind="slotBindings">
+        <Form
         v-model="model"
         v-bind="{ currentLang, errors, languages, readonly }"
         :fields="conf.fields"
         :moreSlotBindings="slotBindings"
         immediate
-      >
-        <template v-for="(_, slot) in $slots" :slot="slot">
-          <!-- @vuese-ignore -->
-          <slot :name="slot" />
-        </template>
-        <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
-          <!-- @vuese-ignore -->
-          <slot :name="slot" v-bind="props" />
-        </template>
-      </Form>
+        >
+          <template v-for="(_, slot) in $slots" :slot="slot">
+            <!-- @vuese-ignore -->
+            <slot :name="slot" />
+          </template>
+          <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+            <!-- @vuese-ignore -->
+            <slot :name="slot" v-bind="props" />
+          </template>
+        </Form>  
+      </slot>
+      <slot name="body.bottom" v-bind="slotBindings" />
     </div>
   </v-card>
 </template>
@@ -61,8 +65,13 @@ export default {
   name: "FormGroup",
   data() {
     return {
-      model: {},
-      expanded: true
+      model: this.value,
+      expanded:
+        this.conf?.group?.expanded != undefined
+          ? this.conf?.group?.expanded
+          : this.$mapo.$options?.ui?.forms?.groups?.expanded != undefined
+          ? this.$mapo.$options?.ui?.forms?.groups?.expanded
+          : true,
     };
   },
   props: {
@@ -88,7 +97,7 @@ export default {
     // A list of languages into which the payload needs to be translated.
     languages: {
       type: Array,
-      default: () => [],
+      default() { return this.$mapo.$options?.content?.languages || []; },
     },
     // Makes all the fields readonly.
     readonly: Boolean,
@@ -132,9 +141,6 @@ export default {
       }
       return true
     },
-  },
-  created() {
-    this.model = this.value;
-  },
+  }
 };
 </script>

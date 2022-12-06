@@ -17,7 +17,7 @@
           v-bind="{ ...$attrs, ...attrs }"
           v-on="readonly ? undefined : on"
           :clearable="!readonly"
-          class="rounded-0"
+          class="rounded-inherit"
         ></v-text-field>
       </template>
       <v-date-picker v-model="model" :range="range" no-title>
@@ -27,6 +27,12 @@
     </v-menu>
   </div>
 </template>
+
+<style scoped>
+.rounded-inherit{
+  border-radius: inherit;
+}
+</style>
 
 <script>
 /**

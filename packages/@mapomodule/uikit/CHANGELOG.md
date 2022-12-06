@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.39](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2022-12-03)
+
+
+### Bug Fixes
+
+* fix class inheritance for field border radius ([33f1fd9](https://github.com/lotrekagency/mapo/commit/33f1fd9e41edb9f3a396ee8a4c1a7431072b885a))
+* fix list table to fallback to unknown string if navigable but no column value ([dcf400f](https://github.com/lotrekagency/mapo/commit/dcf400f5a728246a9251a464c2d9739246092b9a))
+
+
+### Features
+
+* give the option to rewrite form fields components defaults in nuxt.config.js ([c4e76b1](https://github.com/lotrekagency/mapo/commit/c4e76b153b145cc670ef988e9501e1a8fbc0005e))
+* pass classes also to groups and tabs in formfields ([e975aab](https://github.com/lotrekagency/mapo/commit/e975aabea4ae62be2285262fed8852af45a69f48))
+* restyle media m2m field ([a79e976](https://github.com/lotrekagency/mapo/commit/a79e9763949b032a37180fefbd8a98ad8e0b05a0))
+* specific class names for detail component parts and configurable sidenav col ([e6a5887](https://github.com/lotrekagency/mapo/commit/e6a588712774080dddcf01fb832a0729babb16a7))
+
+
+### Performance Improvements
+
+* dynamically import components in FormField to reduce bundle size ([85986c6](https://github.com/lotrekagency/mapo/commit/85986c6859a00d8039dd7e9f703f5dd4b668361f))
+* treeshake vuetify to reduce vendor bundle ([42b31b3](https://github.com/lotrekagency/mapo/commit/42b31b38eb04d561bba1535d8e05d91353679027))
+
+
+
+
+
 # [1.0.0-alpha.38](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.37...v1.0.0-alpha.38) (2022-11-22)
 
 

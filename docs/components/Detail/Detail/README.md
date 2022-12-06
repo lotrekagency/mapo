@@ -14,6 +14,7 @@ The purpose of this component is to provide you with a very quick way to create 
 |languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
 |forceLanguages|Forces use of languages passed as prop, instead of those loaded with model|`Boolean`|`false`|false|
 |endpoint|The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.|`String`|`false`|null|
+|sidenavCol|This determines the width of the sidebar in desktop view in a 12 col grid.|—|`false`|4|
 |identifier|The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.|`String|Number`.|`false`|new|
 |modelName|The title of the detail page.|`String`|`false`|-|
 |sticky|This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.|`Boolean`|`false`|true|

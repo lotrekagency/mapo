@@ -311,7 +311,7 @@ export default {
     langs: {
       // `Array<String>`
       type: Array,
-      default: () => [],
+      default() { return this.$mapo.$options?.content?.languages || []; },
     },
     // This is mainly an internal property. It is used by DetailField to pass the active language inherited from the Detail component.
     currentLang: String,

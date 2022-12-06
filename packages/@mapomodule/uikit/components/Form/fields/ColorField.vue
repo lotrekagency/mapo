@@ -13,7 +13,7 @@
           readonly
           v-bind="{ ...$attrs, ...attrs }"
           v-on="readonly ? undefined : on"
-          class="rounded-0"
+          class="rounded-inherit"
         >
           <template v-if="model" v-slot:append>
             <div class="color-picker-inner-icon" :style="`background-color: ${model}`"></div>
@@ -38,6 +38,9 @@
   width: 20px;
   height: 20px;
   border-radius: 20px;
+}
+.rounded-inherit{
+  border-radius: inherit;
 }
 </style>
 
