@@ -31,6 +31,7 @@
 }
 .lang__selector {
   max-width: 70px;
+  flex-basis: content;
   overflow: hidden;
   padding: 0;
   v-select {
