@@ -27,6 +27,7 @@ const components = {
     FileField: () => import("@mapomodule/uikit/components/Form/fields/FileField.vue"),
     Repeater: () => import("@mapomodule/uikit/components/Form/fields/Repeater.vue"),
     ColorField: () => import("@mapomodule/uikit/components/Form/fields/ColorField.vue"),
+    DateTimeField: () => import("@mapomodule/uikit/components/Form/fields/DateTimeField.vue"),
 }
 
 const mapping = {
@@ -46,6 +47,7 @@ const mapping = {
     seoPreview: components.SeoPreview,
     repeater: components.Repeater,
     color: components.ColorField,
+    datetime: components.DateTimeField,
 }
 
 const attrs = {
