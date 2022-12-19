@@ -209,6 +209,10 @@ export default {
             type: Object | Array,
             required: true
         },
+        usePatch: {
+            type: Boolean,
+            default() { return this.$mapo.$options?.content?.usePatch || false; },
+        },
         // A list of languages into which the payload needs to be translated.
         languages: {
             type: Array,
@@ -264,22 +268,19 @@ export default {
             this.buttonClicked = back ? "saveAndBackBtn" : "saveBtn";
             this.errors = null;
             this.$refs.form?.resetValidation();
-            this.crud
-                .updateOrCreate(this.model, {}, { multipart: this.multipart })
-                .then((resp) => {
-                    this.model = resp;
-                    this.modelBkp = resp;
-                    this.$mapo.$snack.open({ message: this.isNew ? this.$t("mapo.createSuccess") : this.$t("mapo.saveSuccess"), color: "success" })
-                    this.isNew && this.$router.replace({ params: { detail: resp.id } })
-                    back && this.back();
-                })
-                .catch(error => {
-                this.errors =
-                    (error.response.status == 400 && error.response.data) || null;
-                this.$mapo.$snack.open({
-                    message: error.response?.data?.detail || this.$t("mapo.genericError"),
-                    color: "error"
-                })
+            this.apiSendPayload().then((resp) => {
+              this.model = resp;
+              this.modelBkp = deepClone(this.model);
+              this.$mapo.$snack.open({ message: this.isNew ? this.$t("mapo.createSuccess") : this.$t("mapo.saveSuccess"), color: "success" })
+              this.isNew && this.$router.replace({ params: { detail: resp.id } })
+              back && this.back();
+            }).catch(error => {
+              this.errors =
+                  (error.response.status == 400 && error.response.data) || null;
+              this.$mapo.$snack.open({
+                  message: error.response?.data?.detail || this.$t("mapo.genericError"),
+                  color: "error"
+              })
             }).finally(() => {this.buttonClicked = null;});;
         },
         deleteItem() {
@@ -363,6 +364,20 @@ export default {
         crud() {
             return this.$mapo.$api.crud(this.endpoint);
         },
+        apiSendPayload(){
+          let method, args;
+          if (!this.model.id){
+            method = this.crud.create;
+            args = [this.model, {}, { multipart: this.multipart }]
+          } else if (this.usePatch) {
+            method = this.crud.partialUpdate;
+            args = [this.model.id, this.modelDiff, {}, { multipart: this.multipart }]
+          } else {
+            method = this.crud.update;
+            args = [this.model.id, this.model, {}, { multipart: this.multipart }]
+          }
+          return async () => method(...args)
+        },
         isReadonly() {
             if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
                 return !this.$mapo.$auth.user.permissions.includes(this.isNew ? "add" : "change");
@@ -416,7 +431,7 @@ export default {
                 : {};
         },
         modelDiff(){
-          return diffObjs(this.modelBkp, this.model);
+          return diffObjs(this.modelBkp, this.model) || {};
         },
         hasDiff() {
           return !!(this.modelDiff && Object.keys(this.modelDiff).length > 0);
