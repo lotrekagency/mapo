@@ -177,7 +177,7 @@ export default {
       return {
         label: this.label,
         errorMessages: this.errorMessages,
-        hideDetails: this.hasErrors,
+        hideDetails: !this.hasErrors,
         ...this.defaultAttrs,
         readonly: this.readonly,
         ...this.conf.attrs,
