@@ -83,17 +83,22 @@ function findPropPaths(obj, predicate) {
     return results;
 }
 
-function diffObjs(obj1, obj2) {
-    const a = deepClone(obj1)
-    const b = deepClone(obj2)
+function diffObjs(obj1, obj2, clone=deepClone) {
+    const a = obj1 && clone(obj1) || obj2 && obj2.__proto__.constructor();
+    const b = obj2 && clone(obj2) || obj1 && obj1.__proto__.constructor();
     for (const i in b) {
         if (JSON.stringify(a[i]) === JSON.stringify(b[i])) {
-            delete b[i]
-        } else if (!Array.isArray(b[i]) && typeof b[i] == 'object') {
-            b[i] = diffObjs(a[i], b[i])
-        }
+            delete b[i];
+        } else if (b[i] && !Array.isArray(b[i]) && typeof b[i] == 'object') {
+            const diff = diffObjs(a[i], b[i], (v) => v);
+            if (diff !== undefined){
+                b[i] = diff;
+            } else {
+                delete b[i];
+            };
+        };
     }
-    return b;
+    return b && Object.keys(b).length ? b : undefined;
 }
 
 module.exports = {
