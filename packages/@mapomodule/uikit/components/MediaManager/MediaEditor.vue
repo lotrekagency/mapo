@@ -312,20 +312,20 @@ export default {
         ? URL.createObjectURL(this.newFile)
         : null;
     },
-    permissions() {
-      return this.$store.getters["mapo/user/isSuperUser"]
-        ? ["add", "view", "change", "delete"]
-        : this.$store.getters["mapo/user/info"]?.all_permissions
-            ?.filter((p) =>
-              p.codename.endsWith(this.$mapo.$options?.medias?.permissionsModel || "media")
-            )
-            ?.map((p) => p.codename.split("_").slice(0, -1).join("_")) || [];
+    permissionsModel() {
+      return this.$mapo.$options?.medias?.permissionsModel || "media";
     },
     canEdit() {
-      return this.permissions.includes("change");
+      return this.$store.getters["mapo/user/hasModelPermission"](
+        this.permissionsModel,
+        "change"
+      );
     },
     canDelete() {
-      return this.permissions.includes("delete");
+      return this.$store.getters["mapo/user/hasModelPermission"](
+        this.permissionsModel,
+        "delete"
+      );
     },
   },
   watch: {
