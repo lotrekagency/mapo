@@ -175,6 +175,8 @@
 </style>
 
 <script>
+import { diffObjs, deepClone } from "@mapomodule/utils/helpers/objHelpers";
+
 /**
  * The purpose of this component is to provide you with a very quick way to create an edit page for a payload to send to the server.
  * A use case example could be "build a page that allows you to change the specifications of a product for an ecommerce".<br> <h4>Index:</h4> [[toc]]
@@ -265,13 +267,11 @@ export default {
             this.crud
                 .updateOrCreate(this.model, {}, { multipart: this.multipart })
                 .then((resp) => {
-                  if (back) {
-                    this.back()
-                  } else {
                     this.model = resp;
+                    this.modelBkp = resp;
                     this.$mapo.$snack.open({ message: this.isNew ? this.$t("mapo.createSuccess") : this.$t("mapo.saveSuccess"), color: "success" })
                     this.isNew && this.$router.replace({ params: { detail: resp.id } })
-                  }
+                    back && this.back();
                 })
                 .catch(error => {
                 this.errors =
@@ -302,6 +302,34 @@ export default {
                 }
             });
         },
+        setRouterGuard(){
+          const checkUnsaved = async (to, from, next) => {
+            if (to.name !== from.name && this.hasDiff){
+              this.$mapo.$confirm
+                .open({
+                title: this.$t("mapo.unsavedData"),
+                question: this.$t("mapo.confirmLeaveChanges"),
+                approveButton: { text: this.$t("mapo.confirm"), attrs: { text: true } }
+            }).then(next);
+            } else {
+              next();
+            }
+          };
+          checkUnsaved.bind(this);
+          this.$router.beforeHooks.push(checkUnsaved);
+          window?.addEventListener('beforeunload', this.preventWindowClose);
+        },
+        preventWindowClose(event){
+          const text = this.$t("mapo.confirmLeaveChanges");
+          if (this.hasDiff) {
+            event.returnValue = text; 
+            return text;              
+          }
+        },
+        unsetRouterGuard(){
+          window?.removeEventListener('beforeunload', this.preventWindowClose);
+          this.$router.beforeHooks = this.$router.beforeHooks.filter(({name})=> name != 'checkUnsaved');
+        }
     },
     watch: {
         currentLang(val) {
@@ -323,7 +351,7 @@ export default {
             if (val) {
                 this.model = val;
             }
-        }
+        },
     },
     computed: {
         canGoBack() {
@@ -386,22 +414,33 @@ export default {
                     top: "60px"
                 }
                 : {};
+        },
+        modelDiff(){
+          return diffObjs(this.modelBkp, this.model);
+        },
+        hasDiff() {
+          return !!(this.modelDiff && Object.keys(this.modelDiff).length > 0);
         }
     },
-    mounted() {
+    async mounted() {
         if (this.identifier && this.identifier !== "new") {
-            this.crud.detail(this.identifier).then(res => {
-                this.model = res;
-                this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id);
-            }).catch(error => {
-                this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || this.$t("mapo.genericError") });
-            });
+          try {
+            this.model = await this.crud.detail(this.identifier);
+            this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id);
+          } catch (error) {
+            this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || this.$t("mapo.genericError") });
+          }
         }
         else if (this.value) {
             this.model = this.value;
             this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id);
         }
+        this.modelBkp = deepClone(this.model);
+        this.setRouterGuard();
     },
+    destroyed(){
+      this.unsetRouterGuard();
+    }
 };
 </script>
 

@@ -23,6 +23,8 @@ export default {
         saveSuccess: "Item saved succesfully!",
         createSuccess: "Item succesfully created!",
         confirmDelete: "Are you sure you want to delete this item?",
+        unsavedData: "Exit page?",
+        confirmLeaveChanges: "Changes you made may not be saved.",
         fetchingData: "Fetching data...",
         login: "Login",
         loginError: "Cannot login right now. Try again later.",

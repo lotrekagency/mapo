@@ -23,6 +23,8 @@ export default {
         saveSuccess: "Elemento salvato con successo!",
         createSuccess: "Elemento creato con successo!",
         confirmDelete: "Vuoi veramente eliminare questo elemento?",
+        unsavedData: "Uscire dalla pagina?",
+        confirmLeaveChanges: "I dati non sono ancora stati salvati.",
         fetchingData: "Caricamento in corso...",
         login: "Login",
         loginError:
