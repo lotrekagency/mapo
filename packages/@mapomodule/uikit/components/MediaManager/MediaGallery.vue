@@ -1,6 +1,6 @@
 <template>
   <div class="media-gallery--wrapper">
-    <div v-if="selection && selection.length && selectMode == 'multi'" class="media-gallery--selection grey darken-2">
+    <draggable v-model="draggableSelection" animation="150" v-if="selection && selection.length && selectMode == 'multi'" class="media-gallery--selection grey darken-2">
         <MediaPreview
           v-for="media in selection"
           :key="media.file"
@@ -9,7 +9,7 @@
           icon-size="20px"
           class="elevation-4 media-gallery--selection-item"
         />
-    </div>
+    </draggable>
     <div ref="masonry" class="media-gallery--masonry" v-if="medias.length">
       <div
         v-for="media in medias"
@@ -165,11 +165,17 @@ $wcol: calc(100% / 6 - 12px);
 
 <script>
 import { mapGetters, mapActions } from "vuex"
+import draggable from "vuedraggable";
 
 export default {
   name: "MediaGallery",
+  components: { draggable },
   computed: {
     ...mapGetters("mapo/media", ["page", "pages", "medias", "selection", "selectMode", "loading"]),
+    draggableSelection: {
+      get() { return this.selection; },
+      set(val) { this.setSelection(val); }
+    },
     currentPage: {
       get() {
         return this.page;
@@ -182,7 +188,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("mapo/media", ["getRoot", "openEditor", "select"]),
+    ...mapActions("mapo/media", ["getRoot", "openEditor", "select", "setSelection"]),
     isSelected(media) {
       switch (this.selectMode) {
         case "multi":
