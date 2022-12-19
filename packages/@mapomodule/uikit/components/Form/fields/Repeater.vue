@@ -265,7 +265,7 @@ export default {
   },
   data() {
     return {
-      items: null,
+      items: this.value ? deepClone(this.value) : [],
       tModalOpen: false,
       tModalCallback: () => {},
       collapsedStack: (this.value || []).map(() => !!this.collapsable),
@@ -320,7 +320,8 @@ export default {
   },
   watch: {
     value(val) {
-      if (JSON.stringify(val) === JSON.stringify(this.items)) return;
+      const isEmpty = (v) => !v || Object.keys(v).length == 0;
+      if (isEmpty(val) && isEmpty(this.items) || JSON.stringify(val) === JSON.stringify(this.items)) return;
       this.items = (val && deepClone(val)) || [];
       if (val.length != this.collapsedStack.length)
         this.collapsedStack = (val || []).map(() => !!this.collapsable);
@@ -452,9 +453,6 @@ export default {
         return { maxHeight, paddingTop: "15px", overflowX: "hidden", overflowY: "auto" };
       }
     },
-  },
-  mounted() {
-    this.items = (this.value && deepClone(this.value)) || [];
   },
 };
 </script>
