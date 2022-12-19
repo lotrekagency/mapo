@@ -378,7 +378,7 @@ export default {
               },
             ],
           },
-          { value: this.$t("highlight_image"), type: "enhancedMedia", synci18n: true },
+          { value: "highlight_image", label: this.$t("highlight_image"), type: "media", synci18n: true },
         ],
       };
     },
