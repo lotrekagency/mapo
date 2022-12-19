@@ -30,7 +30,6 @@ export default {
     return {
       response: null,
       dialog: false,
-      optionsBk: null,
       options: {
         title: this.title || this.$t("mapo.confirm"),
         question: this.question || this.$t("mapo.confirmDialog.areYouSure"),
@@ -142,7 +141,7 @@ export default {
       }
       this.dialog = false;
       this.response = false;
-      this.options = { ...this.optionsBk };
+      setTimeout(() => this.options = { ...this.optionsBk }, 300);
     }
   }
 };
