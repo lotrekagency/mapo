@@ -109,10 +109,11 @@ export default {
             changeFile: "Cambia File",
             maintainOldUrl: "Mantieni URL precedente",
             confirmDelete: "Vuoi veramente eliminare questo media?",
+            details: "Dettagli",
         },
         // MediaManager/MediaFolders.vue
         mediaFolders: {
-            goBack: "Torna indietro", 
+            goBack: "Torna indietro",
             noFolders: "Non sono presenti cartelle... Creane una!",
             newFolder: "Crea nuova cartella",
             editFolder: "Modifica cartella",
