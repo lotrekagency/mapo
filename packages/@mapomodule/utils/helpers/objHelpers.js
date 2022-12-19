@@ -57,7 +57,7 @@ function findPropPaths(obj, predicate) {
     const path = [];
     const results = [];
     if (!obj && (typeof obj !== "object" || Array.isArray(obj))) {
-        throw new TypeError("First argument of finPropPath is not the correct type Object");
+        throw new TypeError("First argument of findPropPaths is not the correct type Object");
     }
     if (typeof predicate !== "function") {
         throw new TypeError("Predicate is not a function");
