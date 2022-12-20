@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.41](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.40...v1.0.0-alpha.41) (2022-12-20)
+
+
+### Bug Fixes
+
+* hide language select if empty ([c2b6d9e](https://github.com/lotrekagency/mapo/commit/c2b6d9e9d3f96959f64f9322e3deb68eb9f8b006))
+* **media-editor:** clone media object from store ([5f0d39a](https://github.com/lotrekagency/mapo/commit/5f0d39a033cf70d0860ae201978f65c5da0ee321))
+
+
+### Features
+
+* handle all_permissions prop in user ([14d4252](https://github.com/lotrekagency/mapo/commit/14d425215434e29f82093fc96e53b172bf247b8f))
+* hide parent sidebar item when there aren't any accessible items ([2358b1d](https://github.com/lotrekagency/mapo/commit/2358b1d3b56813ed7a7a39541951b2e4ff66a223))
+* **media editor:** disable save and delete button on medias without permissions ([e15bc71](https://github.com/lotrekagency/mapo/commit/e15bc718d50c9b8ef5d1bd215e3149609866dc3c))
+
+
+
+
+
 # [1.0.0-alpha.40](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.39...v1.0.0-alpha.40) (2022-12-20)
 
 
