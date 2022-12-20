@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.40](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.39...v1.0.0-alpha.40) (2022-12-20)
+
+
+### Bug Fixes
+
+* rewritten and more precise diffObjs function ([3e79775](https://github.com/lotrekagency/mapo/commit/3e797756d0dc48142febcdb806390552ea522b30))
+
+
+### Features
+
+* style scrollbars ([48e4c7b](https://github.com/lotrekagency/mapo/commit/48e4c7b047a1062464d823ddeebdc60b96ea11a8))
+
+
+
+
+
 # [1.0.0-alpha.34](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.33...v1.0.0-alpha.34) (2022-11-11)
 
 

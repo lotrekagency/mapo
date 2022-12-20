@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.40](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.39...v1.0.0-alpha.40) (2022-12-20)
+
+
+### Bug Fixes
+
+* fix formfield hideDetails on errors ([4d97992](https://github.com/lotrekagency/mapo/commit/4d9799283b697392c30c0f984958d2bc0332882a))
+* fix repeater mount value ([aacaf20](https://github.com/lotrekagency/mapo/commit/aacaf206693932d103b7c85cf62bb70659b70b7f))
+* fixed detail forceLanguage default ([2ab928a](https://github.com/lotrekagency/mapo/commit/2ab928a6351e65e0d6f4a95db27910d49dee6f63))
+* reduce debounce output with nested repeater to prevent field deletions ([b6a252e](https://github.com/lotrekagency/mapo/commit/b6a252eb411ffad69170393516cf0f983592280a))
+* reset confirm dialog options after transition to prevent graphic glitch ([d2e5138](https://github.com/lotrekagency/mapo/commit/d2e5138901caf8a5c9e5ef59a808d3266ec12868))
+
+
+### Features
+
+* add some slots to drop area component ([73d79df](https://github.com/lotrekagency/mapo/commit/73d79df9f43cb88c987b70a44a12180be5bde8d9))
+* added botdy.top and body.bottom slots for forma groups ([3e48d43](https://github.com/lotrekagency/mapo/commit/3e48d43963e3e776c297ed5dbbaa04f930c0b2f5))
+* added draggable capability to media manager selection ([f6311cd](https://github.com/lotrekagency/mapo/commit/f6311cddcb3b97b181eb20dc8585b82bd493df88))
+* added global and single field configuration for initial expanded value in form groups ([69249c1](https://github.com/lotrekagency/mapo/commit/69249c1e7dbee403c262da2814aa2c55678e4b68))
+* added global and single field configuration for initial expanded value in form tabs ([e4f01d0](https://github.com/lotrekagency/mapo/commit/e4f01d0ec73e8c376e6155ae8c2695fc7733ee7c))
+* added route gruard to prevent leaving a detail page with unsaved data ([7d51cd2](https://github.com/lotrekagency/mapo/commit/7d51cd2ec634cb9b32ea88ec87f948265d9c0dfa))
+* added spridermenu option to nuxt.config ([1808d43](https://github.com/lotrekagency/mapo/commit/1808d4365fce57f1979239bf575d241fe66206be))
+* added tab.slug.before and tab.slug.after slots for forms tabs ([42a2497](https://github.com/lotrekagency/mapo/commit/42a249752024d8ffd3e8d784d4cec31145670974))
+* added the possibility to set default langs in nuxt.config ([81b0fe4](https://github.com/lotrekagency/mapo/commit/81b0fe4334b84cdea4527b38a7cc6996f78184da))
+* added usePatch option to partially save data with PATCH http method ([1dfa3b2](https://github.com/lotrekagency/mapo/commit/1dfa3b28cb06e8ded4de7e982a865fa2c06f6f07))
+* added warning on media manager upload for big files ([09743b9](https://github.com/lotrekagency/mapo/commit/09743b981de624234199bfe71e3594a8c4709109))
+* style scrollbars ([48e4c7b](https://github.com/lotrekagency/mapo/commit/48e4c7b047a1062464d823ddeebdc60b96ea11a8))
+
+
+
+
+
 # [1.0.0-alpha.39](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2022-12-03)
 
 
