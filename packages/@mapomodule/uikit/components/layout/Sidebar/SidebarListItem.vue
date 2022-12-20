@@ -151,24 +151,23 @@ export default {
       );
     },
     userCanSee() {
-      const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: this.meta });
+      return this.checkPermissions();
+    },
+  },
+  methods: {
+    checkPermissions(child = undefined) {
+      const item = child || this;
+      const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: item.meta });
       if (middleware.includes("permissions")) {
-        const userInfo = this.$mapo.$auth.user.info;
-        if (userInfo.is_superuser) return true;
-        const { model } = this.meta?.permissions || {};
-        const userPermission = (
-          userInfo.all_permissions ||
-          userInfo.user_permissions ||
-          []
-        )
-          .filter((perm) => perm.codename.endsWith(model))
-          .map(({ codename }) => codename.replace(`_${model}`, ""));
-        return userPermission.includes("view");
+        const { model } = item.meta?.permissions || {};
+        return this.$store.getters["mapo/user/hasModelPermission"](model, "view");
       }
       if (middleware.includes("auth")) {
         return this.$mapo.$auth.user.isLoggedIn;
       }
-      return true;
+      return (
+        item.childrens.length == 0 || item.childrens.some((c) => this.checkPermissions(c))
+      );
     },
   },
   props: {
