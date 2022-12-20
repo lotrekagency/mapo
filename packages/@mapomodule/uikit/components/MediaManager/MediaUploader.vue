@@ -11,6 +11,9 @@
           </v-btn>
         </div>
       </template>
+      <template v-slot:list-item.content.after="{ item }">
+        <v-chip dense v-if="isTooLarge(item)" color="error">{{$t("mapo.mediaUploader.tooLarge")}}</v-chip>
+      </template>
       <template v-slot:editContent="{ editedItem }">
         <v-container>
           <v-row>
@@ -57,7 +60,9 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex"
+import { mapGetters } from "vuex"
+const MAX_IMAGE_SIZE = 1000000 // 1mb
+const MAX_VIDEO_SIZE = 100000000 // 100mb
 
 export default {
   name: "MediaUploader",
@@ -94,6 +99,17 @@ export default {
     }
   },
   methods: {
+    isTooLarge({ info }){
+      const {type} = info;
+      switch (type.split("/")[0]) {
+        case "image":
+          return info.rawsize > MAX_IMAGE_SIZE;
+        case "video":
+          return info.rawsize > MAX_VIDEO_SIZE;
+        default:
+          return false;
+      }
+    },
     updateMediaList(mediaList) {
       this.mediaList = mediaList;
       this.mediaList.forEach(media => {

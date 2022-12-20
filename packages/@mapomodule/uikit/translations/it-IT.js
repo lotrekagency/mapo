@@ -131,6 +131,6 @@ export default {
             fileInfo: "File info succesfully updated",
         },
         // MediaManager/MediaUploader.vue
-        mediaUploader: { success: "{numberFiles} file caricati" },
+        mediaUploader: { success: "{numberFiles} file caricati", tooLarge: "Attenzione! Ottimizza prima di caricare!" },
     },
 };
