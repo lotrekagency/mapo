@@ -33,29 +33,42 @@
         :height="uploadedFiles.length * 64 > 256 ? 256 : uploadedFiles.length * 64"
         item-height="64"
       >
-        <template v-slot:default="{ item }">
-          <v-list-item :key="item.info.name">
-            <v-list-item-avatar tile v-if="item.info.objectURL">
-              <v-img :src="item.info.objectURL"></v-img>
-            </v-list-item-avatar>
+        <template v-slot:default="ctx">
+          <slot name="list-item.before" v-bind="{...ctx, editItem, removeItem}"/>
+          <slot name="list-item" v-bind="{...ctx, editItem, removeItem}">
+            <v-list-item :key="ctx.item.info.name" class="drop-area--item">
+              <slot name="list-item.preview.before" v-bind="{...ctx, editItem, removeItem}"/>
+              <slot name="list-item.preview" v-bind="{...ctx, editItem, removeItem}">
+              <v-list-item-avatar tile v-if="ctx.item.info.objectURL">
+                <v-img :src="ctx.item.info.objectURL"></v-img>
+              </v-list-item-avatar>
+              </slot>
+              <slot name="list-item.preview.after" v-bind="{...ctx, editItem, removeItem}"/>
+              <slot name="list-item.content.before" v-bind="{...ctx, editItem, removeItem}"/>
+              <slot name="list-item.content" v-bind="{...ctx, editItem, removeItem}">
+                <v-list-item-content class="cursor-pointer" @click.stop="editItem(ctx.item)">
+                  <v-list-item-title>
+                    {{ ctx.item.info.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>
+                    {{ ctx.item.info.type || "type/unknow" }}, {{ ctx.item.info.size }}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
+              </slot>
+              <slot name="list-item.content.after" v-bind="{...ctx, editItem, removeItem}"/>
+              <slot name="list-item.action.before" v-bind="{...ctx, editItem, removeItem}"/>
+              <slot name="list-item.action" v-bind="{...ctx, editItem, removeItem}">
+                <v-list-item-action>
+                  <v-btn @click.stop="removeItem(ctx.item.info.name)" icon>
+                    <v-icon> mdi-close-circle </v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </slot>
+              <slot name="list-item.action.after" v-bind="{...ctx, editItem, removeItem}"/>
 
-            <v-list-item-content class="cursor-pointer" @click.stop="editItem(item)">
-              <v-list-item-title>
-                {{ item.info.name }}
-              </v-list-item-title>
-              <v-list-item-subtitle>
-                {{ item.info.type || "type/unknow" }}, {{ item.info.size }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-btn @click.stop="removeFile(item.info.name)" icon>
-                <v-icon> mdi-close-circle </v-icon>
-              </v-btn>
-            </v-list-item-action>
-          </v-list-item>
-
-          <v-divider></v-divider>
+            </v-list-item>
+          </slot>
+          <slot name="list-item.after" v-bind="{...ctx, editItem, removeItem}"/>
         </template>
       </v-virtual-scroll>
     </v-card-text>
@@ -115,6 +128,15 @@
 .cursor-pointer {
   cursor: pointer;
 }
+.v-virtual-scroll__item:not(:last-child){
+  .drop-area--item{
+    border-bottom: 1px solid;
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+}
+.theme--light .v-virtual-scroll__item .drop-area--item {
+  border-color: rgba(0, 0, 0, 0.12);
+}
 </style>
 
 <script>
@@ -164,7 +186,7 @@ export default {
     clearList() {
       this.uploadedFiles = [];
     },
-    removeFile(fileName) {
+    removeItem(fileName) {
       const index = this.uploadedFiles.findIndex((file) => file.info.name === fileName);
       if (index > -1) this.uploadedFiles.splice(index, 1);
     },
@@ -199,6 +221,7 @@ export default {
           objectURL: blob.type.startsWith("image/") ? URL.createObjectURL(blob) : null,
           name: blob.name,
           size: humanFileSize(blob.size, true, 2),
+          rawsize: blob.size,
           type: blob.type,
         },
         blob,
