@@ -257,6 +257,7 @@ table tr td:nth-child(2) {
 }
 </style>
 <script>
+import { deepClone } from "@mapomodule/utils/helpers/objHelpers";
 import { humanFileSize } from "@mapomodule/utils/helpers/formatters";
 import { mapGetters, mapActions } from "vuex";
 
@@ -330,7 +331,7 @@ export default {
   },
   watch: {
     editMedia(val) {
-      this.media = val;
+      this.media = deepClone(val);
       this.editing = false;
       this.newFile = null;
       this.sameUrl = false;
