@@ -23,7 +23,11 @@
       >
     </v-list-item>
 
-    <div class="child-menu" :style="indent" v-if="childrens.length && expanded && !forceCollapse">
+    <div
+      class="child-menu"
+      :style="indent"
+      v-if="childrens.length && expanded && !forceCollapse"
+    >
       <SidebarListItem
         v-for="(item, i) in childrens"
         :key="i"
@@ -44,15 +48,15 @@
 <style lang="scss" scoped>
 @import "@mapomodule/uikit/assets/variables.scss";
 
-.v-list-item::after{
-  content: '';
+.v-list-item::after {
+  content: "";
   position: absolute;
   background: rgba(0, 0, 0, 0.2);
   height: 100%;
   width: 4px;
   left: 0;
 }
-.v-list-item.v-list-item--active::after{
+.v-list-item.v-list-item--active::after {
   background: var(--v-primary-base);
 }
 .expand-icon {
@@ -110,7 +114,7 @@
       border-bottom-left-radius: 3px;
     }
   }
-  .child-menu{
+  .child-menu {
     &::after {
       height: 0px;
     }
@@ -131,7 +135,8 @@ export default {
     indent() {
       return {
         paddingLeft: `calc(1rem + ${+this.depth * this.nestDepth}px)`,
-        marginLeft: this.depth > 1 && `calc(-1rem - ${(this.depth - 1) * this.nestDepth}px)`,
+        marginLeft:
+          this.depth > 1 && `calc(-1rem - ${(this.depth - 1) * this.nestDepth}px)`,
       };
     },
     rotate() {
@@ -141,21 +146,28 @@ export default {
       };
     },
     activeChild() {
-      return (this.childrens || []).some((child) => this.$nuxt.$route.path.startsWith(child.link));
+      return (this.childrens || []).some((child) =>
+        this.$nuxt.$route.path.startsWith(child.link)
+      );
     },
     userCanSee() {
-      const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: this.meta })
-      if (middleware.includes("permissions")){
-        const userInfo = this.$mapo.$auth.user.info
-        if (userInfo.is_superuser) return true
-        const { model } = this.meta?.permissions || {}
-        const userPermission = (userInfo.user_permissions || []).filter(perm => perm.codename.endsWith(model)).map(({ codename }) => codename.replace(`_${model}`, ''))
-        return userPermission.includes('view')
+      return this.checkPermissions();
+    },
+  },
+  methods: {
+    checkPermissions(child = undefined) {
+      const item = child || this;
+      const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: item.meta });
+      if (middleware.includes("permissions")) {
+        const { model } = item.meta?.permissions || {};
+        return this.$store.getters["mapo/user/hasModelPermission"](model, "view");
       }
-      if (middleware.includes("auth")){
-        return this.$mapo.$auth.user.isLoggedIn
+      if (middleware.includes("auth")) {
+        return this.$mapo.$auth.user.isLoggedIn;
       }
-      return true
+      return (
+        item.childrens.length == 0 || item.childrens.some((c) => this.checkPermissions(c))
+      );
     },
   },
   props: {

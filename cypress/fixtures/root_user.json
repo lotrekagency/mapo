@@ -1,5 +1,6 @@
 {
     "id": 1,
+    "all_permissions": [],
     "user_permissions": [],
     "last_login": "2022-08-26T10:54:54.019075Z",
     "is_superuser": true,

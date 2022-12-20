@@ -1,176 +1,201 @@
 <template>
   <div v-if="media" class="media-editor--wrapper">
-      <div class="img_overlay">
-        <v-btn class="img_overlay__button img_overlay__button--back" small icon @click="closeEditor">
-          <v-icon>mdi-arrow-left</v-icon>
-        </v-btn>
-        <v-btn class="img_overlay__button img_overlay__button--href" small icon :href="media.file" target="_blank" >
-          <v-icon>mdi-open-in-new</v-icon>
-        </v-btn>
-      </div>
-      <MediaPreview
-        :media="media"
-        contain
-        filename
-        media-controls
-        class="media-editor--preview elevation-2"
-      />
-      <v-overlay
-        absolute
-        v-model="editing"
-        @click="editing = false"
-      ></v-overlay>
-      <div class="dialog">
-        <div class="dialog__container">
-          <v-card flat tile class="dialog__content overflow-y-auto"
-            :class="{ 'py-0': !editing }"
-            :max-height="editing ? height : '0px'"
-          >
-            <v-card-text class="flex-grow-0">
-              <v-row class="flex-md-row-reverse">
-                <v-col md="6" cols="12" class="info-media">
-                  <table class="text-caption fill-height pb-md-10">
-                    <tr>
-                      <td class="pr-3"><b>{{ $t("mapo.fileName") }}:</b></td>
-                      <td>{{ fileName }}</td>
-                    </tr>
-                    <tr>
-                      <td class="pr-3"><b>{{ $t("mapo.mime") }}:</b></td>
-                      <td>{{ media.mime_type }}</td>
-                    </tr>
-                    <tr>
-                      <td class="pr-3"><b>{{ $t("mapo.created") }}:</b></td>
-                      <td>{{ dateCreated }}</td>
-                    </tr>
-                    <tr>
-                      <td class="pr-3"><b>{{ $t("mapo.size") }}:</b></td>
-                      <td>{{ fileSize }}</td>
-                    </tr>
-                    <tr>
-                      <td class="pr-3"><b>URL:</b></td>
-                      <td>
-                        <a :href="media.file" target="_blank">{{ media.file }}</a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="pr-3"><b>{{ $t("mapo.linkedModels") }}:</b></td>
-                      <td>
-                        <ul>
-                          <li v-for="link in media.links" :key="link.id">
-                            <b>{{link.model}} (id:{{link.id}})</b> - {{link.name}}
-                          </li>
-                        </ul>
-                      </td>
-                    </tr>
-                  </table>
-                </v-col>
-                <v-col md="6" cols="12">
-                  <v-row>
-                    <v-col sm="6" md="12" cols="12">
-                      <v-text-field
+    <div class="img_overlay">
+      <v-btn
+        class="img_overlay__button img_overlay__button--back"
+        small
+        icon
+        @click="closeEditor"
+      >
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+      <v-btn
+        class="img_overlay__button img_overlay__button--href"
+        small
+        icon
+        :href="media.file"
+        target="_blank"
+      >
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+    </div>
+    <MediaPreview
+      :media="media"
+      contain
+      filename
+      media-controls
+      class="media-editor--preview elevation-2"
+    />
+    <v-overlay absolute v-model="editing" @click="editing = false"></v-overlay>
+    <div class="dialog">
+      <div class="dialog__container">
+        <v-card
+          flat
+          tile
+          class="dialog__content overflow-y-auto"
+          :class="{ 'py-0': !editing }"
+          :max-height="editing ? height : '0px'"
+        >
+          <v-card-text class="flex-grow-0">
+            <v-row class="flex-md-row-reverse">
+              <v-col md="6" cols="12" class="info-media">
+                <table class="text-caption fill-height pb-md-10">
+                  <tr>
+                    <td class="pr-3">
+                      <b>{{ $t("mapo.fileName") }}:</b>
+                    </td>
+                    <td>{{ fileName }}</td>
+                  </tr>
+                  <tr>
+                    <td class="pr-3">
+                      <b>{{ $t("mapo.mime") }}:</b>
+                    </td>
+                    <td>{{ media.mime_type }}</td>
+                  </tr>
+                  <tr>
+                    <td class="pr-3">
+                      <b>{{ $t("mapo.created") }}:</b>
+                    </td>
+                    <td>{{ dateCreated }}</td>
+                  </tr>
+                  <tr>
+                    <td class="pr-3">
+                      <b>{{ $t("mapo.size") }}:</b>
+                    </td>
+                    <td>{{ fileSize }}</td>
+                  </tr>
+                  <tr>
+                    <td class="pr-3"><b>URL:</b></td>
+                    <td>
+                      <a :href="media.file" target="_blank">{{ media.file }}</a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="pr-3">
+                      <b>{{ $t("mapo.linkedModels") }}:</b>
+                    </td>
+                    <td>
+                      <ul>
+                        <li v-for="link in media.links" :key="link.id">
+                          <b>{{ link.model }} (id:{{ link.id }})</b> - {{ link.name }}
+                        </li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+              </v-col>
+              <v-col md="6" cols="12">
+                <v-row>
+                  <v-col sm="6" md="12" cols="12">
+                    <v-text-field
+                      dense
+                      v-model="media.name"
+                      :label="$t('mapo.name')"
+                      :readonly="!canEdit"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col sm="6" md="12" cols="12">
+                    <v-text-field
+                      dense
+                      v-model="media.title"
+                      :label="$t('mapo.titleTag')"
+                      :readonly="!canEdit"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col sm="6" md="12" cols="12">
+                    <v-text-field
+                      dense
+                      v-model="media.description"
+                      :label="$t('mapo.description')"
+                      :readonly="!canEdit"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col sm="6" md="12" cols="12">
+                    <v-text-field
+                      dense
+                      v-model="media.alt_text"
+                      :label="$t('mapo.altTag')"
+                      :readonly="!canEdit"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col
+                    sm="6"
+                    md="12"
+                    cols="12"
+                    class="d-flex align-center"
+                    v-if="canEdit"
+                  >
+                    <div class="d-flex flex-column flex-grow-1">
+                      <v-file-input
+                        v-model="newFile"
+                        :accept="accept"
+                        :label="$t('mapo.mediaEditor.changeFile')"
+                        show-size
                         dense
-                        v-model="media.name"
-                        :label="$t('mapo.name')"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col sm="6" md="12" cols="12">
-                      <v-text-field
+                        prepend-icon
+                      ></v-file-input>
+                      <v-checkbox
+                        v-if="newFile"
+                        v-model="sameUrl"
+                        :label="$t('mapo.mediaEditor.maintainOldUrl')"
+                        class="ma-0"
+                        hide-details
                         dense
-                        v-model="media.title"
-                        :label="$t('mapo.titleTag')"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col sm="6" md="12" cols="12">
-                      <v-text-field
-                        dense
-                        v-model="media.description"
-                        :label="$t('mapo.description')"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col sm="6" md="12" cols="12">
-                      <v-text-field
-                        dense
-                        v-model="media.alt_text"
-                        :label="$t('mapo.altTag')"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col sm="6" md="12" cols="12" class="d-flex align-center">
-                      <div class="d-flex flex-column flex-grow-1">
-                        <v-file-input
-                          v-model="newFile"
-                          :accept="accept"
-                          :label="$t('mapo.mediaEditor.changeFile')"
-                          show-size
-                          dense
-                          prepend-icon
-                        ></v-file-input>
-                        <v-checkbox
-                          v-if="newFile"
-                          v-model="sameUrl"
-                          :label="$t('mapo.mediaEditor.maintainOldUrl')"
-                          class="ma-0"
-                          hide-details
-                          dense
-                        ></v-checkbox>
-                      </div>
-                      <v-img
-                        v-if="newFile && newFilePreview"
-                        :src="newFilePreview"
-                        aspect-ratio="1"
-                        min-width="70px"
-                        max-width="110px"
-                        class="grey lighten-2 ml-3"
-                      >
-                        <template v-slot:placeholder>
-                          <v-row
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center"
-                          >
-                            <v-progress-circular
-                              indeterminate
-                              color="grey lighten-5"
-                            ></v-progress-circular>
-                          </v-row>
-                        </template>
-                      </v-img>
-                    </v-col>
-                  </v-row>
-                </v-col>
-              </v-row>
-            </v-card-text>
-          </v-card>
-          <v-btn
-            tile
-            depressed
-            width="100%"
-            :class="{ 'pr-0': editing }"
-            @click="editing = !editing"
-          >
-            <span>{{ $t("mapo.edit") }}</span>
-            <v-icon :style="rotate">mdi-chevron-up</v-icon>
-            <div class="edit_spacer" :class="{ 'flex-grow-1': editing }"></div>
-            <v-btn v-if="editing" text tile color="primary" @click="saveMedia">
-              {{ $t("mapo.save") }}
-            </v-btn>
-            <v-btn
-              v-if="editing"
-              text
-              tile
-              color="error"
-              @click.stop="confirmDelete"
-            >
-              {{ $t("mapo.delete") }}
-            </v-btn>
+                      ></v-checkbox>
+                    </div>
+                    <v-img
+                      v-if="newFile && newFilePreview"
+                      :src="newFilePreview"
+                      aspect-ratio="1"
+                      min-width="70px"
+                      max-width="110px"
+                      class="grey lighten-2 ml-3"
+                    >
+                      <template v-slot:placeholder>
+                        <v-row class="fill-height ma-0" align="center" justify="center">
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </v-col>
+                </v-row>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+        <v-btn
+          tile
+          depressed
+          width="100%"
+          :class="{ 'pr-0': editing }"
+          @click="editing = !editing"
+        >
+          <span>{{ canEdit ? $t("mapo.edit") : $t("mapo.mediaEditor.details") }}</span>
+          <v-icon :style="rotate">mdi-chevron-up</v-icon>
+          <div class="edit_spacer" :class="{ 'flex-grow-1': editing }"></div>
+          <v-btn v-if="editing && canEdit" text tile color="primary" @click="saveMedia">
+            {{ $t("mapo.save") }}
           </v-btn>
-        </div>
+          <v-btn
+            v-if="editing && canDelete"
+            text
+            tile
+            color="error"
+            @click.stop="confirmDelete"
+          >
+            {{ $t("mapo.delete") }}
+          </v-btn>
+        </v-btn>
       </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-
-.media-editor--wrapper{
+.media-editor--wrapper {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -195,16 +220,17 @@ table tr td:nth-child(2) {
     transition-timing-function: ease-out;
   }
 }
-.media-editor--preview{
+.media-editor--preview {
   max-height: calc(100vh - 180px);
   flex-grow: 1;
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     max-height: calc(100vh - 260px);
-    min-height: calc(100vh - 260px);  }
+    min-height: calc(100vh - 260px);
+  }
 }
-.v-dialog .media-editor--preview{
+.v-dialog .media-editor--preview {
   max-height: calc(100vh - 510px);
-  @media (max-width: 600px){
+  @media (max-width: 600px) {
     max-height: calc(100vh - 375px);
     min-height: unset;
   }
@@ -231,8 +257,9 @@ table tr td:nth-child(2) {
 }
 </style>
 <script>
+import { deepClone } from "@mapomodule/utils/helpers/objHelpers";
 import { humanFileSize } from "@mapomodule/utils/helpers/formatters";
-import { mapGetters, mapActions } from "vuex"
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "MediaEditor",
@@ -269,25 +296,42 @@ export default {
           return 425;
       }
     },
-    accept(){
+    accept() {
       switch (this.media.mime_type && this.media.mime_type.split("/")[0]) {
         case "image":
-          return "image/*"
+          return "image/*";
         case "video":
-          return "video/*"
+          return "video/*";
         case "audio":
-          return "audio/*"
+          return "audio/*";
         default:
-          return "*"
+          return "*";
       }
     },
     newFilePreview() {
-      return this.newFile.type.startsWith("image/") ? URL.createObjectURL(this.newFile) : null;
+      return this.newFile.type.startsWith("image/")
+        ? URL.createObjectURL(this.newFile)
+        : null;
+    },
+    permissionsModel() {
+      return this.$mapo.$options?.medias?.permissionsModel || "media";
+    },
+    canEdit() {
+      return this.$store.getters["mapo/user/hasModelPermission"](
+        this.permissionsModel,
+        "change"
+      );
+    },
+    canDelete() {
+      return this.$store.getters["mapo/user/hasModelPermission"](
+        this.permissionsModel,
+        "delete"
+      );
     },
   },
   watch: {
     editMedia(val) {
-      this.media = val;
+      this.media = deepClone(val);
       this.editing = false;
       this.newFile = null;
       this.sameUrl = false;
@@ -304,7 +348,7 @@ export default {
         alt_text: this.media.alt_text,
         file: this.newFile || undefined,
         same_url: (this.newFile && this.sameUrl) || undefined,
-        language_code: this.$i18n.locale
+        language_code: this.$i18n.locale,
       }).then(() => {
         this.newFile = null;
         this.sameUrl = false;
@@ -315,10 +359,13 @@ export default {
         .open({
           title: this.$t("mapo.delete"),
           question: this.$t("mapo.mediaEditor.confirmDelete"),
-          approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } },
+          approveButton: {
+            text: this.$t("mapo.delete"),
+            attrs: { color: "red", text: true },
+          },
         })
         .then((res) => res && this.deleteMedia(this.media));
-    }
+    },
   },
 };
 </script>
