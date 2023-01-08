@@ -1,0 +1,22 @@
+{
+  "name": "@mapomodule/core",
+  "version": "1.0.0-alpha.39",
+  "description": "This is part of Mapo nuxt module. Injects the core mapo plugin helpers.",
+  "author": "bnznamco <gabriele.baldi.01@gmail.com>",
+  "keywords": [
+    "mapo",
+    "nuxt",
+    "Admin",
+    "Panel"
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/lotrekagency/mapo",
+  "main": "./module.js",
+  "dependencies": {
+    "@mapomodule/utils": "^1.0.0-alpha.34",
+    "@nuxt/kit": "^3.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

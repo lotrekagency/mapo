@@ -1,0 +1,20 @@
+{
+  "name": "example",
+  "private": true,
+  "description": "Example project using mapo",
+  "scripts": {
+    "dev": "nuxi dev",
+    "build": "nuxi generate",
+    "start": "nuxi preview",
+    "generate": "nuxt generate",
+    "test": "echo \"No test defined\""
+  },
+  "dependencies": {
+    "@mapomodule/mapo-integrations-camomilla": "1.0.0-alpha.11",
+    "mapomodule": "latest",
+    "nuxt-edge": "latest"
+  },
+  "devDependencies": {
+    "@nuxt/bridge": "npm:@nuxt/bridge-edge@^3.0.0-27833237.ddd8ecc"
+  }
+}

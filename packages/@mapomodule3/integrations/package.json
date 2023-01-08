@@ -1,0 +1,15 @@
+{
+  "name": "@mapomodule/integrations",
+  "version": "1.0.0-alpha.16",
+  "license": "MIT",
+  "description": "This is part of Mapo nuxt module. Injects Mapo integrations packages.",
+  "author": "bnznamco <gabriele.baldi.01@gmail.com>",
+  "repository": "https://github.com/lotrekagency/mapo",
+  "main": "./module.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^3.0.0"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
+  "noImplicitAny": false,
+  "compilerOptions": {
+    "types": [
+      "./types",
+      "@nuxt/types",
+      "@nuxtjs/i18n"
+    ]
+  }
+}

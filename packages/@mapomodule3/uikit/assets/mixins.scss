@@ -1,0 +1,22 @@
+
+// To handle vertical margin spacing, parameter is a string
+// supported values: s, xs, m, l, xl
+// example: @include spacing(m);
+// output: margin: 32px 0;
+@mixin spacing($size) {
+  @if $size=="xs" {
+    margin: 0.5rem 0;
+  }
+  @if $size=="s" {
+    margin: 1rem 0;
+  }
+  @if $size=="m" {
+    margin: 2rem 0;
+  }
+  @if $size=="l" {
+    margin: 3rem 0;
+  }
+  @if $size=="xl" {
+    margin: 4rem 0;
+  }
+}
