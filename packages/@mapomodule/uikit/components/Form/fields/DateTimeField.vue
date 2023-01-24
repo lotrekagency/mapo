@@ -73,6 +73,7 @@
 import dateFormat from "dateformat";
 /**
  * This component is used to edit a datetime in iso format. It is a combination of "v-text-field", "v-date-picker" and "v-time-picker".
+ * All dates are emitted using UTC timezone.
  */
 export default {
   name: "DateTimeField",

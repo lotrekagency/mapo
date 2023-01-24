@@ -55,7 +55,7 @@ import dateFormat from "dateformat";
 
 /**
  * This component is used to edit a time in iso format. It is a combination of "v-text-field" and "v-time-picker".
- * Can get time from a full ISO date (as string) or from string in a HH:MM:ss format.
+ * Can get time from a full ISO date (as string in UTC timezone) or from string in a HH:MM:ss format.
  */
 export default {
   name: "TimeField",
