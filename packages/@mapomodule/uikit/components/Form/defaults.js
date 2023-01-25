@@ -19,6 +19,8 @@ const components = {
     // customs
     wygEditor: () => import("@mapomodule/uikit/components/Form/fields/wygEditor/wygEditor.vue"),
     DateField: () => import("@mapomodule/uikit/components/Form/fields/DateField.vue"),
+    TimeField: () => import("@mapomodule/uikit/components/Form/fields/TimeField.vue"),
+    DateTimeField: () => import("@mapomodule/uikit/components/Form/fields/DateTimeField.vue"),
     FksField: () => import("@mapomodule/uikit/components/Form/fields/FksField.vue"),
     MediaM2mField: () => import("@mapomodule/uikit/components/Form/fields/MediaM2mField.vue"),
     MediaField: () => import("@mapomodule/uikit/components/Form/fields/MediaField.vue"),
@@ -33,6 +35,8 @@ const mapping = {
     text: components.vTextField,
     select: components.vSelect,
     date: components.DateField,
+    time: components.TimeField,
+    datetime: components.DateTimeField,
     textarea: components.vTextarea,
     switch: components.vSwitch,
     slider: components.vSlider,

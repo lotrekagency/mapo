@@ -7,12 +7,12 @@
       :fields="fields"
       :modelName="$t('article')"
     >
-    <template v-slot:fields.meta.contents.template.tempname.fields.title>
-      <h2>TeSt</h2>
-    </template>
-    <template v-slot:group.group-inside-group.top>
-      <h2>TeSt2</h2>
-    </template>
+      <template v-slot:fields.meta.contents.template.tempname.fields.title>
+        <h2>TeSt</h2>
+      </template>
+      <template v-slot:group.group-inside-group.top>
+        <h2>TeSt2</h2>
+      </template>
     </Detail>
   </v-container>
 </template>
@@ -39,6 +39,7 @@ en:
     published: "Published"
     trash: "Trash"
   pubblicationDate: "Pubblication Date"
+  pubblicationTime: "Pubblication Time"
   highlightImage: "Highlight Image"
   testTab: "Test tab en"
   image: "Backgorud Image"
@@ -64,6 +65,7 @@ it:
     published: "Pubblicato"
     trash: "Cestinato"
   pubblicationDate: "Data di pubblicazione"
+  pubblicationTime: "Ora di pubblicazione"
   highlightImage: "Immagine in evidenza"
   testTab: "Test tab it"
   image: "Immagine di sfondo"
@@ -171,7 +173,7 @@ export default {
             },
           },
           {
-            group: {name: "Tabs", expanded: false},
+            group: { name: "Tabs", expanded: false },
             tabs: {
               tab_1: {
                 tab: { label: this.$t("testTab") },
@@ -182,7 +184,7 @@ export default {
                     tabs: {
                       in_tab1: [{ value: "meta.key3", synci18n: true }],
                       in_tab2: {
-                        tab: { label: "Tab inside tab"},
+                        tab: { label: "Tab inside tab" },
                         fields: [{ value: "meta.key4", synci18n: true }],
                       },
                     },
@@ -195,10 +197,12 @@ export default {
           {
             // group: "Tabs",
             group: "Group inside group",
-            fields: [{
-              group: "Group inside group",
-              fields: [{ value: "meta.group_inside_group" }]
-            }]
+            fields: [
+              {
+                group: "Group inside group",
+                fields: [{ value: "meta.group_inside_group" }],
+              },
+            ],
           },
           { label: this.$t("content"), value: "content", type: "editor" },
           { label: "Color", value: "meta.color", synci18n: true, type: "color" },
@@ -222,117 +226,119 @@ export default {
             ],
           },
           {
-          group: {
-            name: this.$t("overviewBlock"),
-          },
-          fields: [
-            {
-              value: "meta.overview.elements",
-              label: this.$t("elements"),
-              type: "repeater",
-              attrs: {
-                sortable: true,
-                collapsable: true,
-                collapsedLabel: (item) =>
-                  this.$t(item.type) + ": " + (item.label || this.$t("labelNotCompiled")),
-                fields: {
-                  fullText: {
-                    name: this.$t("fullTextBlock"),
-                    preview:
-                      "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
-                    tCode: "fullTextBlock",
-                    tCodeField: "type",
-                    fields: [
-                      {
-                        value: "label",
-                        class: "col-md-6",
-                        attrs: { hideDetails: true, dense: true },
-                      },
-                      {
-                        value: "title",
-                        label: this.$t("title"),
-                        class: "col-md-6",
-                        attrs: { hideDetails: true, dense: true },
-                      },
-                      {
-                        value: "content",
-                        label: this.$t("content"),
-                        type: "editor",
-                        attrs: { hideDetails: true },
-                      },
-                      {
-                        value: "details",
-                        label: this.$t("details"),
-                        type: "repeater",
-                        attrs: {
-                          sortable: true,
-                          collapsable: true,
-                          collapsedLabel: (item) =>
-                            item.label || this.$t("labelNotCompiled"),
-                          fields: [
-                            {
-                              value: "title",
-                              label: this.$t("title"),
-                              class: "col-md-6",
-                            },
-                            {
-                              value: "content",
-                              label: this.$t("content"),
-                              type: "editor",
-                              attrs: { hideDetails: true },
-                            },
-                          ],
+            group: {
+              name: this.$t("overviewBlock"),
+            },
+            fields: [
+              {
+                value: "meta.overview.elements",
+                label: this.$t("elements"),
+                type: "repeater",
+                attrs: {
+                  sortable: true,
+                  collapsable: true,
+                  collapsedLabel: (item) =>
+                    this.$t(item.type) +
+                    ": " +
+                    (item.label || this.$t("labelNotCompiled")),
+                  fields: {
+                    fullText: {
+                      name: this.$t("fullTextBlock"),
+                      preview:
+                        "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
+                      tCode: "fullTextBlock",
+                      tCodeField: "type",
+                      fields: [
+                        {
+                          value: "label",
+                          class: "col-md-6",
+                          attrs: { hideDetails: true, dense: true },
                         },
-                      },
-                    ],
-                  },
-                  halfText: {
-                    name: this.$t("halfTextBlock"),
-                    preview:
-                      "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
-                    tCode: "halfTextBlock",
-                    tCodeField: "type",
-                    fields: [
-                      {
-                        value: "label",
-                        class: "col-md-6",
-                        attrs: { hideDetails: true, dense: true },
-                      },
-                      {
-                        value: "title",
-                        label: this.$t("title"),
-                        class: "col-md-6",
-                        attrs: { hideDetails: true, dense: true },
-                      },
-                      { value: "content", label: this.$t("content"), type: "editor" },
-                    ],
-                  },
-                  smallText: {
-                    name: this.$t("smallTextBlock"),
-                    preview:
-                      "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
-                    tCode: "smallTextBlock",
-                    tCodeField: "type",
-                    fields: [
-                      {
-                        value: "label",
-                        class: "col-md-6",
-                        attrs: { hideDetails: true, dense: true },
-                      },
-                      {
-                        value: "title",
-                        label: this.$t("title"),
-                        class: "col-md-6",
-                        attrs: { hideDetails: true, dense: true },
-                      },
-                      { value: "content", label: this.$t("content"), type: "editor" },
-                    ],
+                        {
+                          value: "title",
+                          label: this.$t("title"),
+                          class: "col-md-6",
+                          attrs: { hideDetails: true, dense: true },
+                        },
+                        {
+                          value: "content",
+                          label: this.$t("content"),
+                          type: "editor",
+                          attrs: { hideDetails: true },
+                        },
+                        {
+                          value: "details",
+                          label: this.$t("details"),
+                          type: "repeater",
+                          attrs: {
+                            sortable: true,
+                            collapsable: true,
+                            collapsedLabel: (item) =>
+                              item.label || this.$t("labelNotCompiled"),
+                            fields: [
+                              {
+                                value: "title",
+                                label: this.$t("title"),
+                                class: "col-md-6",
+                              },
+                              {
+                                value: "content",
+                                label: this.$t("content"),
+                                type: "editor",
+                                attrs: { hideDetails: true },
+                              },
+                            ],
+                          },
+                        },
+                      ],
+                    },
+                    halfText: {
+                      name: this.$t("halfTextBlock"),
+                      preview:
+                        "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
+                      tCode: "halfTextBlock",
+                      tCodeField: "type",
+                      fields: [
+                        {
+                          value: "label",
+                          class: "col-md-6",
+                          attrs: { hideDetails: true, dense: true },
+                        },
+                        {
+                          value: "title",
+                          label: this.$t("title"),
+                          class: "col-md-6",
+                          attrs: { hideDetails: true, dense: true },
+                        },
+                        { value: "content", label: this.$t("content"), type: "editor" },
+                      ],
+                    },
+                    smallText: {
+                      name: this.$t("smallTextBlock"),
+                      preview:
+                        "https://blog.openreplay.com/c4052718994cbc8eb6dac8c89c23ba06/img3.gif", //TODO
+                      tCode: "smallTextBlock",
+                      tCodeField: "type",
+                      fields: [
+                        {
+                          value: "label",
+                          class: "col-md-6",
+                          attrs: { hideDetails: true, dense: true },
+                        },
+                        {
+                          value: "title",
+                          label: this.$t("title"),
+                          class: "col-md-6",
+                          attrs: { hideDetails: true, dense: true },
+                        },
+                        { value: "content", label: this.$t("content"), type: "editor" },
+                      ],
+                    },
                   },
                 },
               },
-            },
-          ],
-        },
+            ],
+          },
         ],
         sidenav: [
           {
@@ -369,16 +375,56 @@ export default {
                 synci18n: true,
               },
               {
-                value: this.$t("pubblicationDate"),
+                value: "pubblication_date",
+                label: this.$t("pubblicationDate"),
                 accessor: {
-                  set: ({ val }) => val && new Date(val).toISOString(),
+                  set: ({ val, model }) => {
+                    return (
+                      (val &&
+                        new Date(
+                          model?.pubblication_date
+                            ? val + "T" + model.pubblication_date.split("T").slice(-1)[0]
+                            : val
+                        ).toISOString()) ||
+                      model.pubblication_date
+                    );
+                  },
                 },
                 type: "date",
                 synci18n: true,
               },
+              {
+                value: "pubblication_date",
+                label: this.$t("pubblicationTime"),
+                type: "time",
+                synci18n: true,
+              },
+              {
+                value: "meta.simple_time",
+                type: "time",
+                synci18n: true,
+              },
+              {
+                value: "pubblication_date",
+                label: this.$t("pubblicationDate"),
+                type: "datetime",
+                synci18n: true,
+                attrs: { range: false },
+              },
+              {
+                value: "meta.range_datetime",
+                type: "datetime",
+                synci18n: true,
+                attrs: { range: true },
+              },
             ],
           },
-          { value: "highlight_image", label: this.$t("highlight_image"), type: "media", synci18n: true },
+          {
+            value: "highlight_image",
+            label: this.$t("highlight_image"),
+            type: "media",
+            synci18n: true,
+          },
         ],
       };
     },
