@@ -66,6 +66,11 @@
 }
 .raw-input {
   outline: none;
+  text-align: center;
+}
+.raw-input::-webkit-calendar-picker-indicator {
+  background: none;
+  display: none;
 }
 </style>
 
@@ -127,7 +132,7 @@ export default {
         setTimeout(() => {
           this.$refs.startRawInput?.focus();
           this.$refs.timePicker.selecting = 1;
-        });
+        }, 100);
     },
     isStartFocused(val, old) {
       if (val != old) this.$refs.timePicker.selecting = 1;
@@ -222,7 +227,7 @@ export default {
         if (this.range && value.length == 2) {
           this.endDateTime = mergeDate(this.endDateTime || null, value[1]);
           this.startDateTime = mergeDate(this.startDateTime || null, value[0]);
-          setTimeout(() => this.$refs.endRawInput?.focus());
+          setTimeout(() => this.$refs.endRawInput?.focus(), 100);
         } else {
           this.endDateTime = null;
           this.startDateTime = mergeDate(
@@ -254,7 +259,7 @@ export default {
         const oldDateTime = this.endDateTime;
         if (value) this.endDateTime = new Date(value).toISOString();
         this.selectTimePickerMethod(oldDateTime, this.endDateTime);
-        setTimeout(() => this.$refs.endRawInput?.focus());
+        setTimeout(() => this.$refs.endRawInput?.focus(), 100);
         this.emit();
       },
     },

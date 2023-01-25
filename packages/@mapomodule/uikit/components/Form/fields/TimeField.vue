@@ -48,6 +48,10 @@
   text-align: center;
   outline: none;
 }
+.raw-input-container input::-webkit-calendar-picker-indicator {
+  background: none;
+  display: none;
+}
 </style>
 
 <script>
@@ -94,7 +98,7 @@ export default {
       if (val)
         setTimeout(() => {
           this.$refs.rawInput.focus();
-        });
+        }, 100);
     },
   },
   computed: {
