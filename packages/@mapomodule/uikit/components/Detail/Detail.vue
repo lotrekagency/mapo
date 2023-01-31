@@ -295,7 +295,7 @@ export default {
                     this.buttonClicked = "deleteBtn";
                     this.crud
                         .delete(this.identifier)
-                        .then(() => this.back())
+                        .then(() => {this.unsetRouterGuard(); this.back();})
                         .catch(error => this.$mapo.$snack.open({
                         message: error.response?.data?.detail || this.$t("mapo.genericError"),
                         color: "error"
