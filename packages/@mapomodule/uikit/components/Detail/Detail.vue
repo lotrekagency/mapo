@@ -1,177 +1,192 @@
 <template>
   <div class="mapo-detail--wrapper">
-  <div class="mapo-detail--loader" v-if="loading">
-    <v-progress-linear
-      color="primary"
-      indeterminate
-      absolute
-    ></v-progress-linear>
-    <span class="detail-component-loading">
-      <v-icon size="30">mdi-timer-sand</v-icon>
-      {{ $t('mapo.fetchingData') }}
-    </span>
-  </div>
-  <div class="mapo-detail--loaded" v-else>
-    <!-- Use this to override the title of the detail component. -->
-    <slot name="title" v-bind="slotBindings">
-      <!-- `<h1> "Create | Edit" + modelName </h1>` -->
-      <h1 class="mapo-detail--title">{{ isNew ? $t("mapo.create") : $t("mapo.edit") }} {{ modelName }}</h1>
-    </slot>
-    <v-form class="mapo-detail--form" ref="form">
-      <v-row>
-        <v-col class="mapo-detail--main" cols="12" :md="12 - sidenavCol">
-          <!-- Use this to add content at the top of the central layout. -->
-          <slot name="body.top" v-bind="slotBindings"></slot>
-          <!-- Use this to override the Language Switch panel. -->
-          <slot name="body.lang" v-bind="slotBindings">
-            <!-- [`DetailLangSwitch`](/components/detail/DetailLangSwitch/)  -->
-            <DetailLangSwitch
-              v-if="langs && langs.length"
-              v-show="langs.length > 1"
-              class="mapo-detail--language-tabs"
-              v-model="currentLang"
-              :langs="langs"
-              :errors="errors"
-          /></slot>
-          <!-- Use this to add content under the Language Switch panel. -->
-          <slot name="body.top.underlang" v-bind="slotBindings"></slot>
-          <!-- Use this to override the content of the main body. -->
-          <slot name="body" v-bind="slotBindings">
-          <Form
-            v-model="model"
-            :currentLang="currentLang"
-            :languages="langs"
-            :errors="errors"
-            :fields="mainFields"
-            :moreSlotBindings="slotBindings"
-            :readonly="isReadonly"
-          >
-            <template v-for="(_, slot) in $slots" :slot="slot">
-              <!-- @vuese-ignore -->
-              <slot :name="slot"></slot>
-            </template>
-            <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
-              <!-- @vuese-ignore -->
-              <slot :name="slot" v-bind="props" />
-            </template>
-          </Form>
-          </slot>
-          <!-- Use this to add content under the main body. -->
-          <slot name="body.bottom" v-bind="slotBindings"></slot>
-        </v-col>
-        <v-col class="mapo-detail--sidenav" cols="12" :md="sidenavCol">
-          <div class="mapo-detail--sidenav-col" :style="stickySide">
-            <!-- Use this to add content on the top of the sidebar button panel. -->
-            <slot name="side.buttons.top" v-bind="slotBindings"></slot>
-            <!-- Use this to override the the sidebar button panel. -->
-            <slot name="side.buttons" v-bind="slotBindings">
-              <!-- Save, Save and continue, Back, and Delete buttons. -->
-              <div class="mapo-detail--buttons">
-                <!-- Use this to override the Save button. -->
-                <slot name="button.save" v-bind="slotBindings">
-                  <!-- The Save button. -->
-                  <v-btn v-show="canGoBack" :loading="buttonClicked == 'saveAndBackBtn'" :disabled="isReadonly" tile block @click="saveItem(true)">{{
-                    isNew ? $t("mapo.create") : $t("mapo.save")
-                  }}</v-btn>
-                </slot>
-                <!-- Use this to override the Save and continue button. -->
-                <slot name="button.savecontinue" v-bind="slotBindings">
-                  <!-- The Save and continue button. -->
-                  <v-btn :loading="buttonClicked == 'saveBtn'" :disabled="isReadonly" tile block @click="saveItem(false)"
-                    >{{ isNew ? $t("mapo.createContinue") : $t("mapo.saveContinue") }}</v-btn
-                  >
-                </slot>
-                <!-- Use this to override the Back button. -->
-                <slot name="button.back" v-bind="slotBindings">
-                  <!-- The Back button. -->
-                  <v-btn v-show="canGoBack" tile block @click="back"
-                    >{{ $t("mapo.back") }}</v-btn
-                  >
-                </slot>
-                <!-- Use this to override the Delete button. -->
-                <slot name="button.delete" :loading="buttonClicked == 'deleteBtn'" v-bind="slotBindings">
-                  <!-- The Delete button. -->
-                  <v-btn
-                    v-if="!isNew"
-                    color="error"
-                    tile
-                    block
-                    :disabled="!canDelete"
-                    @click="deleteItem"
-                    >{{ $t("mapo.delete") }}</v-btn
-                  >
-                </slot>
-              </div>
+    <div class="mapo-detail--loader" v-if="loading">
+      <v-progress-linear color="primary" indeterminate absolute></v-progress-linear>
+      <span class="detail-component-loading">
+        <v-icon size="30">mdi-timer-sand</v-icon>
+        {{ $t("mapo.fetchingData") }}
+      </span>
+    </div>
+    <div class="mapo-detail--loaded" v-else>
+      <!-- Use this to override the title of the detail component. -->
+      <slot name="title" v-bind="slotBindings">
+        <!-- `<h1> "Create | Edit" + modelName </h1>` -->
+        <h1 class="mapo-detail--title">
+          {{ isNew ? $t("mapo.create") : $t("mapo.edit") }} {{ modelName }}
+        </h1>
+      </slot>
+      <v-form class="mapo-detail--form" ref="form">
+        <v-row>
+          <v-col class="mapo-detail--main" cols="12" :md="12 - sidenavCol">
+            <!-- Use this to add content at the top of the central layout. -->
+            <slot name="body.top" v-bind="slotBindings"></slot>
+            <!-- Use this to override the Language Switch panel. -->
+            <slot name="body.lang" v-bind="slotBindings">
+              <!-- [`DetailLangSwitch`](/components/detail/DetailLangSwitch/)  -->
+              <DetailLangSwitch
+                v-if="langs && langs.length"
+                v-show="langs.length > 1"
+                class="mapo-detail--language-tabs"
+                v-model="currentLang"
+                :langs="langs"
+                :errors="errors"
+            /></slot>
+            <!-- Use this to add content under the Language Switch panel. -->
+            <slot name="body.top.underlang" v-bind="slotBindings"></slot>
+            <!-- Use this to override the content of the main body. -->
+            <slot name="body" v-bind="slotBindings">
+              <Form
+                v-model="model"
+                :currentLang="currentLang"
+                :languages="langs"
+                :errors="errors"
+                :fields="mainFields"
+                :moreSlotBindings="slotBindings"
+                :readonly="isReadonly"
+              >
+                <template v-for="(_, slot) in $slots" :slot="slot">
+                  <!-- @vuese-ignore -->
+                  <slot :name="slot"></slot>
+                </template>
+                <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+                  <!-- @vuese-ignore -->
+                  <slot :name="slot" v-bind="props" />
+                </template>
+              </Form>
             </slot>
-            <!-- Use this to add content on the top of the sidebar fields (or under sidebar buttons). -->
-            <slot name="side.top" v-bind="slotBindings"></slot>
-            <Form
-              v-model="model"
-              :currentLang="currentLang"
-              :languages="langs"
-              :errors="errors"
-              :fields="sideFields"
-              :moreSlotBindings="slotBindings"
-            >
-              <template v-for="(_, slot) in $slots" :slot="slot">
-                <!-- @vuese-ignore -->
-                <slot :name="slot"></slot>
-              </template>
-              <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
-                <!-- @vuese-ignore -->
-                <slot :name="slot" v-bind="props" />
-              </template>
-            </Form>
-            <!-- 	Use this to add content under the sidebar fields. -->
-            <slot name="side.bottom" v-bind="slotBindings"></slot>
-          </div>
-        </v-col>
-      </v-row>
-    </v-form>
-  </div>
+            <!-- Use this to add content under the main body. -->
+            <slot name="body.bottom" v-bind="slotBindings"></slot>
+          </v-col>
+          <v-col class="mapo-detail--sidenav" cols="12" :md="sidenavCol">
+            <div class="mapo-detail--sidenav-col" :style="stickySide">
+              <!-- Use this to add content on the top of the sidebar button panel. -->
+              <slot name="side.buttons.top" v-bind="slotBindings"></slot>
+              <!-- Use this to override the the sidebar button panel. -->
+              <slot name="side.buttons" v-bind="slotBindings">
+                <!-- Save, Save and continue, Back, and Delete buttons. -->
+                <div class="mapo-detail--buttons">
+                  <!-- Use this to override the Save button. -->
+                  <slot name="button.save" v-bind="slotBindings">
+                    <!-- The Save button. -->
+                    <v-btn
+                      v-show="canGoBack"
+                      :loading="buttonClicked == 'saveAndBackBtn'"
+                      :disabled="isReadonly"
+                      tile
+                      block
+                      @click="saveItem(true)"
+                      >{{ isNew ? $t("mapo.create") : $t("mapo.save") }}</v-btn
+                    >
+                  </slot>
+                  <!-- Use this to override the Save and continue button. -->
+                  <slot name="button.savecontinue" v-bind="slotBindings">
+                    <!-- The Save and continue button. -->
+                    <v-btn
+                      :loading="buttonClicked == 'saveBtn'"
+                      :disabled="isReadonly"
+                      tile
+                      block
+                      @click="saveItem(false)"
+                      >{{
+                        isNew ? $t("mapo.createContinue") : $t("mapo.saveContinue")
+                      }}</v-btn
+                    >
+                  </slot>
+                  <!-- Use this to override the Back button. -->
+                  <slot name="button.back" v-bind="slotBindings">
+                    <!-- The Back button. -->
+                    <v-btn v-show="canGoBack" tile block @click="back">{{
+                      $t("mapo.back")
+                    }}</v-btn>
+                  </slot>
+                  <!-- Use this to override the Delete button. -->
+                  <slot
+                    name="button.delete"
+                    :loading="buttonClicked == 'deleteBtn'"
+                    v-bind="slotBindings"
+                  >
+                    <!-- The Delete button. -->
+                    <v-btn
+                      v-if="!isNew"
+                      color="error"
+                      tile
+                      block
+                      :disabled="!canDelete"
+                      @click="deleteItem"
+                      >{{ $t("mapo.delete") }}</v-btn
+                    >
+                  </slot>
+                </div>
+              </slot>
+              <!-- Use this to add content on the top of the sidebar fields (or under sidebar buttons). -->
+              <slot name="side.top" v-bind="slotBindings"></slot>
+              <Form
+                v-model="model"
+                :currentLang="currentLang"
+                :languages="langs"
+                :errors="errors"
+                :fields="sideFields"
+                :moreSlotBindings="slotBindings"
+              >
+                <template v-for="(_, slot) in $slots" :slot="slot">
+                  <!-- @vuese-ignore -->
+                  <slot :name="slot"></slot>
+                </template>
+                <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+                  <!-- @vuese-ignore -->
+                  <slot :name="slot" v-bind="props" />
+                </template>
+              </Form>
+              <!-- 	Use this to add content under the sidebar fields. -->
+              <slot name="side.bottom" v-bind="slotBindings"></slot>
+            </div>
+          </v-col>
+        </v-row>
+      </v-form>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-  .mapo-detail--loader {
-    .v-progress-linear {
-      top: 0;
-    }
-    span{
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+.mapo-detail--loader {
+  .v-progress-linear {
+    top: 0;
   }
-  .mapo-detail--title{
-    margin-bottom: 20px;
-    font-weight: normal;
-  }
-  .mapo-detail--language-tabs {
-    margin-bottom: 20px;
-  }
-  .mapo-detail--sidenav-col {
+  span {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-  .mapo-detail--buttons {
-    margin-top: 16px;
-    margin-bottom: 0px;
-    order: 1;
-    @media (min-width: 960px) {
-      margin-bottom: 16px;
-      margin-top: 0px;
-      order: 0;
-    }
-    .v-btn{
-      margin-bottom: 8px;
-    }
+}
+.mapo-detail--title {
+  margin-bottom: 20px;
+  font-weight: normal;
+}
+.mapo-detail--language-tabs {
+  margin-bottom: 20px;
+}
+.mapo-detail--sidenav-col {
+  display: flex;
+  flex-direction: column;
+}
+.mapo-detail--buttons {
+  margin-top: 16px;
+  margin-bottom: 0px;
+  order: 1;
+  @media (min-width: 960px) {
+    margin-bottom: 16px;
+    margin-top: 0px;
+    order: 0;
   }
+  .v-btn {
+    margin-bottom: 8px;
+  }
+}
 </style>
 
 <script>
@@ -182,279 +197,317 @@ import { diffObjs, deepClone } from "@mapomodule/utils/helpers/objHelpers";
  * A use case example could be "build a page that allows you to change the specifications of a product for an ecommerce".<br> <h4>Index:</h4> [[toc]]
  */
 export default {
-    name: "Detail",
-    data() {
-        return {
-            model: {},
-            modelLanguages: [],
-            currentLang: this.lang,
-            errors: null,
-            buttonClicked: null
-        };
+  name: "Detail",
+  data() {
+    return {
+      model: {},
+      modelLanguages: [],
+      currentLang: this.lang,
+      errors: null,
+      buttonClicked: null,
+    };
+  },
+  props: {
+    // V-model of the object we are editing.
+    value: {
+      type: Object,
+      required: false,
     },
-    props: {
-        // V-model of the object we are editing.
-        value: {
-            type: Object,
-            required: false
-        },
-        // Set the current lang to value.
-        lang: {
-            type: String,
-            required: false
-        },
-        // The main configuration that determines the arrangement of the fields in the detail layout.
-        fields: {
-            // [`DetailConfiguration`](#detailconfiguration)
-            type: Object | Array,
-            required: true
-        },
-        usePatch: {
-            type: Boolean,
-            default() { return this.$mapo.$options?.content?.usePatch || false; },
-        },
-        // A list of languages into which the payload needs to be translated.
-        languages: {
-            type: Array,
-            default() { return this.$mapo.$options?.content?.languages || []; },
-        },
-        // Forces use of languages passed as prop, instead of those loaded with model
-        forceLanguages: {
-            type: Boolean,
-            default() { return this.$mapo.$options?.content?.forceLanguages || false; },
-        },
-        // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
-        endpoint: {
-            type: String,
-            default: null
-        },
-        // This determines the width of the sidebar in desktop view in a 12 col grid.
-        sidenavCol: {
-          type: Number | String,
-          default: "4",
-          validator: function (value) {
-              // The value must be a number between 0 and 12
-              return [...Array(12).keys()].indexOf(+value) !== -1;
+    // Set the current lang to value.
+    lang: {
+      type: String,
+      required: false,
+    },
+    // The main configuration that determines the arrangement of the fields in the detail layout.
+    fields: {
+      // [`DetailConfiguration`](#detailconfiguration)
+      type: Object | Array,
+      required: true,
+    },
+    usePatch: {
+      type: Boolean,
+      default() {
+        return this.$mapo.$options?.content?.usePatch || false;
+      },
+    },
+    // A list of languages into which the payload needs to be translated.
+    languages: {
+      type: Array,
+      default() {
+        return this.$mapo.$options?.content?.languages || [];
+      },
+    },
+    // Forces use of languages passed as prop, instead of those loaded with model
+    forceLanguages: {
+      type: Boolean,
+      default() {
+        return this.$mapo.$options?.content?.forceLanguages || false;
+      },
+    },
+    // The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.
+    endpoint: {
+      type: String,
+      default: null,
+    },
+    // This determines the width of the sidebar in desktop view in a 12 col grid.
+    sidenavCol: {
+      type: Number | String,
+      default: "4",
+      validator: function (value) {
+        // The value must be a number between 0 and 12
+        return [...Array(12).keys()].indexOf(+value) !== -1;
+      },
+    },
+    // The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.
+    identifier: {
+      // `String|Number`.
+      type: String | Number,
+      default: "new",
+    },
+    // The title of the detail page.
+    modelName: String,
+    // This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.
+    sticky: {
+      type: Boolean,
+      default: true,
+    },
+    // Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
+    multipart: {
+      type: String,
+      default: "auto",
+      validator: function (value) {
+        // The value must match one of these strings
+        return ["auto", "force", "disable"].indexOf(value) !== -1;
+      },
+    },
+  },
+  methods: {
+    back() {
+      this.$nuxt.context?.from?.name == "login"
+        ? this.$router.go(-3)
+        : this.$router.back();
+    },
+    saveItem(back = false) {
+      this.buttonClicked = back ? "saveAndBackBtn" : "saveBtn";
+      this.errors = null;
+      this.$refs.form?.resetValidation();
+      this.apiSendPayload()
+        .then((resp) => {
+          this.model = resp;
+          this.modelBkp = deepClone(this.model);
+          this.$mapo.$snack.open({
+            message: this.isNew
+              ? this.$t("mapo.createSuccess")
+              : this.$t("mapo.saveSuccess"),
+            color: "success",
+          });
+          this.isNew && this.$router.replace({ params: { detail: resp.id } });
+          back && this.back();
+        })
+        .catch((error) => {
+          this.errors = (error.response.status == 400 && error.response.data) || null;
+          this.$mapo.$snack.open({
+            message: error.response?.data?.detail || this.$t("mapo.genericError"),
+            color: "error",
+          });
+        })
+        .finally(() => {
+          this.buttonClicked = null;
+        });
+    },
+    deleteItem() {
+      this.$mapo.$confirm
+        .open({
+          title: "Delete",
+          question: this.$t("mapo.confirmDelete"),
+          approveButton: {
+            text: this.$t("mapo.delete"),
+            attrs: { color: "red", text: true },
           },
-        },
-        // The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.
-        identifier: {
-            // `String|Number`.
-            type: String | Number,
-            default: "new"
-        },
-        // The title of the detail page.
-        modelName: String,
-        // This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.
-        sticky: {
-            type: Boolean,
-            default: true
-        },
-        // Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.
-        multipart: {
-            type: String,
-            default: "auto",
-            validator: function (value) {
-                // The value must match one of these strings
-                return ["auto", "force", "disable"].indexOf(value) !== -1;
-            },
-        },
-    },
-    methods: {
-        back() {
-            this.$nuxt.context?.from?.name == "login" ? this.$router.go(-3) : this.$router.back();
-        },
-        saveItem(back = false) {
-            this.buttonClicked = back ? "saveAndBackBtn" : "saveBtn";
-            this.errors = null;
-            this.$refs.form?.resetValidation();
-            this.apiSendPayload().then((resp) => {
-              this.model = resp;
-              this.modelBkp = deepClone(this.model);
-              this.$mapo.$snack.open({ message: this.isNew ? this.$t("mapo.createSuccess") : this.$t("mapo.saveSuccess"), color: "success" })
-              this.isNew && this.$router.replace({ params: { detail: resp.id } })
-              back && this.back();
-            }).catch(error => {
-              this.errors =
-                  (error.response.status == 400 && error.response.data) || null;
-              this.$mapo.$snack.open({
-                  message: error.response?.data?.detail || this.$t("mapo.genericError"),
-                  color: "error"
+        })
+        .then((res) => {
+          if (res) {
+            this.buttonClicked = "deleteBtn";
+            this.crud
+              .delete(this.identifier)
+              .then(() => {
+                this.unsetRouterGuard();
+                this.back();
               })
-            }).finally(() => {this.buttonClicked = null;});;
-        },
-        deleteItem() {
-            this.$mapo.$confirm
-                .open({
-                title: "Delete",
-                question: this.$t("mapo.confirmDelete"),
-                approveButton: { text: this.$t("mapo.delete"), attrs: { color: "red", text: true } }
-            })
-                .then(res => {
-                if (res) {
-                    this.buttonClicked = "deleteBtn";
-                    this.crud
-                        .delete(this.identifier)
-                        .then(() => {this.unsetRouterGuard(); this.back();})
-                        .catch(error => this.$mapo.$snack.open({
-                        message: error.response?.data?.detail || this.$t("mapo.genericError"),
-                        color: "error"
-                    })).finally(()=> {this.buttonClicked = null;});
-                }
-            });
-        },
-        async checkUnsavedHook(to, from, next) {
-          if (to.name !== from.name && this.hasDiff){
-            this.$mapo.$confirm
-              .open({
-              title: this.$t("mapo.unsavedData"),
-              question: this.$t("mapo.confirmLeaveChanges"),
-              approveButton: { text: this.$t("mapo.confirm"), attrs: { text: true } }
-          }).then(next);
-          } else {
-            next();
+              .catch((error) =>
+                this.$mapo.$snack.open({
+                  message: error.response?.data?.detail || this.$t("mapo.genericError"),
+                  color: "error",
+                })
+              )
+              .finally(() => {
+                this.buttonClicked = null;
+              });
           }
-        },
-        setRouterGuard(){
-          this.$router.beforeHooks.push(this.checkUnsavedHook);
-          window?.addEventListener('beforeunload', this.preventWindowClose);
-        },
-        preventWindowClose(event){
-          const text = this.$t("mapo.confirmLeaveChanges");
-          if (this.hasDiff) {
-            event.returnValue = text;
-            return text;
+        });
+    },
+    async checkUnsavedHook(to, from, next) {
+      if (to.name !== from.name && this.hasDiff) {
+        this.$mapo.$confirm
+          .open({
+            title: this.$t("mapo.unsavedData"),
+            question: this.$t("mapo.confirmLeaveChanges"),
+            approveButton: { text: this.$t("mapo.confirm"), attrs: { text: true } },
+          })
+          .then(next);
+      } else {
+        next();
+      }
+    },
+    setRouterGuard() {
+      this.$router.beforeHooks.push(this.checkUnsavedHook);
+      window?.addEventListener("beforeunload", this.preventWindowClose);
+    },
+    preventWindowClose(event) {
+      const text = this.$t("mapo.confirmLeaveChanges");
+      if (this.hasDiff) {
+        event.returnValue = text;
+        return text;
+      }
+    },
+    unsetRouterGuard() {
+      window?.removeEventListener("beforeunload", this.preventWindowClose);
+      this.$router.beforeHooks = this.$router.beforeHooks.filter(
+        (f) => f != this.checkUnsavedHook
+      );
+    },
+  },
+  watch: {
+    currentLang(val) {
+      // Fired when the current language changes.
+      // @arg Emits the language name as a string.
+      this.$emit("update:lang", val);
+    },
+    model(val) {
+      // Fired when the v-model changes.
+      // @arg Emits the entire payload modified.
+      this.$emit("input", val);
+    },
+    lang(val) {
+      if (val && this.langs.includes(val)) {
+        this.currentLang = val;
+      }
+    },
+    value(val) {
+      if (val) {
+        this.model = val;
+      }
+    },
+  },
+  computed: {
+    canGoBack() {
+      if (typeof window !== "undefined") {
+        return (
+          (this.$nuxt?.context?.from?.name !== "login" && window.history.length > 1) ||
+          window.history.length > 3
+        );
+      }
+      return true;
+    },
+    crud() {
+      return this.$mapo.$api.crud(this.endpoint);
+    },
+    apiSendPayload() {
+      let method, args;
+      if (!this.model.id) {
+        method = this.crud.create;
+        args = [this.model, {}, { multipart: this.multipart }];
+      } else if (this.usePatch) {
+        method = this.crud.partialUpdate;
+        args = [this.model.id, this.modelDiff, {}, { multipart: this.multipart }];
+      } else {
+        method = this.crud.update;
+        args = [this.model.id, this.model, {}, { multipart: this.multipart }];
+      }
+      return async () => method(...args);
+    },
+    isReadonly() {
+      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
+        return !this.$mapo.$auth.user.permissions.includes(this.isNew ? "add" : "change");
+      }
+      return !!this.buttonClicked;
+    },
+    canDelete() {
+      if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
+        return this.$mapo.$auth.user.permissions.includes("delete");
+      }
+      return true;
+    },
+    mainFields() {
+      return this.fields instanceof Array ? this.fields : this.fields.main || [];
+    },
+    sideFields() {
+      return (this.fields instanceof Object && this.fields.sidenav) || [];
+    },
+    isNew() {
+      return this.identifier && this.identifier == "new";
+    },
+    loading() {
+      if (this.identifier === "new") {
+        return false;
+      }
+      return !Object.keys(this.model).length;
+    },
+    langs() {
+      return !this.forceLanguages && (this.modelLanguages || []).length
+        ? this.modelLanguages
+        : this.languages;
+    },
+    slotBindings() {
+      return {
+        model: this.model,
+        errors: this.errors,
+        currentLang: this.currentLang,
+        crud: this.crud,
+        isNew: this.isNew,
+        langs: this.langs,
+        loading: this.loading,
+        form: this.$refs.form,
+        saveItem: this.saveItem,
+        deleteItem: this.deleteItem,
+      };
+    },
+    stickySide() {
+      return this.sticky
+        ? {
+            position: "sticky",
+            top: "60px",
           }
-        },
-        unsetRouterGuard(){
-          window?.removeEventListener('beforeunload', this.preventWindowClose);
-          this.$router.beforeHooks = this.$router.beforeHooks.filter(f => f != this.checkUnsavedHook);
-        }
+        : {};
     },
-    watch: {
-        currentLang(val) {
-            // Fired when the current language changes.
-            // @arg Emits the language name as a string.
-            this.$emit("update:lang", val);
-        },
-        model(val) {
-            // Fired when the v-model changes.
-            // @arg Emits the entire payload modified.
-            this.$emit("input", val);
-        },
-        lang(val) {
-            if (val && this.langs.includes(val)) {
-                this.currentLang = val;
-            }
-        },
-        value(val) {
-            if (val) {
-                this.model = val;
-            }
-        },
+    modelDiff() {
+      return diffObjs(this.modelBkp, this.model) || {};
     },
-    computed: {
-        canGoBack() {
-            if (typeof window !== "undefined") {
-                return this.$nuxt?.context?.from?.name !== "login" && window.history.length > 1 || window.history.length > 3;
-            }
-            return true;
-        },
-        crud() {
-            return this.$mapo.$api.crud(this.endpoint);
-        },
-        apiSendPayload(){
-          let method, args;
-          if (!this.model.id){
-            method = this.crud.create;
-            args = [this.model, {}, { multipart: this.multipart }]
-          } else if (this.usePatch) {
-            method = this.crud.partialUpdate;
-            args = [this.model.id, this.modelDiff, {}, { multipart: this.multipart }]
-          } else {
-            method = this.crud.update;
-            args = [this.model.id, this.model, {}, { multipart: this.multipart }]
-          }
-          return async () => method(...args)
-        },
-        isReadonly() {
-            if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
-                return !this.$mapo.$auth.user.permissions.includes(this.isNew ? "add" : "change");
-            }
-            return !!this.buttonClicked;
-        },
-        canDelete() {
-            if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
-                return this.$mapo.$auth.user.permissions.includes("delete");
-            }
-            return true;
-        },
-        mainFields() {
-            return this.fields instanceof Array ? this.fields : this.fields.main || [];
-        },
-        sideFields() {
-            return (this.fields instanceof Object && this.fields.sidenav) || [];
-        },
-        isNew() {
-            return this.identifier && this.identifier == "new";
-        },
-        loading() {
-            if (this.identifier === "new") {
-                return false;
-            }
-            return !Object.keys(this.model).length;
-        },
-        langs() {
-            return (!this.forceLanguages && (this.modelLanguages || []).length) ? this.modelLanguages : this.languages;
-        },
-        slotBindings() {
-            return {
-                model: this.model,
-                errors: this.errors,
-                currentLang: this.currentLang,
-                crud: this.crud,
-                isNew: this.isNew,
-                langs: this.langs,
-                loading: this.loading,
-                form: this.$refs.form,
-                saveItem: this.saveItem,
-                deleteItem: this.deleteItem
-            };
-        },
-        stickySide() {
-            return this.sticky
-                ? {
-                    position: "sticky",
-                    top: "60px"
-                }
-                : {};
-        },
-        modelDiff(){
-          return diffObjs(this.modelBkp, this.model) || {};
-        },
-        hasDiff() {
-          return !!(this.modelDiff && Object.keys(this.modelDiff).length > 0);
-        }
+    hasDiff() {
+      return !!(this.modelDiff && Object.keys(this.modelDiff).length > 0);
     },
-    async mounted() {
-        if (this.identifier && this.identifier !== "new") {
-          try {
-            this.model = await this.crud.detail(this.identifier);
-            this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id);
-          } catch (error) {
-            this.$nuxt.error({ statusCode: error.response.status, message: error.response.data?.detail || this.$t("mapo.genericError") });
-          }
-        }
-        else if (this.value) {
-            this.model = this.value;
-            this.modelLanguages = this.model?.lang_info?.site_languages.map(l => l.id);
-        }
-        this.modelBkp = deepClone(this.model);
-        this.setRouterGuard();
-    },
-    destroyed(){
-      this.unsetRouterGuard();
+  },
+  async mounted() {
+    if (this.identifier && this.identifier !== "new") {
+      try {
+        this.model = await this.crud.detail(this.identifier);
+        this.modelLanguages = this.model?.lang_info?.site_languages.map((l) => l.id);
+      } catch (error) {
+        this.$nuxt.error({
+          statusCode: error.response.status,
+          message: error.response.data?.detail || this.$t("mapo.genericError"),
+        });
+      }
+    } else if (this.value) {
+      this.model = this.value;
+      this.modelLanguages = this.model?.lang_info?.site_languages.map((l) => l.id);
     }
+    this.modelBkp = deepClone(this.model);
+    this.setRouterGuard();
+  },
+  destroyed() {
+    this.unsetRouterGuard();
+  },
 };
 </script>
 
