@@ -303,33 +303,32 @@ export default {
                 }
             });
         },
+        async checkUnsavedHook(to, from, next) {
+          if (to.name !== from.name && this.hasDiff){
+            this.$mapo.$confirm
+              .open({
+              title: this.$t("mapo.unsavedData"),
+              question: this.$t("mapo.confirmLeaveChanges"),
+              approveButton: { text: this.$t("mapo.confirm"), attrs: { text: true } }
+          }).then(next);
+          } else {
+            next();
+          }
+        },
         setRouterGuard(){
-          const checkUnsaved = async (to, from, next) => {
-            if (to.name !== from.name && this.hasDiff){
-              this.$mapo.$confirm
-                .open({
-                title: this.$t("mapo.unsavedData"),
-                question: this.$t("mapo.confirmLeaveChanges"),
-                approveButton: { text: this.$t("mapo.confirm"), attrs: { text: true } }
-            }).then(next);
-            } else {
-              next();
-            }
-          };
-          checkUnsaved.bind(this);
-          this.$router.beforeHooks.push(checkUnsaved);
+          this.$router.beforeHooks.push(this.checkUnsavedHook);
           window?.addEventListener('beforeunload', this.preventWindowClose);
         },
         preventWindowClose(event){
           const text = this.$t("mapo.confirmLeaveChanges");
           if (this.hasDiff) {
-            event.returnValue = text; 
-            return text;              
+            event.returnValue = text;
+            return text;
           }
         },
         unsetRouterGuard(){
           window?.removeEventListener('beforeunload', this.preventWindowClose);
-          this.$router.beforeHooks = this.$router.beforeHooks.filter(({name})=> name != 'checkUnsaved');
+          this.$router.beforeHooks = this.$router.beforeHooks.filter(f => f != this.checkUnsavedHook);
         }
     },
     watch: {
