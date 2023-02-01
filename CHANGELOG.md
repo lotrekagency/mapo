@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.42](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.41...v1.0.0-alpha.42) (2023-02-01)
+
+
+### Bug Fixes
+
+* **detailguard:** fix router hook in builds ([9b8304f](https://github.com/lotrekagency/mapo/commit/9b8304f0b398f203e11e5b731375bc9e12862183))
+* **detailguard:** unset guard after deletion ([d857ce4](https://github.com/lotrekagency/mapo/commit/d857ce49ef2a05fc6371f28266f69f4515967685))
+
+
+### Features
+
+* added time and datetime fields ([30ad418](https://github.com/lotrekagency/mapo/commit/30ad418693a336f99116e18b029c3e587f30ffb9))
+
+
+
+
+
 # [1.0.0-alpha.41](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.40...v1.0.0-alpha.41) (2022-12-20)
 
 
