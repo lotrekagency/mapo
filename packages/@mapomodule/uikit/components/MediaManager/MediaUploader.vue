@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="container">
     <drop-area @change="updateMediaList($event)" multiple>
       <template v-slot:actions="{ clearList }">
         <div v-if="mediaList && mediaList.length">
@@ -58,6 +58,13 @@
     </div>
   </v-container>
 </template>
+
+<style scoped>
+.container {
+  height: 100%;
+  overflow: auto;
+}
+</style>
 
 <script>
 import { mapGetters } from "vuex"
