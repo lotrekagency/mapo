@@ -51,7 +51,12 @@
 </style>
 
 <script>
-import dateFormat from "dateformat";
+import {
+  formatLocalTime,
+  cleanDateStr,
+  formatUTCTime,
+  mergeTime,
+} from "@mapomodule/utils/helpers/datetime";
 
 /**
  * This component is used to edit a time in iso format. It is a combination of "v-text-field" and "v-time-picker".
@@ -61,9 +66,8 @@ export default {
   name: "TimeField",
   data() {
     return {
-      model: null,
+      model: { model: null, returnDate: false },
       menu: null,
-      returnDate: false,
     };
   },
   props: {
@@ -80,15 +84,19 @@ export default {
   },
   watch: {
     value(val) {
-      if (this.model !== val) {
-        this.setupValue();
+      const model = this.setupModel(val);
+      if (JSON.stringify(model) != JSON.stringify(this.model)) {
+        this.model = model;
       }
     },
-    model(val) {
-      // Fired when the v-model changes
-      //@arg Emits the time edited.
-      if (this.returnDate) this.$emit("input", `${this.value.split("T")[0]}T${val}Z`);
-      else this.$emit("input", val);
+    model: {
+      handler: function (val) {
+        // Fired when the v-model changes
+        //@arg Emits the time edited.
+        if (val.returnDate) this.$emit("input", val.model.toISOString());
+        else this.$emit("input", formatUTCTime(val.model));
+      },
+      deep: true,
     },
     menu(val) {
       if (val)
@@ -100,10 +108,10 @@ export default {
   computed: {
     localModel: {
       get() {
-        return this.model && dateFormat(`2000-01-01T${this.model}Z`, "HH:MM:ss");
+        return this.model?.model && formatLocalTime(this.model?.model);
       },
       set(value) {
-        this.model = dateFormat(`2000-01-01T${value}`, "UTC:HH:MM:ss");
+        this.model.model = mergeTime(this?.model?.model || new Date(), value);
       },
     },
   },
@@ -124,14 +132,15 @@ export default {
       }
       this.localModel = model;
     },
-    setupValue() {
-      const d = new Date(this.value);
-      this.returnDate = !isNaN(d);
-      this.model = !isNaN(d) ? dateFormat(d, "UTC:HH:MM:ss") : this.value;
+    setupModel(val) {
+      const d = new Date(cleanDateStr(val));
+      const returnDate = !isNaN(d);
+      const model = !isNaN(d) ? d : mergeTime(new Date(), cleanDateStr(val));
+      return { returnDate, model };
     },
   },
   mounted() {
-    this.setupValue();
+    this.model = this.setupModel(this.value);
   },
 };
 </script>

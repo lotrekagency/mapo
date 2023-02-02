@@ -70,7 +70,15 @@
 </style>
 
 <script>
-import dateFormat from "dateformat";
+import {
+  formatLocalTime,
+  formatLocalDate,
+  formatLocalDateTime,
+  mergeDate,
+  mergeTime,
+  cleanDateStr,
+} from "@mapomodule/utils/helpers/datetime";
+
 /**
  * This component is used to edit a datetime in iso format. It is a combination of "v-text-field", "v-date-picker" and "v-time-picker".
  * All dates are emitted using UTC timezone.
@@ -116,11 +124,6 @@ export default {
   watch: {
     value(val) {
       this.setupValue();
-    },
-    model(val) {
-      // Fired when the v-model changes
-      //@arg Emits the date or the date range edited.
-      this.$emit("input", val);
     },
     menu(val) {
       if (val)
@@ -173,8 +176,8 @@ export default {
         (typeof this.value == "string" && this.value
           ? this.value.split(",").filter((v) => v)
           : this.value) || [];
-      this.startDateTime = dates.length > 0 ? dates[0] : null;
-      this.endDateTime = dates.length > 1 ? dates[1] : null;
+      this.startDateTime = dates.length > 0 ? cleanDateStr(dates[0]) : null;
+      this.endDateTime = dates.length > 1 ? cleanDateStr(dates[1]) : null;
     },
   },
   computed: {
@@ -182,21 +185,12 @@ export default {
       get() {
         const time = this.isStartFocused ? this.startDateTime : this.endDateTime;
         if (!time) return null;
-        return dateFormat(time, "HH:MM:ss");
+        return formatLocalTime(time);
       },
       set(value) {
-        const mergeTime = (dateTime, time) => {
-          let newDateTime = new Date(dateTime);
-          const [hours, minutes, seconds] = time.split(":").map((n) => parseInt(n));
-          if (hours) newDateTime.setHours(hours);
-          if (minutes) newDateTime.setMinutes(minutes);
-          if (seconds) newDateTime.setSeconds(seconds);
-          return newDateTime.toISOString();
-        };
-
         if (this.isStartFocused)
-          this.startDateTime = mergeTime(this.startDateTime, value);
-        else this.endDateTime = mergeTime(this.endDateTime, value);
+          this.startDateTime = mergeTime(this.startDateTime, value).toISOString();
+        else this.endDateTime = mergeTime(this.endDateTime, value).toISOString();
         this.emit();
       },
     },
@@ -204,31 +198,25 @@ export default {
       get() {
         const d = [this.startDateTime, this.endDateTime]
           .filter((d) => d)
-          .map((d) => dateFormat(d, "yyyy-mm-dd"));
+          .map((d) => formatLocalDate(d));
         if (this.range) return d;
         else if (d.length > 0) return d[0];
         return null;
       },
       set(value) {
-        const mergeDate = (dateTime, date) => {
-          let newDateTime = new Date(dateTime);
-          const dateObj = new Date(date);
-          newDateTime.setFullYear(dateObj.getFullYear());
-          newDateTime.setMonth(dateObj.getMonth());
-          newDateTime.setDate(dateObj.getDate());
-          return newDateTime.toISOString();
-        };
-
         if (this.range && value.length == 2) {
-          this.endDateTime = mergeDate(this.endDateTime || null, value[1]);
-          this.startDateTime = mergeDate(this.startDateTime || null, value[0]);
+          this.endDateTime = mergeDate(this.endDateTime || null, value[1]).toISOString();
+          this.startDateTime = mergeDate(
+            this.startDateTime || null,
+            value[0]
+          ).toISOString();
           setTimeout(() => this.$refs.endRawInput?.focus());
         } else {
           this.endDateTime = null;
           this.startDateTime = mergeDate(
             this.startDateTime || null,
             Array.isArray(value) ? value[0] : value
-          );
+          ).toISOString();
         }
         this.emit();
       },
@@ -236,7 +224,7 @@ export default {
     startRawDateTime: {
       get() {
         if (!this.startDateTime) return null;
-        return dateFormat(this.startDateTime, "yyyy-mm-dd'T'HH:MM:ss");
+        return formatLocalDateTime(this.startDateTime);
       },
       set(value) {
         const oldDateTime = this.startDateTime;
@@ -248,7 +236,7 @@ export default {
     endRawDateTime: {
       get() {
         if (!this.endDateTime) return null;
-        return dateFormat(this.endDateTime, "yyyy-mm-dd'T'HH:MM:ss");
+        return formatLocalDateTime(this.endDateTime);
       },
       set(value) {
         const oldDateTime = this.endDateTime;
