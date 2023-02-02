@@ -7,7 +7,7 @@
   "repository": "https://github.com/lotrekagency/mapo",
   "main": "./module.js",
   "dependencies": {
-    "@mapomodule/utils": "^1.0.0-alpha.40",
+    "@mapomodule/utils": "^1.0.0-alpha.42",
     "@nuxtjs/i18n": "^7.2.2",
     "@nuxtjs/vuetify": "^1.12.3",
     "vuedraggable": "^2.24.3"
