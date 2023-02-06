@@ -318,7 +318,7 @@ export default {
     deleteItem() {
       this.$mapo.$confirm
         .open({
-          title: "Delete",
+          title: this.$t("mapo.delete"),
           question: this.$t("mapo.confirmDelete"),
           approveButton: {
             text: this.$t("mapo.delete"),
