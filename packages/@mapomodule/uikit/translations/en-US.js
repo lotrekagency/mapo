@@ -103,8 +103,27 @@ export default {
             toggleOrder: "Toggle reordering",
             errorOrder: "Reorder failed",
         },
-
-        // MediaManager/MediaEditor.vue
+        // MenuManager/MenuNodeEditor.vue
+        menuNodeEditor: {
+            editNode: "Editing",
+            linkTypeLabel: "Link type",
+            styleLabel: "Style",
+            openInNewTabLabel: "Open in a new tab",
+            relContentTypeLabel: "Type of page",
+            relPageIdLabel: "Page",
+            staticLabel: "Static Url",
+            relational: "Relational",
+            static: "Static",
+        },
+        // MenuManager/MenuManager.vue
+        menuManager: {
+            noSelectedNode: "Select a node to edit or create a new one."
+        },
+        // MenuManager/MenuTreeview.vue
+        menuTreeview:{
+            newNode: "Create node",
+            areYouSureDelete: "Are you sure to delete current node and all it's childs ?"
+        },
         mediaEditor: {
             changeFile: "Change File",
             maintainOldUrl: "Maintain old URL",

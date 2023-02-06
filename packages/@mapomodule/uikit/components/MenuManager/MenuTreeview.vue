@@ -1,7 +1,7 @@
 <template>
-  <div class="fill-height d-flex flex-column">
+  <div class="menu-treeview--wrapper">
     <slot name="treeview.top" v-bind="{ newNode, nodes, value }" />
-    <div class="tools">
+    <div class="menu-treeview--tools">
       <h5>{{ title }}</h5>
       <div>
         <v-tooltip bottom>
@@ -10,17 +10,21 @@
               <v-icon>mdi-view-grid-plus</v-icon>
             </v-btn>
           </template>
-          <span>{{ $t("newNode") }}</span>
+          <span>{{ $t("mapo.menuTreeview.newNode") }}</span>
         </v-tooltip>
       </div>
     </div>
-    <v-list dense class="pa-0 list flex-grow-1" @click.native="selected = null">
+    <v-list
+      dense
+      class="menu-treeview--main menu-treeview-node--list"
+      @click.native="selected = null"
+    >
       <v-list-item-group :value="selected" :value-comparator="compareItems">
         <draggable
           v-model="inNodes"
           :emptyInsertThreshold="25"
           group="nodes"
-          draggable=".item"
+          draggable=".menu-treeview--draggable"
           @start="_dragging = true"
           @end="_dragging = false"
         >
@@ -28,7 +32,7 @@
             v-for="item in inNodes"
             :key="item.id"
             :value="item"
-            class="pa-0 item"
+            class="menu-treeview--draggable"
             @click.stop="selected = item"
           >
             <MenuTreeviewNode
@@ -44,13 +48,43 @@
   </div>
 </template>
 
-<style scoped>
-.tools {
+<style lang="scss">
+.menu-treeview--wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.menu-treeview--tools {
   background-color: var(--v-primary-base);
   justify-content: space-between;
   display: flex;
   align-items: center;
   padding-left: 10px;
+}
+.menu-treeview--main {
+  padding: 0;
+  flex: 1;
+  overflow: auto;
+}
+.menu-treeview-node--list {
+  width: 100%;
+  background-color: inherit;
+  padding: 0;
+  &.shift {
+    padding-left: 10px;
+  }
+  .v-list-item {
+    padding: 0;
+  }
+  .menu-treeeview-node--title {
+    flex-basis: 0%;
+  }
+}
+.sortable-chosen {
+  background-color: var(--v-primary-darken2);
+  opacity: 0.3;
+  border: 1px dashed var(--v-primary-darken4);
+  transition: all 0.1s 0.5s linear;
 }
 </style>
 
@@ -129,8 +163,12 @@ export default {
     deleteSelectedNode() {
       this.$mapo.$confirm
         .open({
-          title: this.$t("deleteNode"),
-          question: this.$t("areYouSureDelete"),
+          title: this.$t("mapo.delete"),
+          question: this.$t("mapo.menuTreeview.areYouSureDelete"),
+          approveButton: {
+            text: this.$t("mapo.delete"),
+            attrs: { color: "red", text: true },
+          },
         })
         .then((ok) => {
           if (ok) {

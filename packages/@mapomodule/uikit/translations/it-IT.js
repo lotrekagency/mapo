@@ -105,7 +105,27 @@ export default {
             toggleOrder: "Attiva/Disattiva riordinamento elementi",
             errorOrder: "Riordinamento fallito",
         },
-
+        // MenuManager/MenuNodeEditor.vue
+        menuNodeEditor: {
+            editNode: "Nodo",
+            linkTypeLabel: "Tipo di link",
+            styleLabel: "Stile",
+            openInNewTabLabel: "Apri in una nuova finestra",
+            relContentTypeLabel: "Tipo di pagina",
+            relPageIdLabel: "Pagina",
+            staticLabel: "Url Statica",
+            relational: "Relazionale",
+            static: "Statico",
+        },
+        // MenuManager/MenuManager.vue
+        menuManager: {
+            noSelectedNode: "Seleziona un nodo o creane uno nuovo."
+        },
+        // MenuManager/MenuTreeview.vue
+        menuTreeview:{
+            newNode: "Crea nodo",
+            areYouSureDelete: "Sei sicuro di voler eliminare questo nodo e tutti i suoi discendenti?"
+        },
         // MediaManager/MediaEditor.vue
         mediaEditor: {
             changeFile: "Cambia File",

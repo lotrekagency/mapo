@@ -1,35 +1,44 @@
 <template>
-  <div class="expand-all" v-if="inNode">
-    <v-btn icon @click.stop="open = !open" class="d-inline">
+  <div class="menu-treeeview-node--wrapper" v-if="inNode">
+    <v-btn
+      icon
+      @click.stop="open = !open"
+      class="menu-treeeview-node--expand-icon"
+    >
       <v-icon :class="{ 'mdi-rotate-90': open }">mdi-menu-right</v-icon>
     </v-btn>
     <v-list-item-title
-      v-if="!inNode.new"
-      v-text="inNode.title"
-      class="d-inline item-title"
+      v-if="!inNode.new && !editTitle"
+      v-html="inNode.title.trim() || '&nbsp;'"
+      @dblclick="editTitle = true"
+      class="menu-treeeview-node--title"
     ></v-list-item-title>
     <v-list-item-content v-else>
       <v-text-field
         v-model="title"
-        class="d-inline"
+        class="menu-treeeview-node--title-edit"
         autofocus
         hide-details
         dense
-        @blur="setNodeTitle()"
-        @keydown.enter.stop="setNodeTitle()"
+        @blur="setNodeTitle"
+        @keydown.enter.stop="setNodeTitle"
         @click.stop=""
       ></v-text-field>
     </v-list-item-content>
     <v-list-item-icon v-if="hasErrors" class="ma-0">
       <v-icon size="40" color="error">mdi-circle-small</v-icon>
     </v-list-item-icon>
-    <v-list dense class="pa-0 pl-4 list" v-if="open || inDragging">
+    <v-list
+      dense
+      class="menu-treeview-node--list shift"
+      v-show="open || inDragging"
+    >
       <v-list-item-group :value="inSelected" :value-comparator="compareItems">
         <draggable
           v-model="inNode.nodes"
           :emptyInsertThreshold="25"
           group="nodes"
-          draggable=".item"
+          draggable=".menu-treeview--draggable"
           @start="inDragging = true"
           @end="inDragging = false"
         >
@@ -37,7 +46,7 @@
             v-for="(item, i) in inNode.nodes"
             :key="i + '_' + item.id + 'CAT'"
             :value="item"
-            class="pa-0 item"
+            class="menu-treeview--draggable"
             @click.stop="item.title && select(item)"
           >
             <MenuTreeviewNode
@@ -54,36 +63,21 @@
   </div>
 </template>
 
-<i18n lang="yaml">
-en-us:
-  empty: "No items found"
-it-it:
-  empty: "Nessun elemento trovato"
-</i18n>
-
-<style scoped>
-.expand-all {
+<style lang="scss" scoped>
+.menu-treeeview-node--wrapper {
   width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: left;
 }
-.shift-right {
-  padding: 0px;
-  padding-left: 24px;
+.menu-treeeview-node--expand-icon,
+.menu-treeeview-node--title,
+.menu-treeeview-node--title-edit {
+  display: inline;
 }
-
-.list {
-  width: 100%;
-  background-color: inherit;
-}
-.list .item-title {
-  flex-basis: 0%;
-}
-
-.sortable-drag {
-  opacity: 0.5;
+.v-list--dense .v-list-item .v-list-item__content {
+  padding: 0;
 }
 </style>
 
@@ -133,6 +127,7 @@ export default {
   },
   data() {
     return {
+      editTitle: false,
       inDragging: this.dragging,
       inSelected: this.selected,
       inNode: this.node,
@@ -153,11 +148,12 @@ export default {
       if (this.title) {
         this.$set(this.inNode, "title", this.title);
         this.$set(this.inNode, "new", false);
-        this.inNode.resolve(this.inNode);
+        this.inNode.resolve && this.inNode.resolve(this.inNode);
       } else {
-        this.inNode.reject(this.inNode);
+        this.inNode.reject && this.inNode.reject(this.inNode);
       }
       this.$nextTick(() => {
+        this.editTitle = false;
         delete this.inNode.new;
         delete this.inNode.resolve;
         delete this.inNode.reject;
@@ -173,7 +169,7 @@ export default {
       let i = this.findChildIndex(node);
       if (i > -1) {
         this.inNode.nodes.splice(i, 1);
-        return true
+        return true;
       }
       return this.$refs.nodes?.some((nodeRef) => nodeRef.deleteChild(node));
     },

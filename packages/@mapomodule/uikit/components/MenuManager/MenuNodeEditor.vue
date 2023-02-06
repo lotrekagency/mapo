@@ -1,36 +1,40 @@
 <template>
-  <div>
-    <div class="tools internal">
-      <h5>{{ $t("editNode") }}</h5>
+  <div class="menu-node-editor--wrapper">
+    <div class="menu-node-editor--topbar">
+      <h5 class="menu-node-editor--breadcrumbs">
+        <span class="menu-node-editor--breadcrumbs-title"
+          >{{ $t("mapo.menuNodeEditor.editNode") }}:</span
+        >
+        <span
+          class="menu-node-editor--breadcrumbs-item"
+          v-for="(node, i) in parents"
+          :key="i"
+        >
+          {{ node.title }}
+          <span
+            class="menu-node-editor--breadcrumbs-divider"
+            v-if="i != parents.length - 1"
+          >
+            >
+          </span>
+        </span>
+      </h5>
       <div>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn icon v-bind="attrs" v-on="on" @click="$emit('delete')">
-              <v-icon>mdi-delete</v-icon>
-            </v-btn>
-          </template>
-          <span>{{ $t("deleteNode") }}</span>
-        </v-tooltip>
-        <v-tooltip bottom>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn icon v-bind="attrs" v-on="on" @click="model = null">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </template>
-          <span>{{ $t("close") }}</span>
-        </v-tooltip>
+        <v-btn tile color="error" @click="$emit('delete')">
+          <v-icon>mdi-delete</v-icon>
+        </v-btn>
       </div>
     </div>
 
     <Form
       v-model="model"
+      class="menu-node-editor--form"
       :currentLang="lang"
       :languages="languages"
       :errors="model.errors"
       :fields="fields"
       :moreSlotBindings="slotBindings"
       :readonly="readonly"
-      class="pa-4"
     >
       <template v-for="(_, slot) in $slots" :slot="slot">
         <!-- @vuese-ignore -->
@@ -45,12 +49,19 @@
 </template>
 
 <style scoped>
-.tools {
+.menu-node-editor--topbar {
   background-color: var(--v-primary-base);
   justify-content: space-between;
   display: flex;
   align-items: center;
   padding-left: 10px;
+}
+.menu-node-editor--breadcrumbs-title,
+.menu-node-editor--breadcrumbs-divider {
+  color: var(--v-primary-darken3);
+}
+.menu-node-editor--form {
+  margin: 20px 0;
 }
 </style>
 
@@ -60,6 +71,10 @@ export default {
     value: {
       type: Object,
       required: true,
+    },
+    nodes: {
+      type: Array,
+      default: () => [],
     },
     availableClasses: {
       type: Object,
@@ -118,24 +133,37 @@ export default {
         currentLang: this.lang,
       };
     },
+    parents() {
+      let find = (nodes, parents = []) => {
+        let node = nodes.find(({ id }) => id == this.model.id);
+        return node
+          ? [...parents, node]
+          : nodes
+              .filter(({ nodes }) => nodes.length)
+              .reduce((acc, node) => {
+                return acc.length ? acc : find(node.nodes, [...parents, node]);
+              }, []);
+      };
+      return find(this.nodes);
+    },
     defaultCoreFields() {
       return [
-        { value: "title", class: "col-md-6", synci18n: true },
-        { value: "meta.xfn", class: "col-md-6", synci18n: true },
         {
           value: "link.link_type",
+          label: this.$t("mapo.menuNodeEditor.linkTypeLabel"),
           type: "select",
           class: "col-md-4",
           synci18n: true,
           attrs: {
             items: [
-              { text: this.$t("relational"), value: "RE" },
-              { text: this.$t("static"), value: "ST" },
+              { text: this.$t("mapo.menuNodeEditor.relational"), value: "RE" },
+              { text: this.$t("mapo.menuNodeEditor.static"), value: "ST" },
             ],
           },
         },
         {
           value: "meta.style",
+          label: this.$t("mapo.menuNodeEditor.styleLabel"),
           type: "select",
           class: "col-md-4",
           synci18n: true,
@@ -147,14 +175,15 @@ export default {
           },
         },
         {
-          label: this.$t("openInNewTab"),
           value: "meta.target_bank",
+          label: this.$t("mapo.menuNodeEditor.openInNewTabLabel"),
           class: "col-md-4",
           type: "switch",
           synci18n: true,
         },
         {
           value: "link.relational.content_type",
+          label: this.$t("mapo.menuNodeEditor.relContentTypeLabel"),
           vShow: ({ model }) => model.link.link_type == "RE",
           onChange: this.loadPages,
           class: "col-md-6",
@@ -169,6 +198,7 @@ export default {
         },
         {
           value: "link.relational.page_id",
+          label: this.$t("mapo.menuNodeEditor.relPageIdLabel"),
           vShow: ({ model }) => model.link.link_type == "RE",
           class: "col-md-6",
           type: "select",
@@ -182,6 +212,7 @@ export default {
         },
         {
           value: "link.static",
+          label: this.$t("mapo.menuNodeEditor.staticLabel"),
           vShow: ({ model }) => model.link.link_type == "ST",
           synci18n: true,
         },

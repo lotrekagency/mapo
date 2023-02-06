@@ -1,41 +1,93 @@
 <template>
-  <div class="fill-height">
-    <v-row no-gutters v-if="model" class="fill-height">
-      <v-col cols="3">
-        <MenuTreeview
-          v-model="selected"
-          :nodes.sync="nodes"
-          :title="`Menu: ${model.key}`"
-          ref="treeview"
-        >
-          <template v-if="translationsActive" v-slot:treeview.top>
-            <DetailLangSwitch
-              :langs="languages"
-              v-model="currentLang"
-              :errors="errors"
-              class="flex-grow-0"
-            />
-          </template>
-          <template v-slot:treeview.bottom>
-            <v-btn tile @click="save" :loading="loading">
-              {{ $t("save") }}
-            </v-btn>
-          </template>
-        </MenuTreeview>
-      </v-col>
-      <v-col cols="9" v-if="selected">
-        <MenuNodeEditor
-          v-model="selected"
-          @delete="$refs.treeview.deleteSelectedNode"
-          :menu-endpoint="endpoint"
-          :lang="currentLang"
-          :languages="languages"
-          :readonly="isReadonly"
-        />
-      </v-col>
-    </v-row>
+  <div v-if="model" class="menu-manager--wrapper">
+    <v-navigation-drawer
+      v-model="mobileOpened"
+      :bottom="isMobile"
+      :absolute="isMobile"
+      :permanent="!isMobile"
+    >
+      <MenuTreeview
+        v-model="selected"
+        :nodes.sync="nodes"
+        :title="`Menu: ${model.key}`"
+        ref="treeview"
+      >
+        <template v-if="translationsActive" v-slot:treeview.top>
+          <DetailLangSwitch
+            :langs="languages"
+            v-model="currentLang"
+            :errors="errors"
+          />
+        </template>
+        <template v-slot:treeview.bottom>
+          <v-btn tile @click="save" :loading="loading">
+            {{ $t("mapo.save") }}
+          </v-btn>
+        </template>
+      </MenuTreeview>
+    </v-navigation-drawer>
+    <MenuNodeEditor
+      v-if="selected"
+      v-model="selected"
+      @delete="$refs.treeview.deleteSelectedNode"
+      :menu-endpoint="endpoint"
+      :nodes="nodes"
+      :lang="currentLang"
+      :languages="languages"
+      :readonly="isReadonly"
+    />
+    <div class="menu-manager--empty" v-else>
+      <v-icon size="60"> mdi-resistor-nodes </v-icon>
+      <p>{{ $t("mapo.menuManager.noSelectedNode") }}</p>
+    </div>
+    <v-btn
+      v-if="isMobile"
+      class="menu-manager--bottom-btn"
+      tile
+      block
+      @click="save"
+      :loading="loading"
+    >
+      {{ $t("mapo.save") }}
+    </v-btn>
+    <v-btn
+      v-if="isMobile"
+      color="primary"
+      class="menu-manager--bottom-btn"
+      tile
+      @click="mobileOpened = !mobileOpened"
+      ><v-icon>mdi-menu-open</v-icon></v-btn
+    >
   </div>
 </template>
+<style lang="scss">
+.menu-manager--wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  .v-tabs {
+    flex: 0;
+  }
+}
+.menu-node-editor--wrapper {
+  flex: 1;
+  max-width: 100%;
+}
+.menu-manager--bottom-btn {
+  position: absolute;
+  bottom: 0;
+}
+.menu-manager--empty {
+  flex: 1;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+}
+</style>
 
 <script>
 import { diffObjs, deepClone } from "@mapomodule/utils/helpers/objHelpers";
@@ -83,6 +135,7 @@ export default {
   data() {
     return {
       selected: null,
+      mobileOpened: false,
       currentLang: this.lang || this.$i18n.locale,
       loading: false,
       errors: {},
@@ -171,6 +224,9 @@ export default {
         args = [this.model.id, this.model];
       }
       return async () => method(...args);
+    },
+    isMobile() {
+      return this.$vuetify.breakpoint.xs;
     },
   },
   async mounted() {
