@@ -22,6 +22,7 @@
       <v-list-item-group :value="selected" :value-comparator="compareItems">
         <draggable
           v-model="inNodes"
+          class="menu-treeview--main-draggable-wrapper" 
           :emptyInsertThreshold="25"
           group="nodes"
           draggable=".menu-treeview--draggable"
@@ -80,6 +81,9 @@
   .menu-treeeview-node--title {
     flex-basis: 0%;
   }
+}
+.menu-treeview--main-draggable-wrapper{
+  padding-bottom: 100px;
 }
 .sortable-chosen {
   background-color: var(--v-primary-darken2);
