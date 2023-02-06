@@ -77,10 +77,12 @@ export default {
     }, 300),
     setValue(val) {
       const dump = { ...this.value }; // since we cannot directly edit a prop
+      let old = this.extractValue(dump);
       setPointed(dump, this.kpointed, this.accessor.set({ model: dump, val }));
       if (typeof this.conf.onChange == "function")
         this.conf.onChange({
           val,
+          old,
           model: dump,
           currentLang: this.currentLang,
           languages: this.langs,
