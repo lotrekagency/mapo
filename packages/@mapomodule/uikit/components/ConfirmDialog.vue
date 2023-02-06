@@ -2,14 +2,22 @@
   <div>
     <!-- Activator slot, this follows the logics of <a href="https://vuetifyjs.com/en/api/v-dialog/#api-slots" target="__blank">vuetify activator</a>.-->
     <slot v-bind="{ on, attrs: options.attrs }" name="activator"></slot>
-    <v-dialog v-model="dialog" v-bind="{ width: 350, ...options.attrs }">
+    <v-dialog
+      @keydown="onKeyDown"
+      v-model="dialog"
+      v-bind="{ width: 350, ...options.attrs }"
+    >
       <v-card v-bind="options.attrs">
         <v-card-title>{{ options.title }}</v-card-title>
         <v-card-text class="headline">{{ options.question }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn v-bind="dismissAttrs" @click="close">{{ dismissTxt }}</v-btn>
-          <v-btn @click="accept" v-bind="approveAttrs">{{ approveTxt }}</v-btn>
+          <v-btn v-bind="dismissAttrs" ref="close" @click="close">{{
+            dismissTxt
+          }}</v-btn>
+          <v-btn @click="accept" ref="accept" v-bind="approveAttrs">{{
+            approveTxt
+          }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -33,24 +41,30 @@ export default {
       options: {
         title: this.title || this.$t("mapo.confirm"),
         question: this.question || this.$t("mapo.confirmDialog.areYouSure"),
-        dismissButton: this.dismissButton || { text: this.$t("mapo.cancel"), attrs: { text: true } },
-        approveButton: this.approveButton || { text: this.$t("mapo.ok"), attrs: { color: "primary", text: true } },
-        attrs: { ...this.$attrs }
+        dismissButton: this.dismissButton || {
+          text: this.$t("mapo.cancel"),
+          attrs: { text: true },
+        },
+        approveButton: this.approveButton || {
+          text: this.$t("mapo.ok"),
+          attrs: { color: "primary", text: true },
+        },
+        attrs: { ...this.$attrs },
       },
       on: {
-        click: event => {
+        click: (event) => {
           event.preventDefault();
           event.stopPropagation();
           this.dialog = !this.dialog;
-        }
-      }
+        },
+      },
     };
   },
   props: {
     // v-model boolean that controll the status of the dialog (opened/closed)
     value: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // The text in the body of the dialog.
     question: {
@@ -69,7 +83,7 @@ export default {
     approveButton: {
       // `{ text: String, attrs: Object }`
       type: Object,
-    }
+    },
   },
   computed: {
     approveTxt() {
@@ -83,7 +97,7 @@ export default {
     },
     dismissAttrs() {
       return this.options.dismissButton?.attrs || {};
-    }
+    },
   },
   watch: {
     value(val) {
@@ -95,23 +109,26 @@ export default {
       this.$emit("input", val);
       if (val) {
         // Fired when the dialog opens
-        this.$emit("open")
+        this.$emit("open");
+        this.$nextTick(() =>
+          this.$nextTick(() => this.$refs.accept.$el.focus())
+        );
       } else {
         // Fired when the dialog closes
-        this.$emit("close")
+        this.$emit("close");
       }
       if (!val && this.resolve) {
         this.resolve(null);
       }
-    }
+    },
   },
   methods: {
-   /**
-    * @vuese
-    * This open the Confirm dialog component showing to the user a question. Returns a promise with the user response.
-    * See [this.$mapo.$confirm.open](/core/#confirm)
-    * @arg The payload containing the information to show to the user in the confirm dialog.
-    */
+    /**
+     * @vuese
+     * This open the Confirm dialog component showing to the user a question. Returns a promise with the user response.
+     * See [this.$mapo.$confirm.open](/core/#confirm)
+     * @arg The payload containing the information to show to the user in the confirm dialog.
+     */
     open(options) {
       this.optionsBk = { ...this.options };
       this.options = { ...this.options, ...options };
@@ -141,8 +158,16 @@ export default {
       }
       this.dialog = false;
       this.response = false;
-      setTimeout(() => this.options = { ...this.optionsBk }, 300);
-    }
-  }
+      setTimeout(() => (this.options = { ...this.optionsBk }), 300);
+    },
+    onKeyDown({ keyCode }) {
+      switch (keyCode) {
+        case 39:
+          return this.$refs.accept.$el.focus();
+        case 37:
+          return this.$refs.close.$el.focus();
+      }
+    },
+  },
 };
 </script>
