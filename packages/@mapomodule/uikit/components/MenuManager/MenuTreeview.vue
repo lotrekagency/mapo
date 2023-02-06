@@ -44,6 +44,10 @@
             />
           </v-list-item>
         </draggable>
+        <div @click="newNode" class="menu-treeview--empty" v-if="inNodes.length == 0">
+          <v-icon size="40"> mdi-view-grid-plus </v-icon>
+          <p>{{ $t("mapo.menuTreeview.noRootNodes") }}</p>
+        </div>
       </v-list-item-group>
     </v-list>
     <slot name="treeview.bottom" v-bind="{ newNode, nodes, value }" />
@@ -90,6 +94,17 @@
   opacity: 0.3;
   border: 1px dashed var(--v-primary-darken4);
   transition: all 0.1s 0.5s linear;
+}
+.menu-treeview--empty {
+  flex: 1;
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
 }
 </style>
 

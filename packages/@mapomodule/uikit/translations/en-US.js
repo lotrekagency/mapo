@@ -122,6 +122,7 @@ export default {
         // MenuManager/MenuTreeview.vue
         menuTreeview:{
             newNode: "Create node",
+            noRootNodes: "No nodes here. Create a new one!",
             areYouSureDelete: "Are you sure to delete current node and all it's childs ?"
         },
         mediaEditor: {

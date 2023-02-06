@@ -124,6 +124,7 @@ export default {
         // MenuManager/MenuTreeview.vue
         menuTreeview:{
             newNode: "Crea nodo",
+            noRootNodes: "Non c'è nessun nodo qui, creane uno nuovo!",
             areYouSureDelete: "Sei sicuro di voler eliminare questo nodo e tutti i suoi discendenti?"
         },
         // MediaManager/MediaEditor.vue
