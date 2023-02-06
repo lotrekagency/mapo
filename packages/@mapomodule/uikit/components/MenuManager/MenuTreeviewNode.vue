@@ -1,5 +1,9 @@
 <template>
-  <div class="menu-treeeview-node--wrapper" v-if="inNode">
+  <div
+    @dblclick.stop="editTitle = true"
+    class="menu-treeeview-node--wrapper"
+    v-if="inNode"
+  >
     <v-btn
       icon
       @click.stop="open = !open"
@@ -10,7 +14,6 @@
     <v-list-item-title
       v-if="!inNode.new && !editTitle"
       v-html="inNode.title.trim() || '&nbsp;'"
-      @dblclick="editTitle = true"
       class="menu-treeeview-node--title"
       @keydown.delete="$emit('delete', inNode)"
       tabindex="0"
