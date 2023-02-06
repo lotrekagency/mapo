@@ -1,3 +1,5 @@
+const Vue =  require('vue')
+
 function deepClone(obj) {
     const clone = obj instanceof Array ? Object.assign([]) : Object.assign({});
     for (const i in obj) {
@@ -18,7 +20,7 @@ function getPointed(obj, kpointed, def) {
 function setPointed(obj, kpointed, val) {
     const arr = typeof kpointed == 'string' ? kpointed.split(".") : kpointed
     if (arr.length == 1) {
-        obj[arr[0]] = val
+        Vue.set(obj, arr[0], val)
         return obj
     }
     obj[arr[0]] = obj[arr[0]] || {}
