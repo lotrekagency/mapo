@@ -38,6 +38,7 @@
             <MenuTreeviewNode
               :node="item"
               :selected.sync="selected"
+              @delete="deleteNode"
               ref="nodes"
             />
           </v-list-item>
@@ -160,7 +161,8 @@ export default {
     compareItems(a, b) {
       return a && b && a.id === b.id;
     },
-    deleteSelectedNode() {
+    deleteNode(node) {
+      const isSelected = this.selected.id == node.id;
       this.$mapo.$confirm
         .open({
           title: this.$t("mapo.delete"),
@@ -172,19 +174,23 @@ export default {
         })
         .then((ok) => {
           if (ok) {
-            let i = this.nodes?.findIndex(({ id }) => id == this.selected.id);
+            let i = this.nodes?.findIndex(({ id }) => id == node.id);
             if (i > -1) {
               this.nodes?.splice(i, 1);
-              this.selected = null;
+              this.selected = isSelected ? null : this.selected;
             } else {
-              this.selected = this.$refs.nodes?.some((nodeRef) =>
-                nodeRef.deleteChild(this.selected)
-              )
-                ? null
-                : this.selected;
+              this.selected =
+                this.$refs.nodes?.some((nodeRef) =>
+                  nodeRef.deleteChild(this.selected)
+                ) && isSelected
+                  ? null
+                  : this.selected;
             }
           }
         });
+    },
+    deleteSelectedNode() {
+      return this.deleteNode(this.selected);
     },
   },
 };

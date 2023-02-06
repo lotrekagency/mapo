@@ -12,6 +12,8 @@
       v-html="inNode.title.trim() || '&nbsp;'"
       @dblclick="editTitle = true"
       class="menu-treeeview-node--title"
+      @keydown.delete="$emit('delete', inNode)"
+      tabindex="0"
     ></v-list-item-title>
     <v-list-item-content v-else>
       <v-text-field
@@ -54,6 +56,7 @@
               :selected.sync="inSelected"
               :dragging.sync="inDragging"
               ref="nodes"
+              @delete="$emit('delete', $event)"
               @update:node="$emit('update:node', inNode)"
             />
           </v-list-item>
