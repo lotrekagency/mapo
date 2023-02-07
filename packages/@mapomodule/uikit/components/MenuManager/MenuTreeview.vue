@@ -22,7 +22,7 @@
       <v-list-item-group :value="selected" :value-comparator="compareItems">
         <draggable
           v-model="inNodes"
-          class="menu-treeview--main-draggable-wrapper" 
+          class="menu-treeview--main-draggable-wrapper"
           :emptyInsertThreshold="25"
           group="nodes"
           draggable=".menu-treeview--draggable"
@@ -40,11 +40,16 @@
               :node="item"
               :selected.sync="selected"
               @delete="deleteNode"
+              @silentDelete="silentDeleteNode"
               ref="nodes"
             />
           </v-list-item>
         </draggable>
-        <div @click="newNode" class="menu-treeview--empty" v-if="inNodes.length == 0">
+        <div
+          @click="newNode"
+          class="menu-treeview--empty"
+          v-if="inNodes.length == 0"
+        >
           <v-icon size="40"> mdi-view-grid-plus </v-icon>
           <p>{{ $t("mapo.menuTreeview.noRootNodes") }}</p>
         </div>
@@ -86,7 +91,7 @@
     flex-basis: 0%;
   }
 }
-.menu-treeview--main-draggable-wrapper{
+.menu-treeview--main-draggable-wrapper {
   padding-bottom: 100px;
 }
 .sortable-chosen {
@@ -160,28 +165,28 @@ export default {
         meta: {},
         link: { relational: {} },
       };
-      let promise = new Promise(
-        (resolve, reject) => (node = { ...node, resolve, reject })
-      );
       (this.selected?.nodes || this.inNodes).push(node);
       this.$refs?.nodes?.forEach((nodeRef) => nodeRef.openIfChild(node));
-      return promise
-        .then((node) => (this.selected = node))
-        .catch((node) => {
-          if (this.selected) {
-            this.selected.nodes = this.selected.nodes.filter(
-              ({ id }) => id != node.id
-            );
-          } else {
-            this.inNodes = this.inNodes.filter(({ id }) => id != node.id);
-          }
-        });
     },
     compareItems(a, b) {
       return a && b && a.id === b.id;
     },
+    silentDeleteNode(node) {
+      let isSelected = this.selected?.id == node?.id;
+      let i = this.nodes?.findIndex(({ id }) => id == node.id);
+      if (i > -1) {
+        this.nodes?.splice(i, 1);
+        this.selected = isSelected ? null : this.selected;
+      } else {
+        this.selected =
+          this.$refs.nodes?.some((nodeRef) =>
+            nodeRef.deleteChild(node)
+          ) && isSelected
+            ? null
+            : this.selected;
+      }
+    },
     deleteNode(node) {
-      const isSelected = this.selected.id == node.id;
       this.$mapo.$confirm
         .open({
           title: this.$t("mapo.delete"),
@@ -191,22 +196,7 @@ export default {
             attrs: { color: "red", text: true },
           },
         })
-        .then((ok) => {
-          if (ok) {
-            let i = this.nodes?.findIndex(({ id }) => id == node.id);
-            if (i > -1) {
-              this.nodes?.splice(i, 1);
-              this.selected = isSelected ? null : this.selected;
-            } else {
-              this.selected =
-                this.$refs.nodes?.some((nodeRef) =>
-                  nodeRef.deleteChild(this.selected)
-                ) && isSelected
-                  ? null
-                  : this.selected;
-            }
-          }
-        });
+        .then((ok) => ok && this.silentDeleteNode(node));
     },
     deleteSelectedNode() {
       return this.deleteNode(this.selected);

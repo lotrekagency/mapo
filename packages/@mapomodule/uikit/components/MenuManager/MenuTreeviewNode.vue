@@ -25,8 +25,8 @@
         autofocus
         hide-details
         dense
-        @blur="setNodeTitle"
-        @keydown.enter.stop="setNodeTitle"
+        @blur="updateNodeTitle"
+        @keydown.enter.stop="updateNodeTitle"
         @click.stop=""
       ></v-text-field>
     </v-list-item-content>
@@ -60,6 +60,7 @@
               :dragging.sync="inDragging"
               ref="nodes"
               @delete="$emit('delete', $event)"
+              @silentDelete="$emit('silentDelete', $event)"
               @update:node="$emit('update:node', inNode)"
             />
           </v-list-item>
@@ -150,20 +151,19 @@ export default {
     select(e) {
       this.inSelected = e;
     },
-    setNodeTitle() {
-      if (this.title) {
-        this.$set(this.inNode, "title", this.title);
+    updateNodeTitle() {
+      this.$set(this.inNode, "title", this.title);
+      if (this.inNode.new) {
         this.$set(this.inNode, "new", false);
-        this.inNode.resolve && this.inNode.resolve(this.inNode);
-      } else {
-        this.inNode.reject && this.inNode.reject(this.inNode);
+        this.$nextTick(() => delete this.inNode.new);
+        if (!this.inNode.title) {
+          console.log("DELETING", this.inNode)
+          this.$emit("silentDelete", this.inNode);
+        } else {
+          this.inSelected = this.inNode;
+        }
       }
-      this.$nextTick(() => {
-        this.editTitle = false;
-        delete this.inNode.new;
-        delete this.inNode.resolve;
-        delete this.inNode.reject;
-      });
+      this.editTitle = false;
     },
     compareItems(a, b) {
       return a && b && a.id === b.id;

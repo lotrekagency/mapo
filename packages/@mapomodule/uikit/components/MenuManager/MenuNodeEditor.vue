@@ -5,19 +5,21 @@
         <span class="menu-node-editor--breadcrumbs-title"
           >{{ $t("mapo.menuNodeEditor.editNode") }}:</span
         >
-        <span
-          class="menu-node-editor--breadcrumbs-item"
-          v-for="(node, i) in parents"
-          :key="i"
-        >
-          {{ node.title }}
+        <template v-for="(node, i) in parents">
           <span
+            :key="`i${i}`"
+            class="menu-node-editor--breadcrumbs-item"
+            @click="model = node"
+            >{{ node.title }}</span
+          >
+          <span
+            :key="`d${i}`"
             class="menu-node-editor--breadcrumbs-divider"
             v-if="i != parents.length - 1"
           >
             >
           </span>
-        </span>
+        </template>
       </h5>
       <div>
         <v-btn tile color="error" @click="$emit('delete')">
@@ -55,6 +57,9 @@
   display: flex;
   align-items: center;
   padding-left: 10px;
+}
+.menu-node-editor--breadcrumbs-item {
+  cursor: pointer;
 }
 .menu-node-editor--breadcrumbs-title,
 .menu-node-editor--breadcrumbs-divider {
