@@ -23,7 +23,7 @@ function setPointed(obj, kpointed, val) {
         Vue.set(obj, arr[0], val)
         return obj
     }
-    obj[arr[0]] = obj[arr[0]] || {}
+    Vue.set(obj, arr[0], obj[arr[0]] || {})
     return setPointed(obj[arr[0]], arr.slice(1), val)
 }
 

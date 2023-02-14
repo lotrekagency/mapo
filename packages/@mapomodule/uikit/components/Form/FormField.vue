@@ -76,14 +76,13 @@ export default {
       this.setValue(...args);
     }, 300),
     setValue(val) {
-      const dump = { ...this.value }; // since we cannot directly edit a prop
-      let old = this.extractValue(dump);
-      setPointed(dump, this.kpointed, this.accessor.set({ model: dump, val }));
+      const old = this.extractValue(this.value);
+      setPointed(this.value, this.kpointed, this.accessor.set({ model: this.value, val }));
       if (typeof this.conf.onChange == "function")
         this.conf.onChange({
           val,
           old,
-          model: dump,
+          model: this.value,
           currentLang: this.currentLang,
           languages: this.langs,
           conf: this.conf,
@@ -92,7 +91,7 @@ export default {
 
       // Fired when the v-model changes.
       // @arg Emits the entire payload modified.
-      this.$emit("input", dump);
+      this.$emit("input", this.value);
     },
     extractValue(val = this.value) {
       return this.accessor.get({
