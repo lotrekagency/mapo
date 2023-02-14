@@ -9,6 +9,7 @@ export default {
   },
   build: {
     transpile: ["mapomodule"],
+    postcss: null,
   },
   head: {
     titleTemplate: '%s - mapo',
