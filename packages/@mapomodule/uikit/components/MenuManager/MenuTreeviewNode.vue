@@ -128,6 +128,7 @@ export default {
     node: {
       handler(val) {
         this.inNode = val;
+        this.title = val?.title
       },
       deep: true,
     },

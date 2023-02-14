@@ -108,6 +108,7 @@ export default {
         // MenuManager/MenuNodeEditor.vue
         menuNodeEditor: {
             editNode: "Nodo",
+            title: "Titolo",
             linkTypeLabel: "Tipo di link",
             styleLabel: "Stile",
             openInNewTabLabel: "Apri in una nuova finestra",

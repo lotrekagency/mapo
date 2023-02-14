@@ -154,6 +154,11 @@ export default {
     defaultCoreFields() {
       return [
         {
+          value: "title",
+          label: this.$t("mapo.menuNodeEditor.title"),
+          synci18n: true,
+        },
+        {
           value: "link.link_type",
           label: this.$t("mapo.menuNodeEditor.linkTypeLabel"),
           type: "select",
