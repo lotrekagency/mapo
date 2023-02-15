@@ -27,26 +27,29 @@
         </v-btn>
       </div>
     </div>
-
-    <Form
-      v-model="model"
-      class="menu-node-editor--form"
-      :currentLang="lang"
-      :languages="languages"
-      :errors="model.errors"
-      :fields="fields"
-      :moreSlotBindings="slotBindings"
-      :readonly="readonly"
-    >
-      <template v-for="(_, slot) in $slots" :slot="slot">
-        <!-- @vuese-ignore -->
-        <slot :name="slot"></slot>
-      </template>
-      <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
-        <!-- @vuese-ignore -->
-        <slot :name="slot" v-bind="props" />
-      </template>
-    </Form>
+    <slot name="form.top" v-bind="slotBindings"></slot>
+    <slot name="form" v-bind="slotBindings">
+      <Form
+        v-model="model"
+        class="menu-node-editor--form"
+        :currentLang="lang"
+        :languages="languages"
+        :errors="model.errors"
+        :fields="fields"
+        :moreSlotBindings="slotBindings"
+        :readonly="readonly"
+      >
+        <template v-for="(_, slot) in $slots" :slot="slot">
+          <!-- @vuese-ignore -->
+          <slot :name="slot"></slot>
+        </template>
+        <template v-for="(_, slot) in $scopedSlots" v-slot:[slot]="props">
+          <!-- @vuese-ignore -->
+          <slot :name="slot" v-bind="props" />
+        </template>
+      </Form>
+    </slot>
+    <slot name="form.bottom" v-bind="slotBindings"></slot>
   </div>
 </template>
 
@@ -136,6 +139,9 @@ export default {
         model: this.model,
         errors: this.model.errors,
         currentLang: this.lang,
+        langs: this.langs,
+        fields: this.fields,
+        readonly: this.readonly,
       };
     },
     parents() {

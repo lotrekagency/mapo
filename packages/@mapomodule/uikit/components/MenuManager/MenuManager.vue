@@ -35,7 +35,15 @@
       :lang="currentLang"
       :languages="languages"
       :readonly="isReadonly"
-    />
+      v-bind="$attrs"
+    >
+      <template v-for="slot in nameSpacedSlots($slots, 'editor.')" :slot="slot">
+        <slot :name="`editor.${slot}`"></slot>
+      </template>
+      <template v-for="slot in nameSpacedSlots($scopedSlots, 'editor.')" v-slot:[slot]="props">
+        <slot :name="`editor.${slot}`" v-bind="props" />
+      </template>
+    </MenuNodeEditor>
     <div class="menu-manager--empty" v-else>
       <v-icon size="60"> mdi-resistor-nodes </v-icon>
       <p>{{ $t("mapo.menuManager.noSelectedNode") }}</p>
@@ -91,6 +99,7 @@
 
 <script>
 import { diffObjs, deepClone } from "@mapomodule/utils/helpers/objHelpers";
+import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 
 export default {
   name: "MenuManager",
@@ -245,6 +254,7 @@ export default {
     this.modelBkp = deepClone(this.model);
   },
   methods: {
+    nameSpacedSlots,
     save() {
       this.errors = null;
       this.loading = true;
