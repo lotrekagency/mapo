@@ -21,9 +21,9 @@
   },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "dev": "nuxt example",
-    "build:example": "nuxt build example",
-    "start:example": "nuxt start example",
+    "dev": "env NODE_OPTIONS=--openssl-legacy-provider nuxt example",
+    "build:example": "env NODE_OPTIONS=--openssl-legacy-provider nuxt build example",
+    "start:example": "env NODE_OPTIONS=--openssl-legacy-provider nuxt start example",
     "pub": "lerna publish --conventional-commits",
     "docs:gen": "yarn docs:js && vuese gen && ./docs/.vuepress/moveREADME.sh",
     "docs:dev": "vuepress dev docs",
