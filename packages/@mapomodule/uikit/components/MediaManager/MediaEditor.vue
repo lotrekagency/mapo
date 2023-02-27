@@ -86,82 +86,24 @@
               </v-col>
               <v-col md="6" cols="12">
                 <v-row>
-                  <v-col sm="6" md="12" cols="12">
-                    <v-text-field
-                      dense
-                      v-model="media.name"
-                      :label="$t('mapo.name')"
-                      :readonly="!canEdit"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col sm="6" md="12" cols="12">
-                    <v-text-field
-                      dense
-                      v-model="media.title"
-                      :label="$t('mapo.titleTag')"
-                      :readonly="!canEdit"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col sm="6" md="12" cols="12">
-                    <v-text-field
-                      dense
-                      v-model="media.description"
-                      :label="$t('mapo.description')"
-                      :readonly="!canEdit"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col sm="6" md="12" cols="12">
-                    <v-text-field
-                      dense
-                      v-model="media.alt_text"
-                      :label="$t('mapo.altTag')"
-                      :readonly="!canEdit"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col
-                    sm="6"
-                    md="12"
-                    cols="12"
-                    class="d-flex align-center"
-                    v-if="canEdit"
-                  >
-                    <div class="d-flex flex-column flex-grow-1">
-                      <v-file-input
-                        v-model="newFile"
-                        :accept="accept"
-                        :label="$t('mapo.mediaEditor.changeFile')"
-                        show-size
-                        dense
-                        prepend-icon
-                      ></v-file-input>
-                      <v-checkbox
-                        v-if="newFile"
-                        v-model="sameUrl"
-                        :label="$t('mapo.mediaEditor.maintainOldUrl')"
-                        class="ma-0"
-                        hide-details
-                        dense
-                      ></v-checkbox>
-                    </div>
-                    <v-img
-                      v-if="newFile && newFilePreview"
-                      :src="newFilePreview"
-                      aspect-ratio="1"
-                      min-width="70px"
-                      max-width="110px"
-                      class="grey lighten-2 ml-3"
-                    >
-                      <template v-slot:placeholder>
-                        <v-row class="fill-height ma-0" align="center" justify="center">
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
+                  <v-col cols="12">
+                    <DetailLangSwitch
+                      :langs="languages"
+                      v-model="currentLang"
+                      no-route-change
+                    />
                   </v-col>
                 </v-row>
+                <Form
+                  v-model="media"
+                  class="menu-node-editor--form"
+                  :currentLang="currentLang"
+                  :languages="languages"
+                  :fields="fields"
+                  :moreSlotBindings="slotBindings"
+                  :readonly="!canEdit"
+                />
+                <MediaFileChanger class="mt-6" :file.sync="newFile" :maintain-url.sync="sameUrl" :accept="accept" />
               </v-col>
             </v-row>
           </v-card-text>
@@ -269,7 +211,16 @@ export default {
       editing: false,
       newFile: null,
       sameUrl: false,
+      currentLang: this.$i18n.locale,
     };
+  },
+  props: {
+    languages: {
+      type: Array,
+      default() {
+        return this.$mapo.$options?.content?.languages || [];
+      },
+    },
   },
   computed: {
     ...mapGetters("mapo/media", ["editMedia"]),
@@ -296,6 +247,22 @@ export default {
           return 425;
       }
     },
+    fields() {
+      return [
+        { value: "title", label: this.$t('mapo.titleTag'), attrs: { dense: true } },
+        { value: "description", label: this.$t('mapo.description'), attrs: { dense: true } },
+        { value: "alt_text", label: this.$t('mapo.altTag'), attrs: { dense: true } },
+      ]
+    },
+    slotBindings() {
+      return {
+        model: this.media,
+        currentLang: this.lang,
+        langs: this.languages,
+        fields: this.fields,
+        readonly: !this.canEdit,
+      };
+    },
     accept() {
       switch (this.media.mime_type && this.media.mime_type.split("/")[0]) {
         case "image":
@@ -307,11 +274,6 @@ export default {
         default:
           return "*";
       }
-    },
-    newFilePreview() {
-      return this.newFile.type.startsWith("image/")
-        ? URL.createObjectURL(this.newFile)
-        : null;
     },
     permissionsModel() {
       return this.$mapo.$options?.medias?.permissionsModel || "media";
@@ -341,15 +303,11 @@ export default {
     ...mapActions("mapo/media", ["closeEditor", "deleteMedia", "updateMedia"]),
     saveMedia() {
       this.updateMedia({
-        id: this.media.id,
-        name: this.media.name,
-        title: this.media.title,
-        description: this.media.description,
-        alt_text: this.media.alt_text,
+        ...this.media,
         file: this.newFile || undefined,
         same_url: (this.newFile && this.sameUrl) || undefined,
         language_code: this.$i18n.locale,
-      }).then(() => {
+      }).finally(() => {
         this.newFile = null;
         this.sameUrl = false;
       });

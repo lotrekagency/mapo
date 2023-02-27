@@ -33,6 +33,7 @@ export default {
       type: Array,
       default() { return this.$mapo.$options?.content?.languages || []; }
     },
+    noRouteChange: Boolean,
       // An object representing all the errors of all fields. This component will find errors in each language and will display a little dot in the tab if there are any errors.
     errors: Object,
   },
@@ -54,6 +55,7 @@ export default {
   },
   methods: {
     saveQparams() {
+      if (this.noRouteChange) return;
       const { lang } = this.$route.query;
       if (lang !== this.currentLang) {
         this.$router.replace({

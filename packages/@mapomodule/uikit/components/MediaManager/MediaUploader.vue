@@ -26,12 +26,6 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="editedItem.name"
-                :label="$t('mapo.name')"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
                 v-model="editedItem.title"
                 :label="$t('titleTag')"
               ></v-text-field>
