@@ -128,14 +128,14 @@ const actions = {
         return this.$mapo.$api
             .crud("api/media-folders")
             .updateOrCreate(folder)
-            .then(dispatch("getRoot"));
+            .then(() => dispatch("getRoot"));
     },
 
     deleteFolder({ dispatch }, folder) {
         return this.$mapo.$api
             .crud("api/media-folders")
             .delete(folder.id)
-            .then(dispatch("getRoot"));
+            .then(() => dispatch("getRoot"));
     },
 
     deleteMedia({ dispatch }, media) {
