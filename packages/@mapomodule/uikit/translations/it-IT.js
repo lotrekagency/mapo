@@ -140,6 +140,10 @@ export default {
             goBack: "Torna indietro",
             noFolders: "Non sono presenti cartelle... Creane una!",
             newFolder: "Crea nuova cartella",
+            imageFolder: "Tutte le immagini",
+            videoFolder: "Tutti i video",
+            audioFolder: "Tutti gli audio",
+            docFolder: "Tutti i documenti",
             editFolder: "Modifica cartella",
             folderName: "Nome cartella",
             confirmDelete:

@@ -1,6 +1,6 @@
 <template>
   <div class="media-manager--wrapper">
-    <MediaFolders v-show="!editMedia" v-if="!noFolders" />
+    <MediaFolders v-show="!editMedia" v-if="!noFolders" :mime="mime" />
     <v-card elevation="0" class="media-manager--v-card" :class="{ transparent: !fillBackgroud, editing:editMedia }">
     <v-card-title class="d-flex flex-wrap pa-0">
       <div class="d-flex flex-grow-1">
@@ -137,15 +137,23 @@ export default {
   methods: {
     ...mapActions("mapo/media", ["getRoot", "openEditor", "updateMedia", "updateOrCreateFolder", "deleteFolder", "deleteMedia", "reset"]),
     search: debounce(function () {
-      this.getRoot({search: this.searchValue}).then(() => (this.loadingSearch = false));
+      this.getRoot({search: this.searchValue, all: true}).then(() => (this.loadingSearch = false));
     }, 500),
   },
   async fetch() {
     this.$store.commit("mapo/media/SET_MIME_TYPE", this.mime || null);
     await this.getRoot();
   },
+  mounted(){
+    this.storeUnsubscribe = this.$store.subscribeAction((action) => {
+      if ((action.type = "mapo/media/getRoot" && this.searchValue != action.payload?.search)) {
+        this.searchValue = action.payload?.search;
+      }
+    });
+  },
   destroyed(){
     this.reset();
+    this.storeUnsubscribe && this.storeUnsubscribe()
   }
 };
 </script>

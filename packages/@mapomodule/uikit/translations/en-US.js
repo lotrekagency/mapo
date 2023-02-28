@@ -137,6 +137,10 @@ export default {
             goBack: "Go back",
             noFolders: "No folders here... Create a new one!",
             newFolder: "Add new folder",
+            imageFolder: "All images",
+            videoFolder: "All videos",
+            docFolder: "All documents",
+            audioFolder: "All audio",
             editFolder: "Edit folder",
             folderName: "Folder name",
             confirmDelete:

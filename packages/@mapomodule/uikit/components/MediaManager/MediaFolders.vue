@@ -26,8 +26,21 @@
           }}</v-list-item-title>
         </v-list-item>
         <v-divider></v-divider>
+        <v-list-item
+          v-for="conf in mimeFolders"
+          :key="conf.mime"
+          :input-value="searchMime == conf.mime"
+          dense
+          @click.stop="setSearchMime(conf.mime)"
+        >
+          <v-list-item-icon>
+            <v-icon>{{ conf.icon }}</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>{{ conf.label }}</v-list-item-title>
+        </v-list-item>
+        <v-divider></v-divider>
       </template>
-      <template v-if="parentFolder" v-slot:append>
+      <template v-if="parentFolder || searchMime" v-slot:append>
         <v-divider></v-divider>
         <v-list-item
           class="py-1"
@@ -50,7 +63,7 @@
           @click.stop="getRoot({ folder })"
         >
           <v-list-item-icon dense>
-            <v-icon>mdi-folder-image</v-icon>
+            <v-icon>mdi-folder</v-icon>
           </v-list-item-icon>
           <v-list-item-content dense>
             <v-list-item-title v-text="folder.title"></v-list-item-title>
@@ -127,7 +140,6 @@
 }
 
 .media-folders--empty {
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-content: center;
@@ -170,8 +182,10 @@ export default {
       expanded: false,
       dialog: false,
       folderEdit: {},
+      searchMime: false,
     };
   },
+  props: { mime: { type: String, default: "" } },
   methods: {
     ...mapActions("mapo/media", [
       "getRoot",
@@ -207,6 +221,20 @@ export default {
       this.folderEdit = {};
     },
     slugify,
+    setSearchMime(mime) {
+      this.searchMime = mime;
+      this.getRoot({ mime, all: true });
+    },
+  },
+  mounted() {
+    this.storeUnsubscribe = this.$store.subscribeAction((action) => {
+      if ((action.type = "mapo/media/getRoot" && !action.payload?.mime)) {
+        this.searchMime = null;
+      }
+    });
+  },
+  destroyed() {
+    if (this.storeUnsubscribe) this.storeUnsubscribe();
   },
   computed: {
     ...mapGetters("mapo/media", [
@@ -226,6 +254,30 @@ export default {
         permanent: !this.isMobile,
         expandOnHover: !this.isMobile,
       };
+    },
+    mimeFolders() {
+      return [
+        {
+          mime: "image/*",
+          label: this.$t("mapo.mediaFolders.imageFolder"),
+          icon: "mdi-folder-image",
+        },
+        {
+          mime: "video/*",
+          label: this.$t("mapo.mediaFolders.videoFolder"),
+          icon: "mdi-folder-play",
+        },
+        {
+          mime: "audio/*",
+          label: this.$t("mapo.mediaFolders.audioFolder"),
+          icon: "mdi-folder-music",
+        },
+        {
+          mime: "application/*",
+          label: this.$t("mapo.mediaFolders.docFolder"),
+          icon: "mdi-folder-text",
+        },
+      ].filter(({ mime }) => !this.mime || mime == this.mime);
     },
   },
 };

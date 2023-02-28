@@ -60,14 +60,16 @@ const actions = {
         return new Promise((resolve, reject) => {
             let crud = this.$mapo.$api.crud("api/media-folders");
             commit("SET_LOADING", true);
-            let { page, folder, search, mime } = context || {};
+            let { page, folder, search, mime, all } = context || {};
             let { id } =
                 (folder === undefined ? getters.parentFolder : folder) || {};
             page = page || getters.page;
             mime = mime || getters.mimeType;
+            id = all ? null : id;
             let params = {
                 page,
                 search,
+                all,
                 fltr: mime ? `mime_type=${mime}` : undefined,
             };
 
