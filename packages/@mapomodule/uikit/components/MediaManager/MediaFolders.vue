@@ -118,7 +118,10 @@
             $t("mapo.cancel")
           }}</v-btn>
           <v-btn color="primary" text @click="saveFolder">{{
-            $t("mapo.create")
+            folderEdit.id
+              ? $t("mapo.save")
+              : $t("mapo.create")
+            
           }}</v-btn>
         </v-card-actions>
       </v-card>
