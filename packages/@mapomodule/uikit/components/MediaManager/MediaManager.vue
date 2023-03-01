@@ -146,7 +146,7 @@ export default {
   },
   mounted(){
     this.storeUnsubscribe = this.$store.subscribeAction((action) => {
-      if ((action.type = "mapo/media/getRoot" && this.searchValue != action.payload?.search)) {
+      if (action.type == "mapo/media/getRoot" && this.searchValue != action.payload?.search) {
         this.searchValue = action.payload?.search;
       }
     });
