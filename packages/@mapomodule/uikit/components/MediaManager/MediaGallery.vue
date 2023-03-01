@@ -1,15 +1,55 @@
 <template>
   <div class="media-gallery--wrapper">
-    <draggable v-model="draggableSelection" animation="150" v-if="selection && selection.length && selectMode == 'multi'" class="media-gallery--selection grey darken-2">
-        <MediaPreview
-          v-for="media in selection"
-          :key="media.file"
-          @click.native.stop="select(media)"
-          :media="media"
-          icon-size="20px"
-          class="elevation-4 media-gallery--selection-item"
-        />
+    <draggable
+      v-model="draggableSelection"
+      animation="150"
+      v-if="selection && selection.length && selectMode == 'multi'"
+      class="media-gallery--selection grey darken-2"
+    >
+      <MediaPreview
+        v-for="media in selection"
+        :key="media.file"
+        @click.native.stop="select(media)"
+        :media="media"
+        icon-size="20px"
+        class="elevation-4 media-gallery--selection-item"
+      />
     </draggable>
+    <div class="media-gallery--selectAll" v-if="editListSet.size">
+      <div class="media-gallery--select-action">
+        <v-icon
+          v-if="editListState.outside"
+          @click="editSelect('__clear__')"
+          dense
+          left
+          color="error"
+          >mdi-close-box-outline</v-icon
+        >
+        <span class="mr-2"
+          >{{ editListSet.size }}
+          {{ $t("mapo.mediaGallery.selectedAssets") }}</span
+        >
+        <!-- <v-btn text small> <v-icon left>mdi-image-move</v-icon> Move</v-btn> -->
+        <v-btn text small @click="deleteSelected">
+          <v-icon left>mdi-delete-sweep</v-icon> {{ $t("mapo.delete") }}</v-btn
+        >
+      </div>
+      <div class="media-gallery--select-action">
+        <v-checkbox
+          hide-details
+          dense
+          color="accent"
+          :label="
+            editListState.value
+              ? $t('mapo.mediaGallery.deselectAll')
+              : $t('mapo.mediaGallery.selectAll')
+          "
+          @click="editSelect(medias.map((m) => m.id))"
+          :input-value="editListState.value"
+          :indeterminate="editListState.indeterminate"
+        />
+      </div>
+    </div>
     <div ref="masonry" class="media-gallery--masonry" v-if="medias.length">
       <div
         v-for="media in medias"
@@ -17,16 +57,24 @@
         class="media-gallery--card"
       >
         <v-btn
+          v-if="selectMode != 'none'"
           @click.stop="openEditor(media)"
           icon
           small
           :ripple="false"
           color="white"
           class="media-gallery--card-btn"
-          :class="{'d-none': selectMode == 'none'}"
         >
           <v-icon>mdi-circle-edit-outline</v-icon>
         </v-btn>
+        <v-checkbox
+          hide-details
+          dense
+          @click="editSelect(media.id)"
+          :input-value="editListSet.has(media.id)"
+          color="accent"
+          class="media-gallery--card-checkbox"
+        />
         <MediaPreview
           class="elevation-4 cursor-pointer"
           :media="media"
@@ -69,13 +117,39 @@
     background: #1e1e1ea1;
     border-radius: 50% 0 0;
   }
+  &-checkbox {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 0;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.5s;
+    &.v-input--is-label-active {
+      opacity: 1;
+    }
+  }
+  &:hover {
+    .media-gallery--card-checkbox {
+      opacity: 1;
+    }
+  }
+}
+.media-gallery--selectAll {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px 0 10px;
+  flex-wrap: wrap;
+}
+.media-gallery--select-action {
+  display: flex;
+  align-items: center;
 }
 
 .media-gallery--wrapper{
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 $wcol: calc(100% / 6 - 12px);
@@ -171,7 +245,7 @@ export default {
   name: "MediaGallery",
   components: { draggable },
   computed: {
-    ...mapGetters("mapo/media", ["page", "pages", "medias", "selection", "selectMode", "loading"]),
+    ...mapGetters("mapo/media", ["page", "pages", "medias", "selection", "selectMode", "loading", "editListState", "editListSet"]),
     draggableSelection: {
       get() { return this.selection; },
       set(val) { this.setSelection(val); }
@@ -188,7 +262,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions("mapo/media", ["getRoot", "openEditor", "select", "setSelection"]),
+    ...mapActions("mapo/media", ["getRoot", "openEditor", "select", "setSelection", "editSelect", "deleteSelected"]),
     isSelected(media) {
       switch (this.selectMode) {
         case "multi":

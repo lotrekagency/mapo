@@ -147,7 +147,14 @@ export default {
                 "Are you sure to delele this folder and all its content?",
         },
         // MediaManager/MediaGallery.vue
-        mediaGallery: { noMediaFound: "No media found..." },
+        mediaGallery: {
+            noMediaFound: "No media found...",
+            selectAll: "Select page",
+            deselectAll: "Deselect page",
+            selectedAssets: "selected assets",
+            deleteSelected: "You are going to delete {number} assets. Do you want to continue?",
+            deleteSuccess: "{number} assets deleted!"
+        },
         // MediaManager/MediaManager.vue
         mediaManager: {
             gallery: "Gallery",

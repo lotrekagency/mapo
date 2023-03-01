@@ -150,7 +150,14 @@ export default {
                 "Vuoi veramente eliminare questa cartella e tutti i suoi contenuti?",
         },
         // MediaManager/MediaGallery.vue
-        mediaGallery: { noMediaFound: "Nessun media individuato..." },
+        mediaGallery: {
+            noMediaFound: "Nessun media individuato...",
+            selectAll: "Seleziona pagina",
+            deselectAll: "Deseleziona pagina",
+            selectedAssets: "elementi selezionati",
+            deleteSelected: "Stai per eliminare {number} elementi. Vuoi proseguire?",
+            deleteSuccess: "{number} elementi eliminati!"
+        },
         // MediaManager/MediaManager.vue
         mediaManager: {
             gallery: "Galleria",

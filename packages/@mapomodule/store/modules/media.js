@@ -8,6 +8,7 @@ const state = () => ({
     loading: false,
     editMedia: null,
     selection: [],
+    editList: [],
     selectMode: "none",
 });
 
@@ -17,6 +18,9 @@ const mutations = {
     },
     SET_LOADING: (state, status) => {
         state.loading = status;
+    },
+    SET_EDIT_LIST: (state, status) => {
+        state.editList = status;
     },
     SET_ROOT: (state, response) => {
         state.medias = response?.media?.items || [];
@@ -222,6 +226,51 @@ const actions = {
             }
         });
     },
+    editSelect({ commit, state }, data) {
+        return new Promise((resolve) => {
+            if (data == "__clear__") {
+                commit("SET_EDIT_LIST", []);
+                return resolve([]);
+            }
+            let dataArray = Array.isArray(data) ? data : [data];
+            let currentSet = new Set(state.editList);
+            let allPresent = dataArray.every((id) => currentSet.has(id));
+            currentSet = allPresent
+                ? new Set([...currentSet].filter((x) => !dataArray.includes(x)))
+                : new Set([...dataArray, ...currentSet]);
+            commit("SET_EDIT_LIST", [...currentSet]);
+            return resolve([...currentSet]);
+        });
+    },
+    deleteSelected({ commit, dispatch, state }) {
+        return new Promise(async (resolve, reject) => {
+            let { editList } = state;
+            let number = editList.length;
+            let resp = await this.$mapo.$confirm.open({
+                title: this.$i18n.t("mapo.delete"),
+                question: this.$i18n.t("mapo.mediaGallery.deleteSelected", {
+                    number,
+                }),
+                approveButton: {
+                    text: this.$i18n.t("mapo.delete"),
+                    attrs: { color: "red", text: true },
+                },
+            });
+            if (!resp) return resolve(false);
+            let crud = this.$mapo.$api.crud("api/media");
+            return await Promise.all(editList.map((id) => crud.delete(id)))
+                .then((r) => {
+                    commit("SET_EDIT_LIST", []);
+                    dispatch("getRoot");
+                    this.$mapo.$snack.open({
+                        message: this.$i18n.t("mapo.mediaGallery.deleteSuccess", { number }),
+                        color: "success",
+                    });
+                    resolve(r);
+                })
+                .catch(reject);
+        });
+    },
 };
 
 const getters = {
@@ -239,6 +288,17 @@ const getters = {
     editMedia: (state) => state.editMedia,
     selection: (state) => state.selection,
     selectMode: (state) => state.selectMode,
+    editListSet: (state) => new Set(state.editList),
+    editListState: (state) => {
+        let value = state.medias.every(({ id }) => state.editList.includes(id));
+        let indeterminate =
+            !value &&
+            state.medias.some(({ id }) => state.editList.includes(id));
+        let outside = state.editList.some(
+            (id) => !state.medias.map((m) => m.id).includes(id)
+        );
+        return { value, indeterminate, outside };
+    },
 };
 
 export default {
