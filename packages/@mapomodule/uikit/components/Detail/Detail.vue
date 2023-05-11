@@ -127,6 +127,7 @@
                 :errors="errors"
                 :fields="sideFields"
                 :moreSlotBindings="slotBindings"
+                :readonly="isReadonly"
               >
                 <template v-for="(_, slot) in $slots" :slot="slot">
                   <!-- @vuese-ignore -->
@@ -280,6 +281,8 @@ export default {
         return ["auto", "force", "disable"].indexOf(value) !== -1;
       },
     },
+    // This forces the detail page to be readonly.
+    readonly: Boolean
   },
   methods: {
     back() {
@@ -427,12 +430,14 @@ export default {
       return async () => method(...args);
     },
     isReadonly() {
+      if (this.readonly) return this.readonly;
       if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
         return !this.$mapo.$auth.user.permissions.includes(this.isNew ? "add" : "change");
       }
       return !!this.buttonClicked;
     },
     canDelete() {
+      if (this.readonly) return false;
       if (this.$mapo.$auth.routeMiddlewares.includes("permissions")) {
         return this.$mapo.$auth.user.permissions.includes("delete");
       }
