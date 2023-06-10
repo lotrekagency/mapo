@@ -1,4 +1,5 @@
-const Vue =  require('vue')
+var Vue =  require('vue')
+Vue = Vue.default || Vue
 
 function deepClone(obj) {
     const clone = obj instanceof Array ? Object.assign([]) : Object.assign({});
