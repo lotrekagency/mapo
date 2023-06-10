@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.45](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.44...v1.0.0-alpha.45) (2023-06-10)
+
+
+### Bug Fixes
+
+* fix setPointed ([f43685d](https://github.com/lotrekagency/mapo/commit/f43685dce23fb9383d7b0501767b1c40ff442686))
+
+
+
+
+
 # [1.0.0-alpha.44](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2023-06-10)
 
 
