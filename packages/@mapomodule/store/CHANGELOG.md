@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.44](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2023-06-10)
+
+
+### Bug Fixes
+
+* **media-folders:** fix media folder create, update and delete callbacks ([1e8e1b0](https://github.com/lotrekagency/mapo/commit/1e8e1b022f9fa44cc2732fe2c62d3a0167beb121))
+
+
+### Features
+
+* added delete selected to media manager ([060eaed](https://github.com/lotrekagency/mapo/commit/060eaedccc6f5761e995a889a749f3643494eb2f))
+* added type folders to media manager ([63cd551](https://github.com/lotrekagency/mapo/commit/63cd551d33278e0e23a52d3ac234f58dbe56eb91))
+
+
+
+
+
 # [1.0.0-alpha.43](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.42...v1.0.0-alpha.43) (2023-02-02)
 
 **Note:** Version bump only for package @mapomodule/store

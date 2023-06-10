@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.44](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2023-06-10)
+
+
+### Bug Fixes
+
+* added bottom padding to menu treeview draggable ([6c10dcb](https://github.com/lotrekagency/mapo/commit/6c10dcbd9c5be34cba448692e39ee61494205e61))
+* added missing tranlations to detail component ([c099319](https://github.com/lotrekagency/mapo/commit/c09931963b5f6c9425bb905b958b13ed44df3b06))
+* better double clik node edit catcher ([78ec053](https://github.com/lotrekagency/mapo/commit/78ec053be801f6da49019c1bd371948a1eaf3a15))
+* fix media edit folder typo ([aba1d15](https://github.com/lotrekagency/mapo/commit/aba1d15807edcb10941e3b051e75d20c86e6670e))
+* fix search value update in media manager ([c38b530](https://github.com/lotrekagency/mapo/commit/c38b5304bec5438bfa74b1fed9fe083457189fc1))
+
+
+### Features
+
+* add click callback to menuNode breadcrums to help navigation ([0b73718](https://github.com/lotrekagency/mapo/commit/0b73718402a306c66a20e04e7d77201a53a16875))
+* added css classes and translations to menu-manager ([e1f46c0](https://github.com/lotrekagency/mapo/commit/e1f46c0347ad3cd56bb44ecec810692daf57aad2))
+* added del keyboard input to delete menu nodes ([6d376a0](https://github.com/lotrekagency/mapo/commit/6d376a05e932921d3f78eee008bd09c9ebe9a0cf))
+* added delete selected to media manager ([060eaed](https://github.com/lotrekagency/mapo/commit/060eaedccc6f5761e995a889a749f3643494eb2f))
+* added empty placeholder for menu treeview ([f40dfc3](https://github.com/lotrekagency/mapo/commit/f40dfc36e6a80f6f2f532d1580b59a5ed5e686f6))
+* added keyboard inputs for confirm dialog ([e9e4058](https://github.com/lotrekagency/mapo/commit/e9e4058020ce240a7f4877e384931a02da8a69bd))
+* added media editor translation fields ([87ed691](https://github.com/lotrekagency/mapo/commit/87ed691da08d6e06ff0f960d5e6592ace349cce6))
+* added MenuManager component ([25107a9](https://github.com/lotrekagency/mapo/commit/25107a9cbfd75fcacf485163b96a793fe788cb4b))
+* added old value to onChange in formField ([b53c86e](https://github.com/lotrekagency/mapo/commit/b53c86e392aee9a197df56c5c99c943ecb3895b9))
+* added readonly props to detail component ([4c8c79f](https://github.com/lotrekagency/mapo/commit/4c8c79fc41839f7e8398d6adc9a6191306c54742))
+* added slots to menu editor component to sobstitute the entire form ([239727c](https://github.com/lotrekagency/mapo/commit/239727cc1da9938511bac551b5a91f6c94b39539))
+* added title field in menu node editor ([bd62662](https://github.com/lotrekagency/mapo/commit/bd62662d4afb85b46a8f7185203b916aab8fe713))
+* added type folders to media manager ([63cd551](https://github.com/lotrekagency/mapo/commit/63cd551d33278e0e23a52d3ac234f58dbe56eb91))
+
+
+### Performance Improvements
+
+* EXPERIMENTAL: use Vue.set in setpointed and directly manipulate js object in FormField ([1c384e9](https://github.com/lotrekagency/mapo/commit/1c384e9d7c922b0e876512de874a3f9832ac30f1))
+
+
+
+
+
 # [1.0.0-alpha.43](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.42...v1.0.0-alpha.43) (2023-02-02)
 
 

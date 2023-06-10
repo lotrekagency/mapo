@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.44](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2023-06-10)
+
+
+### Bug Fixes
+
+* added better reactivity to setPointed function ([78a4a88](https://github.com/lotrekagency/mapo/commit/78a4a88fbc98e5ce0d2662c074541eb4f8fd3ea1))
+
+
+### Performance Improvements
+
+* EXPERIMENTAL: use Vue.set in setpointed and directly manipulate js object in FormField ([1c384e9](https://github.com/lotrekagency/mapo/commit/1c384e9d7c922b0e876512de874a3f9832ac30f1))
+
+
+
+
+
 # [1.0.0-alpha.43](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.42...v1.0.0-alpha.43) (2023-02-02)
 
 
