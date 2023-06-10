@@ -25,6 +25,7 @@
     "build:example": "env NODE_OPTIONS=--openssl-legacy-provider nuxt build example",
     "start:example": "env NODE_OPTIONS=--openssl-legacy-provider nuxt start example",
     "pub": "lerna publish --conventional-commits",
+    "pub:from-git": "lerna publish from-git --conventional-commits",
     "docs:gen": "yarn docs:js && vuese gen && ./docs/.vuepress/moveREADME.sh",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
