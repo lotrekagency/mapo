@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.47](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.46...v1.0.0-alpha.47) (2023-06-24)
+
+
+### Bug Fixes
+
+* fix media gallery keys ([f9fb666](https://github.com/lotrekagency/mapo/commit/f9fb6664456488b0b32b730ef7236d2e8bddea80))
+
+
+### Features
+
+* improve media uloader progress ([bbc9628](https://github.com/lotrekagency/mapo/commit/bbc9628653c18ebbcb37011302e698d9dc8f29a8))
+* update translations ([a51ae6d](https://github.com/lotrekagency/mapo/commit/a51ae6d86da32248b6377f1d4ce6bfab7fc413d1))
+
+
+
+
+
 # [1.0.0-alpha.46](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.45...v1.0.0-alpha.46) (2023-06-24)
 
 
