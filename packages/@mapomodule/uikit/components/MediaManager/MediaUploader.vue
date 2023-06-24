@@ -12,43 +12,30 @@
         </div>
       </template>
       <template v-slot:list-item.content.after="{ item }">
-        <v-chip dense v-if="isTooLarge(item)" color="error">{{$t("mapo.mediaUploader.tooLarge")}}</v-chip>
+        <v-chip dense v-if="isTooLarge(item)" color="error">{{ $t("mapo.mediaUploader.tooLarge") }}</v-chip>
       </template>
       <template v-slot:editContent="{ editedItem }">
         <v-container>
           <v-row>
             <v-col cols="12">
-              <v-select
-                v-model="editedItem.folder"
-                :items="folderOptions"
-                :label="$t('mapo.folder')"
-              ></v-select>
+              <v-select v-model="editedItem.folder" :items="folderOptions" :label="$t('mapo.folder')"></v-select>
             </v-col>
             <v-col cols="12">
-              <v-text-field
-                v-model="editedItem.title"
-                :label="$t('titleTag')"
-              ></v-text-field>
+              <v-text-field v-model="editedItem.title" :label="$t('titleTag')"></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field
-                v-model="editedItem.description"
-                :label="$t('mapo.description')"
-              ></v-text-field>
+              <v-text-field v-model="editedItem.description" :label="$t('mapo.description')"></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field
-                v-model="editedItem.alt_text"
-                :label="$t('mapo.altTag')"
-              ></v-text-field>
+              <v-text-field v-model="editedItem.alt_text" :label="$t('mapo.altTag')"></v-text-field>
             </v-col>
           </v-row>
         </v-container>
       </template>
     </drop-area>
     <div v-if="mediaList.length" class="mt-3">
-      <p class="text-right mr-3 mb-2">{{ completed }}</p>
-      <v-progress-linear :value="progress"></v-progress-linear>
+      <p class="text-right mr-3 mb-2">{{ bufferProgress >= 100 ? $t('mapo.mediaUploader.optimizingFiles') : (progress > 0 ? $t('mapo.mediaUploader.uploadingFiles'):'')}} {{ completed }}</p>
+      <v-progress-linear :stream="stream" :indeterminate="progress == 100" :value="progress" :buffer-value="bufferProgress"></v-progress-linear>
     </div>
   </v-container>
 </template>
@@ -69,8 +56,9 @@ export default {
   name: "MediaUploader",
   data() {
     return {
-      count: 0,
-      progress: 0,
+      buffer : 0,
+      stream: false,
+      responses: [],
       mediaList: [],
       _mediaFileCrud: null
     };
@@ -84,7 +72,7 @@ export default {
       return this._mediaFileCrud;
     },
     completed() {
-      return `${this.count}/${this.mediaList.length}`;
+      return `${this.responses.length}/${this.mediaList.length}`;
     },
     folderOptions() {
       return [
@@ -97,11 +85,17 @@ export default {
           value: folder.id
         }))
       ];
+    },
+    progress(){
+      return this.responses.length/this.mediaList.length * 100;
+    },
+    bufferProgress(){
+      return this.buffer/this.mediaList.length * 100;
     }
   },
   methods: {
-    isTooLarge({ info }){
-      const {type} = info;
+    isTooLarge({ info }) {
+      const { type } = info;
       switch (type.split("/")[0]) {
         case "image":
           return info.rawsize > MAX_IMAGE_SIZE;
@@ -122,58 +116,47 @@ export default {
           (this.parentFolder && this.parentFolder.id) ||
           null;
       });
-      this.count = 0;
-      this.progress = 0;
+      this.responses = [];
+      this.buffer = 0;
+      this.stream = false
     },
-    updateAll() {
-      return Promise.all(
-        this.mediaList.map(media =>
-          this.uploadMedia(
-            Object.assign(
-              { file: media.blob },
-              {
-                title: media.info.title,
-                alt_text: media.info.alt_text,
-                description: media.info.description,
-                folder: media.info.folder
-              }
-            )
+    async updateAll() {
+      this.stream = true
+      for (const media of this.mediaList) {
+        await this.uploadMedia(
+          Object.assign(
+            { file: media.blob },
+            {
+              title: media.info.title,
+              alt_text: media.info.alt_text,
+              description: media.info.description,
+              folder: media.info.folder
+            }
           )
-        )
-      ).then(response => {
-        if (this.mediaList && this.mediaList.length) {
+        ).then(r => this.responses.push(r)).catch(error => {
           this.$mapo.$snack.open({
-            message: this.$t("mapo.mediaUploader.success", {numberFiles: response.length || this.mediaList.length})
-          });
-          this.$emit("Upload", (response.length && response) || this.mediaList);
-          this.$refs.closeButton.$el.click();
-        }
-      }).catch(error => {
-        this.$mapo.$snack.open({
-          message: error.response?.data?.detail || this.$t("mapo.genericError"),
-          color: "error",
+            message: error.response?.data?.detail || this.$t("mapo.genericError"),
+            color: "error",
+          })
         })
-      });
+      }
+      if (this.mediaList && this.mediaList.length) {
+        this.$mapo.$snack.open({
+          message: this.$t("mapo.mediaUploader.success", { numberFiles: this.responses.length || this.mediaList.length })
+        });
+        this.$emit("Upload", (this.responses.length && this.responses) || this.mediaList);
+        this.$refs.closeButton.$el.click();
+      }
     },
-    uploadMedia(media) {
-      const index = this.mediaList.findIndex(el => el.blob === media.file);
+    async uploadMedia(media) {
       const payload = this.$mapo.$api.multipart(media, ["file"]);
       const conf = {
         headers: { "Content-Type": "multipart/form-data" },
         onUploadProgress: function(event) {
-          this.mediaList[index].progress = Math.ceil(
-            (event.loaded / event.total) * 100
-          );
-          this.progress =
-            this.mediaList.reduce((acc, media) => acc + media.progress, 0) /
-            this.mediaList.length;
-          this.count = this.mediaList.reduce(
-            (acc, media) => acc + (media.progress === 100),
-            0
-          );
+          this.buffer = Math.ceil(this.buffer) + (event.loaded / event.total)
         }.bind(this)
       };
-      return this.mediaFileCrud.create(payload, conf);
+      return await this.mediaFileCrud.create(payload, conf);
     }
   }
 };
