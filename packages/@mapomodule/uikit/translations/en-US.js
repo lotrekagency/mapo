@@ -162,6 +162,6 @@ export default {
             fileInfo: "File info succesfully updated",
         },
         // MediaManager/MediaUploader.vue
-        mediaUploader: { success: "{numberFiles} files succesfully uploaded", tooLarge: "Warning! Optimize before upload!" },
+        mediaUploader: { optimizingFiles: "Optimizing files..", uploadingFiles: "Uploading files..", success: "{numberFiles} files succesfully uploaded", tooLarge: "Warning! Optimize before upload!" },
     },
 };
