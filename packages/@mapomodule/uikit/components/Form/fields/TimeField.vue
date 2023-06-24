@@ -140,6 +140,7 @@ export default {
     },
   },
   mounted() {
+    throw Error("TimeField is actually broken. Use something else.")
     this.model = this.setupModel(this.value);
   },
 };
