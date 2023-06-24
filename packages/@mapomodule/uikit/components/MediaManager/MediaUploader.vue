@@ -148,6 +148,11 @@ export default {
           this.$emit("Upload", (response.length && response) || this.mediaList);
           this.$refs.closeButton.$el.click();
         }
+      }).catch(error => {
+        this.$mapo.$snack.open({
+          message: error.response?.data?.detail || this.$t("mapo.genericError"),
+          color: "error",
+        })
       });
     },
     uploadMedia(media) {

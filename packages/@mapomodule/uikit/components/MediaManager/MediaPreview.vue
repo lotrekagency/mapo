@@ -1,5 +1,5 @@
 <template>
-  <v-img
+    <v-img
     :src="(isImage && media.file) || null"
     :lazy-src="(isImage && media.thumbnail) || null"
     aspect-ratio="1"
@@ -10,6 +10,8 @@
     }"
     v-bind="$attrs"
     v-on="videoListeners"
+    @mouseover.native="hover = true"
+    @mouseleave.native="hover = false; showInfo = false"
     :title="media.title || media.name"
   >
     <template v-slot:placeholder>
@@ -67,10 +69,54 @@
         </div>
       </v-row>
     </template>
+    <template>
+      <div @click.stop="showInfo=true" class="file-info text-right" :class="{hover, showInfo}">
+      <span class="file-name text-truncate">{{ (filename && name) || undefined }}</span>
+      <span class="file-details text-caption " :class="{showInfo}">
+        <span>{{ dateCreated }}</span><br>
+        <span>{{ fileSize }}</span>
+      </span>
+      </div>
+    </template>
   </v-img>
 </template>
 
 <style lang="scss">
+.file-info{
+  position: absolute;
+  bottom: 0;
+  padding: 0.2em 1em;
+  background: #1f1f1f;
+  opacity: 0;
+  transition: opacity .5s;
+  width: 100%;
+  display: block;
+  max-height: 80%;
+  overflow: auto  ;
+  &.hover{
+    opacity: .7;
+  }
+  &.showInfo{
+    opacity: .9;
+    padding: 0.2em 0.5em;
+    .file-name{
+      font-weight: bold;
+    }
+  }
+}
+.file-name{
+   display: block;
+}
+.file-details{
+  max-height: 0;
+  overflow: hidden;
+  transition: all .5s;
+  display: block;
+  &.showInfo{
+    max-height: 500px;
+    overflow: auto;
+  }
+}
 .v-image.media-controls {
   .v-image__placeholder {
     z-index: 0;
@@ -93,6 +139,7 @@
 </style>
 
 <script>
+import { humanFileSize } from "@mapomodule/utils/helpers/formatters";
 
 const extensions = {
   image: ["png", "jpg", "jpeg", "avif", "webp"],
@@ -105,6 +152,8 @@ export default {
     return {
       playing: false,
       playPromise: null,
+      hover: false,
+      showInfo: false
     };
   },
   props: {
@@ -151,7 +200,7 @@ export default {
       if (this.media?.mime_type)
         return this.media.mime_type.startsWith("video/");
       return extensions.video.includes(this.media?.file?.split(".").pop()?.toLowerCase())
-    },   
+    },
     isAudio() {
       if (this.media?.mime_type)
         return this.media.mime_type.startsWith("audio/");
@@ -165,6 +214,12 @@ export default {
           touchstart: this.handleTouch
         };
       }
+    },
+    fileSize() {
+      return this.media && humanFileSize(this.media.size);
+    },
+    dateCreated() {
+      return this.media && new Date(this.media.created).toLocaleDateString();
     },
   },
   methods: {

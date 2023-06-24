@@ -300,13 +300,18 @@ export default {
     },
   },
   methods: {
-    ...mapActions("mapo/media", ["closeEditor", "deleteMedia", "updateMedia"]),
+    ...mapActions("mapo/media", ["getRoot", "closeEditor", "deleteMedia", "updateMedia"]),
     saveMedia() {
       this.updateMedia({
         ...this.media,
         file: this.newFile || undefined,
         same_url: (this.newFile && this.sameUrl) || undefined,
         language_code: this.$i18n.locale,
+      }).catch(error => {
+        this.$mapo.$snack.open({
+          message: error.response?.data?.detail || this.$t("mapo.genericError"),
+          color: "error",
+        })
       }).finally(() => {
         this.newFile = null;
         this.sameUrl = false;
@@ -322,7 +327,13 @@ export default {
             attrs: { color: "red", text: true },
           },
         })
-        .then((res) => res && this.deleteMedia(this.media));
+        .then((res) => res && this.deleteMedia(this.media)
+        .catch(error =>
+          this.$mapo.$snack.open({
+            message: error.response?.data?.detail || this.$t("mapo.genericError"),
+            color: "error",
+          })
+        ).finally(() => {this.getRoot(); this.closeEditor()}));
     },
   },
 };
