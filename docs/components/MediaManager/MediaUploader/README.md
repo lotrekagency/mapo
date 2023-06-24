@@ -1,5 +1,7 @@
 # MediaUploader
 
+100mb
+
 ## Events
 
 <!-- @vuese:MediaUploader:events:start -->

@@ -18,7 +18,7 @@ This component is made to manage a list of object that can be added/removed/reor
 |translatable|Make the repeater multilanguage. This means that it's going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.|`Boolean`|`false`|-|
 |sortCallback|This callback is called during sort/add/remove item if the Repeater is sortable. Use this callback to change some prop of the items in the list.|`Function`|`false`|() => {}|
 |collapsedLabel|With this you can define the output of the collapsed label. You can enter the pointed path of a value in the row or a callback function to extract the label from the row.|—|`false`|null|
-|langs|This is mainly an internal property. It is used by DetailField to pass the list of languages inherited from the Detail component.|`Array<String>`|`false`|[]|
+|langs|This is mainly an internal property. It is used by DetailField to pass the list of languages inherited from the Detail component.|`Array<String>`|`false`|-|
 |currentLang|This is mainly an internal property. It is used by DetailField to pass the active language inherited from the Detail component.|`String`|`false`|-|
 |maxHeight|-|—|`false`|-|
 

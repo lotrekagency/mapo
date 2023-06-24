@@ -3,6 +3,164 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.47](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.46...v1.0.0-alpha.47) (2023-06-24)
+
+
+### Bug Fixes
+
+* fix media gallery keys ([f9fb666](https://github.com/lotrekagency/mapo/commit/f9fb6664456488b0b32b730ef7236d2e8bddea80))
+
+
+### Features
+
+* improve media uloader progress ([bbc9628](https://github.com/lotrekagency/mapo/commit/bbc9628653c18ebbcb37011302e698d9dc8f29a8))
+* update translations ([a51ae6d](https://github.com/lotrekagency/mapo/commit/a51ae6d86da32248b6377f1d4ce6bfab7fc413d1))
+
+
+
+
+
+# [1.0.0-alpha.46](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.45...v1.0.0-alpha.46) (2023-06-24)
+
+
+### Features
+
+* media manager enhancements ([994a8f0](https://github.com/lotrekagency/mapo/commit/994a8f05207d85b92133ede63b70d5f33750158c))
+
+
+
+
+
+# [1.0.0-alpha.45](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.44...v1.0.0-alpha.45) (2023-06-10)
+
+
+### Bug Fixes
+
+* fix setPointed ([f43685d](https://github.com/lotrekagency/mapo/commit/f43685dce23fb9383d7b0501767b1c40ff442686))
+
+
+
+
+
+# [1.0.0-alpha.44](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.43...v1.0.0-alpha.44) (2023-06-10)
+
+
+### Bug Fixes
+
+* added better reactivity to setPointed function ([78a4a88](https://github.com/lotrekagency/mapo/commit/78a4a88fbc98e5ce0d2662c074541eb4f8fd3ea1))
+* added bottom padding to menu treeview draggable ([6c10dcb](https://github.com/lotrekagency/mapo/commit/6c10dcbd9c5be34cba448692e39ee61494205e61))
+* added missing tranlations to detail component ([c099319](https://github.com/lotrekagency/mapo/commit/c09931963b5f6c9425bb905b958b13ed44df3b06))
+* better double clik node edit catcher ([78ec053](https://github.com/lotrekagency/mapo/commit/78ec053be801f6da49019c1bd371948a1eaf3a15))
+* fix media edit folder typo ([aba1d15](https://github.com/lotrekagency/mapo/commit/aba1d15807edcb10941e3b051e75d20c86e6670e))
+* fix search value update in media manager ([c38b530](https://github.com/lotrekagency/mapo/commit/c38b5304bec5438bfa74b1fed9fe083457189fc1))
+* **media-folders:** fix media folder create, update and delete callbacks ([1e8e1b0](https://github.com/lotrekagency/mapo/commit/1e8e1b022f9fa44cc2732fe2c62d3a0167beb121))
+
+
+### Features
+
+* add click callback to menuNode breadcrums to help navigation ([0b73718](https://github.com/lotrekagency/mapo/commit/0b73718402a306c66a20e04e7d77201a53a16875))
+* added css classes and translations to menu-manager ([e1f46c0](https://github.com/lotrekagency/mapo/commit/e1f46c0347ad3cd56bb44ecec810692daf57aad2))
+* added del keyboard input to delete menu nodes ([6d376a0](https://github.com/lotrekagency/mapo/commit/6d376a05e932921d3f78eee008bd09c9ebe9a0cf))
+* added delete selected to media manager ([060eaed](https://github.com/lotrekagency/mapo/commit/060eaedccc6f5761e995a889a749f3643494eb2f))
+* added empty placeholder for menu treeview ([f40dfc3](https://github.com/lotrekagency/mapo/commit/f40dfc36e6a80f6f2f532d1580b59a5ed5e686f6))
+* added keyboard inputs for confirm dialog ([e9e4058](https://github.com/lotrekagency/mapo/commit/e9e4058020ce240a7f4877e384931a02da8a69bd))
+* added media editor translation fields ([87ed691](https://github.com/lotrekagency/mapo/commit/87ed691da08d6e06ff0f960d5e6592ace349cce6))
+* added MenuManager component ([25107a9](https://github.com/lotrekagency/mapo/commit/25107a9cbfd75fcacf485163b96a793fe788cb4b))
+* added old value to onChange in formField ([b53c86e](https://github.com/lotrekagency/mapo/commit/b53c86e392aee9a197df56c5c99c943ecb3895b9))
+* added readonly props to detail component ([4c8c79f](https://github.com/lotrekagency/mapo/commit/4c8c79fc41839f7e8398d6adc9a6191306c54742))
+* added slots to menu editor component to sobstitute the entire form ([239727c](https://github.com/lotrekagency/mapo/commit/239727cc1da9938511bac551b5a91f6c94b39539))
+* added title field in menu node editor ([bd62662](https://github.com/lotrekagency/mapo/commit/bd62662d4afb85b46a8f7185203b916aab8fe713))
+* added type folders to media manager ([63cd551](https://github.com/lotrekagency/mapo/commit/63cd551d33278e0e23a52d3ac234f58dbe56eb91))
+
+
+### Performance Improvements
+
+* EXPERIMENTAL: use Vue.set in setpointed and directly manipulate js object in FormField ([1c384e9](https://github.com/lotrekagency/mapo/commit/1c384e9d7c922b0e876512de874a3f9832ac30f1))
+
+
+
+
+
+# [1.0.0-alpha.43](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.42...v1.0.0-alpha.43) (2023-02-02)
+
+
+### Bug Fixes
+
+* allow overflow on media dialog container ([705a3be](https://github.com/lotrekagency/mapo/commit/705a3be3100e22b7ec043415c0cca8dff8973144))
+* put version on @mapomodule/utils ([9182283](https://github.com/lotrekagency/mapo/commit/9182283aeef7075a664ce12a45c94b934d5c491a))
+
+
+
+
+
+# [1.0.0-alpha.42](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.41...v1.0.0-alpha.42) (2023-02-01)
+
+
+### Bug Fixes
+
+* **detailguard:** fix router hook in builds ([9b8304f](https://github.com/lotrekagency/mapo/commit/9b8304f0b398f203e11e5b731375bc9e12862183))
+* **detailguard:** unset guard after deletion ([d857ce4](https://github.com/lotrekagency/mapo/commit/d857ce49ef2a05fc6371f28266f69f4515967685))
+
+
+### Features
+
+* added time and datetime fields ([30ad418](https://github.com/lotrekagency/mapo/commit/30ad418693a336f99116e18b029c3e587f30ffb9))
+
+
+
+
+
+# [1.0.0-alpha.41](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.40...v1.0.0-alpha.41) (2022-12-20)
+
+
+### Bug Fixes
+
+* hide language select if empty ([c2b6d9e](https://github.com/lotrekagency/mapo/commit/c2b6d9e9d3f96959f64f9322e3deb68eb9f8b006))
+* **media-editor:** clone media object from store ([5f0d39a](https://github.com/lotrekagency/mapo/commit/5f0d39a033cf70d0860ae201978f65c5da0ee321))
+
+
+### Features
+
+* handle all_permissions prop in user ([14d4252](https://github.com/lotrekagency/mapo/commit/14d425215434e29f82093fc96e53b172bf247b8f))
+* hide parent sidebar item when there aren't any accessible items ([2358b1d](https://github.com/lotrekagency/mapo/commit/2358b1d3b56813ed7a7a39541951b2e4ff66a223))
+* **media editor:** disable save and delete button on medias without permissions ([e15bc71](https://github.com/lotrekagency/mapo/commit/e15bc718d50c9b8ef5d1bd215e3149609866dc3c))
+
+
+
+
+
+# [1.0.0-alpha.40](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.39...v1.0.0-alpha.40) (2022-12-20)
+
+
+### Bug Fixes
+
+* fix formfield hideDetails on errors ([4d97992](https://github.com/lotrekagency/mapo/commit/4d9799283b697392c30c0f984958d2bc0332882a))
+* fix repeater mount value ([aacaf20](https://github.com/lotrekagency/mapo/commit/aacaf206693932d103b7c85cf62bb70659b70b7f))
+* fixed detail forceLanguage default ([2ab928a](https://github.com/lotrekagency/mapo/commit/2ab928a6351e65e0d6f4a95db27910d49dee6f63))
+* reduce debounce output with nested repeater to prevent field deletions ([b6a252e](https://github.com/lotrekagency/mapo/commit/b6a252eb411ffad69170393516cf0f983592280a))
+* reset confirm dialog options after transition to prevent graphic glitch ([d2e5138](https://github.com/lotrekagency/mapo/commit/d2e5138901caf8a5c9e5ef59a808d3266ec12868))
+* rewritten and more precise diffObjs function ([3e79775](https://github.com/lotrekagency/mapo/commit/3e797756d0dc48142febcdb806390552ea522b30))
+
+
+### Features
+
+* add some slots to drop area component ([73d79df](https://github.com/lotrekagency/mapo/commit/73d79df9f43cb88c987b70a44a12180be5bde8d9))
+* added botdy.top and body.bottom slots for forma groups ([3e48d43](https://github.com/lotrekagency/mapo/commit/3e48d43963e3e776c297ed5dbbaa04f930c0b2f5))
+* added draggable capability to media manager selection ([f6311cd](https://github.com/lotrekagency/mapo/commit/f6311cddcb3b97b181eb20dc8585b82bd493df88))
+* added global and single field configuration for initial expanded value in form groups ([69249c1](https://github.com/lotrekagency/mapo/commit/69249c1e7dbee403c262da2814aa2c55678e4b68))
+* added global and single field configuration for initial expanded value in form tabs ([e4f01d0](https://github.com/lotrekagency/mapo/commit/e4f01d0ec73e8c376e6155ae8c2695fc7733ee7c))
+* added route gruard to prevent leaving a detail page with unsaved data ([7d51cd2](https://github.com/lotrekagency/mapo/commit/7d51cd2ec634cb9b32ea88ec87f948265d9c0dfa))
+* added spridermenu option to nuxt.config ([1808d43](https://github.com/lotrekagency/mapo/commit/1808d4365fce57f1979239bf575d241fe66206be))
+* added tab.slug.before and tab.slug.after slots for forms tabs ([42a2497](https://github.com/lotrekagency/mapo/commit/42a249752024d8ffd3e8d784d4cec31145670974))
+* added the possibility to set default langs in nuxt.config ([81b0fe4](https://github.com/lotrekagency/mapo/commit/81b0fe4334b84cdea4527b38a7cc6996f78184da))
+* added usePatch option to partially save data with PATCH http method ([1dfa3b2](https://github.com/lotrekagency/mapo/commit/1dfa3b28cb06e8ded4de7e982a865fa2c06f6f07))
+* added warning on media manager upload for big files ([09743b9](https://github.com/lotrekagency/mapo/commit/09743b981de624234199bfe71e3594a8c4709109))
+* style scrollbars ([48e4c7b](https://github.com/lotrekagency/mapo/commit/48e4c7b047a1062464d823ddeebdc60b96ea11a8))
+
+
+
+
+
 # [1.0.0-alpha.39](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.38...v1.0.0-alpha.39) (2022-12-03)
 
 

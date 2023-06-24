@@ -12,7 +12,7 @@
 |errors|An object representing all the errors of all fields. This means that this component will find the error of its field following the dottedPath of the value in the error dict.|`Object`|`false`|-|
 |moreSlotBindings|Additional bindings to indrease slots capabilities|`Object`|`false`|-|
 |fields|The main configuration that determines the arrangement of the fields in the detail layout.|[`DetailConfiguration`](#detailconfiguration)|`true`|-|
-|languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
+|languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|-|
 |immediate|Removes debounce from the emitter.|`Boolean`|`false`|-|
 
 <!-- @vuese:Form:props:end -->

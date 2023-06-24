@@ -11,14 +11,16 @@ The purpose of this component is to provide you with a very quick way to create 
 |value|V-model of the object we are editing.|`Object`|`false`|-|
 |lang|Set the current lang to value.|`String`|`false`|-|
 |fields|The main configuration that determines the arrangement of the fields in the detail layout.|[`DetailConfiguration`](#detailconfiguration)|`true`|-|
-|languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
-|forceLanguages|Forces use of languages passed as prop, instead of those loaded with model|`Boolean`|`false`|false|
+|usePatch|-|`Boolean`|`false`|-|
+|languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|-|
+|forceLanguages|Forces use of languages passed as prop, instead of those loaded with model|`Boolean`|`false`|-|
 |endpoint|The url of the endpoint to which the payload is to be sent. From this url a complete crud (See [this.$mapo.$api.crud](/core/#$api.crud)) will be created.|`String`|`false`|null|
 |sidenavCol|This determines the width of the sidebar in desktop view in a 12 col grid.|—|`false`|4|
 |identifier|The identifier of the object you need to retrieve and edit. It can be "new" if you need to create a new payload.|`String|Number`.|`false`|new|
 |modelName|The title of the detail page.|`String`|`false`|-|
 |sticky|This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.|`Boolean`|`false`|true|
 |multipart|Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.|`String`|`false`|auto|
+|readonly|This forces the detail page to be readonly.|`Boolean`|`false`|-|
 
 <!-- @vuese:Detail:props:end -->
 

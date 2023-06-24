@@ -9,7 +9,8 @@ This is mainly an internal component. It is used by the [`DetailComponent`](/com
 |Name|Description|Type|Required|Default|
 |---|---|---|---|---|
 |value|V-model representing the current selected language.|`String`|`false`|-|
-|langs|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
+|langs|A list of languages into which the payload needs to be translated.|`Array`|`false`|-|
+|noRouteChange|-|`Boolean`|`false`|-|
 |errors|An object representing all the errors of all fields. This component will find errors in each language and will display a little dot in the tab if there are any errors.|`Object`|`false`|-|
 
 <!-- @vuese:DetailLangSwitch:props:end -->

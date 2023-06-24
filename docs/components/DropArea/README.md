@@ -33,6 +33,18 @@ This component creates a drop area for uploads. You can drag and drop over the b
 
 |Name|Description|Default Slot Content|
 |---|---|---|
+|list-item.before|-|-|
+|list-item|-|-|
+|list-item.preview.before|-|-|
+|list-item.preview|-|-|
+|list-item.preview.after|-|-|
+|list-item.content.before|-|-|
+|list-item.content|-|-|
+|list-item.content.after|-|-|
+|list-item.action.before|-|-|
+|list-item.action|-|-|
+|list-item.action.after|-|-|
+|list-item.after|-|-|
 |actions|Slot to provide custom button actions inside the drop area|`<v-btn @click="clearList" icon><v-icon>mdi-close</v-icon></v-btn>`|
 |editTitle|Slot to provide custom edit card title. Exposes `editedItem`.|`<v-img v-if="editedItem.objectURL" max-height="200" contain :src="editedItem.objectURL"></v-img>`|
 |editContent|Slot to provide custom edit card content. Exposes `editedItem`.|`<v-container><v-row><v-col cols="12"><v-text-field v-model="editedItem.name" label="File name"></v-text-field></v-col></v-row></v-container>`|

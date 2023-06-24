@@ -10,7 +10,7 @@ This components renders a dialog that let the user quick edit (or add) an elemen
 |---|---|---|---|---|
 |value|V-model|`Boolean`|`false`|-|
 |editFields|The main configuration that determines the arrangement of the fields in the detail layout.|`Array`|`false`|[]|
-|languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|[]|
+|languages|A list of languages into which the payload needs to be translated.|`Array`|`false`|-|
 |lookup|-|`String`|`false`|id|
 |crud|-|`Object`|`true`|-|
 |dialogProps|-|`Object`|`false`|{"width":600,"scrollable":true}|
