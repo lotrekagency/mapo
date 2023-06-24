@@ -8,7 +8,7 @@
     >
       <MediaPreview
         v-for="media in selection"
-        :key="media.file"
+        :key="media.id"
         @click.native.stop="select(media)"
         :media="media"
         icon-size="20px"
@@ -53,7 +53,7 @@
     <div ref="masonry" class="media-gallery--masonry" v-if="medias.length">
       <div
         v-for="media in medias"
-        :key="media.file"
+        :key="media.id"
         class="media-gallery--card"
       >
         <v-btn
@@ -179,7 +179,7 @@ $wcol: calc(100% / 6 - 12px);
   .media-gallery--masonry{
     grid-template-columns: $wcol $wcol;
   }
-} 
+}
 
 .media-gallery--empty{
   height: 100%;
@@ -224,7 +224,7 @@ $wcol: calc(100% / 6 - 12px);
       color: white;
     }
   }
-  
+
 }
 .media-gallery--selected {
   &::after {
