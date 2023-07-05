@@ -68,6 +68,7 @@ export default {
     return {
       model: { model: null, returnDate: false },
       menu: null,
+      isUpdating: false, // Add a flag to track updates
     };
   },
   props: {
@@ -83,10 +84,13 @@ export default {
     },
   },
   watch: {
-    value(val) {
-      const model = this.setupModel(val);
-      if (JSON.stringify(model) != JSON.stringify(this.model)) {
-        this.model = model;
+      value(val) {
+      if (!this.isUpdating) { // Check if an update is already in progress
+        const model = this.setupModel(val);
+        if (JSON.stringify(model) !== JSON.stringify(this.model)) {
+          this.isUpdating = true; // Set the flag to indicate an update is in progress
+          this.model = model;
+        }
       }
     },
     model: {
@@ -140,8 +144,14 @@ export default {
     },
   },
   mounted() {
-    throw Error("TimeField is actually broken. Use something else.")
-    this.model = this.setupModel(this.value);
+    this.model = this.setupModel(this.value); // Initialize the model on mount
   },
+  updated() {
+    this.isUpdating = false; // Reset the flag after the component updates
+  },
+  // mounted() {
+  //   throw Error("TimeField is actually broken. Use something else.")
+  //   this.model = this.setupModel(this.value);
+  // },
 };
 </script>
