@@ -198,7 +198,7 @@ export default {
           synci18n: true,
         },
         {
-          value: "link.relational.content_type",
+          value: "link.content_type",
           label: this.$t("mapo.menuNodeEditor.relContentTypeLabel"),
           vShow: ({ model }) => model.link.link_type == "RE",
           onChange: this.loadPages,
@@ -213,7 +213,7 @@ export default {
           },
         },
         {
-          value: "link.relational.page_id",
+          value: "link.page_id",
           label: this.$t("mapo.menuNodeEditor.relPageIdLabel"),
           vShow: ({ model }) => model.link.link_type == "RE",
           class: "col-md-6",
@@ -240,7 +240,7 @@ export default {
   },
   methods: {
     async loadPages() {
-      const { content_type } = this.model?.link?.relational || {};
+      const { content_type } = this.model?.link || {};
       if (content_type) {
         const options = { params: { language_code: this.lang } };
         this.availablePages = await this.$mapo.$api
