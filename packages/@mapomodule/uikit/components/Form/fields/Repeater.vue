@@ -326,8 +326,11 @@ export default {
       if (val.length != this.collapsedStack.length)
         this.collapsedStack = (val || []).map(() => !!this.collapsable);
     },
-    items(val) {
-      this.$emit("input", deepClone(val));
+    items: {
+      handler(val) {
+        this.$emit("input", deepClone(val));
+      },
+      deep: true
     },
     tModalOpen(val) {
       !val && this.tModalCallback();
