@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.48](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.47...v1.0.0-alpha.48) (2023-07-14)
+
+
+### Bug Fixes
+
+* fix repeater not emitting internal values to form field ([c118eb3](https://github.com/lotrekagency/mapo/commit/c118eb3f4814fc203aaa33bd9232aaa9f76a428b))
+
+
+
+
+
 # [1.0.0-alpha.47](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.46...v1.0.0-alpha.47) (2023-06-24)
 
 
