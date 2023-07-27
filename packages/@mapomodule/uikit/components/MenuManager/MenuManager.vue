@@ -9,6 +9,7 @@
       <MenuTreeview
         v-model="selected"
         :nodes.sync="nodes"
+        :max-depth="maxDepth"
         :title="`Menu: ${model.key}`"
         ref="treeview"
       >
@@ -140,6 +141,10 @@ export default {
       type: String | Number,
       default: "new",
     },
+    maxDepth: {
+      type: Number,
+      default: -1
+    }
   },
   data() {
     return {

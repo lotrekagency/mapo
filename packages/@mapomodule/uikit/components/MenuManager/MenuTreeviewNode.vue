@@ -46,6 +46,8 @@
           draggable=".menu-treeview--draggable"
           @start="inDragging = true"
           @end="inDragging = false"
+          :move="move"
+          :data-depth="depth"
         >
           <v-list-item
             v-for="(item, i) in inNode.nodes"
@@ -58,6 +60,8 @@
               :node="item"
               :selected.sync="inSelected"
               :dragging.sync="inDragging"
+              :depth="depth + 1"
+              :max-depth="maxDepth"
               ref="nodes"
               @delete="$emit('delete', $event)"
               @silentDelete="$emit('silentDelete', $event)"
@@ -90,6 +94,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import { calcMaxMenuNestDepth } from "@mapomodule/utils/helpers/menu";
 
 export default {
   name: "MenuTreeviewNode",
@@ -106,6 +111,14 @@ export default {
     root: {
       type: Boolean,
       default: true,
+    },
+    depth: {
+      type: Number,
+      default: 1
+    },
+    maxDepth: {
+      type: Number,
+      default: -1
     },
     dragging: {
       type: Boolean,
@@ -149,6 +162,11 @@ export default {
     },
   },
   methods: {
+    move(val){
+      let { draggedContext: { element }} = val
+      let totalDepth = calcMaxMenuNestDepth(element) + (+val.to.dataset.depth);
+      return !(this.maxDepth > 0 && totalDepth >= this.maxDepth)
+    },
     select(e) {
       this.inSelected = e;
     },

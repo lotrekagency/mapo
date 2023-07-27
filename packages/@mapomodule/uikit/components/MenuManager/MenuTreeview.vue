@@ -25,9 +25,11 @@
           class="menu-treeview--main-draggable-wrapper"
           :emptyInsertThreshold="25"
           group="nodes"
+          :move="move"
           draggable=".menu-treeview--draggable"
           @start="_dragging = true"
           @end="_dragging = false"
+          data-depth="0"
         >
           <v-list-item
             v-for="item in inNodes"
@@ -39,6 +41,7 @@
             <MenuTreeviewNode
               :node="item"
               :selected.sync="selected"
+              :max-depth="maxDepth"
               @delete="deleteNode"
               @silentDelete="silentDeleteNode"
               ref="nodes"
@@ -115,6 +118,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import { calcMaxMenuNestDepth } from "@mapomodule/utils/helpers/menu";
 
 export default {
   name: "MenuTreeview",
@@ -132,6 +136,10 @@ export default {
     value: {
       type: Object | null,
       required: false,
+    },
+    maxDepth: {
+      type: Number,
+      default: -1
     },
     loading: Boolean,
   },
@@ -156,6 +164,11 @@ export default {
     },
   },
   methods: {
+    move(val){
+      let { draggedContext: { element }} = val
+      let totalDepth = calcMaxMenuNestDepth(element) + (+val.to.dataset.depth);
+      return !(this.maxDepth > 0 && totalDepth >= this.maxDepth)
+    },
     newNode() {
       let node = {
         new: true,
@@ -165,7 +178,11 @@ export default {
         meta: {},
         link: { relational: {} },
       };
-      (this.selected?.nodes || this.inNodes).push(node);
+      if (this.maxDepth > 0 && this.currentDepth >= this.maxDepth){
+        this.inNodes.push(node);
+      } else {
+        this.selected ? this.selected.nodes.push(node) : this.inNodes.push(node);
+      }
       this.$refs?.nodes?.forEach((nodeRef) => nodeRef.openIfChild(node));
     },
     compareItems(a, b) {
@@ -202,5 +219,19 @@ export default {
       return this.deleteNode(this.selected);
     },
   },
+  computed: {
+    currentDepth() {
+      let find = (nodes, depth = 0) => {
+        let node = nodes.find(({ id }) => id == this.selected?.id);
+        return node
+          ? depth + 1
+          : nodes
+              .filter(({ nodes }) => nodes.length)
+              .reduce((acc, node) => {
+                return acc > 0 ? acc : find(node.nodes, depth + 1);
+              }, 0);
+      };
+      return this.selected ? find(this.nodes) : 0},
+  }
 };
 </script>
