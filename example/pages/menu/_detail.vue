@@ -3,6 +3,7 @@
     endpoint="api/camomilla/menus"
     :identifier="$route.params.detail"
     :additional-fields="fields"
+    :max-depth="5"
   >
     <!-- <template
       v-slot:editor.form="{ model, currentLang, languages, errors, readonly }"
