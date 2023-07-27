@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.49](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.48...v1.0.0-alpha.49) (2023-07-27)
+
+
+### Bug Fixes
+
+* component TimeField resolve browser loop ([504a629](https://github.com/lotrekagency/mapo/commit/504a62902f0fd5fd54b74a1c251cca3c53dbcf67))
+
+
+### Features
+
+* added max-depth prop to menu manager to give the possibility of set a limit in depth for nesting ([e4ab7a1](https://github.com/lotrekagency/mapo/commit/e4ab7a137cbb392e709e8865404105d7707a7634))
+
+
+
+
+
 # [1.0.0-alpha.48](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.47...v1.0.0-alpha.48) (2023-07-14)
 
 

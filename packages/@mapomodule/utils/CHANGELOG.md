@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.49](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.48...v1.0.0-alpha.49) (2023-07-27)
+
+
+### Features
+
+* added max-depth prop to menu manager to give the possibility of set a limit in depth for nesting ([e4ab7a1](https://github.com/lotrekagency/mapo/commit/e4ab7a137cbb392e709e8865404105d7707a7634))
+
+
+
+
+
 # [1.0.0-alpha.45](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.44...v1.0.0-alpha.45) (2023-06-10)
 
 

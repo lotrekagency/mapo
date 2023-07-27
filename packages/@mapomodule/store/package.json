@@ -1,6 +1,6 @@
 {
   "name": "@mapomodule/store",
-  "version": "1.0.0-alpha.45",
+  "version": "1.0.0-alpha.49",
   "description": "This is part of Mapo nuxt module. Injects mapo vuex store.",
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
   "keywords": [
@@ -13,7 +13,7 @@
   "repository": "https://github.com/lotrekagency/mapo",
   "main": "./module.js",
   "dependencies": {
-    "@mapomodule/utils": "^1.0.0-alpha.45",
+    "@mapomodule/utils": "^1.0.0-alpha.49",
     "cookieparser": "^0.1.0",
     "js-cookie": "^2.2.1"
   },

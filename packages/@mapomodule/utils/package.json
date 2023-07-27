@@ -1,6 +1,6 @@
 {
   "name": "@mapomodule/utils",
-  "version": "1.0.0-alpha.45",
+  "version": "1.0.0-alpha.49",
   "license": "MIT",
   "description": "This is part of Mapo nuxt module. Provides a set of utils for the project.",
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
