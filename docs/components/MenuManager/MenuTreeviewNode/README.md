@@ -9,6 +9,8 @@
 |node|-|`Object`|`true`|-|
 |selected|-|`Object`|`false`|null|
 |root|-|`Boolean`|`false`|true|
+|depth|-|`Number`|`false`|1|
+|maxDepth|-|`Number`|`false`|-1|
 |dragging|-|`Boolean`|`false`|false|
 
 <!-- @vuese:MenuTreeviewNode:props:end -->

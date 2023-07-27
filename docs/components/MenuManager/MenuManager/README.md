@@ -13,6 +13,7 @@
 |usePatch|-|`Boolean`|`false`|-|
 |endpoint|-|`String`|`false`|null|
 |identifier|-|`String|Number`.|`false`|new|
+|maxDepth|-|`Number`|`false`|-1|
 
 <!-- @vuese:MenuManager:props:end -->
 

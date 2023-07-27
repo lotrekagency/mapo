@@ -10,6 +10,7 @@
 |errors|-|`Array`|`false`|[]|
 |title|-|`String`|`false`|-|
 |value|-|—|`false`|-|
+|maxDepth|-|`Number`|`false`|-1|
 |loading|-|`Boolean`|`false`|-|
 
 <!-- @vuese:MenuTreeview:props:end -->
