@@ -149,9 +149,5 @@ export default {
   updated() {
     this.isUpdating = false; // Reset the flag after the component updates
   },
-  // mounted() {
-  //   throw Error("TimeField is actually broken. Use something else.")
-  //   this.model = this.setupModel(this.value);
-  // },
 };
 </script>
