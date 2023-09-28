@@ -296,7 +296,7 @@ export default {
       this.$refs.form?.resetValidation();
       this.apiSendPayload()
         .then((resp) => {
-          this.model = resp;
+          Object.assign(this.model, resp);
           this.modelBkp = deepClone(this.model);
           this.$mapo.$snack.open({
             message: this.isNew
