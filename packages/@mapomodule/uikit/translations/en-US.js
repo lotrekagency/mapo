@@ -40,6 +40,7 @@ export default {
         altTag: "Alt Tag",
         titleTag: "Title Tag",
         linkedModels: "Linked Models",
+        showPreview: "Show preview",
 
         // pages/index.vue
         index: {
