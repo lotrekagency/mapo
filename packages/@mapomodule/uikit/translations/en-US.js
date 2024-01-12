@@ -40,6 +40,7 @@ export default {
         altTag: "Alt Tag",
         titleTag: "Title Tag",
         linkedModels: "Linked Models",
+        showPreview: "Show preview",
         searchLocation: "Search location",
         latitude: "Latitude",
         longitude: "Longitude",

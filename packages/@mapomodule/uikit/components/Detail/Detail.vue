@@ -116,6 +116,14 @@
                       >{{ $t("mapo.delete") }}</v-btn
                     >
                   </slot>
+                   <!-- Use this to override the Preview Page button. -->
+                   <slot name="button.preview" v-bind="slotBindings">
+                    <!-- The Preview Page button. Needs a preview field from model. Declare it in the props. -->
+                    <PagePreview
+                      v-if="previewUrl"
+                      :pageUrl="previewUrl"
+                    />                    
+                  </slot>
                 </div>
               </slot>
               <!-- Use this to add content on the top of the sidebar fields (or under sidebar buttons). -->
@@ -280,6 +288,11 @@ export default {
         // The value must match one of these strings
         return ["auto", "force", "disable"].indexOf(value) !== -1;
       },
+    },
+    // The name of the field that contains the url of the page preview. [optional]
+    previewField: {
+      type: String,
+      required: false,
     },
     // This forces the detail page to be readonly.
     readonly: Boolean
@@ -490,6 +503,9 @@ export default {
     },
     hasDiff() {
       return !!(this.modelDiff && Object.keys(this.modelDiff).length > 0);
+    },
+    previewUrl() {
+      return this.previewField ? this.model[this.previewField] : null;
     },
   },
   async mounted() {
