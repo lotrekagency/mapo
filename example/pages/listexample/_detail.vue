@@ -377,7 +377,7 @@ export default {
                 synci18n: true,
               },
               {
-                value: "pubblication_date",
+                value: "publication_date",
                 label: this.$t("pubblicationDate"),
                 accessor: {
                   set: ({ val, model }) => {
@@ -405,13 +405,6 @@ export default {
                 value: "meta.simple_time",
                 type: "time",
                 synci18n: true,
-              },
-              {
-                value: "pubblication_date",
-                label: this.$t("pubblicationDate"),
-                type: "datetime",
-                synci18n: true,
-                attrs: { range: false },
               },
               {
                 value: "meta.range_datetime",
