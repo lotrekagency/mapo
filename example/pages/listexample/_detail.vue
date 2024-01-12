@@ -395,6 +395,7 @@ export default {
                 type: "date",
                 synci18n: true,
               },
+              /*
               {
                 value: "meta.pubblication_datetime",
                 label: this.$t("pubblicationDateTime"),
@@ -405,7 +406,7 @@ export default {
                 value: "meta.simple_time",
                 type: "time",
                 synci18n: true,
-              },
+              }, */
               {
                 value: "meta.range_datetime",
                 type: "datetime",
@@ -420,6 +421,7 @@ export default {
             type: "media",
             synci18n: true,
           },
+          { label: "map", value: "meta.map", type: "map", synci18n: true },
         ],
       };
     },

@@ -33,7 +33,7 @@
 
 <script>
 import initMapoMedia from "./utils/mapomedia.plugin.js";
-import injectScript from "./utils/script.injector.js";
+import injectScript from "./utils/tinymce.injector.js";
 import defaults from "./defaults.js";
 import validEvents from "./utils/events.js";
 
