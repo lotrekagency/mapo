@@ -41,6 +41,9 @@ export default {
         altTag: "Alt Tag",
         titleTag: "Title Tag",
         linkedModels: "Modelli collegati",
+        searchLocation: "Cerca luogo",
+        latitude: "Latitudine",
+        longitude: "Longitudine",
 
         // pages/index.vue
         index: {
