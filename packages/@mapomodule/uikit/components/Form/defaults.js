@@ -29,6 +29,7 @@ const components = {
     FileField: () => import("@mapomodule/uikit/components/Form/fields/FileField.vue"),
     Repeater: () => import("@mapomodule/uikit/components/Form/fields/Repeater.vue"),
     ColorField: () => import("@mapomodule/uikit/components/Form/fields/ColorField.vue"),
+    MapField: () => import("@mapomodule/uikit/components/Form/fields/mapField/mapField.vue"),
 }
 
 const mapping = {
@@ -50,6 +51,7 @@ const mapping = {
     seoPreview: components.SeoPreview,
     repeater: components.Repeater,
     color: components.ColorField,
+    map: components.MapField
 }
 
 const attrs = {

@@ -39,6 +39,7 @@ en:
     published: "Published"
     trash: "Trash"
   pubblicationDate: "Pubblication Date"
+  pubblicationDateTime: "Pubblication Date Time"
   pubblicationTime: "Pubblication Time"
   highlightImage: "Highlight Image"
   testTab: "Test tab en"
@@ -65,6 +66,7 @@ it:
     published: "Pubblicato"
     trash: "Cestinato"
   pubblicationDate: "Data di pubblicazione"
+  pubblicationDateTime: "Data e ora di pubblicazione"
   pubblicationTime: "Ora di pubblicazione"
   highlightImage: "Immagine in evidenza"
   testTab: "Test tab it"
@@ -375,7 +377,7 @@ export default {
                 synci18n: true,
               },
               {
-                value: "pubblication_date",
+                value: "publication_date",
                 label: this.$t("pubblicationDate"),
                 accessor: {
                   set: ({ val, model }) => {
@@ -393,24 +395,18 @@ export default {
                 type: "date",
                 synci18n: true,
               },
+              /*
               {
-                value: "pubblication_date",
-                label: this.$t("pubblicationTime"),
-                type: "time",
+                value: "meta.pubblication_datetime",
+                label: this.$t("pubblicationDateTime"),
+                type: "datetime",
                 synci18n: true,
               },
               {
                 value: "meta.simple_time",
                 type: "time",
                 synci18n: true,
-              },
-              {
-                value: "pubblication_date",
-                label: this.$t("pubblicationDate"),
-                type: "datetime",
-                synci18n: true,
-                attrs: { range: false },
-              },
+              }, */
               {
                 value: "meta.range_datetime",
                 type: "datetime",
@@ -425,6 +421,7 @@ export default {
             type: "media",
             synci18n: true,
           },
+          { label: "map", value: "meta.map", type: "map", synci18n: true },
         ],
       };
     },
