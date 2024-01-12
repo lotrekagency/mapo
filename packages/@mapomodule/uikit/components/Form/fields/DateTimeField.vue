@@ -54,6 +54,7 @@
             @click="disableCalendar"
             @keydown="disableCalendar"
           />
+          <v-btn text @click="menu = false">{{ $t('mapo.ok') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>

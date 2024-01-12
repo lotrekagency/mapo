@@ -31,6 +31,7 @@
             v-bind="$attrs"
           />
         </div>
+        <v-btn text @click="menu = false">{{ $t('mapo.ok') }}</v-btn>
       </v-time-picker>
     </v-menu>
   </div>
