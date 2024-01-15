@@ -1,5 +1,6 @@
 <template>
   <div>
+    <span v-if="label" class="v-label" :class="{'error--text': hasErrors, 'text--secondary': !hasErrors}">{{ label }}:</span>
     <div ref="map" class="map"></div>
     <div class="map-fields">
       <div class="row search-row">
@@ -119,6 +120,8 @@ export default {
     value: {
       type: Array,
     },
+    // This label will be shown at the top of the editor.
+    label: String,
     // This set the component status to readonly, stopping the user interaction.
     readonly: {
       type: Boolean,

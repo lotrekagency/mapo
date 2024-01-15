@@ -207,6 +207,19 @@ export default {
           { label: this.$t("content"), value: "content", type: "editor" },
           { label: "Color", value: "meta.color", synci18n: true, type: "color" },
           {
+                label: "map",
+                value: "meta.map",
+                type: "map",
+                attrs: {
+                  multiple: true,
+                  fields: [
+                    { value: "store_name", label: "Store name", class: "col-sm-6" },
+                    { value: "contact", label: "Contact", class: "col-sm-6" },
+                  ],
+                },
+                synci18n: true,
+              },
+          {
             group: "Seo",
             fields: [
               {
@@ -342,13 +355,6 @@ export default {
         ],
         sidenav: [
           {
-            label: this.$t("categories"),
-            value: "categories",
-            synci18n: true,
-            type: "m2m",
-            attrs: { endpoint: "api/camomilla/categories", itemText: "title" },
-          },
-          {
             group: "Status",
             fields: [
               {
@@ -426,7 +432,6 @@ export default {
             type: "media",
             synci18n: true,
           },
-          { label: "map", value: "meta.map", type: "map", synci18n: true },
         ],
       };
     },
