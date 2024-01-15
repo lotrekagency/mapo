@@ -54,8 +54,6 @@
           <div class="row">
             <Form
               v-model="point.extra_fields"
-              :currentLang="translatable ? currentLang : null"
-              :languages="langs"
               :fields="getFields(model.extra_fields)"
               :errors="getErrors(index)"
               :readonly="readonly"
@@ -141,18 +139,6 @@ export default {
       type: Array,
       default: () => [],
     },
-    // Make the repeater multilanguage. This means that it's going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.
-    translatable: Boolean,
-    // This is mainly an internal property. It is used by DetailField to pass the list of languages inherited from the Detail component.
-    langs: {
-      // `Array<String>`
-      type: Array,
-      default() {
-        return this.$mapo.$options?.content?.languages || [];
-      },
-    },
-    // This is mainly an internal property. It is used by DetailField to pass the active language inherited from the Detail component.
-    currentLang: String,
   },
   data() {
     return {
@@ -296,7 +282,7 @@ export default {
       this.searchLocation();
     }, 500),
     getErrors(index) {
-      // return (this.errorMessages || [])[index] || {};
+      return (this.errorMessages[index]) || {};
     },
     getFields(model) {
       if (this.hasTemplates) {

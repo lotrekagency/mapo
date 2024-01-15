@@ -41,7 +41,7 @@ export default {
         altTag: "Alt Tag",
         titleTag: "Title Tag",
         linkedModels: "Modelli collegati",
-        searchLocation: "Cerca luogo",
+        searchLocation: "Cerca un luogo",
         latitude: "Latitudine",
         longitude: "Longitudine",
         pointName: "Nome punto",
