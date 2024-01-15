@@ -43,11 +43,17 @@ export default {
         searchLocation: "Search location",
         latitude: "Latitude",
         longitude: "Longitude",
+        pointName: "Point name",
 
         // pages/index.vue
         index: {
             welcomeMessage:
                 "Congratulations!! 🥳 You successfully installed Mapo!",
+        },
+
+        //errors
+        error: {
+            searchError: "Error during search",
         },
 
         // ConfirmDialog.vue
