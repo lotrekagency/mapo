@@ -13,7 +13,8 @@
           />
         </div>
       </div>
-      <div class="row input-gap" v-for="(point, index) in model" :key="index">
+      <div class="row input-gap" style="margin-top: 1rem;" v-for="(point, index) in model" :key="index">
+        <div class="col-sm-12"><v-divider></v-divider></div>
         <div class="col-sm-6">
           <div class="row">
             <v-text-field
@@ -49,6 +50,32 @@
             >
           </div>
         </div>
+        <div class="col-sm-12">
+          <div class="row">
+            <Form
+              v-model="point.extra_fields"
+              :currentLang="translatable ? currentLang : null"
+              :languages="langs"
+              :fields="getFields(model.extra_fields)"
+              :errors="getErrors(index)"
+              :readonly="readonly"
+              immediate
+            >
+              <template
+                v-for="(slot, name) in templateSlots(model, $slots)"
+                :slot="slot"
+              >
+                <slot :name="name"></slot>
+              </template>
+              <template
+                v-for="(slot, name) in templateSlots(model, $scopedSlots)"
+                v-slot:[slot]="props"
+              >
+                <slot :name="name" v-bind="props" />
+              </template>
+            </Form>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -81,9 +108,14 @@
  */
 import { debounce } from "@mapomodule/utils/helpers/debounce";
 import injectScript from "./leaflet.injector.js";
+import { nameSpacedSlots } from "@mapomodule/utils/helpers/slots";
 
 export default {
   name: "MapField",
+  components: {
+    // For recursive dynamic components is better to resolve dependencies at runtime to avoid circular deps
+    Form: () => import("@mapomodule/uikit/components/Form/Form.vue"),
+  },
   props: {
     // V-model property.
     value: {
@@ -99,6 +131,28 @@ export default {
       type: Boolean,
       default: false,
     },
+    fields: {
+      // [`Array<FieldConfiguration>`](/components/Detail/Detail/#fieldconfiguration)
+      type: Array | Object,
+      default: () => [],
+    },
+    // Puts the input in an error state and passes through custom error messages.
+    errorMessages: {
+      type: Array,
+      default: () => [],
+    },
+    // Make the repeater multilanguage. This means that it's going to inherit the languages and the current language from the parent detail component, creating the translations for each line of the repeater.
+    translatable: Boolean,
+    // This is mainly an internal property. It is used by DetailField to pass the list of languages inherited from the Detail component.
+    langs: {
+      // `Array<String>`
+      type: Array,
+      default() {
+        return this.$mapo.$options?.content?.languages || [];
+      },
+    },
+    // This is mainly an internal property. It is used by DetailField to pass the active language inherited from the Detail component.
+    currentLang: String,
   },
   data() {
     return {
@@ -151,6 +205,7 @@ export default {
           lat: coordinates.lat,
           lon: coordinates.lng,
           pointName: "",
+          extra_fields: {},
         });
 
         const marker = L.marker([coordinates.lat, coordinates.lng]).addTo(
@@ -227,6 +282,7 @@ export default {
             lat,
             lon,
             pointName: this.searchQuery,
+            extra_fields: {},
           });
 
           await this.reverseGeoCoding(lat, lon);
@@ -239,6 +295,30 @@ export default {
     debouncedSearchLocation: debounce(function () {
       this.searchLocation();
     }, 500),
+    getErrors(index) {
+      // return (this.errorMessages || [])[index] || {};
+    },
+    getFields(model) {
+      if (this.hasTemplates) {
+        const template = this.templates.find(
+          (t) => model[t.tCodeField] == t.tCode
+        );
+        return template ? template.fields : [];
+      }
+      return this.fields;
+    },
+    templateSlots(model, slots) {
+      if (this.hasTemplates) {
+        const template = this.templates.find(
+          (t) => model[t.tCodeField] == t.tCode
+        );
+        return nameSpacedSlots(slots, `template.${template.tCode}.`).reduce(
+          (acc, v) => ({ [`template.${template.tCode}.${v}`]: v, ...acc }),
+          {}
+        );
+      }
+      return Object.keys(slots).reduce((acc, v) => ({ [v]: v, ...acc }), {});
+    },
   },
   computed: {
     lat() {
@@ -252,6 +332,27 @@ export default {
     },
     currentIndex() {
       return this.model.length > 0 ? this.model.length - 1 : 0;
+    },
+    hasTemplates() {
+      return typeof this.fields == "object" && !Array.isArray(this.fields);
+    },
+    templates() {
+      const templates = {};
+      if (this.hasTemplates) {
+        Object.keys(this.fields).forEach((tKey) => {
+          const tValue = this.fields[tKey];
+          const { preview, description } = tValue;
+          templates[tKey] = {
+            fields: tValue.fields || tValue,
+            name: tValue.name || titleCase(tKey.replace(/_/, " ")),
+            tCode: tValue.tCode || tKey,
+            tCodeField: tValue.tCodeField || "tCode",
+            preview,
+            description,
+          };
+        });
+      }
+      return Object.values(templates);
     },
   },
 };
