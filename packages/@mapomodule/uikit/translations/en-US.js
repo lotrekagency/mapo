@@ -41,6 +41,7 @@ export default {
         titleTag: "Title Tag",
         linkedModels: "Linked Models",
         searchLocation: "Search a location",
+        showPreview: "Show preview",
         latitude: "Latitude",
         longitude: "Longitude",
         pointName: "Point name",
