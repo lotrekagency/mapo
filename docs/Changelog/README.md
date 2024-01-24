@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.50](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.49...v1.0.0-alpha.50) (2024-01-24)
+
+
+### Bug Fixes
+
+* **listexample:** fixed field declaration ([0baa347](https://github.com/lotrekagency/mapo/commit/0baa347236b2afc8a1bb7104374317d7dd400f27))
+* **listexample:** removed duplicated field. Fixed typo ([22858ba](https://github.com/lotrekagency/mapo/commit/22858bad52646b51dc6bfad01dba72a566d46cfd))
+
+
+### Features
+
+* added MapField ([3ba3b26](https://github.com/lotrekagency/mapo/commit/3ba3b262120a543f187ee4a5e9f24d31a7a1e1b4))
+* **Detail:** added PagePreview component ([9ed8975](https://github.com/lotrekagency/mapo/commit/9ed8975ba60a5954abe985a0565a198ea7f62aad))
+* **fields:** added geo point field ([ba0dd0c](https://github.com/lotrekagency/mapo/commit/ba0dd0c782524914826941b2cbdf7b4169a35afe))
+* **Time and DateTime:** added Ok button to close menu ([11f1d1e](https://github.com/lotrekagency/mapo/commit/11f1d1e52e45d154a064eb545e2812a0c8cf1f7b))
+
+
+
+
+
 # [1.0.0-alpha.49](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.48...v1.0.0-alpha.49) (2023-07-27)
 
 

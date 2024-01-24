@@ -20,6 +20,7 @@ The purpose of this component is to provide you with a very quick way to create 
 |modelName|The title of the detail page.|`String`|`false`|-|
 |sticky|This determines the style of the sidebar. If set to true the sidebar will remain sticky during the scroll.|`Boolean`|`false`|true|
 |multipart|Set the multipart politic. Accepts `'auto'|'force|'disable'`. If auto is set the request is transformed in multipart if any file is in the payload. If set to force the request is transformed in multipart no matter if files are found. If set to `'disable'` the request is never transformed in multipart.|`String`|`false`|auto|
+|previewField|The name of the field that contains the url of the page preview. [optional]|`String`|`false`|-|
 |readonly|This forces the detail page to be readonly.|`Boolean`|`false`|-|
 
 <!-- @vuese:Detail:props:end -->
@@ -54,6 +55,7 @@ The purpose of this component is to provide you with a very quick way to create 
 |button.savecontinue|Use this to override the Save and continue button.|The Save and continue button.|
 |button.back|Use this to override the Back button.|The Back button.|
 |button.delete|Use this to override the Delete button.|The Delete button.|
+|button.preview|Use this to override the Preview Page button.|The Preview Page button. Needs a preview field from model. Declare it in the props.|
 |side.top|Use this to add content on the top of the sidebar fields (or under sidebar buttons).|-|
 |side.bottom|Use this to add content under the sidebar fields.|-|
 
