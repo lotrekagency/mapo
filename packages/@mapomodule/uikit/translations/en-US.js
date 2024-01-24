@@ -40,15 +40,21 @@ export default {
         altTag: "Alt Tag",
         titleTag: "Title Tag",
         linkedModels: "Linked Models",
+        searchLocation: "Search a location",
         showPreview: "Show preview",
-        searchLocation: "Search location",
         latitude: "Latitude",
         longitude: "Longitude",
+        pointName: "Point name",
 
         // pages/index.vue
         index: {
             welcomeMessage:
                 "Congratulations!! 🥳 You successfully installed Mapo!",
+        },
+
+        //errors
+        error: {
+            searchError: "Error during search",
         },
 
         // ConfirmDialog.vue
