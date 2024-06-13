@@ -18,6 +18,7 @@ const components = {
 
     // customs
     wygEditor: () => import("@mapomodule/uikit/components/Form/fields/wygEditor/wygEditor.vue"),
+    wygEditorCKE: () => import("@mapomodule/uikit/components/Form/fields/wygEditorCKE/wygEditorCKE.vue"),
     DateField: () => import("@mapomodule/uikit/components/Form/fields/DateField.vue"),
     TimeField: () => import("@mapomodule/uikit/components/Form/fields/TimeField.vue"),
     DateTimeField: () => import("@mapomodule/uikit/components/Form/fields/DateTimeField.vue"),

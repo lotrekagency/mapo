@@ -8,6 +8,14 @@
         <wygEditor v-model="tinyInput" :readonly="readonly" />
       </v-col>
     </v-row>
+    <v-row justify="center" align="center">
+      <v-col cols="12" sm="8" md="12">
+        <v-btn dark class="mb-2" @click.native="readonly = !readonly">
+          {{ readonly ? $t("enable") : $t("disable") }}
+        </v-btn>
+        <wygEditorCKE v-model="ckeInput" :readonly="readonly" />
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
@@ -48,6 +56,20 @@ export default {
                 </tr>
             </tbody>
         </table>
+      `,
+      ckeInput: `<article>
+                  <h1>
+                      HTML playground
+                  </h1>
+                  <p data-foo="bar">
+                      This is a sample paragraph with a <code><strong>data</strong></code><strong> attribute</strong>.
+                  </p>
+                  <section>
+                      <h2>
+                          Responsive column layout
+                      </h2>
+                  </section>
+              </article>
       `,
     };
   },
