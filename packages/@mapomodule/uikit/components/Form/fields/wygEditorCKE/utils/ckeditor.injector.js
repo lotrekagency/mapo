@@ -5,6 +5,7 @@ export default async function () {
         }
         let scriptTag = document.getElementById("ckeditor-script") || null
         const handler = () => {
+            console.log('ckeditor loaded')
             scriptTag.removeEventListener('load', handler);
             resolve()
         };
@@ -22,8 +23,11 @@ export default async function () {
                 reject(error)
             }
         } else {
-            scriptTag.addEventListener('load', handler);
-            resolve()
+            if (typeof window.CKEDITOR !== 'undefined') {
+                resolve();
+            } else {
+                scriptTag.addEventListener('load', handler);
+            }
         }
     })
 }
