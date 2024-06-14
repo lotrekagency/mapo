@@ -35,6 +35,7 @@
     border: solid var(--v-error-base) 2px;
   }
 }
+
 </style>
 
 <script>
@@ -81,12 +82,16 @@ export default {
     hasErrors () { return this.errorMessages && this.errorMessages.length },
     defaultConfiguration(){
       const { base } = this.$router.options;
+      const assetsBasePath = `${base}mapo/ckeditor/`
       const { isDark } = this.$vuetify.theme;
-      return defaultConfig({ base, isDark })
+      return defaultConfig({ assetsBasePath, isDark })
     },
   },
 
   mounted() {
+    const { base } = this.$router.options;
+    this.assetsBasePath = `${base}mapo/ckeditor/`
+
     injectScript().then(this.initEditor);
   },
 
@@ -101,7 +106,10 @@ export default {
       });
     },
     createEditorInstance() {
+      const { base } = this.$router.options;
+      const assetsBasePath = `${base}mapo/ckeditor/`
       CKEDITOR.editorConfig = window.CKEDITOR.editorConfig;
+      CKEDITOR.plugins.addExternal('image2', `${assetsBasePath}plugins/image2/`, 'plugin.js');
       this.editorInstance = CKEDITOR.replace(this.$refs.ckeditor, {...this.defaultConfiguration});
       this.editorInstance.addCommand("insertMedia", {
         exec: (editor) => {

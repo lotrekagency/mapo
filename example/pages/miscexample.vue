@@ -68,6 +68,9 @@ export default {
                       <h2>
                           Responsive column layout
                       </h2>
+                      <p data-foo="bar">
+                      <img alt="null" src="https://camomilla.lotrek.io/_nuxt/img/camomilla-logo.799c556.png" width="300px" />
+                      </p>
                   </section>
               </article>
       `,

@@ -1,11 +1,10 @@
 export default async function () {
     return new Promise((resolve, reject) => {
-        if (typeof window.ckeditor !== 'undefined'){
+        if (typeof window.CKEDITOR !== 'undefined'){
             resolve()
         }
         let scriptTag = document.getElementById("ckeditor-script") || null
         const handler = () => {
-            console.log('ckeditor loaded')
             scriptTag.removeEventListener('load', handler);
             resolve()
         };
@@ -15,7 +14,7 @@ export default async function () {
                 scriptTag.referrerPolicy = 'origin';
                 scriptTag.type = 'application/javascript';
                 scriptTag.id = 'ckeditor-script';
-                scriptTag.src = "https://cdn.ckeditor.com/4.22.1/standard/ckeditor.js";
+                scriptTag.src = "https://cdn.ckeditor.com/4.22.1/full/ckeditor.js";
                 scriptTag.async = true
                 scriptTag.addEventListener('load', handler);
                 document.head.appendChild(scriptTag);
@@ -23,11 +22,8 @@ export default async function () {
                 reject(error)
             }
         } else {
-            if (typeof window.CKEDITOR !== 'undefined') {
-                resolve();
-            } else {
-                scriptTag.addEventListener('load', handler);
-            }
+            scriptTag.addEventListener('load', handler);
+            
         }
     })
 }

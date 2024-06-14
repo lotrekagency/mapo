@@ -1,4 +1,4 @@
-const defaultConfig = ({ base, isDark }) => {
+const defaultConfig = ({ assetsBasePath, isDark }) => {
     const config = {
         language: "en",
         uiColor: isDark ? "#cccccc" : "#ffffff",
@@ -6,6 +6,9 @@ const defaultConfig = ({ base, isDark }) => {
         toolbarCanCollapse: true,
         removePlugins: "elementspath",
         resize_enabled: false,
+        removePlugins: "image,exportpdf",
+        extraPlugins: "image2",
+
         toolbar: [
             {
                 name: "clipboard",
@@ -20,6 +23,23 @@ const defaultConfig = ({ base, isDark }) => {
                     "Redo",
                 ],
             },
+            {
+                name: "styles",
+                items: [
+                    "Styles",
+                    "Format",
+                    "Font",
+                    "FontSize",
+                    "-",
+                    "JustifyLeft",
+                    "JustifyCenter",
+                    "JustifyRight",
+                    "JustifyBlock",
+                ],
+            },
+            { name: "colors", items: ["TextColor", "BGColor"] },
+            { name: "tools", items: ["Maximize", "ShowBlocks"] },
+            
             "/",
             {
                 name: "basicstyles",
@@ -46,11 +66,6 @@ const defaultConfig = ({ base, isDark }) => {
                     "Blockquote",
                     "CreateDiv",
                     "-",
-                    "JustifyLeft",
-                    "JustifyCenter",
-                    "JustifyRight",
-                    "JustifyBlock",
-                    "-",
                     "BidiLtr",
                     "BidiRtl",
                     "Language",
@@ -69,19 +84,15 @@ const defaultConfig = ({ base, isDark }) => {
                     "insertMedia",
                 ],
             },
-            { name: "styles", items: ["Styles", "Format", "Font", "FontSize"] },
-            { name: "colors", items: ["TextColor", "BGColor"] },
-            { name: "tools", items: ["Maximize", "ShowBlocks"] },
             {
                 name: "document",
-                items: [
-                    "Source",
-                ],
+                items: ["Source"],
             },
         ],
-        ...base,
+        skin: isDark
+            ? `moono-dark,${assetsBasePath}skins/moono-dark/`
+            : `moono,${assetsBasePath}skins/moono/`,
     };
-    
 
     return config;
 };
