@@ -98,7 +98,6 @@ export default {
   methods: {
     initEditor() {
       this.createEditorInstance();
-      this.setupdEditor();
       this.editorInstance.setData(this.value);
       this.editorInstance.on("change", () => {
         const data = this.editorInstance.getData();
@@ -126,7 +125,15 @@ export default {
         icon: "image",
       });
     },
-    setupdEditor() {},
+    destroyEditor() {
+      if (this.editorInstance) {
+        this.editorInstance.destroy();
+      }
+    },
+    reloadEditor(){
+      this.destroyEditor();
+      this.initEditor();
+    },
     insertMediaCallback: async function () {
       return new Promise((resolve, reject) => {
         this.$refs.mediaManager
@@ -158,9 +165,7 @@ export default {
     },
   },
   beforeDestroy() {
-    if (this.editorInstance) {
-      this.editorInstance.destroy();
-    }
+    this.destroyEditor();
   },
   watch: {
     value(newValue) {
@@ -173,6 +178,7 @@ export default {
         this.editorInstance.setReadOnly(newValue);
       }
     },
+    '$vuetify.theme.isDark'(){ this.reloadEditor(); }
   },
 };
 </script>
