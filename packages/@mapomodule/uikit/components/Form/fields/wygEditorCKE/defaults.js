@@ -1,7 +1,6 @@
 const defaultConfig = ({ assetsBasePath, isDark }) => {
     const config = {
         language: "en",
-        uiColor: isDark ? "#cccccc" : "#ffffff",
         height: 300,
         toolbarCanCollapse: true,
         removePlugins: "elementspath",

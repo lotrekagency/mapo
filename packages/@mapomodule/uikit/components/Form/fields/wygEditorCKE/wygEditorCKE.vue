@@ -36,6 +36,16 @@
   }
 }
 
+.cke_toolgroup {
+  background-image: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  border-radius: 0 !important;
+  -webkit-border-radius: 0 !important;
+  border-bottom-color: none !important;
+  border: none !important;
+}
 </style>
 
 <script>
@@ -79,18 +89,20 @@ export default {
   },
 
   computed: {
-    hasErrors () { return this.errorMessages && this.errorMessages.length },
-    defaultConfiguration(){
+    hasErrors() {
+      return this.errorMessages && this.errorMessages.length;
+    },
+    defaultConfiguration() {
       const { base } = this.$router.options;
-      const assetsBasePath = `${base}mapo/ckeditor/`
+      const assetsBasePath = `${base}mapo/ckeditor/`;
       const { isDark } = this.$vuetify.theme;
-      return defaultConfig({ assetsBasePath, isDark })
+      return defaultConfig({ assetsBasePath, isDark });
     },
   },
 
   mounted() {
     const { base } = this.$router.options;
-    this.assetsBasePath = `${base}mapo/ckeditor/`
+    this.assetsBasePath = `${base}mapo/ckeditor/`;
 
     injectScript().then(this.initEditor);
   },
@@ -106,15 +118,25 @@ export default {
     },
     createEditorInstance() {
       const { base } = this.$router.options;
-      const assetsBasePath = `${base}mapo/ckeditor/`
+      const assetsBasePath = `${base}mapo/ckeditor/`;
       CKEDITOR.editorConfig = window.CKEDITOR.editorConfig;
-      CKEDITOR.plugins.addExternal('image2', `${assetsBasePath}plugins/image2/`, 'plugin.js');
-      this.editorInstance = CKEDITOR.replace(this.$refs.ckeditor, {...this.defaultConfiguration});
+      CKEDITOR.plugins.addExternal(
+        "image2",
+        `${assetsBasePath}plugins/image2/`,
+        "plugin.js"
+      );
+      this.editorInstance = CKEDITOR.replace(this.$refs.ckeditor, {
+        allowedContent: true,
+        extraAllowedContent: "*(*);*{*}[*]",
+        ...this.defaultConfiguration,
+      });
       this.editorInstance.addCommand("insertMedia", {
         exec: (editor) => {
           this.insertMediaCallback().then((html) => {
             var element = CKEDITOR.dom.element.createFromHtml(html);
-            editor.insertElement( element );
+            editor.insertElement(element);
+            // Following line is a workaround to force the editor to update to make the image2 plugin recognize the new image
+            editor.setData(editor.getData());
           });
         },
       });
@@ -130,7 +152,7 @@ export default {
         this.editorInstance.destroy();
       }
     },
-    reloadEditor(){
+    reloadEditor() {
       this.destroyEditor();
       this.initEditor();
     },
@@ -143,7 +165,7 @@ export default {
               let html;
               switch (result.mime_type && result.mime_type.split("/")[0]) {
                 case "image":
-                  html = `<img width="300px" src="${result.file}" alt="${result.alt_text}"/>`;
+                  html = `<img src="${result.file}" alt="${result.alt_text}"/></p>`;
                   break;
                 case "video":
                   html = `<video controls><source src="${result.file}" type="${result.mime_type}"></video>`;
@@ -178,7 +200,9 @@ export default {
         this.editorInstance.setReadOnly(newValue);
       }
     },
-    '$vuetify.theme.isDark'(){ this.reloadEditor(); }
+    "$vuetify.theme.isDark"() {
+      this.reloadEditor();
+    },
   },
 };
 </script>
