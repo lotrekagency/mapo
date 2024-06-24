@@ -43,7 +43,7 @@ const mapping = {
     switch: components.vSwitch,
     slider: components.vSlider,
     file: components.FileField,
-    editor: components.wygEditor,
+    editor: components.wygEditorCKE,
     media: components.MediaField,
     enhancedMedia: components.EnhancedMediaField,
     fks: components.FksField,
