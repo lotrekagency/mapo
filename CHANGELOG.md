@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.51](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.50...v1.0.0-alpha.51) (2024-06-24)
+
+
+### Bug Fixes
+
+* **ckeditor injector:** resolving promise if script exists and CKEDITOR is not undefined ([7f24ba9](https://github.com/lotrekagency/mapo/commit/7f24ba9cdad95ddde7a6807178ebcbe4ed0d8bcc))
+* **images:** forcing image2 to recognize images from mapomedia, removed sanitize ([dbb0ce8](https://github.com/lotrekagency/mapo/commit/dbb0ce8de86885c381fdb5798564a866c3992bd2))
+* **theme handling:** added watcher on vuetify theme ([44e3b69](https://github.com/lotrekagency/mapo/commit/44e3b6976b38445bfd984856bf74abbbc3647dd4))
+
+
+### Features
+
+* **extra config:** added image2 plugin and 2 skins (light and dark mode) ([4360cef](https://github.com/lotrekagency/mapo/commit/4360cef3cda0651e6d002771d3a4e658d0b36d47))
+* **fields:** added new editor component based on cke ([ca4969e](https://github.com/lotrekagency/mapo/commit/ca4969e5bdfcd1539c1f3685576ee1c904466872))
+
+
+
+
+
 # [1.0.0-alpha.50](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.49...v1.0.0-alpha.50) (2024-01-24)
 
 
