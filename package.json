@@ -33,7 +33,7 @@
     "docs:js": "jsdoc2md -t docs/.jsdoc2md/TEMPLATE.hbs ./packages/@mapomodule/core/index.js ./packages/@mapomodule/core/api/*.js > docs/core/README.md"
   },
   "devDependencies": {
-    "nuxt": "^2.15.8",
+    "nuxt": "^2.17.3",
     "@mapomodule/mapo-integrations-camomilla": "^1.0.0-alpha.11",
     "@vuese/cli": "https://github.com/bnznamco/vuese/releases/download/%40vuese%2Fcli%402.14.3.mod2/cli.tar.gz",
     "cypress": "^11.1.0",
