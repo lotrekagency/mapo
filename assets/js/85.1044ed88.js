@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[85],{420:function(e,t,i){"use strict";i.r(t);var n={methods:{toggleTheme(){this.$vuetify.theme.dark=!this.$vuetify.theme.dark}}},h=i(1),s=Object(h.a)(n,(function(){return(0,this._self._c)("v-icon",{on:{click:this.toggleTheme}},[this._v("mdi-theme-light-dark")])}),[],!1,null,null,null);t.default=s.exports}}]);
