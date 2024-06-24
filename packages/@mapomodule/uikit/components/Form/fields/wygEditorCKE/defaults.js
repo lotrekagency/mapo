@@ -88,9 +88,10 @@ const defaultConfig = ({ assetsBasePath, isDark }) => {
                 items: ["Source"],
             },
         ],
-        skin: isDark
-            ? `moono-dark,${assetsBasePath}skins/moono-dark/`
-            : `moono,${assetsBasePath}skins/moono/`,
+        skin: `moono,${assetsBasePath}skins/moono/`,
+        // skin: isDark
+        //     ? `moono-dark,${assetsBasePath}skins/moono-dark/`
+        //     : `moono,${assetsBasePath}skins/moono/`,
     };
 
     return config;

@@ -36,6 +36,67 @@
   }
 }
 
+.cke_top {
+  background-image: none !important;
+  background: none !important;
+  // border: 1px solid #e0e0e0;
+}
+
+.cke {
+  * {
+    border-color: #e0e0e0!important;
+    background: none;
+    background-image: none;    
+  }
+  border-color: #e0e0e0!important;  
+  box-shadow: none;
+  background: none;
+  background-image: none;
+}
+
+.cke_panel_grouptitle {
+  background-image: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+a.cke_button_on {
+  background-image: none !important;
+  // background: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+
+}
+
+.cke_bottom {
+  background-image: none !important;
+  background: none !important;
+  // border: 1px solid #e0e0e0;
+}
+
+a.cke_combo_button {
+  background-image: none !important;
+  background: none !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+}
+
+a.cke_button_off:hover, a.cke_button_disabled:hover {
+  background-image: none !important;
+  background: #e0e0e0!important; 
+
+}
+
+.cke_reset_all iframe {
+  background-image: none !important;
+  background: none !important;
+  * {
+    background-image: none !important;
+    background: none !important;
+  }
+}
+
 .cke_toolgroup {
   background-image: none !important;
   background: none !important;
@@ -51,6 +112,7 @@
 <script>
 import injectScript from "./utils/ckeditor.injector.js";
 import defaultConfig from "./defaults.js";
+import ThemeToggle from "../../../ThemeToggle.vue";
 
 /**
 
