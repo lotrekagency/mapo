@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.52](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.51...v1.0.0-alpha.52) (2024-07-04)
+
+
+### Bug Fixes
+
+* **ckeditor config:** disabled versionCheck to avoid warning popup ([9b8efcf](https://github.com/lotrekagency/mapo/commit/9b8efcf08eb444d5c1ca8a28581b6dbc663a55f2))
+
+
+
+
+
 # [1.0.0-alpha.51](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.50...v1.0.0-alpha.51) (2024-06-24)
 
 
