@@ -7,7 +7,7 @@ const defaultConfig = ({ assetsBasePath, isDark }) => {
         resize_enabled: false,
         removePlugins: "image,exportpdf",
         extraPlugins: "image2",
-
+        versionCheck: false,
         toolbar: [
             {
                 name: "clipboard",
