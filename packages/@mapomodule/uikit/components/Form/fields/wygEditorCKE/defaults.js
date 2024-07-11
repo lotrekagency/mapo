@@ -8,6 +8,9 @@ const defaultConfig = ({ assetsBasePath, isDark }) => {
         removePlugins: "image,exportpdf",
         extraPlugins: "image2",
         versionCheck: false,
+        iframe_attributes: {
+            sandbox: "allow-same-origin allow-scripts allow-popups allow-forms",
+        },
         toolbar: [
             {
                 name: "clipboard",
