@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.53](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.52...v1.0.0-alpha.53) (2024-07-11)
+
+
+### Bug Fixes
+
+* **editor config:** added iframe configuration allowing js execution ([2d7b729](https://github.com/lotrekagency/mapo/commit/2d7b729279c5bec8f08344f884360e184c30d508))
+* **editor config:** now using props conf object, allowing component customization ([aed3c05](https://github.com/lotrekagency/mapo/commit/aed3c053bfbc9bb75648f5b0688d26232e07d4a9))
+* **mapField:** added hasErrors computed missing property ([36e9049](https://github.com/lotrekagency/mapo/commit/36e90496068ed56f2fa1eb2508e531ab0b03df90))
+
+
+
+
+
 # [1.0.0-alpha.52](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.51...v1.0.0-alpha.52) (2024-07-04)
 
 
