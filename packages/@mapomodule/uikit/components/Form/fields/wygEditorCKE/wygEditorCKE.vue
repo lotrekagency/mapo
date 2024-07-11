@@ -113,7 +113,7 @@ a.cke_button_off:hover, a.cke_button_disabled:hover {
 import injectScript from "./utils/ckeditor.injector.js";
 import defaultConfig from "./defaults.js";
 import ThemeToggle from "../../../ThemeToggle.vue";
-
+import _ from "lodash";
 /**
 
 */
@@ -158,7 +158,7 @@ export default {
       const { base } = this.$router.options;
       const assetsBasePath = `${base}mapo/ckeditor/`;
       const { isDark } = this.$vuetify.theme;
-      return defaultConfig({ assetsBasePath, isDark });
+      return _.merge(defaultConfig({ assetsBasePath, isDark }), this.conf);
     },
   },
 
