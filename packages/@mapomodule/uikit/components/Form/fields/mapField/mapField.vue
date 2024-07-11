@@ -119,6 +119,7 @@ export default {
     // V-model property.
     value: {
       type: Array,
+      default: () => [],
     },
     // This label will be shown at the top of the editor.
     label: String,
@@ -325,6 +326,7 @@ export default {
     hasTemplates() {
       return typeof this.fields == "object" && !Array.isArray(this.fields);
     },
+    hasErrors () { return this.errorMessages && this.errorMessages.length },
     templates() {
       const templates = {};
       if (this.hasTemplates) {
