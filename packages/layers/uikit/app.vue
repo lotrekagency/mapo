@@ -1,0 +1,4 @@
+<template>
+  <HelloWorldUI />
+  <HelloWorldCore />
+</template>
