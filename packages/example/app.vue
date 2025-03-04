@@ -3,13 +3,15 @@ const { x, y } = useMouse();
 </script>
 
 <template>
-  <div>
-    <HelloWorldUI />
-    <HelloWorldCore />
-    <p>Mouse position Example is at: {{ x }}, {{ y }}</p>
-    <NuxtRouteAnnouncer />
-    <NuxtWelcome />
-  </div>
+  <v-app>
+    <div>
+      <HelloWorldUI />
+      <HelloWorldCore />
+      <p>Mouse position Example is at: {{ x }}, {{ y }}</p>
+      <NuxtRouteAnnouncer />
+      <NuxtWelcome />
+    </div>
+  </v-app>
 </template>
 
 <style scoped lang="scss">
