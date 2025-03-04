@@ -1,47 +1,30 @@
 {
-  "name": "mapo-monorepo",
-  "private": true,
-  "description": "Monorepo for @mapomodule",
-  "author": "bnznamco <gabriele.baldi.01@gmail.com>",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lotrekagency/mapo.git"
-  },
+  "name": "mapo-next",
+  "version": "2.0.0",
+  "description": "Monorepo for @mapomodule in Nuxt 3",
+  "main": "index.js",
   "workspaces": [
-    "packages/@mapomodule/*",
-    "packages/mapomodule",
-    "example"
+    "packages/layers/*",
+    "packages/example"
   ],
-  "vuese": {
-    "genType": "markdown",
-    "include": [
-      "packages/@mapomodule/uikit/components/**/*.vue"
-    ],
-    "markdownDir": "*"
-  },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "dev": "nuxt example",
-    "build:example": "nuxt build example",
-    "start:example": "nuxt start example",
-    "pub": "lerna publish --conventional-commits",
-    "pub:from-git": "lerna publish from-git --conventional-commits",
-    "docs:gen": "yarn docs:js && vuese gen && ./docs/.vuepress/moveREADME.sh",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "docs:publish": "./docs/.vuepress/publishDOCS.sh",
-    "docs:js": "jsdoc2md -t docs/.jsdoc2md/TEMPLATE.hbs ./packages/@mapomodule/core/index.js ./packages/@mapomodule/core/api/*.js > docs/core/README.md"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example:dev": "pnpm --filter mapo-example dev",
+    "core:dev": "pnpm --filter mapo-core-layer dev",
+    "uikit:dev": "pnpm --filter mapo-uikit-layer dev",
+    "uikit:storybook": "pnpm --filter mapo-uikit-layer storybook",
+    "dev": "pnpm --stream -r -parallel dev"
   },
+  "keywords": [],
+  "author": "Michele Abbrescia",
+  "license": "ISC",
+  "private": true,
   "devDependencies": {
-    "nuxt": "^2.17.3",
-    "@mapomodule/mapo-integrations-camomilla": "^1.0.0-alpha.11",
-    "@vuese/cli": "https://github.com/bnznamco/vuese/releases/download/%40vuese%2Fcli%402.14.3.mod2/cli.tar.gz",
-    "cypress": "^11.1.0",
-    "eslint": "^8.27.0",
-    "eslint-plugin-vue": "^9.7.0",
-    "jsdoc-to-markdown": "^7.1.1",
-    "lerna": "^6.0.3",
-    "vuepress": "^1.9.7",
-    "vuepress-plugin-demo-code": "^1.0.0"
-  }
+    "sass": "^1.85.1"
+  },
+  "engines": {
+    "node": ">=22.13.1",
+    "npm": ">=10.5.2"
+  },
+  "packageManager": "pnpm@10.5.2+sha512.da9dc28cd3ff40d0592188235ab25d3202add8a207afbedc682220e4a0029ffbff4562102b9e6e46b4e3f9e8bd53e6d05de48544b0c57d4b0179e22c76d1199b"
 }

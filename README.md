@@ -1,75 +1,83 @@
-# mapomodule [![npm](https://img.shields.io/npm/v/mapomodule?style=flat-square)](https://www.npmjs.com/package/mapomodule) ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/lotrekagency/mapo/Test%20and%20Coverage?label=e2e-tests&style=flat-square) [![GitHub](https://img.shields.io/badge/license-MIT-green?style=flat-square)](./LICENSE.md)
+# Mapo Minimal Starter
 
 ## Setup
-Add `mapomodule` dependency to your project
-```sh
-yarn add --dev mapomodule # or npm install --save-dev mapomodule
+
+Make sure to install dependencies:
+
+```bash
+# pnpm
+pnpm install
 ```
-Add mapomodule to the modules section of nuxt.config.js
-```js
-{
-  modules: [
-    // Simple usage
-    'mapomodule',
 
-    // With options
-    ['mapomodule', { /* module options */ }]
-  ]
-}
+## Development Server
+
+Start the development server on `http://localhost:3000`:
+
+```bash
+# pnpm
+pnpm dev
 ```
- 
- You can add options also from top level nuxt.config.js
 
-```js
-{
-  modules: [
-    'mapomodule'
-  ],
-  mapo: {
-    /* module options */
-  }
-}
+Start the example project
+
+```bash
+# pnpm
+pnpm example:dev
 ```
-## Integrations
-This module was created to simplify the creation of administration panels.
 
-Mapo was born as a frontend companion of the Camomilla project, but it was created with the aim of being agnostic about the backend. This is why we have enclosed the logic linked to the Camomilla project (camomilla-integrations) in a compatibility layer.
+Start the uikit project
 
-If you want to try the project with Camomilla as a backend, just follow the instructions you will find here. Otherwise you can write your backend with the framework and language you prefer. You can also write new integrations to connect Mapo to other existing api backends.
+```bash
+# pnpm
+pnpm uikit:dev
 
-## Features
+# storybook
+pnpm uikit:storybook
+```
 
-- Exposes [`$mapo`](https://lotrekagency.github.io/mapo/core/) core sevices to provide set of utilities.
-- Injects mapo [`components`](https://lotrekagency.github.io/mapo/components/) in the default nuxt component discovery.
-- Adds meta information to router module from nuxt pages.
+Start the core project
 
-📑 &nbsp;Read more from the [documentation](https://lotrekagency.github.io/mapo/).
+```bash
+# pnpm
+pnpm core:dev
+```
 
-## How to contribute
+## Production
 
-1. Clone this repository
-2. Install dependencies using `yarn bootstrap`
-3. Start development server using `yarn dev`
+Build the application for production:
 
+```bash
+# npm
+npm run build
 
-Feel free to contribute to the project by making a [Pull Request](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+# pnpm
+pnpm build
 
-Here's an example for a branch naming:
+# yarn
+yarn build
 
-`feature/<branch name>`
+# bun
+bun run build
+```
 
-Once you're done with your work and are ready to make a Pull Request, set the reviewers to 
-Gabriele Baldi (bnznamco) and Andrea Morosi (andreamorosi).
+Locally preview production build:
 
+```bash
+# npm
+npm run preview
 
-### Documenting components
-Always write some documentation regarding the components you're developing.
-Our documentation is generated directly from code thanks to [@Vuepress](https://vuepress.vuejs.org/), [@Vuese](https://vuese.org/) and [@jsdoc-to-markdown](https://github.com/jsdoc2md/jsdoc-to-markdown#readme).
+# pnpm
+pnpm preview
 
-1. Generate doc `yarn doc:gen`
-2. Preview vuepress doc `yarn doc:dev`
+# yarn
+yarn preview
 
-### Testing
+# bun
+bun run preview
+```
 
-The project comes with a pre-installed cypress suite. The number of e2e/unit tests present for now is low. So we invite contributors to write tests as well as new features.
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
 
+## NB
+
+The uikit layer uses "nuxt": "3.11.2" to maintain compatibility with Storybook, unlike other layers which use "nuxt": "^3.15.4". This is necessary because the latest version of Storybook (8.6) is not compatible with nuxt-storybook@8.3. For more details, refer to the [Nuxt Storybook setup guide](https://storybook.nuxtjs.org/getting-started/setup).
