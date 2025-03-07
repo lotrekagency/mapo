@@ -2,3 +2,5 @@ node_modules
 .nuxt
 .nuxt-storybook
 docs/.vuepress/dist
+
+.vscode
