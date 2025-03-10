@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.54](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.53...v1.0.0-alpha.54) (2025-03-10)
+
+
+### Bug Fixes
+
+* **repeater:** fix lower-case control and add example to repeater ([#56](https://github.com/lotrekagency/mapo/issues/56)) ([b897150](https://github.com/lotrekagency/mapo/commit/b89715054b8ba6df4c1d66dc853b64a840a5e433))
+
+
+
+
+
 # [1.0.0-alpha.53](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.52...v1.0.0-alpha.53) (2024-07-11)
 
 
