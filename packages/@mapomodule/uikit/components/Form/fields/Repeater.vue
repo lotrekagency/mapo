@@ -57,9 +57,10 @@
             </v-container>
           </div>
           <div class="repeater-side-bar grey lighten-2">
-            <span class="repeater-counter grey--text text--darken-2 text-truncate">{{
-              index + 1
-            }}</span>
+            <span
+              class="repeater-counter grey--text text--darken-2 text-truncate"
+              >{{ index + 1 }}</span
+            >
             <v-tooltip right>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
@@ -120,7 +121,11 @@
         }}</v-card-title>
         <v-card-text>
           <div class="row mt-4">
-            <div v-for="(template, i) in templates" :key="i" class="col-12 col-md-6 pa-0">
+            <div
+              v-for="(template, i) in templates"
+              :key="i"
+              class="col-12 col-md-6 pa-0"
+            >
               <div @click="tModalCallback(template)" class="template-button">
                 <span class="text-h5">{{ template.name }}</span
                 ><br />
@@ -312,7 +317,9 @@ export default {
     langs: {
       // `Array<String>`
       type: Array,
-      default() { return this.$mapo.$options?.content?.languages || []; },
+      default() {
+        return this.$mapo.$options?.content?.languages || [];
+      },
     },
     // This is mainly an internal property. It is used by DetailField to pass the active language inherited from the Detail component.
     currentLang: String,
@@ -321,7 +328,11 @@ export default {
   watch: {
     value(val) {
       const isEmpty = (v) => !v || Object.keys(v).length == 0;
-      if (isEmpty(val) && isEmpty(this.items) || JSON.stringify(val) === JSON.stringify(this.items)) return;
+      if (
+        (isEmpty(val) && isEmpty(this.items)) ||
+        JSON.stringify(val) === JSON.stringify(this.items)
+      )
+        return;
       this.items = (val && deepClone(val)) || [];
       if (val.length != this.collapsedStack.length)
         this.collapsedStack = (val || []).map(() => !!this.collapsable);
@@ -330,7 +341,7 @@ export default {
       handler(val) {
         this.$emit("input", deepClone(val));
       },
-      deep: true
+      deep: true,
     },
     tModalOpen(val) {
       !val && this.tModalCallback();
@@ -383,14 +394,18 @@ export default {
     },
     getFields(model) {
       if (this.hasTemplates) {
-        const template = this.templates.find((t) => model[t.tCodeField] == t.tCode);
+        const template = this.templates.find(
+          (t) => model[t.tCodeField] == t.tCode
+        );
         return template ? template.fields : [];
       }
       return this.fields;
     },
     templateSlots(model, slots) {
       if (this.hasTemplates) {
-        const template = this.templates.find((t) => model[t.tCodeField] == t.tCode);
+        const template = this.templates.find(
+          (t) => model[t.tCodeField] == t.tCode
+        );
         return nameSpacedSlots(slots, `template.${template.tCode}.`).reduce(
           (acc, v) => ({ [`template.${template.tCode}.${v}`]: v, ...acc }),
           {}
@@ -407,7 +422,7 @@ export default {
           return this.collapsedLabel(model);
         default:
           const field = this.getFields(model).find(
-            (f) => !f.type || f.type.lower() == "text"
+            (f) => !f.type || f.type.toLowerCase() == "text"
           );
           return getPointed(model, field.value, fallback);
       }
@@ -452,8 +467,15 @@ export default {
     },
     maxHeightStyle() {
       if (this.maxHeight !== undefined) {
-        const maxHeight = isNaN(this.maxHeight) ? this.maxHeight : `${this.maxHeight}px`;
-        return { maxHeight, paddingTop: "15px", overflowX: "hidden", overflowY: "auto" };
+        const maxHeight = isNaN(this.maxHeight)
+          ? this.maxHeight
+          : `${this.maxHeight}px`;
+        return {
+          maxHeight,
+          paddingTop: "15px",
+          overflowX: "hidden",
+          overflowY: "auto",
+        };
       }
     },
   },
