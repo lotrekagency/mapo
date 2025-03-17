@@ -1,0 +1,4 @@
+packages:
+  - "packages/@mapomodule/*"
+  - "packages/mapomodule"
+  - "apps/example"
