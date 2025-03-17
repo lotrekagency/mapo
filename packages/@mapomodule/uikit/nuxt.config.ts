@@ -1,6 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "@nuxt/test-utils"],
+  modules: [
+    "@nuxt/eslint",
+    "@nuxt/test-utils",
+    "@nuxtjs/storybook"
+  ],
   extends: ["@mapomodule/core"]
 })

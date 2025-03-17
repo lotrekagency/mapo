@@ -9,7 +9,10 @@
     "build": "nuxt build .playground",
     "generate": "nuxt generate .playground",
     "preview": "nuxt preview .playground",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "storybook": "storybook dev -p 6006 --no-open",
+    "build-storybook": "storybook build",
+    "test-storybook": "test-storybook"
   },
   "main": "./nuxt.config.ts",
   "exports": {
@@ -23,15 +26,29 @@
   "author": "bnznamco <gabriele.baldi.01@gmail.com>",
   "repository": "https://github.com/lotrekagency/mapo",
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.5",
     "@mapomodule/core": "workspace:^",
     "@nuxt/eslint": "latest",
     "@nuxt/test-utils": "3.17.2",
+    "@nuxtjs/storybook": "^8.3.3",
+    "@storybook/addon-essentials": "^8.6.4",
+    "@storybook/blocks": "^8.6.4",
+    "@storybook/experimental-addon-test": "^8.6.4",
+    "@storybook/test": "^8.6.4",
+    "@storybook/vue3": "^8.6.4",
     "eslint": "^9.22.0",
-    "nuxt": "^3.16.0",
-    "typescript": "^5.8.2",
+    "eslint-plugin-storybook": "^0.11.4",
+    "nuxt": "^3.15.4",
+    "storybook": "^8.6.4",
+    "typescript": "^5.7.2",
     "vue": "latest"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
+    ]
   }
 }
