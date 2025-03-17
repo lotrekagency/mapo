@@ -1,8 +1,8 @@
 <template>
-  <button class="button-ui" @click="handleClick">
+  <v-btn class="button-ui" @click="handleClick">
     <slot></slot>
     {{ count }}
-  </button>
+  </v-btn>
 </template>
 
 <style scoped>

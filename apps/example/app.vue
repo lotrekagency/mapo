@@ -2,6 +2,7 @@
   <div>
     <HelloWorldCore />
     <HelloWorldUI />
+    <ButtonUI />
     <NuxtRouteAnnouncer />
     <NuxtWelcome />
   </div>

@@ -4,7 +4,15 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
     "@nuxt/test-utils",
-    "@nuxtjs/storybook"
+    'vuetify-nuxt-module'
   ],
-  extends: ["@mapomodule/core"]
+  vuetify: {
+    moduleOptions: {
+      /* module specific options */
+    },
+    vuetifyOptions: {
+      /* vuetify options */
+    }
+  },
+  extends: ["@mapomodule/core"],
 })
