@@ -1,27 +1,28 @@
 {
-  "name": "mapomodule",
+  "name": "mapo-monorepo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Monorepo for @mapomodule",
+  "author": "bnznamco <gabriele.baldi.01@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lotrekagency/mapo.git"
+  },
   "scripts": {
     "build": "lerna run build --parallel",
     "dev": "lerna run dev --parallel",
     "dev:example": "lerna run dev --scope=apps/example",
     "lint": "lerna run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "publish": "lerna publish --conventional-commits"
+    "publish": "lerna publish --conventional-commits",
+    "storybook": "lerna run storybook"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "lerna": "^8.2.1"
   },
     "engines": {
     "node": ">=22.13.1",
     "npm": ">=10.5.2"
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }
