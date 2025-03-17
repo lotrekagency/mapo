@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   modules: [
     "@nuxt/eslint",
     "@nuxt/test-utils",
-    'vuetify-nuxt-module'
+    'vuetify-nuxt-module',
   ],
   vuetify: {
     moduleOptions: {
