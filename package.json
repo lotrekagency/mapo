@@ -1,0 +1,27 @@
+{
+  "name": "mapomodule",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "lerna run build --parallel",
+    "dev": "lerna run dev --parallel",
+    "dev:example": "lerna run dev --scope=apps/example",
+    "lint": "lerna run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "publish": "lerna publish --conventional-commits"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lerna": "^8.2.1"
+  },
+    "engines": {
+    "node": ">=22.13.1",
+    "npm": ">=10.5.2"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

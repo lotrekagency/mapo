@@ -1,0 +1,43 @@
+{
+  "name": "@mapomodule/core",
+  "description": "This is part of Mapo nuxt module. Injects the core mapo plugin helpers.",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "nuxi dev .playground -p 3020",
+    "dev:prepare": "nuxt prepare .playground",
+    "build": "nuxt build .playground",
+    "generate": "nuxt generate .playground",
+    "preview": "nuxt preview .playground",
+    "lint": "eslint ."
+  },
+  "main": "./nuxt.config.ts",
+  "exports": {
+    ".": "./nuxt.config.ts"
+  },
+  "files": [
+    "components",
+    "composables",
+    "nuxt.config.ts"
+  ],
+  "author": "bnznamco <gabriele.baldi.01@gmail.com>",
+  "keywords": [
+    "mapo",
+    "nuxt",
+    "Admin",
+    "Panel"
+  ],
+  "license": "MIT",
+  "repository": "https://github.com/lotrekagency/mapo",
+  "devDependencies": {
+    "@nuxt/eslint": "latest",
+    "@nuxt/test-utils": "3.17.2",
+    "eslint": "^9.22.0",
+    "nuxt": "^3.16.0",
+    "typescript": "^5.8.2",
+    "vue": "latest"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
