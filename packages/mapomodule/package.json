@@ -12,7 +12,8 @@
   },
   "main": "./nuxt.config.ts",
   "exports": {
-    ".": "./nuxt.config.ts"
+    ".": "./nuxt.config.ts",
+    "./package.json": "./package.json"
   },
   "files": [
     "nuxt.config.ts"

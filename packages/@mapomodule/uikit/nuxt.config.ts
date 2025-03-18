@@ -1,8 +1,7 @@
+import i18n from "./defaults/i18n"
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  build: {
-    transpile: ['utils']
-  },
   devtools: { enabled: true },
   modules: [
     "@nuxt/eslint",
@@ -15,20 +14,9 @@ export default defineNuxtConfig({
   // Anyone extending this layer can override these options directly in their nuxt.config.
   vuetify: {
     moduleOptions: {},
-    vuetifyOptions: {
-      defaults: {
-        VBtn: { variant: 'outlined' },
-      }
-    }
+    vuetifyOptions: './defaults/vuetify.ts',
   },
   // When extending this layer, the i18n options specified here will be merged with the options in the extending configuration.
   // https://i18n.nuxtjs.org/docs/guide/layers
-  i18n: {
-    locales: [
-      { code: 'en', iso: 'en-US', file: 'en-US.ts' },
-      { code: 'it', iso: 'it-IT', file: 'it-IT.ts' },
-    ],
-    defaultLocale: 'en',
-    lazy: true,
-  },
+  i18n
 })

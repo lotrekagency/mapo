@@ -1,12 +1,5 @@
 <template>
-  {{ titleCase("ui kit")}}
-  <ButtonUI>
-    <span>UI KIT BUTTON</span>
-  </ButtonUI>
-  <HelloWorldUI />
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
 </template>
-
-<script setup lang="ts">
-import { titleCase } from '@mapomodule/utils/helpers/formatters';
-
-</script>
