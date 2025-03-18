@@ -1,5 +1,5 @@
-var Vue =  require('vue')
-Vue = Vue.default || Vue
+import Vue, { set } from 'vue';
+Vue = Vue || Vue
 
 function deepClone(obj) {
     const clone = obj instanceof Array ? Object.assign([]) : Object.assign({});
@@ -21,10 +21,10 @@ function getPointed(obj, kpointed, def) {
 function setPointed(obj, kpointed, val) {
     const arr = typeof kpointed == 'string' ? kpointed.split(".") : kpointed
     if (arr.length == 1) {
-        Vue.set(obj, arr[0], val)
+        set(obj, arr[0], val)
         return obj
     }
-    Vue.set(obj, arr[0], obj[arr[0]] || {})
+    set(obj, arr[0], obj[arr[0]] || {})
     return setPointed(obj[arr[0]], arr.slice(1), val)
 }
 
@@ -104,7 +104,7 @@ function diffObjs(obj1, obj2, clone=deepClone) {
     return b && Object.keys(b).length ? b : undefined;
 }
 
-module.exports = {
+export {
     deepClone,
     getPointed,
     setPointed,

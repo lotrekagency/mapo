@@ -10,6 +10,6 @@ function calcMaxMenuNestDepth(node, currentDepth = 0) {
     return maxDepth;
 }
 
-module.exports = {
+export {
     calcMaxMenuNestDepth
 }

@@ -78,34 +78,34 @@ export default {
   },
   methods: {
     handleLogin(username, password) {
-      this.$mapo.$auth
-        .login({ username, password })
-        .then(() =>
-          this.$router.push({
-            path: this.redirect || "/",
-            query: this.otherQuery,
-          })
-        )
-        .catch((error) => {
-          this.errors = error.response?.data || {}
-          if (!Object.keys(this.errors).length){
-            this.$mapo.$snack.open({message: this.$t("mapo.loginError"), color: "error"})
-          }
-        });
+      // this.$mapo.$auth
+      //   .login({ username, password })
+      //   .then(() =>
+      //     this.$router.push({
+      //       path: this.redirect || "/",
+      //       query: this.otherQuery,
+      //     })
+      //   )
+      //   .catch((error) => {
+      //     this.errors = error.response?.data || {}
+      //     if (!Object.keys(this.errors).length){
+      //       this.$mapo.$snack.open({message: this.$t("mapo.loginError"), color: "error"})
+      //     }
+      //   });
     },
   },
 };
 </script>
 
 <style lang="scss">
-@import "@mapomodule/uikit/assets/variables.scss";
+@use "../assets/variables.scss" as v;
 .login {
   &__wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: $w-1;
-    color: $black;
+    background: v.$w-1;
+    color: v.$black;
     height: 100%;
   }
   &__inner {
@@ -113,7 +113,7 @@ export default {
     width: 300px;
     &__title {
       font-size: 2rem;
-      border-bottom: 2px solid $black;
+      border-bottom: 2px solid v.$black;
     }
   }
   &__form {

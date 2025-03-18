@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <nuxt />
-    <root-components />
+    <slot />
+    <!-- <root-components /> -->
   </v-app>
 </template>
 

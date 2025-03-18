@@ -65,4 +65,6 @@ function mergeTime(dateTime, time) {
     return mergeDate(timeDateTime, newDateTime);
 }
 
-module.exports = { ...formatOps, cleanDateStr, mergeDate, mergeTime };
+export { cleanDateStr, mergeDate, mergeTime };
+
+export const { getUTC, formatLocalTime, formatLocalDate, formatLocalDateTime, formatUTCTime, formatUTCDate } = formatOps;
