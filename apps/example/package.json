@@ -1,7 +1,7 @@
 {
   "name": "example",
   "private": true,
-  "type": "module",
+  "description": "Example project using mapo",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev -p 3003",

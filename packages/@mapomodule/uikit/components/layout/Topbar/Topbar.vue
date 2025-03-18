@@ -7,7 +7,7 @@
     dense
   > -->
   <v-app-bar
-    :clipped-left="false"
+    :clipped-left="true"
     fixed
     app
     flat

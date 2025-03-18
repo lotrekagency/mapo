@@ -15,7 +15,7 @@
 </template>
 
 <script>
-// import { buildRoutes } from "../routebuilder";
+import { buildRoutes } from "../routebuilder";
 
 // @vuese
 export default {
@@ -43,8 +43,7 @@ export default {
   },
   methods: {
     buildRoutes(routes) {
-      // return buildRoutes(routes, this.defaultIcon)
-      return []
+      return buildRoutes(routes, this.defaultIcon)
     },
   },
 };

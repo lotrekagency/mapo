@@ -127,7 +127,7 @@ export default {
   name: "SidebarListItem",
   data() {
     return {
-      expanded: false,
+      expanded: true,
       nestDepth: 14,
     };
   },
