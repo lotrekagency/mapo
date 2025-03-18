@@ -1,6 +1,6 @@
 {
   "name": "mapomodule",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Mapo is a nuxt module that helps in the creation of Administration Panels.",
   "type": "module",
   "scripts": {

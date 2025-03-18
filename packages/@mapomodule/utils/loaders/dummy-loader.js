@@ -1,0 +1,1 @@
+export default function (source, map) { this.callback(null, "export default function (Component) {}", map) }

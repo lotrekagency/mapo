@@ -72,6 +72,9 @@ importers:
       '@mapomodule/core':
         specifier: workspace:^
         version: link:../core
+      '@mapomodule/utils':
+        specifier: workspace:^
+        version: link:../utils
       '@nuxt/eslint':
         specifier: latest
         version: 1.2.0(@vue/compiler-sfc@3.5.13)(eslint@9.22.0)(typescript@5.8.2)(vite@6.2.2)
@@ -135,6 +138,8 @@ importers:
       vuetify:
         specifier: ^3.7.16
         version: 3.7.16(typescript@5.8.2)(vite-plugin-vuetify@2.1.0)(vue@3.5.13)
+
+  packages/@mapomodule/utils: {}
 
   packages/mapomodule:
     dependencies:
@@ -3905,7 +3910,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.5.13(typescript@5.8.2)
-      vue-component-type-helpers: 3.0.0-alpha.2
+      vue-component-type-helpers: 2.2.8
     dev: true
 
   /@storybook/vue3@8.4.7(storybook@8.4.7)(vue@3.5.13):
@@ -3925,7 +3930,7 @@ packages:
       ts-dedent: 2.2.0
       type-fest: 2.19.0
       vue: 3.5.13(typescript@5.8.2)
-      vue-component-type-helpers: 3.0.0-alpha.2
+      vue-component-type-helpers: 2.2.8
     dev: true
 
   /@stylistic/eslint-plugin@4.2.0(eslint@9.22.0)(typescript@5.8.2):
@@ -12653,10 +12658,6 @@ packages:
 
   /vue-component-type-helpers@2.2.8:
     resolution: {integrity: sha512-4bjIsC284coDO9om4HPA62M7wfsTvcmZyzdfR0aUlFXqq4tXxM1APyXpNVxPC8QazKw9OhmZNHBVDA6ODaZsrA==}
-    dev: true
-
-  /vue-component-type-helpers@3.0.0-alpha.2:
-    resolution: {integrity: sha512-dv9YzsuJFLnpRNxKU0exwIlCIA/v+rXrgCsEtaENsFJLPFMw1Sr4IRctilwfjnjCzoJGgGACHRZfxo6ZwlH2fQ==}
     dev: true
 
   /vue-devtools-stub@0.1.0:
