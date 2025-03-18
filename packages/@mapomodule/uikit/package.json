@@ -19,6 +19,8 @@
   },
   "files": [
     "components",
+    "pages",
+    "layouts",
     "nuxt.config.ts"
   ],
   "license": "MIT",
