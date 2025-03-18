@@ -4,7 +4,7 @@ const { x, y } = useMouse();
 
 <template>
   <div>
-    <h1>Hello World UI!</h1>
+    <h1>Hello World UI! {{ $t('mapo.apply') }}</h1>
     <p>Mouse position UI is at: {{ x }}, {{ y }}</p>
   </div>
 </template>

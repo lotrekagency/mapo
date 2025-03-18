@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ $t('mapo.apply') }}
     <HelloWorldCore />
     <HelloWorldUI />
     <ButtonUI />
@@ -10,8 +11,6 @@
 
 <script setup lang="ts">
 const { x, y } = useMouse();
-
-console.log("Mapomodule composable from core", { x, y })
 </script>
 
 
