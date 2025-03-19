@@ -11,7 +11,7 @@
   "scripts": {
     "build": "lerna run build --parallel",
     "dev": "lerna run dev --parallel",
-    "dev:example": "lerna run dev --scope=apps/example",
+    "dev:example": "lerna run dev --scope=example",
     "lint": "lerna run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "publish": "lerna publish --conventional-commits",
