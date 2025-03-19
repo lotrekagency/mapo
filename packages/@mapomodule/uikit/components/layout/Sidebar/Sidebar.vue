@@ -3,7 +3,7 @@
     v-model="drawer"
     :mini-variant.sync="miniVariant"
     width="300"
-    :clipped="this.$store.getters['mapo/app/clipped']"
+    :clipped="appStore.clipped"
     fixed
     app
   >
@@ -11,21 +11,21 @@
       <div class="menu--container-top">
         <component v-if="componentExists('MapoSidebarTitleTopSlot')" :is="'MapoSidebarTitleTopSlot'" />
         <component v-if="componentExists('MapoSidebarTitleSlot')" :is="'MapoSidebarTitleSlot'" />
-        <SidebarTitle v-else />
+        <LayoutSidebarTitle v-else />
         <component v-if="componentExists('MapoSidebarTitleBottomSlot')" :is="'MapoSidebarTitleBottomSlot'" />
         <v-divider></v-divider>
       </div>
       <div class="menu--container-center">
         <component v-if="componentExists('MapoSidebarListTopSlot')" :is="'MapoSidebarListTopSlot'" />
         <component v-if="componentExists('MapoSidebarListSlot')" :is="'MapoSidebarListSlot'" />
-        <SidebarList v-else :force-collapse="miniVariant" />
+        <LayoutSidebarList v-else :force-collapse="miniVariant" />
         <component v-if="componentExists('MapoSidebarListBottomSlot')" :is="'MapoSidebarListBottomSlot'" />
       </div>
      <div class="menu--container-bottom">
         <v-divider></v-divider>
         <component v-if="componentExists('MapoSidebarListFooterTopSlot')" :is="'MapoSidebarListFooterTopSlot'" />
         <component v-if="componentExists('MapoSidebarListFooterSlot')" :is="'MapoSidebarListFooterSlot'" />
-        <SidebarList v-else footer :force-collapse="miniVariant" />
+        <LayoutSidebarList v-else footer :force-collapse="miniVariant" />
         <component v-if="componentExists('MapoSidebarListFooterBottomSlot')" :is="'MapoSidebarListFooterBottomSlot'" />
         <v-divider></v-divider>
         <component v-if="componentExists('MapoLogoutButtonTopSlot')" :is="'MapoLogoutButtonTopSlot'" />
@@ -57,32 +57,38 @@
 <script>
 // @vuese
 export default {
+  setup(){
+    const appStore = useAppStore()
+    return { appStore }
+  },
   name: "Sidebar",
   computed: {
     drawer: {
       get() {
-        return this.$store.getters["mapo/app/drawer"];
+        return this.appStore.drawer;
       },
       set(value) {
-        if (this.$store.getters["mapo/app/drawer"] !== value)
-          this.$store.dispatch("mapo/app/toggleSidebarDrawer");
+        if (this.appStore.drawer !== value)
+          this.toggleSidebarDrawer();
         return value;
       },
     },
     miniVariant: {
       get() {
-        return this.$store.getters["mapo/app/minivariant"];
+        return this.appStore.minivariant;
       },
       set(value) {
-        if (this.$store.getters["mapo/app/minivariant"] !== value)
-          this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
+        if (this.appStore.minivariant !== value)
+          this.toggleSidebarMinivariant();
         return value;
       },
     },
   },
   methods:{
     componentExists(name){
-      return name in this.$options.components;
+      // return name in this.$options.components;
+      // TODO: check if is the correct way to check if a component exists
+      return name in getCurrentInstance()?.appContext.components;
     }
   }
 };

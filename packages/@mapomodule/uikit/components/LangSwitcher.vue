@@ -15,9 +15,11 @@
     </template>
     <template v-slot:item="{ item, on, attrs }">
       <v-list-item v-on="on" v-bind="attrs">
-        <v-list-item-icon class="mr-2">
-          {{ item.iso ? getFlag(item.iso) : item.name }}
-        </v-list-item-icon>
+        <template v-slot:prepend>
+          <v-icon class="mr-2">
+            {{ item.iso ? getFlag(item.iso) : item.name }}
+          </v-icon>
+        </template>
         <v-list-item-title>
           {{ item.name }}
         </v-list-item-title>
