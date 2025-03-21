@@ -4,7 +4,7 @@
   "description": "Example project using mapo",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev -p 3003",
+    "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

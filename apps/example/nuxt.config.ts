@@ -16,5 +16,5 @@ export default defineNuxtConfig({
       { code: 'en', iso: 'en-US', file: 'en-US.ts' },
       { code: 'it', iso: 'it-IT', file: 'it-IT.ts' },
     ],
-  },
+  }
 })

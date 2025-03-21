@@ -23,26 +23,24 @@
 // @vuese
 export default {
   setup(){
-    const appStore = useAppStore()
-    return { appStore }
+    const { $mapo } = useNuxtApp();
+    const { $store } = useNuxtApp();
+    return { $mapo, $store }
   },
   computed: {
     username() {
-      // return this.isLoggedIn ? this.$mapo.$auth.user.username : "";
-      return "username";
+      return this.isLoggedIn ? this.$mapo.$auth.user.username : "";
     },
     avatar() {
-      // return this.$mapo.$auth.user.avatar;
-      return null;
+      return this.$mapo.$auth.user.avatar;
     },
     isLoggedIn() {
-      // return this.$mapo.$auth.user.isLoggedIn;
-      return false;
+      return this.$mapo.$auth.user.isLoggedIn;
     },
   },
   methods: {
     toggleMiniVariant() {
-      this.appStore.toggleSidebarMinivariant()
+      this.$store.app.toggleSidebarMinivariant()
     },
   },
 };

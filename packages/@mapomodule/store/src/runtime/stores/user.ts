@@ -89,14 +89,16 @@ export const useUserStore = defineStore('user', {
     // endregion old mutations
     // region old actions
     login(loginParams: ILoginParams) {
-      console.log("store pre promise", loginParams);
-
       const { username, password } = loginParams;
       return new Promise((resolve, reject) => {
-        const url = process.env.AUTH_LOGIN_URL || "/api/auth/login";
-        console.log("store", loginParams, url);
+        const url = process.env.AUTH_LOGIN_URL || "/api/auth/login/";
         $fetch(url, {
           method: 'POST',
+          //TODO: remove after integrations
+          baseURL: 'http://localhost:8000',
+          headers: {
+            "x-Forwarded-Host": "localhost",
+          },
           body: JSON.stringify({
             username: (username || "").trim(),
             password: (password || "").trim(),

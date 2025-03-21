@@ -2,13 +2,11 @@
   <div class="d-flex">
     <v-list-item dense class="darker__item" link @click.native="login">
       <template v-slot:prepend>
-        <!-- <v-icon v-if="$mapo.$auth.user.isLoggedIn">mdi-logout</v-icon> -->
-       <v-icon v-if="false">mdi-logout</v-icon>
+        <v-icon v-if="$mapo.$auth.user.isLoggedIn">mdi-logout</v-icon>
         <v-icon v-else>mdi-login</v-icon>
       </template>
       <v-list-item-title>{{
-        // $mapo.$auth.user.isLoggedIn ? $t("mapo.logout") : $t("mapo.login")
-        $t("mapo.login")
+        $mapo.$auth.user.isLoggedIn ? $t("mapo.logout") : $t("mapo.login")
       }}</v-list-item-title>
     </v-list-item>
     <v-list-item

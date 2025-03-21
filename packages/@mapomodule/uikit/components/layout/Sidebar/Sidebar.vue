@@ -3,7 +3,7 @@
     v-model="drawer"
     :mini-variant.sync="miniVariant"
     width="300"
-    :clipped="appStore.clipped"
+    :clipped="this.$store.app.get_clipped"
     fixed
     app
   >
@@ -58,28 +58,28 @@
 // @vuese
 export default {
   setup(){
-    const appStore = useAppStore()
-    return { appStore }
+    const $store = useNuxtApp().$store
+    return { $store }
   },
   name: "Sidebar",
   computed: {
     drawer: {
       get() {
-        return this.appStore.drawer;
+        return this.$store.app.drawer;
       },
       set(value) {
-        if (this.appStore.drawer !== value)
-          this.appStore.toggleSidebarDrawer();
+        if (this.$store.app.drawer !== value)
+          this.$store.app.toggleSidebarDrawer();
         return value;
       },
     },
     miniVariant: {
       get() {
-        return this.appStore.minivariant;
+        return this.$store.app.minivariant;
       },
       set(value) {
-        if (this.appStore.minivariant !== value)
-          this.appStore.toggleSidebarMinivariant();
+        if (this.$store.app.minivariant !== value)
+          this.$store.app.toggleSidebarMinivariant();
         return value;
       },
     },

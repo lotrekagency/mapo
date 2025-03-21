@@ -13,9 +13,8 @@ export default defineNuxtModule<ModuleOptions>({
   setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
 
-    console.log('>>>>>>>>>>', _nuxt)
-
     addImportsDir(resolver.resolve('./runtime/api-utils'))
+    addImportsDir(resolver.resolve('./templates'))
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
     addPlugin(resolver.resolve('./runtime/plugins/core'))

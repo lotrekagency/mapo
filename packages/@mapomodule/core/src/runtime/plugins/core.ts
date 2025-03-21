@@ -43,12 +43,12 @@ export default defineNuxtPlugin({
          */
         getInfo: () => $store?.user?.getInfo(),
         user: {
-          get isLoggedIn() { return $store?.user?.isLoggedIn() },
-          get token() { return $store?.user?.token() },
-          get info() { return $store?.user?.info() },
-          get username() { return $store?.user?.username() },
-          get permissions() { return $store?.user?.pagePermission()(useNuxtApp().$router.currentRoute.value.name || "") },
-          get role() { return $store?.user?.role() }
+          get isLoggedIn() { return $store?.user?.isLoggedIn },
+          get token() { return $store?.user?.token },
+          get info() { return $store?.user?.info },
+          get username() { return $store?.user?.username },
+          get permissions() { return $store?.user?.pagePermission(useNuxtApp().$router.currentRoute.value.name || "") },
+          get role() { return $store?.user?.role }
         },
         /**
          *

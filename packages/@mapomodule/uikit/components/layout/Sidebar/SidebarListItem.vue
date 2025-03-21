@@ -124,6 +124,13 @@
 
 <script>
 export default {
+  setup() {
+    const { $mapo } = useNuxtApp();
+    const { $store } = useNuxtApp();
+    const route = useRoute();
+
+    return { route, $mapo, $store };
+  },
   name: "SidebarListItem",
   data() {
     return {
@@ -146,10 +153,9 @@ export default {
       };
     },
     activeChild() {
-      // return (this.childrens || []).some((child) =>
-      //   this.$nuxt.$route.path.startsWith(child.link)
-      // );
-      return true
+      return (this.childrens || []).some((child) =>
+        this.route.path.startsWith(child.link)
+      );
     },
     userCanSee() {
       return this.checkPermissions();
@@ -157,19 +163,18 @@ export default {
   },
   methods: {
     checkPermissions(child = undefined) {
-      // const item = child || this;
-      // const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: item.meta });
-      // if (middleware.includes("permissions")) {
-      //   const { model } = item.meta?.permissions || {};
-      //   return this.$store.getters["mapo/user/hasModelPermission"](model, "view");
-      // }
-      // if (middleware.includes("auth")) {
-      //   return this.$mapo.$auth.user.isLoggedIn;
-      // }
-      // return (
-      //   item.childrens.length == 0 || item.childrens.some((c) => this.checkPermissions(c))
-      // );
-      return true;
+      const item = child || this;
+      const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: item.meta });
+      if (middleware.includes("permissions")) {
+        const { model } = item.meta?.permissions || {};
+        return this.$store.user.hasModelPermission(model, "view");
+      }
+      if (middleware.includes("auth")) {
+        return this.$mapo.$auth.user.isLoggedIn;
+      }
+      return (
+        item.childrens.length == 0 || item.childrens.some((c) => this.checkPermissions(c))
+      );
     },
   },
   props: {

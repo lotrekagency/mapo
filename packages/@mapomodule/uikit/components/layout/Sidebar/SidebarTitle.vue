@@ -29,22 +29,21 @@
 // @vuese
 export default {
   setup(){
-    const appStore = useAppStore()
-    return { appStore }
+    const $store = useNuxtApp().$store
+    const $mapo = useNuxtApp().$mapo
+    return { $store, $mapo }
   },
   computed:{
     title(){
-      // return this.$mapo.$options?.ui?.panelName || "BACKOFFICE"
-      return "BACKOFFICE"
+      return this.$mapo.$options?.ui?.panelName || "BACKOFFICE"
     },
     logo(){
-      // return this.$mapo.$options?.ui?.panelLogo
-      return null
+      return this.$mapo.$options?.ui?.panelLogo
     }
   },
   methods: {
     toggleMiniVariant() {
-      this.appStore.toggleSidebarMinivariant()
+      this.$store.app.toggleSidebarMinivariant()
     },
   },
 };
