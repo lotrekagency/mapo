@@ -69,7 +69,7 @@ export default {
       },
       set(value) {
         if (this.appStore.drawer !== value)
-          this.toggleSidebarDrawer();
+          this.appStore.toggleSidebarDrawer();
         return value;
       },
     },
@@ -79,7 +79,7 @@ export default {
       },
       set(value) {
         if (this.appStore.minivariant !== value)
-          this.toggleSidebarMinivariant();
+          this.appStore.toggleSidebarMinivariant();
         return value;
       },
     },

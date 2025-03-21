@@ -9,6 +9,7 @@
     "url": "git+https://github.com/lotrekagency/mapo.git"
   },
   "scripts": {
+    "prepack": "lerna run prepack",
     "build": "lerna run build --parallel",
     "dev": "lerna run dev --parallel",
     "dev:example": "lerna run dev --scope=example",

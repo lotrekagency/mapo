@@ -23,9 +23,8 @@
 // @vuese
 export default {
   setup(){
-    const store = useAppStore()
-    const { toggleSidebarMinivariant } = store
-    return { toggleSidebarMinivariant }
+    const appStore = useAppStore()
+    return { appStore }
   },
   computed: {
     username() {
@@ -43,7 +42,7 @@ export default {
   },
   methods: {
     toggleMiniVariant() {
-      this.toggleSidebarMinivariant()
+      this.appStore.toggleSidebarMinivariant()
     },
   },
 };

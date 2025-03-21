@@ -1,0 +1,58 @@
+{
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": [],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "install": {
+      "dependsOn": ["^prepack"]
+    },
+    "dev": {
+      "dependsOn": ["^prepack"]
+    },
+    "generate": {
+      "dependsOn": []
+    },
+    "preview": {
+      "dependsOn": []
+    },
+    "postinstall": {
+      "dependsOn": []
+    },
+    "prepack": {
+      "dependsOn": [
+        "^prepack"
+      ]
+    },
+    "dev:build": {
+      "dependsOn": []
+    },
+    "dev:prepare": {
+      "dependsOn": []
+    },
+    "release": {
+      "dependsOn": []
+    },
+    "lint": {
+      "dependsOn": []
+    },
+    "test": {
+      "dependsOn": []
+    },
+    "test:watch": {
+      "dependsOn": []
+    },
+    "test:types": {
+      "dependsOn": []
+    },
+    "storybook": {
+      "dependsOn": []
+    },
+    "build-storybook": {
+      "dependsOn": []
+    }
+  }
+}

@@ -118,3 +118,5 @@ export const useAppStore = defineStore('app', {
     // snackbar: state => state.snackbar,
   }
 })
+
+export type TAppStore = ReturnType<typeof useAppStore>

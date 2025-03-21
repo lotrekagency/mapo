@@ -44,12 +44,16 @@
 
 <script>
 export default {
+  setup() {
+    const { $mapo } = useNuxtApp();
+    return { $mapo };
+  },
   name: "LogoutButton",
   methods: {
     login() {
-      // this.$mapo.$auth.user.isLoggedIn
-      //   ? this.$store.dispatch("mapo/user/logout")
-      //   : this.$router.push("/login");
+      this.$mapo.$auth.user.isLoggedIn
+        ? this.$store?.user.logout()
+        : this.$router.push("/login");
     },
   },
 };

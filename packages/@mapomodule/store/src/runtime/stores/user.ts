@@ -89,9 +89,12 @@ export const useUserStore = defineStore('user', {
     // endregion old mutations
     // region old actions
     login(loginParams: ILoginParams) {
+      console.log("store pre promise", loginParams);
+
       const { username, password } = loginParams;
-      return new Promise<void>((resolve, reject) => {
+      return new Promise((resolve, reject) => {
         const url = process.env.AUTH_LOGIN_URL || "/api/auth/login";
+        console.log("store", loginParams, url);
         $fetch(url, {
           method: 'POST',
           body: JSON.stringify({
@@ -104,7 +107,7 @@ export const useUserStore = defineStore('user', {
           const { token } = response.data;
           this.SET_TOKEN(token);
           this.SET_LOGGEDIN(true);
-          this.getInfo().then(() => resolve());
+          this.getInfo().then(resolve);
         })
         .catch((error) => {
           reject(error);
@@ -190,3 +193,5 @@ export const useUserStore = defineStore('user', {
       ),
   }
 })
+
+export type TUserStore = ReturnType<typeof useUserStore>
