@@ -1,11 +1,11 @@
 <template>
   <v-list-item class="sidebar-title--container">
-    <v-list-item-avatar class="sidebar-title--logo" v-if="logo">
-      <v-img :src="logo"></v-img>
-    </v-list-item-avatar>
-    <v-list-item-icon v-else>
-      <v-icon color="secondary">mdi-artstation</v-icon>
-    </v-list-item-icon>
+    <template v-slot:prepend>
+      <v-avatar v-if="logo" class="sidebar-title--logo">
+        <v-img :src="logo"></v-img>
+      </v-avatar>
+      <v-icon color="secondary" v-else>mdi-artstation</v-icon>
+    </template>
     <v-list-item-title>
         <b>{{title}}</b>
     </v-list-item-title>
@@ -30,15 +30,17 @@
 export default {
   computed:{
     title(){
-      return this.$mapo.$options?.ui?.panelName || "BACKOFFICE"
+      // return this.$mapo.$options?.ui?.panelName || "BACKOFFICE"
+      return "BACKOFFICE"
     },
     logo(){
-      return this.$mapo.$options?.ui?.panelLogo
+      // return this.$mapo.$options?.ui?.panelLogo
+      return null
     }
   },
   methods: {
     toggleMiniVariant() {
-      this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
+      // this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
     },
   },
 };

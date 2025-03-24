@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <Sidebar />
-    <Topbar />
+    <LayoutSidebar />
+    <LayoutTopbar />
     <v-main>
-      <nuxt />
-      <root-components />
+      <slot />
+      <!-- <root-components /> -->
     </v-main>
   </v-app>
 </template>

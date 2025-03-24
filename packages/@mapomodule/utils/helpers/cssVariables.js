@@ -7,6 +7,6 @@ function setScrollbarTrackColor(dark) {
         );
 }
 
-module.exports = {
+export {
     setScrollbarTrackColor,
 };

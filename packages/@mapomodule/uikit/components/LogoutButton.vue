@@ -1,12 +1,14 @@
 <template>
   <div class="d-flex">
     <v-list-item dense class="darker__item" link @click.native="login">
-      <v-list-item-icon>
-        <v-icon v-if="$mapo.$auth.user.isLoggedIn">mdi-logout</v-icon>
+      <template v-slot:prepend>
+        <!-- <v-icon v-if="$mapo.$auth.user.isLoggedIn">mdi-logout</v-icon> -->
+       <v-icon v-if="false">mdi-logout</v-icon>
         <v-icon v-else>mdi-login</v-icon>
-      </v-list-item-icon>
+      </template>
       <v-list-item-title>{{
-        $mapo.$auth.user.isLoggedIn ? $t("mapo.logout") : $t("mapo.login")
+        // $mapo.$auth.user.isLoggedIn ? $t("mapo.logout") : $t("mapo.login")
+        $t("mapo.login")
       }}</v-list-item-title>
     </v-list-item>
     <v-list-item
@@ -45,9 +47,9 @@ export default {
   name: "LogoutButton",
   methods: {
     login() {
-      this.$mapo.$auth.user.isLoggedIn
-        ? this.$store.dispatch("mapo/user/logout")
-        : this.$router.push("/login");
+      // this.$mapo.$auth.user.isLoggedIn
+      //   ? this.$store.dispatch("mapo/user/logout")
+      //   : this.$router.push("/login");
     },
   },
 };

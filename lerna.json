@@ -1,10 +1,6 @@
 {
-  "packages": [
-    "example",
-    "packages/@mapomodule/*",
-    "packages/mapomodule"
-  ],
-  "npmClient": "yarn",
-  "useWorkspaces": true,
-  "version": "1.0.0-alpha.54"
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "version": "independent",
+  "npmClient": "pnpm"
 }
+

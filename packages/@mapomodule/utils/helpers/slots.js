@@ -4,6 +4,6 @@ function nameSpacedSlots(slots, scope) {
         .map((name) => name.replace(scope, ""));
 }
 
-module.exports = {
+export {
     nameSpacedSlots
 }

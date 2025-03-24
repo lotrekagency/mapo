@@ -36,7 +36,7 @@ function memoizedDebounce(
     };
 }
 
-module.exports = {
+export {
     debounce,
     memoizedDebounce,
 };

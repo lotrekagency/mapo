@@ -1,25 +1,45 @@
 {
   "name": "mapomodule",
-  "version": "1.0.0-alpha.54",
+  "version": "0.0.1",
   "description": "Mapo is a nuxt module that helps in the creation of Administration Panels.",
-  "author": "bnznamco <gabriele.baldi.01@gmail.com>",
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev -p 3006",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "main": "./nuxt.config.ts",
+  "exports": {
+    ".": "./nuxt.config.ts",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "nuxt.config.ts"
+  ],
   "keywords": [
     "mapo",
     "nuxt",
     "Admin",
     "Panel"
   ],
+  "author": "bnznamco <gabriele.baldi.01@gmail.com>",
   "license": "MIT",
   "repository": "https://github.com/lotrekagency/mapo",
-  "main": "./module.js",
   "dependencies": {
-    "@mapomodule/core": "^1.0.0-alpha.49",
-    "@mapomodule/integrations": "^1.0.0-alpha.16",
-    "@mapomodule/routemeta": "^1.0.0-alpha.8",
-    "@mapomodule/store": "^1.0.0-alpha.49",
-    "@mapomodule/uikit": "^1.0.0-alpha.54",
-    "@nuxtjs/axios": "^5.13.6",
-    "lodash.mergewith": "^4.6.2"
+    "@mapomodule/core": "workspace:^",
+    "@mapomodule/uikit": "workspace:^",
+    "@nuxt/eslint": "1.2.0",
+    "@nuxt/test-utils": "3.17.2",
+    "eslint": "^9.0.0",
+    "nuxt": "^3.16.0",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "engines": {
+    "node": ">=22.13.1",
+    "npm": ">=10.5.2"
   },
   "publishConfig": {
     "access": "public"

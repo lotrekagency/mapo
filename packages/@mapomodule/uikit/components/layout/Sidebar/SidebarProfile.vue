@@ -1,12 +1,12 @@
 <template>
   <v-list-item>
-    <v-list-item-avatar v-if="avatar">
-      <v-img :src="avatar"></v-img>
-    </v-list-item-avatar>
-    <v-list-item-icon v-else>
-      <v-icon>mdi-account</v-icon>
-    </v-list-item-icon>
-    <v-list-item-title>
+    <template v-slot:prepend>
+      <v-avatar v-if="avatar">
+        <v-img :src="avatar"></v-img>
+      </v-avatar>
+      <v-icon v-else>mdi-account</v-icon>
+      <template v-slot:prepend>
+        <v-list-item-title>
       <span v-if="isLoggedIn">
         {{ username }}
       </span>
@@ -24,18 +24,21 @@
 export default {
   computed: {
     username() {
-      return this.isLoggedIn ? this.$mapo.$auth.user.username : "";
+      // return this.isLoggedIn ? this.$mapo.$auth.user.username : "";
+      return "username";
     },
     avatar() {
-      return this.$mapo.$auth.user.avatar;
+      // return this.$mapo.$auth.user.avatar;
+      return null;
     },
     isLoggedIn() {
-      return this.$mapo.$auth.user.isLoggedIn;
+      // return this.$mapo.$auth.user.isLoggedIn;
+      return false;
     },
   },
   methods: {
     toggleMiniVariant() {
-      this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
+      // this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
     },
   },
 };

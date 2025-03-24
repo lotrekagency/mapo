@@ -1,4 +1,4 @@
-module.exports = function () {
+export default function () {
     const d = {};
     document.addEventListener("mousedown", e => {
         const closestDialog = e.target.closest(".v-dialog.v-dialog--active");

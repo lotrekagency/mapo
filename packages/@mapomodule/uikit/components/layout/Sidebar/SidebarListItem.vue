@@ -8,9 +8,9 @@
       link
       :to="link"
     >
-      <v-list-item-icon v-if="icon">
+      <template v-slot:prepend v-if="icon">
         <v-icon>{{ icon }}</v-icon>
-      </v-list-item-icon>
+      </template>
       <v-list-item-title>
         {{ label.translate ? $t(label.translate) : label }}
       </v-list-item-title>
@@ -28,7 +28,7 @@
       :style="indent"
       v-if="childrens.length && expanded && !forceCollapse"
     >
-      <SidebarListItem
+      <LayoutSidebarListItem
         v-for="(item, i) in childrens"
         :key="i"
         :link="item.link"
@@ -46,7 +46,7 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@mapomodule/uikit/assets/variables.scss";
+@use "../../../assets/variables.scss";
 
 .v-list-item::after {
   content: "";
@@ -127,7 +127,7 @@ export default {
   name: "SidebarListItem",
   data() {
     return {
-      expanded: false,
+      expanded: true,
       nestDepth: 14,
     };
   },
@@ -146,9 +146,10 @@ export default {
       };
     },
     activeChild() {
-      return (this.childrens || []).some((child) =>
-        this.$nuxt.$route.path.startsWith(child.link)
-      );
+      // return (this.childrens || []).some((child) =>
+      //   this.$nuxt.$route.path.startsWith(child.link)
+      // );
+      return true
     },
     userCanSee() {
       return this.checkPermissions();
@@ -156,18 +157,19 @@ export default {
   },
   methods: {
     checkPermissions(child = undefined) {
-      const item = child || this;
-      const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: item.meta });
-      if (middleware.includes("permissions")) {
-        const { model } = item.meta?.permissions || {};
-        return this.$store.getters["mapo/user/hasModelPermission"](model, "view");
-      }
-      if (middleware.includes("auth")) {
-        return this.$mapo.$auth.user.isLoggedIn;
-      }
-      return (
-        item.childrens.length == 0 || item.childrens.some((c) => this.checkPermissions(c))
-      );
+      // const item = child || this;
+      // const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: item.meta });
+      // if (middleware.includes("permissions")) {
+      //   const { model } = item.meta?.permissions || {};
+      //   return this.$store.getters["mapo/user/hasModelPermission"](model, "view");
+      // }
+      // if (middleware.includes("auth")) {
+      //   return this.$mapo.$auth.user.isLoggedIn;
+      // }
+      // return (
+      //   item.childrens.length == 0 || item.childrens.some((c) => this.checkPermissions(c))
+      // );
+      return true;
     },
   },
   props: {

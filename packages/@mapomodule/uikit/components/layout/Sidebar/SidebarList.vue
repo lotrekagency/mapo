@@ -1,6 +1,6 @@
 <template>
   <v-list dense class="py-0 overflow-y-auto">
-    <SidebarListItem
+    <LayoutSidebarListItem
       v-for="(item, i) in routes"
       :key="i"
       :link="item.link"
@@ -25,9 +25,10 @@ export default {
     forceCollapse: Boolean,
     spiderMenu: {
       type: Boolean,
-      default() { 
-        const { spiderMenu } = this.$mapo.$options?.ui?.sidebar || {};
-        return spiderMenu == undefined ? true : spiderMenu;
+      default() {
+        // const { spiderMenu } = this.$mapo.$options?.ui?.sidebar || {};
+        // return spiderMenu == undefined ? true : spiderMenu;
+        return true
       }
     }
   },

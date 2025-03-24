@@ -42,7 +42,7 @@ function nestReduce(array, defaultIcon) {
         return stack;
     }, []);
 }
-module.exports = {
+export {
     buildRoutes,
     nestReduce
 }

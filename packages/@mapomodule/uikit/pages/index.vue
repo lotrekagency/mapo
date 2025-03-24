@@ -28,10 +28,10 @@
 }
 </style>
 <script>
-import { version } from "mapomodule/package.json";
+// import { version } from "mapomodule/package.json";
 export default {
   data: () => ({
-    version: version
-  }),
+    version: '0.0.1 Nuxt 3'
+  })
 };
 </script>

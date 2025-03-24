@@ -1,10 +1,10 @@
-const auth = require('./helpers/auth');
-const debounce = require('./helpers/debounce');
-const formatters = require('./helpers/formatters');
-const objHelpers = require('./helpers/objHelpers');
-const VDraggableModals = require('./plugins/v-draggable-modals');
+import auth from './helpers/auth';
+import debounce from './helpers/debounce';
+import formatters from './helpers/formatters';
+import objHelpers from './helpers/objHelpers';
+import VDraggableModals from './plugins/v-draggable-modals';
 
-module.exports = {
+export {
     auth,
     debounce,
     formatters,
