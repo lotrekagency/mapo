@@ -1,17 +1,9 @@
 <template>
-  <!-- <v-navigation-drawer
-    v-model="drawer"
-    :mini-variant.sync="miniVariant"
-    width="300"
-    :clipped="this.$store.getters['mapo/app/clipped']"
-    fixed
-    app
-  > -->
   <v-navigation-drawer
     v-model="drawer"
     :mini-variant.sync="miniVariant"
     width="300"
-    :clipped="true"
+    :clipped="appStore.clipped"
     fixed
     app
   >
@@ -65,30 +57,32 @@
 <script>
 // @vuese
 export default {
+  setup(){
+    const appStore = useAppStore()
+    return { appStore }
+  },
   name: "Sidebar",
   computed: {
-    // drawer: {
-    //   get() {
-    //     return this.$store.getters["mapo/app/drawer"];
-    //   },
-    //   set(value) {
-    //     if (this.$store.getters["mapo/app/drawer"] !== value)
-    //       this.$store.dispatch("mapo/app/toggleSidebarDrawer");
-    //     return value;
-    //   },
-    // },
-    // miniVariant: {
-    //   get() {
-    //     return this.$store.getters["mapo/app/minivariant"];
-    //   },
-    //   set(value) {
-    //     if (this.$store.getters["mapo/app/minivariant"] !== value)
-    //       this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
-    //     return value;
-    //   },
-    // },
-    drawer: true,
-    miniVariant: true
+    drawer: {
+      get() {
+        return this.appStore.drawer;
+      },
+      set(value) {
+        if (this.appStore.drawer !== value)
+          this.toggleSidebarDrawer();
+        return value;
+      },
+    },
+    miniVariant: {
+      get() {
+        return this.appStore.minivariant;
+      },
+      set(value) {
+        if (this.appStore.minivariant !== value)
+          this.toggleSidebarMinivariant();
+        return value;
+      },
+    },
   },
   methods:{
     componentExists(name){

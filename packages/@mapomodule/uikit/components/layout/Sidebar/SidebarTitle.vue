@@ -28,6 +28,11 @@
 <script>
 // @vuese
 export default {
+  setup(){
+    const store = useAppStore()
+    const { toggleSidebarMinivariant } = store
+    return { toggleSidebarMinivariant }
+  },
   computed:{
     title(){
       // return this.$mapo.$options?.ui?.panelName || "BACKOFFICE"
@@ -40,7 +45,7 @@ export default {
   },
   methods: {
     toggleMiniVariant() {
-      // this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
+      this.toggleSidebarMinivariant()
     },
   },
 };

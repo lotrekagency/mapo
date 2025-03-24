@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     'vuetify-nuxt-module',
     "@nuxtjs/i18n",
+    "@mapomodule/store"
   ],
   extends: ["@mapomodule/core"],
   // You can define all global settings here in the nuxt config.

@@ -22,6 +22,11 @@
 <script>
 // @vuese
 export default {
+  setup(){
+    const store = useAppStore()
+    const { toggleSidebarMinivariant } = store
+    return { toggleSidebarMinivariant }
+  },
   computed: {
     username() {
       // return this.isLoggedIn ? this.$mapo.$auth.user.username : "";
@@ -38,7 +43,7 @@ export default {
   },
   methods: {
     toggleMiniVariant() {
-      // this.$store.dispatch("mapo/app/toggleSidebarMinivariant");
+      this.toggleSidebarMinivariant()
     },
   },
 };
