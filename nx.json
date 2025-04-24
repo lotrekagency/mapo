@@ -24,7 +24,7 @@
     },
     "prepack": {
       "dependsOn": [
-        "^prepack"
+        "^prepare"
       ]
     },
     "dev:build": {

@@ -1,8 +1,8 @@
 <template>
   <v-navigation-drawer
     v-model="drawer"
-    :mini-variant.sync="miniVariant"
-    width="300"
+    v-model:rail="miniVariant"
+    :width="300"
     :clipped="this.$store.app.get_clipped"
     fixed
     app

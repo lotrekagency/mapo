@@ -1,12 +1,12 @@
 <template>
-  <v-list-item>
+  <v-list-item @click.stop="toggleMiniVariant">
     <template v-slot:prepend>
-      <v-avatar v-if="avatar">
+      <v-avatar v-if="avatar" @click.stop="toggleMiniVariant">
         <v-img :src="avatar"></v-img>
       </v-avatar>
-      <v-icon v-else>mdi-account</v-icon>
-      <template v-slot:prepend>
-        <v-list-item-title>
+      <v-icon @click.stop="toggleMiniVariant" v-else>mdi-account</v-icon>
+    </template>
+    <v-list-item-title>
       <span v-if="isLoggedIn">
         {{ username }}
       </span>

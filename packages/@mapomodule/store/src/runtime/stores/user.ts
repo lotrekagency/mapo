@@ -95,10 +95,10 @@ export const useUserStore = defineStore('user', {
         $fetch(url, {
           method: 'POST',
           //TODO: remove after integrations
-          baseURL: 'http://localhost:8000',
-          headers: {
-            "x-Forwarded-Host": "localhost",
-          },
+          // baseURL: 'http://localhost:8000',
+          // headers: {
+          //   "x-Forwarded-Host": "localhost",
+          // },
           body: JSON.stringify({
             username: (username || "").trim(),
             password: (password || "").trim(),

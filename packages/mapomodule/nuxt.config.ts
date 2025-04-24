@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   },
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxt/test-utils', '@nuxt/eslint'],
+  modules: ['@nuxt/test-utils', '@nuxt/eslint', '@mapomodule/integrations'],
   extends: [
     '@mapomodule/uikit'
   ]

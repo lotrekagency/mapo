@@ -1,10 +1,10 @@
 <template>
   <v-list-item class="sidebar-title--container">
     <template v-slot:prepend>
-      <v-avatar v-if="logo" class="sidebar-title--logo">
+      <v-avatar v-if="logo" class="sidebar-title--logo"@click.stop="toggleMiniVariant">
         <v-img :src="logo"></v-img>
       </v-avatar>
-      <v-icon color="secondary" v-else>mdi-artstation</v-icon>
+      <v-icon color="secondary" @click.stop="toggleMiniVariant" v-else>mdi-artstation</v-icon>
     </template>
     <v-list-item-title>
         <b>{{title}}</b>
