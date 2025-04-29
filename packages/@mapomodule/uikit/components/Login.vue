@@ -52,7 +52,7 @@
 <script>
 export default {
   setup() {
-    const { $mapo } = useNuxtApp();
+    const $mapo = useNuxtApp()?.$mapo;
     return { $mapo };
   },
   data() {
@@ -84,11 +84,12 @@ export default {
     handleLogin(username, password) {
       this.$mapo.$auth
         .login({ username, password })
-        .then(() =>
-          this.$router.push({
-            path: this.redirect || "/",
-            query: this.otherQuery,
-          })
+        .then(() => {
+            return this.$router.push({
+              path: this.redirect || "/",
+              query: this.otherQuery,
+            });
+          }
         )
         .catch((error) => {
           this.errors = error.response?.data || {}

@@ -17,9 +17,8 @@ export default defineNuxtConfig({
       { code: 'it', iso: 'it-IT', file: 'it-IT.ts' },
     ],
   },
-  integrations: {
+  runtimeConfig: {
     camomilla: {
-      location: "@mapomodule/mapo-integrations-camomilla",
       configuration: {
         api: {
           target: "http://localhost:8000",
@@ -30,5 +29,5 @@ export default defineNuxtConfig({
         },
       },
     },
-  }
+  },
 })

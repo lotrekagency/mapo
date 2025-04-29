@@ -125,8 +125,8 @@
 <script>
 export default {
   setup() {
-    const { $mapo } = useNuxtApp();
-    const { $store } = useNuxtApp();
+    const $mapo = useNuxtApp()?.$mapo;
+    const $store = useNuxtApp()?.$store;
     const route = useRoute();
 
     return { route, $mapo, $store };

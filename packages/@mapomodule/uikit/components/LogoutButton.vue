@@ -43,7 +43,7 @@
 <script>
 export default {
   setup() {
-    const { $mapo } = useNuxtApp();
+    const $mapo = useNuxtApp()?.$mapo;
     return { $mapo };
   },
   name: "LogoutButton",

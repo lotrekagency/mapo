@@ -58,7 +58,7 @@
 // @vuese
 export default {
   setup(){
-    const $store = useNuxtApp().$store
+    const $store = useNuxtApp()?.$store
     return { $store }
   },
   name: "Sidebar",
