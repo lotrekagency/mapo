@@ -1,31 +1,31 @@
 {
     "name": "@mapomodule/mapomodule",
-    "implicitDependencies": ["@mapomodule/store", "@mapomodule/core", "@mapomodule/uikit"],
-    "targets": {
-        "install": {
-          "executor": "nx:run-commands",
-          "options": {
-            "command": "pnpm install"
-          }
-        },
-        "dev": {
-          "executor": "nx:run-commands",
-          "options": {
-            "command": "pnpm run dev"
-          }
-        },
-        "prepack": {
-          "executor": "nx:run-commands",
-          "options": {
-            "command": "pnpm run prepack"
-          }
-        },
-        "prepare": {
-          "executor": "nx:run-commands",
-          "options": {
-            "command": "pnpm run prepare"
-          }
-        }
-      }
+    // "implicitDependencies": ["@mapomodule/store", "@mapomodule/core", "@mapomodule/uikit"],
+    // "targets": {
+    //     "install": {
+    //       "executor": "nx:run-commands",
+    //       "options": {
+    //         "command": "pnpm install"
+    //       }
+    //     },
+    //     "dev": {
+    //       "executor": "nx:run-commands",
+    //       "options": {
+    //         "command": "pnpm run dev"
+    //       }
+    //     },
+    //     "prepack": {
+    //       "executor": "nx:run-commands",
+    //       "options": {
+    //         "command": "pnpm run prepack"
+    //       }
+    //     },
+    //     "prepare": {
+    //       "executor": "nx:run-commands",
+    //       "options": {
+    //         "command": "pnpm run prepare"
+    //       }
+    //     }
+    //   }
   }
   
