@@ -4,7 +4,8 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'empty'
+  layout: 'empty',
+  sidebarFooter: false,
 })
 // export default {
 //   layout: "empty",

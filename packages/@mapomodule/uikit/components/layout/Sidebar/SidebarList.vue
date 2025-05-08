@@ -44,6 +44,7 @@ export default {
     };
   },
   mounted() {
+    console.log('mounted sidebar list', this.routes, this.$router, this.footer, this.$router.options.routes);
     this.routes = this.buildRoutes(this.$router.options.routes.filter(({ meta }) => !!meta?.sidebarFooter == this.footer));
   },
   methods: {

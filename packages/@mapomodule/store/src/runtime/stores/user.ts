@@ -93,13 +93,14 @@ export const useUserStore = defineStore('user', {
       return new Promise((resolve, reject) => {
         const url = process.env.AUTH_LOGIN_URL || "/api/auth/login/";
 
-        $fetch(url, {
+        useCustomFetch(url, {
           method: 'POST',
           body: JSON.stringify({
             username: (username || "").trim(),
             password: (password || "").trim(),
           })
         }).then((response) => {
+          console.log("response", response);
           const token = response?.data?.token;
 
           this.SET_TOKEN(token);
@@ -114,7 +115,7 @@ export const useUserStore = defineStore('user', {
     logout() {
       return new Promise<void>((resolve, reject) => {
         const url = process.env.AUTH_LOGIN_URL || "/api/auth/logout";
-        $fetch(url, { method: 'GET' })
+        useCustomFetch(url, { method: 'GET' })
           .then((_) => {
             this.CLEAN_DATA();
             if (typeof location !== "undefined")
@@ -132,8 +133,9 @@ export const useUserStore = defineStore('user', {
     getInfo({ updatePermissions } = { updatePermissions: true }) {
       return new Promise((resolve, reject) => {
         const url = process.env.USER_INFO_API || "/api/profiles/me/";
-        $fetch(url, { method: 'GET' })
+        useCustomFetch(url, { method: 'GET' })
           .then((response) => {
+            console.log("response", response);
             // @ts-ignore TODO: manage type response
             this.SET_INFO(response.data);
             if (updatePermissions)

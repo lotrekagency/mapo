@@ -14,8 +14,10 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     addPlugin(resolver.resolve('./runtime/plugins/pinia'), { append: true });
+    addPlugin(resolver.resolve('./runtime/plugins/fetch'), { append: true });
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
     addImportsDir(resolver.resolve('./runtime/stores'))
+    addImportsDir(resolver.resolve('./runtime/composables'))
   },
 })

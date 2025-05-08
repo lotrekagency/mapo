@@ -25,7 +25,7 @@ const createRepository = () => (endpoint: string, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     list(config: Object) {
-        const func = $fetch(`/${trimslashes(endpoint)}/`, { method: 'GET', ...higherConf, ...config })
+        const func = useCustomFetch(`/${trimslashes(endpoint)}/`, { method: 'GET', ...higherConf, ...config })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
@@ -38,7 +38,7 @@ const createRepository = () => (endpoint: string, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     create(payload: Object, config: Object, options: Object & { multipart: string }) {
-        const func = $fetch(`/${trimslashes(endpoint)}/`, { method: 'POST', ...higherConf, ...config, body: preparePayload(payload, options) })
+        const func = useCustomFetch(`/${trimslashes(endpoint)}/`, { method: 'POST', ...higherConf, ...config, body: preparePayload(payload, options) })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
@@ -50,7 +50,7 @@ const createRepository = () => (endpoint: string, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     detail(id: string | number, config: Object) {
-        const func = $fetch(`/${trimslashes(endpoint)}/${id}/`, { method: 'GET', ...higherConf, ...config })
+        const func = useCustomFetch(`/${trimslashes(endpoint)}/${id}/`, { method: 'GET', ...higherConf, ...config })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
@@ -77,7 +77,7 @@ const createRepository = () => (endpoint: string, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     update(id: string | number, payload: Object, config: Object, options: Object & { multipart: string }) {
-        const func = $fetch(`/${trimslashes(endpoint)}/${id}/`, { method: 'PUT', ...higherConf, ...config, body: preparePayload(payload, options) })
+        const func = useCustomFetch(`/${trimslashes(endpoint)}/${id}/`, { method: 'PUT', ...higherConf, ...config, body: preparePayload(payload, options) })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
@@ -91,7 +91,7 @@ const createRepository = () => (endpoint: string, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     partialUpdate(id: string | number, payload: Object, config: Object, options: Object & { multipart: string }) {
-        const func = $fetch(`/${trimslashes(endpoint)}/${id}/`, { method: 'PATCH', ...higherConf, ...config, body: preparePayload(payload, options) })
+        const func = useCustomFetch(`/${trimslashes(endpoint)}/${id}/`, { method: 'PATCH', ...higherConf, ...config, body: preparePayload(payload, options) })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
     /**
@@ -102,7 +102,7 @@ const createRepository = () => (endpoint: string, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
     delete(id: string | number, config: Object) {
-        const func = $fetch(`/${trimslashes(endpoint)}/${id}/`, { method: 'DELETE', ...higherConf, ...config })
+        const func = useCustomFetch(`/${trimslashes(endpoint)}/${id}/`, { method: 'DELETE', ...higherConf, ...config })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
     /**
@@ -115,7 +115,7 @@ const createRepository = () => (endpoint: string, higherConf = {}) => ({
      * @returns {Promise<external:AxiosResponse>}
      */
      update_order(startId: string, endId: string, config: Object) {
-        const func = $fetch(`/${trimslashes(endpoint)}/update_order/`, { method: 'POST', ...higherConf, ...config, body: { startId, endId } })
+        const func = useCustomFetch(`/${trimslashes(endpoint)}/update_order/`, { method: 'POST', ...higherConf, ...config, body: { startId, endId } })
         return endpoint !== null ? func : Promise.reject(endpointError)
     },
 
