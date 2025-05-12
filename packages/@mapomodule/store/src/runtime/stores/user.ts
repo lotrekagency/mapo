@@ -90,21 +90,21 @@ export const useUserStore = defineStore('user', {
     // region old actions
     login(loginParams: ILoginParams) {
       const { username, password } = loginParams;
-      return new Promise<void>((resolve, reject) => {
-        const url = process.env.AUTH_LOGIN_URL || "/api/auth/login";
+      return new Promise((resolve, reject) => {
+        const url = process.env.AUTH_LOGIN_URL || "/api/auth/login/";
+
         $fetch(url, {
           method: 'POST',
           body: JSON.stringify({
             username: (username || "").trim(),
             password: (password || "").trim(),
           })
-        })
-        .then((response) => {
-          // @ts-ignore TODO: manage type response
-          const { token } = response.data;
+        }).then((response) => {
+          const token = response?.data?.token;
+
           this.SET_TOKEN(token);
           this.SET_LOGGEDIN(true);
-          this.getInfo().then(() => resolve());
+          this.getInfo().then(resolve);
         })
         .catch((error) => {
           reject(error);
@@ -190,3 +190,5 @@ export const useUserStore = defineStore('user', {
       ),
   }
 })
+
+export type TUserStore = ReturnType<typeof useUserStore>

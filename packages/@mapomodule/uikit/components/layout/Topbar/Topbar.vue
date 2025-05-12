@@ -1,6 +1,6 @@
 <template>
   <v-app-bar
-    :clipped-left="get_clipped"
+    :clipped-left="$store.app.get_clipped"
     fixed
     app
     flat
@@ -17,21 +17,22 @@
 </template>
 
 <script>
-import { mapState } from 'pinia'
 import { getCurrentInstance } from 'vue';
 
 export default {
   name: "Topbar",
   setup(){
-    const store = useAppStore()
-    const { get_clipped, toggleSidebarDrawer } = store
-    return { get_clipped, toggleSidebarDrawer }
+    const $store = useNuxtApp().$store
+    return { $store }
   },
   methods: {
     componentExists(name){
       // return name in this.$options.components;
       // TODO: check if is the correct way to check if a component exists
       return name in getCurrentInstance()?.appContext.components;
+    },
+    toggleSidebarDrawer() {
+      this.$store.app.toggleSidebarDrawer()
     }
   },
 };

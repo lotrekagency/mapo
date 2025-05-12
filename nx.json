@@ -1,0 +1,20 @@
+{
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": [],
+      "outputs": [
+        "{projectRoot}/dist"
+      ]
+    },
+    "install": {
+      "dependsOn": ["^prepack"]
+    },
+    "prepack": {
+      "dependsOn": ["^prepare"]
+    },
+    "prepare": {
+      "implicitDependencies": ["@mapomodule/store", "@mapomodule/core"]
+    }
+  }
+}

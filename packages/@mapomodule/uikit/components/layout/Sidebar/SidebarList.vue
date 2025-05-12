@@ -19,6 +19,10 @@ import { buildRoutes } from "../routebuilder";
 
 // @vuese
 export default {
+  setup() {
+    const $mapo = useNuxtApp().$mapo;
+    return { $mapo };
+  },
   name: "SidebarList",
   props: {
     footer: Boolean,
@@ -26,7 +30,8 @@ export default {
     spiderMenu: {
       type: Boolean,
       default() {
-        // const { spiderMenu } = this.$mapo.$options?.ui?.sidebar || {};
+        // console.log('default spidermenu', this.$mapo);
+        // const { spiderMenu } = this.$mapo?.$options?.ui?.sidebar || {};
         // return spiderMenu == undefined ? true : spiderMenu;
         return true
       }

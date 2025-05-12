@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "nuxi dev .playground -p 3030",
-    "dev:prepare": "nuxt prepare .playground",
+    "prepare": "nuxt prepare .playground",
     "build": "nuxt build .playground",
     "generate": "nuxt generate .playground",
     "preview": "nuxt preview .playground",

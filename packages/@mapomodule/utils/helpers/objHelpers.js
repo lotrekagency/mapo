@@ -1,6 +1,3 @@
-import Vue, { set } from 'vue';
-Vue = Vue || Vue
-
 function deepClone(obj) {
     const clone = obj instanceof Array ? Object.assign([]) : Object.assign({});
     for (const i in obj) {
@@ -21,10 +18,10 @@ function getPointed(obj, kpointed, def) {
 function setPointed(obj, kpointed, val) {
     const arr = typeof kpointed == 'string' ? kpointed.split(".") : kpointed
     if (arr.length == 1) {
-        set(obj, arr[0], val)
+        obj[arr[0]] = val
         return obj
     }
-    set(obj, arr[0], obj[arr[0]] || {})
+    obj[arr[0]] = obj[arr[0]] || {}
     return setPointed(obj[arr[0]], arr.slice(1), val)
 }
 

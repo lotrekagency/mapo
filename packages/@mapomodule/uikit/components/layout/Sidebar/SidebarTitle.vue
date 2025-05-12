@@ -1,10 +1,10 @@
 <template>
   <v-list-item class="sidebar-title--container">
     <template v-slot:prepend>
-      <v-avatar v-if="logo" class="sidebar-title--logo">
+      <v-avatar v-if="logo" class="sidebar-title--logo"@click.stop="toggleMiniVariant">
         <v-img :src="logo"></v-img>
       </v-avatar>
-      <v-icon color="secondary" v-else>mdi-artstation</v-icon>
+      <v-icon color="secondary" @click.stop="toggleMiniVariant" v-else>mdi-artstation</v-icon>
     </template>
     <v-list-item-title>
         <b>{{title}}</b>
@@ -29,23 +29,21 @@
 // @vuese
 export default {
   setup(){
-    const store = useAppStore()
-    const { toggleSidebarMinivariant } = store
-    return { toggleSidebarMinivariant }
+    const $store = useNuxtApp().$store
+    const $mapo = useNuxtApp().$mapo
+    return { $store, $mapo }
   },
   computed:{
     title(){
-      // return this.$mapo.$options?.ui?.panelName || "BACKOFFICE"
-      return "BACKOFFICE"
+      return this.$mapo.$options?.ui?.panelName || "BACKOFFICE"
     },
     logo(){
-      // return this.$mapo.$options?.ui?.panelLogo
-      return null
+      return this.$mapo.$options?.ui?.panelLogo
     }
   },
   methods: {
     toggleMiniVariant() {
-      this.toggleSidebarMinivariant()
+      this.$store.app.toggleSidebarMinivariant()
     },
   },
 };

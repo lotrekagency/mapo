@@ -1,12 +1,12 @@
 <template>
-  <v-list-item>
+  <v-list-item @click.stop="toggleMiniVariant">
     <template v-slot:prepend>
-      <v-avatar v-if="avatar">
+      <v-avatar v-if="avatar" @click.stop="toggleMiniVariant">
         <v-img :src="avatar"></v-img>
       </v-avatar>
-      <v-icon v-else>mdi-account</v-icon>
-      <template v-slot:prepend>
-        <v-list-item-title>
+      <v-icon @click.stop="toggleMiniVariant" v-else>mdi-account</v-icon>
+    </template>
+    <v-list-item-title>
       <span v-if="isLoggedIn">
         {{ username }}
       </span>
@@ -23,27 +23,24 @@
 // @vuese
 export default {
   setup(){
-    const store = useAppStore()
-    const { toggleSidebarMinivariant } = store
-    return { toggleSidebarMinivariant }
+    const $mapo = useNuxtApp()?.$mapo;
+    const $store = useNuxtApp()?.$store;
+    return { $mapo, $store }
   },
   computed: {
     username() {
-      // return this.isLoggedIn ? this.$mapo.$auth.user.username : "";
-      return "username";
+      return this.isLoggedIn ? this.$mapo.$auth.user.username : "";
     },
     avatar() {
-      // return this.$mapo.$auth.user.avatar;
-      return null;
+      return this.$mapo.$auth.user.avatar;
     },
     isLoggedIn() {
-      // return this.$mapo.$auth.user.isLoggedIn;
-      return false;
+      return this.$mapo.$auth.user.isLoggedIn;
     },
   },
   methods: {
     toggleMiniVariant() {
-      this.toggleSidebarMinivariant()
+      this.$store.app.toggleSidebarMinivariant()
     },
   },
 };

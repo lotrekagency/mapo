@@ -8,9 +8,10 @@ export default defineNuxtConfig({
     "@nuxt/test-utils",
     'vuetify-nuxt-module',
     "@nuxtjs/i18n",
-    "@mapomodule/store"
+    "@mapomodule/store",
+    "@mapomodule/core",
   ],
-  extends: ["@mapomodule/core"],
+  extends: [],
   // You can define all global settings here in the nuxt config.
   // Anyone extending this layer can override these options directly in their nuxt.config.
   vuetify: {

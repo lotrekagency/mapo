@@ -51,6 +51,10 @@
 
 <script>
 export default {
+  setup() {
+    const $mapo = useNuxtApp()?.$mapo;
+    return { $mapo };
+  },
   data() {
     return {
       username: "",
@@ -78,20 +82,21 @@ export default {
   },
   methods: {
     handleLogin(username, password) {
-      // this.$mapo.$auth
-      //   .login({ username, password })
-      //   .then(() =>
-      //     this.$router.push({
-      //       path: this.redirect || "/",
-      //       query: this.otherQuery,
-      //     })
-      //   )
-      //   .catch((error) => {
-      //     this.errors = error.response?.data || {}
-      //     if (!Object.keys(this.errors).length){
-      //       this.$mapo.$snack.open({message: this.$t("mapo.loginError"), color: "error"})
-      //     }
-      //   });
+      this.$mapo.$auth
+        .login({ username, password })
+        .then(() => {
+            return this.$router.push({
+              path: this.redirect || "/",
+              query: this.otherQuery,
+            });
+          }
+        )
+        .catch((error) => {
+          this.errors = error.response?.data || {}
+          if (!Object.keys(this.errors).length){
+            this.$mapo.$snack.open({message: this.$t("mapo.loginError"), color: "error"})
+          }
+        });
     },
   },
 };

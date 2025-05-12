@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@nuxt/eslint', '@nuxt/test-utils'],
+  modules: ['@nuxt/eslint', '@nuxt/test-utils', '@mapomodule/integrations-camomilla'],
   extends: ['mapomodule'],
   vuetify: {
     vuetifyOptions: {
@@ -16,5 +16,18 @@ export default defineNuxtConfig({
       { code: 'en', iso: 'en-US', file: 'en-US.ts' },
       { code: 'it', iso: 'it-IT', file: 'it-IT.ts' },
     ],
+  },
+  runtimeConfig: {
+    camomilla: {
+      configuration: {
+        api: {
+          target: "http://localhost:8000",
+          syncCamomillaSession: true,
+          headers: {
+            "x-Forwarded-Host": "localhost",
+          },
+        },
+      },
+    },
   },
 })

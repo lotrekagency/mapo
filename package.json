@@ -9,6 +9,8 @@
     "url": "git+https://github.com/lotrekagency/mapo.git"
   },
   "scripts": {
+    "prepack": "lerna run prepack",
+    "prepare": "lerna run prepare",
     "build": "lerna run build --parallel",
     "dev": "lerna run dev --parallel",
     "dev:example": "lerna run dev --scope=example",
@@ -21,7 +23,7 @@
   "dependencies": {
     "lerna": "^8.2.1"
   },
-    "engines": {
+  "engines": {
     "node": ">=22.13.1",
     "npm": ">=10.5.2"
   }
