@@ -166,12 +166,18 @@ importers:
       '@pinia/nuxt':
         specifier: ^0.10.1
         version: 0.10.1(pinia@3.0.1)
+      devalue:
+        specifier: ^5.1.1
+        version: 5.1.1
       js-cookie:
         specifier: ^3.0.5
         version: 3.0.5
       pinia:
         specifier: ^3.0.1
         version: 3.0.1(typescript@5.8.2)(vue@3.5.13)
+      pinia-plugin-persistedstate:
+        specifier: ^4.2.0
+        version: 4.2.0(@pinia/nuxt@0.10.1)(pinia@3.0.1)
     devDependencies:
       '@nuxt/devtools':
         specifier: ^2.3.0
@@ -3131,18 +3137,6 @@ packages:
     transitivePeerDependencies:
       - magicast
 
-  /@nuxt/devtools-kit@2.3.0(vite@6.3.3):
-    resolution: {integrity: sha512-XKf5czeVLVDi1v602+NliVg80Ma9FyxXc9UmRz2mll/WsXTHZrPzCg94HXJPECv3S5vexTHmmBTyIrMIsqKFmw==}
-    peerDependencies:
-      vite: '>=6.0'
-    dependencies:
-      '@nuxt/kit': 3.17.1(magicast@0.3.5)
-      '@nuxt/schema': 3.17.1
-      execa: 9.5.2
-      vite: 6.3.3(@types/node@22.15.3)(jiti@2.4.2)
-    transitivePeerDependencies:
-      - magicast
-
   /@nuxt/devtools-kit@2.4.0(magicast@0.3.5)(vite@6.3.3):
     resolution: {integrity: sha512-GdxdxEDN1f6uxJOPooYQTLC6X1QUe5kRs83A0PVH/uD0sqoXCjpKHOw+H0vdhkHOwOIsVIsbL+TdaF4k++p9TA==}
     peerDependencies:
@@ -3434,7 +3428,7 @@ packages:
         optional: true
     dependencies:
       '@eslint/config-inspector': 1.0.2(eslint@9.22.0)
-      '@nuxt/devtools-kit': 2.3.0(vite@6.3.3)
+      '@nuxt/devtools-kit': 2.3.0(magicast@0.3.5)(vite@6.3.3)
       '@nuxt/eslint-config': 1.2.0(@vue/compiler-sfc@3.5.13)(eslint@9.22.0)(typescript@5.8.2)
       '@nuxt/eslint-plugin': 1.2.0(eslint@9.22.0)(typescript@5.8.2)
       '@nuxt/kit': 3.16.0
@@ -3471,7 +3465,7 @@ packages:
         optional: true
     dependencies:
       '@eslint/config-inspector': 1.0.2(eslint@9.22.0)
-      '@nuxt/devtools-kit': 2.3.0(vite@6.3.3)
+      '@nuxt/devtools-kit': 2.3.0(magicast@0.3.5)(vite@6.3.3)
       '@nuxt/eslint-config': 1.2.0(@vue/compiler-sfc@3.5.13)(eslint@9.22.0)(typescript@5.8.3)
       '@nuxt/eslint-plugin': 1.2.0(eslint@9.22.0)(typescript@5.8.3)
       '@nuxt/kit': 3.16.0
@@ -6996,7 +6990,7 @@ packages:
     dependencies:
       hookable: 5.5.3
       unhead: 2.0.0-rc.13
-      vue: 3.5.13(typescript@5.8.3)
+      vue: 3.5.13(typescript@5.8.2)
 
   /@unhead/vue@2.0.8(vue@3.5.13):
     resolution: {integrity: sha512-e30+CfCl1avR+hzFtpvnBSesZ5TN2KbShStdT2Z+zs5WIBUvobQwVxSR0arX43To6KfwtCXAfi0iOOIH0kufHQ==}
@@ -7200,8 +7194,8 @@ packages:
       '@babel/core': 7.26.10
       '@babel/plugin-transform-typescript': 7.26.8(@babel/core@7.26.10)
       '@vue/babel-plugin-jsx': 1.4.0(@babel/core@7.26.10)
-      vite: 6.2.2(jiti@2.4.2)(sass-embedded@1.86.0)
-      vue: 3.5.13(typescript@5.8.3)
+      vite: 6.2.2(@types/node@22.13.10)(jiti@2.4.2)
+      vue: 3.5.13(typescript@5.8.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -7228,8 +7222,8 @@ packages:
       vite: ^5.0.0 || ^6.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 6.2.2(jiti@2.4.2)(sass-embedded@1.86.0)
-      vue: 3.5.13(typescript@5.8.3)
+      vite: 6.2.2(@types/node@22.13.10)(jiti@2.4.2)
+      vue: 3.5.13(typescript@5.8.2)
 
   /@vitejs/plugin-vue@5.2.3(vite@6.3.3)(vue@3.5.13):
     resolution: {integrity: sha512-IYSLEQj4LgZZuoVpdSUCw3dIynTWQgPlaRP6iAvMle4My0HdYwr5g5wQAfwOeHQBmYwEkqF70nRpSilr6PoUDg==}
@@ -7520,7 +7514,7 @@ packages:
       magic-string-ast: 0.7.1
       pathe: 2.0.3
       picomatch: 4.0.2
-      vue: 3.5.13(typescript@5.8.3)
+      vue: 3.5.13(typescript@5.8.2)
 
   /@vue/babel-helper-vue-transform-on@1.4.0:
     resolution: {integrity: sha512-mCokbouEQ/ocRce/FpKCRItGo+013tHg7tixg3DUNS+6bmIchPt66012kBMm476vyEIJPafrvOf4E5OYj3shSw==}
@@ -7724,7 +7718,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.5.13
       '@vue/shared': 3.5.13
-      vue: 3.5.13(typescript@5.8.3)
+      vue: 3.5.13(typescript@5.8.2)
 
   /@vue/shared@3.5.13:
     resolution: {integrity: sha512-/hnE/qP5ZoGpol0a5mDi45bOd7t3tjYJBjsgCsivow7D48cJeV5l05RD82lPqi7gRiphZM37rnhW1l6ZoCNNnQ==}
@@ -9295,6 +9289,10 @@ packages:
 
   /deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
+
+  /deep-pick-omit@1.2.1:
+    resolution: {integrity: sha512-2J6Kc/m3irCeqVG42T+SaUMesaK7oGWaedGnQQK/+O0gYc+2SP5bKh/KKTE7d7SJ+GCA9UUE1GRzh6oDe0EnGw==}
+    dev: false
 
   /deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
@@ -15005,6 +15003,27 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
+  /pinia-plugin-persistedstate@4.2.0(@pinia/nuxt@0.10.1)(pinia@3.0.1):
+    resolution: {integrity: sha512-3buhA7ac+ssbOIx3VRCC8oHkoFwhDM9oHRCjo7nj+O8WUqnW+jRqh7eYT5eS/DNa3H28zp3dYf/nd/Vc8zj8eQ==}
+    peerDependencies:
+      '@pinia/nuxt': '>=0.9.0'
+      pinia: '>=2.3.0'
+    peerDependenciesMeta:
+      '@pinia/nuxt':
+        optional: true
+      pinia:
+        optional: true
+    dependencies:
+      '@nuxt/kit': 3.17.1(magicast@0.3.5)
+      '@pinia/nuxt': 0.10.1(pinia@3.0.1)
+      deep-pick-omit: 1.2.1
+      defu: 6.1.4
+      destr: 2.0.5
+      pinia: 3.0.1(typescript@5.8.2)(vue@3.5.13)
+    transitivePeerDependencies:
+      - magicast
+    dev: false
+
   /pinia@3.0.1(typescript@5.8.2)(vue@3.5.13):
     resolution: {integrity: sha512-WXglsDzztOTH6IfcJ99ltYZin2mY8XZCXujkYWVIJlBjqsP6ST7zw+Aarh63E1cDVYeyUcPCxPHzJpEOmzB6Wg==}
     peerDependencies:
@@ -18541,7 +18560,6 @@ packages:
       rollup: 4.36.0
     optionalDependencies:
       fsevents: 2.3.3
-    dev: true
 
   /vite@6.2.2(@types/node@22.15.3):
     resolution: {integrity: sha512-yW7PeMM+LkDzc7CgJuRLMW2Jz0FxMOsVJ8Lv3gpgW9WLcb9cTW+121UEr1hvmfR7w3SegR5ItvYyzVz1vxNJgQ==}
@@ -18894,6 +18912,7 @@ packages:
       tinyglobby: 0.2.13
     optionalDependencies:
       fsevents: 2.3.3
+    dev: true
 
   /vite@6.3.3(sass-embedded@1.86.0):
     resolution: {integrity: sha512-5nXH+QsELbFKhsEfWLkHrvgRpTdGJzqOZ+utSdmPTvwHmvU6ITTm3xx+mRusihkcI8GeC7lCDyn3kDtiki9scw==}
@@ -19378,7 +19397,7 @@ packages:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.6.4
-      vue: 3.5.13(typescript@5.8.3)
+      vue: 3.5.13(typescript@5.8.2)
 
   /vue-router@4.5.1(vue@3.5.13):
     resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}

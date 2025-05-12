@@ -46,9 +46,11 @@ export const useUserStore = defineStore('user', {
   actions: {
     // region old mutations
     SET_TOKEN(token: string) {
+      console.log("SET_TOKEN", token);
       this.token = token;
     },
     SET_LOGGEDIN(bool: boolean) {
+      console.log("SET_LOGGEDIN", bool);
       this.isLoggedIn = !!bool;
     },
     SET_INFO(info: IInfo) {
@@ -68,6 +70,7 @@ export const useUserStore = defineStore('user', {
       }, {});
     },
     CLEAN_DATA(this) {
+      console.log("CLEAN_DATA");
       this.token = null;
       this.isLoggedIn = false;
       this.info = {};
@@ -190,7 +193,8 @@ export const useUserStore = defineStore('user', {
         state.info.is_superuser ||
         state.modelPermissions[model]?.includes(permission)
       ),
-  }
+  },
+  // persist: true,
 })
 
 export type TUserStore = ReturnType<typeof useUserStore>

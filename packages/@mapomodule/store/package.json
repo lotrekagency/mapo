@@ -36,8 +36,10 @@
   "dependencies": {
     "@nuxt/kit": "^3.16.0",
     "@pinia/nuxt": "^0.10.1",
+    "devalue": "^5.1.1",
     "js-cookie": "^3.0.5",
-    "pinia": "^3.0.1"
+    "pinia": "^3.0.1",
+    "pinia-plugin-persistedstate": "^4.2.0"
   },
   "devDependencies": {
     "@nuxt/devtools": "^2.3.0",

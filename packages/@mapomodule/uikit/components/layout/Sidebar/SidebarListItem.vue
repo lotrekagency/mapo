@@ -165,6 +165,7 @@ export default {
     checkPermissions(child = undefined) {
       const item = child || this;
       const middleware = this.$mapo.$auth.getRouteMiddlewares({ meta: item.meta });
+
       if (middleware.includes("permissions")) {
         const { model } = item.meta?.permissions || {};
         return this.$store.user.hasModelPermission(model, "view");
