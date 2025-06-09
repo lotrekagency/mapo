@@ -1,3 +1,4 @@
+import { useCustomFetch } from '#imports';
 import { transformRequestInMultipart } from './multipart';
 const trimslashes = (str: string) => (str || "").replace(/^\/|\/$/g, '')
 const preparePayload = (payload: Object, options: Object & { multipart: string }) => {

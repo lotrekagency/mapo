@@ -1,4 +1,4 @@
-import { defineNuxtModule, addPlugin, addImportsDir, createResolver } from '@nuxt/kit'
+import { defineNuxtModule, addPlugin, addImportsDir, createResolver, addRouteMiddleware } from '@nuxt/kit'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {}
@@ -14,7 +14,10 @@ export default defineNuxtModule<ModuleOptions>({
     const resolver = createResolver(import.meta.url)
 
     addImportsDir(resolver.resolve('./runtime/api-utils'))
-    addImportsDir(resolver.resolve('./templates'))
+
+    addRouteMiddleware({ name: 'auth', path: resolver.resolve('./runtime/middleware/auth.ts') })
+    addRouteMiddleware({ name: 'roles', path: resolver.resolve('./runtime/middleware/roles.ts') })
+    addRouteMiddleware({ name: 'permissions', path: resolver.resolve('./runtime/middleware/permissions.ts') })
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
     addPlugin(resolver.resolve('./runtime/plugins/core'))

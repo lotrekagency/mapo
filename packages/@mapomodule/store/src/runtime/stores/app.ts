@@ -12,6 +12,7 @@ const INITIAL_STATE = {
 
 export interface IAppState {
   sidebar: ISidebarState,
+  // TODO: update this type to match your snackbar state
   snackbar: any
 }
 

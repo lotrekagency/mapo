@@ -3,9 +3,15 @@ import libCookie from "cookie";
 
 const mapAuthLogicFactory = ({ sync }: { sync: boolean }) => (proxyRes, req, res) => {
   const paths = [
+    "/api/camomilla/auth/login//",
     "/api/camomilla/auth/login/",
+    "/api/camomilla/auth/logout//",
     "/api/camomilla/auth/logout/"
   ]
+
+  console.log("[INTEGRATIONS CAMOMILLA] Mapo Auth Factory", proxyRes, req.cookies, req.path, res)
+
+
   if (paths.includes(req.path)) {
     const cookies = setCookie.parse(proxyRes);
     const sessionid = cookies.find(c => c.name == "sessionid")

@@ -1,8 +1,8 @@
-import { useFetch, useNuxtApp, type useFetchOptions } from 'nuxt/app'
+import { useFetch, useNuxtApp } from "#app";
 
 export function useCustomFetch<T>(
   url: string | (() => string),
-  options: useFetchOptions<T> = {},
+  options: any,
 ) {
   return useFetch(url, {
     ...options,

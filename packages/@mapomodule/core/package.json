@@ -35,7 +35,6 @@
   "devDependencies": {
     "@mapomodule/utils": "workspace:^",
     "@mapomodule/store": "workspace:^",
-    "@nuxt/devtools": "^2.3.0",
     "@nuxt/eslint": "1.2.0",
     "@nuxt/eslint-config": "^1.2.0",
     "@nuxt/module-builder": "^0.8.4",

@@ -1,4 +1,4 @@
-import { defineNuxtPlugin } from '#app'
+import { defineNuxtPlugin, useNuxtApp } from '#app'
 import { createRepository } from '../api-utils/crud';
 import { transformRequestInMultipart } from '../api-utils/multipart';
 

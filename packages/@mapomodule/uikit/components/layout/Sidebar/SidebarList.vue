@@ -30,10 +30,8 @@ export default {
     spiderMenu: {
       type: Boolean,
       default() {
-        // console.log('default spidermenu', this.$mapo);
-        // const { spiderMenu } = this.$mapo?.$options?.ui?.sidebar || {};
-        // return spiderMenu == undefined ? true : spiderMenu;
-        return true
+        const spiderMenu = this?.$mapo?.$options?.ui?.sidebar?.spiderMenu;
+        return spiderMenu == undefined ? true : spiderMenu;
       }
     }
   },

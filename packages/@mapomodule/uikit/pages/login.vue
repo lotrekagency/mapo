@@ -5,10 +5,6 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'empty',
-  sidebarFooter: false,
+  sidebarHide: true,
 })
-// export default {
-//   layout: "empty",
-//   meta: { sidebarHide: true },
-// };
 </script>

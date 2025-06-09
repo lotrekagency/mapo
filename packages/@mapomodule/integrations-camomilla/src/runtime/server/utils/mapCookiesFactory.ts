@@ -1,4 +1,7 @@
 const mapCookiesFactory = ({ sync }: { sync: boolean }) => (req, res, next) => {
+
+  console.log("[INTEGRATIONS CAMOMILLA] Mapo Cookies Factory", req.cookies, req.path)
+
   const { csrftoken, __mapo_session } = req.cookies
   if (__mapo_session) req.cookies.sessionid = __mapo_session
   if (csrftoken && req.path !== "/auth/login") req.headers['X-CSRFToken'] = csrftoken
