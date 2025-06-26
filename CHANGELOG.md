@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.55](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.54...v1.0.0-alpha.55) (2025-06-26)
+
+
+### Bug Fixes
+
+* fix menù node editor ([f381434](https://github.com/lotrekagency/mapo/commit/f3814341776edc9ecd44dd5e1651186da74eb517))
+
+
+
+
+
 # [1.0.0-alpha.54](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.53...v1.0.0-alpha.54) (2025-03-10)
 
 
