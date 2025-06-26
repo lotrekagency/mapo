@@ -207,22 +207,24 @@ export default {
           synci18n: true,
           attrs: {
             multiple: false,
-            returnObject: false,
             itemText: "verbose_name_plural",
             endpoint: this.pageTypesEndpoint,
           },
         },
         {
-          value: "link.page_id",
+          value: "link.url_node",
           label: this.$t("mapo.menuNodeEditor.relPageIdLabel"),
           vShow: ({ model }) => model.link.link_type == "RE",
           class: "col-md-6",
           type: "select",
           synci18n: true,
           attrs: {
+            returnObject: true,
+            itemText: "name",
+            itemValue: "id",
             items: this.availablePages?.map((item) => ({
-              text: item.name,
-              value: item.id,
+              name: item.name,
+              id: item.url_node_id,
             })),
           },
         },
@@ -245,7 +247,7 @@ export default {
         const options = { params: { language_code: this.lang } };
         this.availablePages = await this.$mapo.$api
           .crud(this.pageTypesEndpoint)
-          .detail(content_type, options);
+          .detail(content_type.id || content_type, options);
       } else {
         this.availablePages = [];
       }
