@@ -22,8 +22,7 @@ import { getPointed, setPointed } from "@mapomodule/utils/helpers/objHelpers";
 import { titleCase } from "@mapomodule/utils/helpers/formatters";
 
 import defaults from "./defaults";
-import { debounce } from "@mapomodule/utils/helpers/debounce";
-const _ = require("lodash");  
+const _ = require("lodash");
 
 /**
  * This is mainly an internal component. It is used by the [`DetailComponent`](/components/detail/Detail/) in order to render dinamic fields inside the main form.
@@ -68,13 +67,10 @@ export default {
     model(val) {
       var model = this.extractValue(val);
       if (JSON.stringify(val) !== JSON.stringify(model))
-        this.debouncedSetValue(val);
+        this.SetValue(val);
     },
   },
   methods: {
-    debouncedSetValue: debounce(function (...args) {
-      this.setValue(...args);
-    }, 300),
     setValue(val) {
       const old = this.extractValue(this.value);
       setPointed(this.value, this.kpointed, this.accessor.set({ model: this.value, val }));
