@@ -97,6 +97,13 @@ export default {
             attrs: { endpoint: "api/camomilla/tags", itemText: "title" },
           },
           {
+            label: this.$t("author"),
+            value: "author",
+            synci18n: true,
+            type: "fks",
+            attrs: { endpoint: "api/camomilla/users", itemText: "username", returnObject: false, extraPick: "email" },
+          },
+          {
             value: "meta.variations",
             label: this.$t("variations"),
             synci18n: true,

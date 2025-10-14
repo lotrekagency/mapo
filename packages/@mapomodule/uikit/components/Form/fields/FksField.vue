@@ -33,6 +33,11 @@ export default {
     },
     // This is the endpoint where the component can fetch options.
     endpoint: String | Object,
+    // Additional fields to include in the API call
+    extraPick: {
+      type: String,
+      required: false
+    },
   },
   computed: {
     fieldAttrs() {
@@ -60,6 +65,28 @@ export default {
           return { url: "", conf: null };
       }
     },
+    fieldsFromAttrs() {
+      const fields = [];
+      const itemText = this.$attrs.itemText || this.fieldAttrs.itemText;
+      const itemValue = this.$attrs.itemValue || this.fieldAttrs.itemValue;
+
+      if (itemValue && itemValue !== 'id') fields.push(itemValue);
+      else if (!itemValue) fields.push('id'); // default value
+
+      if (itemText && itemText !== itemValue) fields.push(itemText);
+
+      if (!fields.includes('id')) fields.push('id');
+
+      return fields.join(',');
+    },
+    pickString() {
+      const attrFields = this.fieldsFromAttrs;
+      const extraFields = this.extraPick;
+      if (!attrFields && !extraFields) return '';
+      if (!extraFields) return attrFields;
+      if (!attrFields) return extraFields;
+      return `${attrFields},${extraFields}`;
+    },
   },
   watch: {
     items(val) {
@@ -75,9 +102,21 @@ export default {
   mounted() {
     if (this.crudConfig.url) {
       this.loading = true;
+
+      let apiConfig = this.crudConfig.conf || {};
+      if (this.pickString) {
+        apiConfig = {
+          ...apiConfig,
+          params: {
+            ...apiConfig.params,
+            fields: this.pickString
+          }
+        };
+      }
+
       this.$mapo.$api
         .crud(this.crudConfig.url)
-        .list(this.crudConfig.conf)
+        .list(apiConfig)
         .then((res) => {
           this.options = res;
           this.loading = false;
