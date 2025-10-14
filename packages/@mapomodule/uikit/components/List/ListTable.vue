@@ -182,6 +182,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    extraPick: {
+      type: String,
+      required: false
+    },
   },
   directives: {
     sortableDataTable: {
@@ -342,6 +346,7 @@ export default {
         query.forEach((q) => params.append("fltr", q));
       });
       if (this.searchString && this.searchable) params.append("search", this.searchString);
+      if (this.pickString) params.append("fields", this.pickString);
       return params;
     },
     quickAction(item) {
@@ -455,6 +460,21 @@ export default {
     },
     serverItemsLength() {
       return this.httpPaginator.count || (this.serverPaginationEnabled && (this.options.page * this.options.itemsPerPage)) || -1;
+    },
+    fieldsFromHeaders() {
+      if (!this.$attrs.headers || !this.$attrs.headers.length) return '';
+      return this.$attrs.headers
+        .filter(header => header.value && header.value !== 'actions' && header.value !== 'drag-column')
+        .map(header => header.value)
+        .join(',');
+    },
+    pickString() {
+      const headerFields = this.fieldsFromHeaders;
+      const extraFields = this.extraPick;
+      if (!headerFields && !extraFields) return '';
+      if (!extraFields) return headerFields;
+      if (!headerFields) return extraFields;
+      return `${headerFields},${extraFields}`;
     },
   },
   mounted() {

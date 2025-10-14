@@ -13,6 +13,7 @@
       can-select-all
       searchable
       drag-reorder
+      extra-pick="status,author"
     >
     </List>
   </v-container>
