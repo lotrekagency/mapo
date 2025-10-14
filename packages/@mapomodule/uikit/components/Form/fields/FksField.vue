@@ -35,8 +35,8 @@ export default {
     endpoint: String | Object,
     // Additional fields to include in the API call
     extraPick: {
-      type: String,
-      required: false
+      type: Array,
+      default: () => []
     },
   },
   computed: {
@@ -77,15 +77,10 @@ export default {
 
       if (!fields.includes('id')) fields.push('id');
 
-      return fields.join(',');
+      return fields;
     },
     pickString() {
-      const attrFields = this.fieldsFromAttrs;
-      const extraFields = this.extraPick;
-      if (!attrFields && !extraFields) return '';
-      if (!extraFields) return attrFields;
-      if (!attrFields) return extraFields;
-      return `${attrFields},${extraFields}`;
+      return [...this.fieldsFromAttrs, ...this.extraPick].join(',');
     },
   },
   watch: {
@@ -103,24 +98,17 @@ export default {
     if (this.crudConfig.url) {
       this.loading = true;
 
-      let apiConfig = this.crudConfig.conf || {};
+      const additionalParams = {};
       if (this.pickString) {
-        apiConfig = {
-          ...apiConfig,
-          params: {
-            ...apiConfig.params,
-            fields: this.pickString
-          }
-        };
+          additionalParams.fields = this.pickString;
       }
-
       this.$mapo.$api
-        .crud(this.crudConfig.url)
-        .list(apiConfig)
-        .then((res) => {
-          this.options = res;
-          this.loading = false;
-        });
+      .crud(this.crudConfig.url)
+      .list({ ...this.crudConfig.conf, params: { ...this.crudConfig?.conf?.params, ...additionalParams } })
+      .then((res) => {
+        this.options = res;
+        this.loading = false;
+      });
     }
   },
 };

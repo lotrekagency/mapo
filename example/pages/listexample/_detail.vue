@@ -101,7 +101,7 @@ export default {
             value: "author",
             synci18n: true,
             type: "fks",
-            attrs: { endpoint: "api/camomilla/users", itemText: "username", returnObject: false, extraPick: "email" },
+            attrs: { endpoint: "api/camomilla/users", itemText: "username", returnObject: false, extraPick: ["email"] },
           },
           {
             value: "meta.variations",

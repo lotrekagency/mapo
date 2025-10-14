@@ -183,8 +183,8 @@ export default {
       default: false,
     },
     extraPick: {
-      type: String,
-      required: false
+      type: Array,
+      default: () => []
     },
   },
   directives: {
@@ -462,19 +462,13 @@ export default {
       return this.httpPaginator.count || (this.serverPaginationEnabled && (this.options.page * this.options.itemsPerPage)) || -1;
     },
     fieldsFromHeaders() {
-      if (!this.$attrs.headers || !this.$attrs.headers.length) return '';
+      if (!this.$attrs.headers || !this.$attrs.headers.length) return [];
       return this.$attrs.headers
         .filter(header => header.value && header.value !== 'actions' && header.value !== 'drag-column')
-        .map(header => header.value)
-        .join(',');
+        .filter(header => header.value && header.value !== 'actions' && header.value !== 'drag-column').map(header => header.value);
     },
     pickString() {
-      const headerFields = this.fieldsFromHeaders;
-      const extraFields = this.extraPick;
-      if (!headerFields && !extraFields) return '';
-      if (!extraFields) return headerFields;
-      if (!headerFields) return extraFields;
-      return `${headerFields},${extraFields}`;
+      return [...this.fieldsFromHeaders, ...this.extraPick].join(',');
     },
   },
   mounted() {
