@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.56](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.55...v1.0.0-alpha.56) (2025-10-20)
+
+
+### Bug Fixes
+
+* **FksField, ListTable:** pick fields as array ([6146d1c](https://github.com/lotrekagency/mapo/commit/6146d1c77474cb586fc9187ea45881de30365f06))
+
+
+### Features
+
+* **FksField:** add pick fields to endpoint call ([aa27a50](https://github.com/lotrekagency/mapo/commit/aa27a507e69192dd385235fa3a57eea0746ed60d))
+* **ListTable:** add fields query param to list endpoint ([06b8f58](https://github.com/lotrekagency/mapo/commit/06b8f589b06408f2e61bb1f82d66560fe70437d5))
+
+
+
+
+
 # [1.0.0-alpha.55](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.54...v1.0.0-alpha.55) (2025-06-26)
 
 

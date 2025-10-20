@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.56](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.55...v1.0.0-alpha.56) (2025-10-20)
+
+**Note:** Version bump only for package mapomodule
+
+
+
+
+
 # [1.0.0-alpha.55](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.54...v1.0.0-alpha.55) (2025-06-26)
 
 **Note:** Version bump only for package mapomodule
