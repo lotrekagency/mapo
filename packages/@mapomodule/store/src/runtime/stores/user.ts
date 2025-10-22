@@ -46,14 +46,15 @@ export const useUserStore = defineStore('user', {
   actions: {
     // region old mutations
     SET_TOKEN(token: string) {
-      console.log("SET_TOKEN", token);
+      console.log("🧩 SET_TOKEN", token);
       this.token = token;
     },
     SET_LOGGEDIN(bool: boolean) {
-      console.log("SET_LOGGEDIN", bool);
+      console.log("🍑 SET_LOGGEDIN", bool);
       this.isLoggedIn = !!bool;
     },
     SET_INFO(info: IInfo) {
+      console.log("🎯 SET_INFO", info);
       this.info = info;
     },
     UPDATE_PERMISSIONS(userInfo: IInfo) {
@@ -103,7 +104,7 @@ export const useUserStore = defineStore('user', {
             password: (password || "").trim(),
           })
         }).then((response) => {
-          console.log("response", response);
+          // console.log("response", response);
           const token = response?.data?.token;
 
           this.SET_TOKEN(token);
@@ -138,7 +139,8 @@ export const useUserStore = defineStore('user', {
         const url = process.env.USER_INFO_API || "/api/profiles/me/";
         useCustomFetch(url, { method: 'GET' })
           .then((response) => {
-            console.log("response", response);
+            console.log("💌 response", response.data);
+
             // @ts-ignore TODO: manage type response
             this.SET_INFO(response.data);
             if (updatePermissions)

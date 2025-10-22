@@ -1,6 +1,7 @@
 import { defineNuxtPlugin, useNuxtApp } from "#app"
 
 export default defineNuxtPlugin((nuxtApp) => {
+  console.log("⚡️ Setting up custom fetch plugin")
   const $customFetch = $fetch.create({
     onResponse({ response }) {
       const $store = useNuxtApp().$store
