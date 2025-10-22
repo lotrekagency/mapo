@@ -13,7 +13,7 @@ export default defineNuxtModule<ModuleOptions>({
   setup(_options, _nuxt) {
     const resolver = createResolver(import.meta.url)
 
-    // addPlugin({ src: resolver.resolve('./runtime/plugins/auth'), mode: 'server' });
+    addPlugin({ src: resolver.resolve('./runtime/plugins/auth'), mode: 'server' });
     addPlugin({ src: resolver.resolve('./runtime/plugins/pinia'), mode: 'all'});
     addPlugin(resolver.resolve('./runtime/plugins/fetch'), { append: true });
 
