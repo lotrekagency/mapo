@@ -3,7 +3,7 @@
     v-model="drawer"
     v-model:rail="miniVariant"
     :width="300"
-    :clipped="this.$store.app.get_clipped"
+    :clipped="$store.app.get_clipped"
     fixed
     app
   >
