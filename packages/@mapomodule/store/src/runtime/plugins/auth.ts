@@ -6,8 +6,7 @@ export default defineNuxtPlugin({
 
     if (import.meta.server === false) return;
 
-    // TODO: remove sessionid management and use only __mapo_session cookie
-    const __mapo_session = useCookie("__mapo_session").value || useCookie("sessionid").value;
+    const __mapo_session = useCookie("__mapo_session").value
     const sidebar_drawer = useCookie("sidebar_drawer").value;
     const sidebar_clipped = useCookie("sidebar_clipped").value;
     const sidebar_minivariant = useCookie("sidebar_minivariant").value;

@@ -1,7 +1,7 @@
 import { fromNodeMiddleware, useRuntimeConfig } from "#imports"
 
 import express from "express"
-import { responseInterceptor, createProxyMiddleware } from "http-proxy-middleware"
+import { createProxyMiddleware } from "http-proxy-middleware"
 import cookieParser from "cookie-parser"
 
 import mapAuthLogicFactory from "./utils/mapAuthLogicFactory"
@@ -15,9 +15,7 @@ const {
   headers,
   changeOrigin,
   pathRewrite,
-  onProxyRes,
   onProxyReq,
-  use,
   base,
   syncCamomillaSession
 } = config.configuration.api || {}
@@ -32,11 +30,12 @@ const proxyOptions = {
   headers,
   changeOrigin: changeOrigin !== undefined ? changeOrigin : true,
   onProxyReq,
-  onProxyRes: authMiddleware,
+  selfHandleResponse: true,
+  on: { proxyRes: authMiddleware },
   pathRewrite: {
-      [`^${baseUrl}/api/auth/login`]: '/api/camomilla/auth/login/',
-      [`^${baseUrl}/api/auth/logout`]: '/api/camomilla/auth/logout/',
-      [`^${baseUrl}/api/profiles/me`]: '/api/camomilla/users/current/',
+      [`^${baseUrl}/api/auth/login`]: '/api/camomilla/auth/login',
+      [`^${baseUrl}/api/auth/logout`]: '/api/camomilla/auth/logout',
+      [`^${baseUrl}/api/profiles/me`]: '/api/camomilla/users/current',
       [`^${baseUrl}/api/media`]: '/api/camomilla/media',
       [`^${baseUrl}/api/media-folders`]: '/api/camomilla/media-folders',
       [`^${baseUrl}/api`]: '/api',
@@ -44,12 +43,12 @@ const proxyOptions = {
   },
 }
 
-if (typeof onProxyRes === 'function') {
-  proxyOptions.onProxyRes = (proxyRes, req, res) => {
-    authMiddleware(proxyRes, req, res)
-    responseInterceptor(onProxyRes)(proxyRes, req, res)
-  }
-}
+// if (typeof onProxyRes === 'function') {
+//   proxyOptions.onProxyRes = (proxyRes, req, res) => {
+//     authMiddleware(proxyRes, req, res)
+//     responseInterceptor(onProxyRes)(proxyRes, req, res)
+//   }
+// }
 
 app.use(cookieParser());
 app.use(cookiesMiddleware);
