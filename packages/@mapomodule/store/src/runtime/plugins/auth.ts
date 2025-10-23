@@ -4,7 +4,10 @@ export default defineNuxtPlugin({
   order: 3,
   setup: async (nuxtApp) => {
 
-    const __mapo_session = useCookie("__mapo_session").value;
+    if (import.meta.server === false) return;
+
+    // TODO: remove sessionid management and use only __mapo_session cookie
+    const __mapo_session = useCookie("__mapo_session").value || useCookie("sessionid").value;
     const sidebar_drawer = useCookie("sidebar_drawer").value;
     const sidebar_clipped = useCookie("sidebar_clipped").value;
     const sidebar_minivariant = useCookie("sidebar_minivariant").value;
@@ -33,6 +36,13 @@ export default defineNuxtPlugin({
       const resp = await $fetch(url, { method: 'GET', headers })
       user.SET_INFO(resp)
       user.UPDATE_PERMISSIONS(resp)
+    } else {
+      // @ts-ignore TODO: manage provisioning type
+      const { $store: { user } } = nuxtApp;
+      user?.SET_TOKEN(null)
+      user?.SET_LOGGEDIN(false)
+      user?.SET_INFO({})
+      user?.UPDATE_PERMISSIONS({})
     }
   },
 });
