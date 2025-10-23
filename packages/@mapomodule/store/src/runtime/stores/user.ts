@@ -46,15 +46,12 @@ export const useUserStore = defineStore('user', {
   actions: {
     // region old mutations
     SET_TOKEN(token: string) {
-      console.log("🧩 SET_TOKEN", token);
       this.token = token;
     },
     SET_LOGGEDIN(bool: boolean) {
-      console.log("🍑 SET_LOGGEDIN", bool);
       this.isLoggedIn = !!bool;
     },
     SET_INFO(info: IInfo) {
-      console.log("🎯 SET_INFO", info);
       this.info = info;
     },
     UPDATE_PERMISSIONS(userInfo: IInfo) {

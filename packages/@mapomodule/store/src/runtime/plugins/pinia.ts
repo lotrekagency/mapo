@@ -10,7 +10,6 @@ import { useMediaStore } from "../stores/media";
 export default defineNuxtPlugin({
   order: 1,
   setup: (nuxtApp) => {
-    console.log("🧰 Setting up Pinia store plugin");
     const pinia = createPinia();
     pinia.use(piniaPluginPersistedstate);
     setActivePinia(pinia);
@@ -19,21 +18,14 @@ export default defineNuxtPlugin({
 
     if (import.meta.server) {
       nuxtApp.hooks.hook("app:rendered", () => {
-        console.log("💾 Saving Pinia state to payload", pinia.state.value);
         nuxtApp.payload.piniaState = pinia.state.value;
       });
     }
 
     if (import.meta.client) {
-      nuxtApp.hooks.hook("app:created", () => {
-        if (nuxtApp.payload.piniaState) {
-          console.log(
-            "♻️ Restoring Pinia state from payload",
-            nuxtApp.payload.piniaState
-          );
-          pinia.state.value = nuxtApp.payload.piniaState as Record<string, any>;
-        }
-      });
+      if (nuxtApp.payload.piniaState) {
+        pinia.state.value = nuxtApp.payload.piniaState as Record<string, any>;
+      }
     }
 
     return {
