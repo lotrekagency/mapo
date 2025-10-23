@@ -101,9 +101,7 @@ export const useUserStore = defineStore('user', {
             password: (password || "").trim(),
           })
         }).then((response) => {
-          // console.log("response", response);
-          const token = response?.data?.token;
-
+          const { token } = response?.data?.value;
           this.SET_TOKEN(token);
           this.SET_LOGGEDIN(true);
           this.getInfo().then(resolve);
@@ -136,15 +134,15 @@ export const useUserStore = defineStore('user', {
         const url = process.env.USER_INFO_API || "/api/profiles/me/";
         useCustomFetch(url, { method: 'GET' })
           .then((response) => {
-            console.log("💌 response", response.data);
+            const { value } = response.data;
 
             // @ts-ignore TODO: manage type response
-            this.SET_INFO(response.data);
+            this.SET_INFO(value);
             if (updatePermissions)
               // @ts-ignore TODO: manage type response
-              this.UPDATE_PERMISSIONS(response.data);
+              this.UPDATE_PERMISSIONS(value);
             // @ts-ignore TODO: manage type response
-            resolve(response.data);
+            resolve(value);
           })
           .catch((error) => {
             reject(error);
