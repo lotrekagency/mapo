@@ -29,11 +29,10 @@ export const parseCookies = (res: ServerResponse<IncomingMessage>) => {
 };
 
 export const serializeCookies = (cookies: Record<string, Cookie>): string[] => {
-  return Object.values(cookies)
-    .map((cookie) => {
-      const attrs = Object.entries(cookie.attributes)
-        .map(([k, v]) => (v ? `${k}=${v}` : k))
-        .join("; ");
-      return `${cookie.name}=${cookie.value}; ${attrs}`;
-    });
+  return Object.values(cookies).map((cookie) => {
+    const attrs = Object.entries(cookie.attributes)
+      .map(([k, v]) => (v ? `${k}=${v}` : k))
+      .join("; ");
+    return `${cookie.name}=${cookie.value}; ${attrs}`;
+  });
 };

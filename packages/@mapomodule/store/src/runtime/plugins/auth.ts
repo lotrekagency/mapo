@@ -4,6 +4,16 @@ export default defineNuxtPlugin({
   order: 3,
   setup: async (nuxtApp) => {
 
+    function logout() {
+      // @ts-ignore TODO: manage provisioning type
+      const { $store: { user } } = nuxtApp;
+      user?.SET_TOKEN(null)
+      user?.SET_LOGGEDIN(false)
+      user?.SET_INFO({})
+      user?.UPDATE_PERMISSIONS({})
+      useCookie("__mapo_session").value = null
+    }
+
     if (import.meta.server === false) return;
 
     const __mapo_session = useCookie("__mapo_session").value
@@ -32,16 +42,17 @@ export default defineNuxtPlugin({
 
       // TODO: manage api url from config ?? or think something better
       const url = `${protocol}://${domain}/api/profiles/me/`;
-      const resp = await $fetch(url, { method: 'GET', headers })
-      user.SET_INFO(resp)
-      user.UPDATE_PERMISSIONS(resp)
+      try {
+        const resp = await $fetch(url, { method: 'GET', headers})
+        user.SET_INFO(resp)
+        user.UPDATE_PERMISSIONS(resp)
+      } catch (e) {
+        console.warn("Auth plugin - unable to fetch user info", e)
+        return logout()
+      }
+
     } else {
-      // @ts-ignore TODO: manage provisioning type
-      const { $store: { user } } = nuxtApp;
-      user?.SET_TOKEN(null)
-      user?.SET_LOGGEDIN(false)
-      user?.SET_INFO({})
-      user?.UPDATE_PERMISSIONS({})
+      return logout()
     }
   },
 });
