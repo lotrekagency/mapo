@@ -31,6 +31,7 @@ const proxyOptions = {
   changeOrigin: changeOrigin !== undefined ? changeOrigin : true,
   onProxyReq,
   selfHandleResponse: true,
+  followRedirects: true,
   on: { proxyRes: authMiddleware },
   pathRewrite: {
       [`^${baseUrl}/api/auth/login`]: '/api/camomilla/auth/login',
