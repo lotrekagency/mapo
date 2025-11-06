@@ -208,6 +208,8 @@ export default {
           attrs: {
             multiple: false,
             itemText: "verbose_name_plural",
+            itemValue: "id",
+            returnObject: false,
             endpoint: this.pageTypesEndpoint,
           },
         },
@@ -218,8 +220,19 @@ export default {
           class: "col-md-6",
           type: "select",
           synci18n: true,
+          accessor: {
+            set: ({ val, model }) => {
+              if (model.link && model.link.page) {
+                delete model.link.page;
+              }
+              if (model.link && model.link.url) {
+                delete model.link.url;
+              }
+              return val;
+            }
+          },
           attrs: {
-            returnObject: true,
+            returnObject: false,
             itemText: "name",
             itemValue: "id",
             items: this.availablePages?.map((item) => ({

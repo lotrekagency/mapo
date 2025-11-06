@@ -10,6 +10,7 @@
       can-select-all
       searchable
       show-select
+      lookup="key"
     >
     </List>
   </v-container>
