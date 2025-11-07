@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.57](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.56...v1.0.0-alpha.57) (2025-11-07)
+
+
+### Bug Fixes
+
+* **menu:** normalize link payload and remove stale derived fields in MenuNodeEditor) ([04dc8e6](https://github.com/lotrekagency/mapo/commit/04dc8e658e85a4d8a0e9b0bee5c6e01df2139806))
+
+
+
+
+
 # [1.0.0-alpha.56](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.55...v1.0.0-alpha.56) (2025-10-20)
 
 
