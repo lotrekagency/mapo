@@ -39,7 +39,6 @@
                 :fields="getFields(model)"
                 :errors="getErrors(index)"
                 :readonly="readonly"
-                immediate
               >
                 <template
                   v-for="(slot, name) in templateSlots(model, $slots)"
