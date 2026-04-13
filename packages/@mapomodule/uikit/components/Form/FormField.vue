@@ -71,10 +71,12 @@ export default {
         this.debouncedSetValue(val);
     },
   },
-  methods: {
-    debouncedSetValue: debounce(function (...args) {
+  created() {
+    this.debouncedSetValue = debounce(function (...args) {
       this.setValue(...args);
-    }, 300),
+    }.bind(this), 300);
+  },
+  methods: {
     setValue(val) {
       const old = this.extractValue(this.value);
       setPointed(this.value, this.kpointed, this.accessor.set({ model: this.value, val }));
