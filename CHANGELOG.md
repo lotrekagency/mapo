@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.58](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.57...v1.0.0-alpha.58) (2026-04-16)
+
+
+### Bug Fixes
+
+* **Form:** resolve silent data loss in Repeater fields ([83c23d6](https://github.com/lotrekagency/mapo/commit/83c23d641dece806475dd806f5ef7360e87bc066))
+
+
+
+
+
 # [1.0.0-alpha.57](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.56...v1.0.0-alpha.57) (2025-11-07)
 
 
