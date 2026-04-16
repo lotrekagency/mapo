@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.59](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.58...v1.0.0-alpha.59) (2026-04-16)
+
+
+### Bug Fixes
+
+* **deps:** update css-loader to version 5.2.7 and add vue resolution ([30527bf](https://github.com/lotrekagency/mapo/commit/30527bfb6ef574aa90b5af21a41f2bf88f1396ec))
+* **deps:** update vue and vue-template-compiler to version 2.7.16 ([005d605](https://github.com/lotrekagency/mapo/commit/005d605c18752ccf7dae4b75963557f5dc254040))
+
+
+
+
+
 # [1.0.0-alpha.58](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.57...v1.0.0-alpha.58) (2026-04-16)
 
 
