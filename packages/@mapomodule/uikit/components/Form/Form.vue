@@ -135,16 +135,13 @@ export default {
     },
   },
   methods: {
-    debouncedEmit: debounce(function (...args) {
-      this.$emit(...args);
-    }, 300),
     nameSpacedSlots,
     initLang(lang = this.currentLang) {
       if (lang && !this.model.translations) {
-        this.model.translations = {};
+        this.$set(this.model, "translations", {});
       }
       if (lang && !this.model.translations[lang]) {
-        this.model.translations[lang] = {};
+        this.$set(this.model.translations, lang, {});
       }
     },
     parseConf(field, i) {
@@ -212,6 +209,9 @@ export default {
     },
   },
   created(){
+    this.debouncedEmit = debounce(function (...args) {
+      this.$emit(...args);
+    }.bind(this), 300);
     this.initLang();
   }
 };
