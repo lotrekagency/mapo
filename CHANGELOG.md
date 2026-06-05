@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.60](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.59...v1.0.0-alpha.60) (2026-06-05)
+
+
+### Bug Fixes
+
+* Persist search state in media Vuex module ([c0986b5](https://github.com/lotrekagency/mapo/commit/c0986b53882a742e1920eccbac2c6bb86c5656e9))
+
+
+
+
+
 # [1.0.0-alpha.59](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.58...v1.0.0-alpha.59) (2026-04-16)
 
 
