@@ -5,6 +5,7 @@ const state = () => ({
     page: 1,
     pages: 1,
     mimeType: null,
+    search: null,
     loading: false,
     editMedia: null,
     selection: [],
@@ -57,6 +58,9 @@ const mutations = {
     SET_MIME_TYPE: (state, mime) => {
         state.mimeType = mime;
     },
+    SET_SEARCH: (state, { search }) => {
+        state.search = search || null;
+    },
 };
 
 const actions = {
@@ -69,6 +73,16 @@ const actions = {
                 (folder === undefined ? getters.parentFolder : folder) || {};
             page = page || getters.page;
             mime = mime || getters.mimeType;
+            // If folder is explicitly provided, clear persisted search.
+            // Otherwise fall back to the persisted search/all values.
+            if (context && "folder" in context) {
+                search = undefined;
+                all = undefined;
+            } else {
+                if (search === undefined) search = getters.search;
+                if (all === undefined) all = getters.search ? true : undefined;
+            }
+            commit("SET_SEARCH", { search, all });
             id = all ? null : id;
             let params = {
                 page,
@@ -284,6 +298,7 @@ const getters = {
     page: (state) => state.page,
     pages: (state) => state.pages,
     mimeType: (state) => state.mimeType,
+    search: (state) => state.search,
     loading: (state) => state.loading,
     editMedia: (state) => state.editMedia,
     selection: (state) => state.selection,
