@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.60...v1.0.0) (2026-07-02)
+
+**Note:** Version bump only for package @mapomodule/store
+
+
+
+
+
 # [1.0.0-alpha.60](https://github.com/lotrekagency/mapo/compare/v1.0.0-alpha.59...v1.0.0-alpha.60) (2026-06-05)
 
 
